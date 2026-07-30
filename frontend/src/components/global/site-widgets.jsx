@@ -9,7 +9,6 @@ export function ScrollProgressBar() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
-  if (pathname && pathname.startsWith("/admin")) return null;
 
   return (
     <motion.div
@@ -29,7 +28,6 @@ export function BackToTop() {
     return () => window.removeEventListener("scroll", toggle);
   }, []);
 
-  if (pathname && pathname.startsWith("/admin")) return null;
   if (!visible) return null;
 
   return (
@@ -61,7 +59,6 @@ export function CookieBanner() {
     setVisible(false);
   };
 
-  if (pathname && pathname.startsWith("/admin")) return null;
   if (!visible) return null;
 
   return (
@@ -98,7 +95,6 @@ export function CookieBanner() {
 
 export function FloatingButtons() {
   const { pathname } = useLocation();
-  if (pathname && pathname.startsWith("/admin")) return null;
 
   return (
     <>
@@ -124,7 +120,6 @@ export function PageLoader() {
     return () => clearTimeout(timer);
   }, []);
 
-  if (pathname && pathname.startsWith("/admin")) return null;
   if (!loading) return null;
 
   return (

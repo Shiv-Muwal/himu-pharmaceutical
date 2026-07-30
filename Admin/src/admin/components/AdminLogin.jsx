@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Lock, Mail, AlertCircle, Sparkles, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { Link } from "@/components/ui/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AdminLogo } from "@/admin/components/AdminLogo";
@@ -9,6 +8,7 @@ import { AdminLogo } from "@/admin/components/AdminLogo";
 const SHOW_HINT = import.meta.env.VITE_USE_LOCAL_ADMIN === "true";
 const HINT_EMAIL = import.meta.env.VITE_LOCAL_ADMIN_EMAIL || "admin@himu.local";
 const HINT_PASSWORD = import.meta.env.VITE_LOCAL_ADMIN_PASSWORD || "HimuAdmin@2026";
+const STOREFRONT_URL = import.meta.env.VITE_STOREFRONT_URL || "http://localhost:5173";
 
 export function AdminLogin({
   emailInput,
@@ -129,9 +129,12 @@ export function AdminLogin({
           </div>
 
           <div className="mt-6 text-center">
-            <Link href="/" className="text-xs font-semibold text-emerald-300/80 hover:text-emerald-200">
+            <a
+              href={STOREFRONT_URL}
+              className="text-xs font-semibold text-emerald-300/80 hover:text-emerald-200"
+            >
               ← Back to storefront
-            </Link>
+            </a>
           </div>
         </motion.div>
       </div>

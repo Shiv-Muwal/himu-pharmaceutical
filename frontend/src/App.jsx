@@ -18,7 +18,6 @@ import { LoginModal } from "@/components/auth/login-modal";
 import { generateOrganizationSchema } from "@/lib/seo";
 import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
-import AdminPage from "@/admin";
 import CareersPage from "@/pages/CareersPage";
 import CategoryPage from "@/pages/CategoryPage";
 import CertificationsPage from "@/pages/CertificationsPage";
@@ -48,20 +47,16 @@ function ScrollToTop() {
 }
 
 function AppLayout() {
-  const { pathname } = useLocation();
-  const isAdmin = pathname.startsWith("/admin");
-
   return (
     <>
       <ScrollToTop />
       <PageLoader />
-      {!isAdmin && <ScrollProgressBar />}
-      {!isAdmin && <Navbar />}
+      <ScrollProgressBar />
+      <Navbar />
       <main className="flex-1 min-h-screen">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/admin" element={<AdminPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/careers" element={<CareersPage />} />
           <Route path="/categories/:slug" element={<CategoryPage />} />
@@ -81,13 +76,13 @@ function AppLayout() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
-      {!isAdmin && <Footer />}
-      {!isAdmin && <BackToTop />}
-      {!isAdmin && <CookieBanner />}
-      {!isAdmin && <FloatingButtons />}
+      <Footer />
+      <BackToTop />
+      <CookieBanner />
+      <FloatingButtons />
       <CartDrawer />
       <CheckoutModal />
-      {!isAdmin && <LoginModal />}
+      <LoginModal />
     </>
   );
 }

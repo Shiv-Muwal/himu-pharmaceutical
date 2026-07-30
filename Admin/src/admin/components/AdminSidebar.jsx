@@ -12,10 +12,11 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "@/components/ui/link";
 import { cn } from "@/lib/utils";
 import { SIDEBAR_TABS } from "@/admin/constants";
 import { AdminLogo } from "@/admin/components/AdminLogo";
+
+const STOREFRONT_URL = import.meta.env.VITE_STOREFRONT_URL || "http://localhost:5173";
 
 const ICONS = {
   overview: LayoutDashboard,
@@ -143,13 +144,13 @@ export function AdminSidebar({
         </nav>
 
         <div className="space-y-2 border-t border-white/10 p-4">
-          <Link
-            href="/"
+          <a
+            href={STOREFRONT_URL}
             className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 px-3 py-2.5 text-xs font-bold text-white/80 hover:bg-white/10"
           >
             <ExternalLink className="h-3.5 w-3.5" />
             View Storefront
-          </Link>
+          </a>
           <Button
             variant="outline"
             onClick={handleLogout}

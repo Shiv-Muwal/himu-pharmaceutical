@@ -17,7 +17,6 @@ const socialLinks = [
 
 export function Footer() {
   const { pathname } = useLocation();
-  if (pathname && pathname.startsWith("/admin")) return null;
 
   return (
     <footer className="bg-primary text-primary-foreground relative mt-24">

@@ -1,19 +1,11 @@
 # dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-
-# testing
-/coverage
+node_modules/
+**/node_modules/
 
 # production
-/dist
-/build
+dist/
+**/dist/
+build/
 
 # misc
 .DS_Store
@@ -26,8 +18,11 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files
-.env*
+.env
+.env.*
 !.env.example
+**/.env
+!**/.env.example
 
 # typescript
 *.tsbuildinfo
