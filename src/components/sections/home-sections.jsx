@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "@/components/ui/link";
 import { Image } from "@/components/ui/image";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
   FlaskConical,
@@ -30,6 +30,7 @@ import { testimonials, partnerLogos } from "@/data/company";
 import { blogPosts } from "@/data/blogs";
 import { ProductCard } from "@/components/products/product-card";
 import { products } from "@/data/products";
+import { getMockProducts } from "@/lib/mock-backend";
 
 const whyChoose = [
   {
@@ -72,58 +73,89 @@ const whyChoose = [
 
 export function HeroSection() {
   const navigate = useNavigate();
+  const searchRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isListening, setIsListening] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [catalog, setCatalog] = useState(products);
   const [placeholderText, setPlaceholderText] = useState(
     "Search medicines, categories, compositions...",
   );
 
+  useEffect(() => {
+    setCatalog(getMockProducts());
+  }, []);
+
+  useEffect(() => {
+    const onClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
+
+  const goToProducts = (query = searchQuery, category = selectedCategory) => {
+    const params = new URLSearchParams();
+    if (query.trim()) params.set("q", query.trim());
+    if (category) params.set("category", category);
+    const qs = params.toString();
+    navigate(qs ? `/products?${qs}` : "/products");
+    setShowSuggestions(false);
+  };
+
+  const suggestions = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (q.length < 1) return [];
+    return catalog
+      .filter((p) => {
+        const matchesQuery =
+          p.name.toLowerCase().includes(q) ||
+          p.composition?.toLowerCase().includes(q) ||
+          p.category?.toLowerCase().includes(q);
+        const matchesCategory = !selectedCategory || p.categorySlug === selectedCategory;
+        return matchesQuery && matchesCategory;
+      })
+      .slice(0, 6);
+  }, [catalog, searchQuery, selectedCategory]);
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    if (!searchQuery.trim()) return;
-    let url = `/products?q=${encodeURIComponent(searchQuery)}`;
-    if (selectedCategory) {
-      url += `&category=${encodeURIComponent(selectedCategory)}`;
-    }
-    navigate(url);
+    goToProducts();
   };
 
   const startListening = () => {
-    if (typeof window !== "undefined") {
-      const SpeechRecognition =
-        window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (SpeechRecognition) {
-        const recognition = new SpeechRecognition();
-        recognition.continuous = false;
-        recognition.lang = "en-IN";
-        recognition.interimResults = false;
-        recognition.onstart = () => {
-          setIsListening(true);
-          setPlaceholderText("Listening... Speak now");
-        };
-        recognition.onresult = (event) => {
-          const transcript = event.results[0][0].transcript;
-          setSearchQuery(transcript);
-          setIsListening(false);
-          setPlaceholderText("Search medicines, categories, compositions...");
-          navigate(`/products?q=${encodeURIComponent(transcript)}`);
-        };
-        recognition.onerror = () => {
-          setIsListening(false);
-          setPlaceholderText("Search medicines, categories, compositions...");
-          alert("Speech recognition error. Please type or try speaking again.");
-        };
-        recognition.onend = () => {
-          setIsListening(false);
-        };
-        recognition.start();
-      } else {
-        alert(
-          "Voice recognition is not supported in this browser. Please try typing.",
-        );
-      }
+    if (typeof window === "undefined") return;
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Voice recognition is not supported in this browser. Please try typing.");
+      return;
     }
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.lang = "en-IN";
+    recognition.interimResults = false;
+    recognition.onstart = () => {
+      setIsListening(true);
+      setPlaceholderText("Listening... Speak now");
+    };
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setSearchQuery(transcript);
+      setIsListening(false);
+      setPlaceholderText("Search medicines, categories, compositions...");
+      goToProducts(transcript, selectedCategory);
+    };
+    recognition.onerror = () => {
+      setIsListening(false);
+      setPlaceholderText("Search medicines, categories, compositions...");
+      alert("Speech recognition error. Please type or try speaking again.");
+    };
+    recognition.onend = () => setIsListening(false);
+    recognition.start();
   };
 
   return (
@@ -180,53 +212,109 @@ export function HeroSection() {
           </p>
           {/* Amazon-like Search Bar with Category and Voice Mic Search */}
           <form
+            ref={searchRef}
             onSubmit={handleSearchSubmit}
-            className="mb-8 w-full max-w-2xl bg-white dark:bg-card p-1.5 flex items-center rounded-2xl border-2 border-secondary focus-within:border-primary transition-all gap-1.5 shadow-2xl relative"
+            className="relative mb-8 w-full max-w-2xl"
           >
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="bg-transparent text-xs font-bold text-foreground px-3 py-2 outline-none border-r border-border cursor-pointer shrink-0"
-              aria-label="Category"
-            >
-              <option value="" className="text-foreground">
-                All Categories
-              </option>
-              {categories.map((c) => (
-                <option key={c.slug} value={c.slug} className="text-foreground">
-                  {c.name}
-                </option>
-              ))}
-            </select>
-            <div className="flex-1 flex items-center relative">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={placeholderText}
-                className={`w-full bg-transparent border-0 text-sm px-2 text-foreground font-medium placeholder:text-muted-foreground outline-none ${isListening ? "text-primary animate-pulse" : ""}`}
-              />
-              <button
-                type="button"
-                onClick={startListening}
-                className={`p-2 rounded-full hover:bg-muted transition-colors cursor-pointer shrink-0 ${isListening ? "text-red-500 bg-red-100 dark:bg-red-950/30 animate-pulse" : "text-muted-foreground hover:text-primary"}`}
-                title="Voice Search"
+            <div className="flex items-center gap-1.5 rounded-2xl border-2 border-secondary bg-white p-1.5 shadow-2xl transition-all focus-within:border-primary dark:bg-card">
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="shrink-0 cursor-pointer border-r border-border bg-transparent px-3 py-2 text-xs font-bold text-foreground outline-none"
+                aria-label="Category"
               >
-                {isListening ? (
-                  <MicOff className="h-4.5 w-4.5" />
-                ) : (
-                  <Mic className="h-4.5 w-4.5" />
-                )}
-              </button>
+                <option value="" className="text-foreground">
+                  All Categories
+                </option>
+                {categories.map((c) => (
+                  <option key={c.slug} value={c.slug} className="text-foreground">
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+              <div className="relative flex flex-1 items-center">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setShowSuggestions(true);
+                  }}
+                  onFocus={() => setShowSuggestions(true)}
+                  placeholder={placeholderText}
+                  className={`w-full border-0 bg-transparent px-2 text-sm font-medium text-foreground outline-none placeholder:text-muted-foreground ${isListening ? "animate-pulse text-primary" : ""}`}
+                  autoComplete="off"
+                />
+                <button
+                  type="button"
+                  onClick={startListening}
+                  className={`shrink-0 cursor-pointer rounded-full p-2 transition-colors hover:bg-muted ${isListening ? "animate-pulse bg-red-100 text-red-500 dark:bg-red-950/30" : "text-muted-foreground hover:text-primary"}`}
+                  title="Voice Search"
+                >
+                  {isListening ? (
+                    <MicOff className="h-4.5 w-4.5" />
+                  ) : (
+                    <Mic className="h-4.5 w-4.5" />
+                  )}
+                </button>
+              </div>
+              <Button
+                type="submit"
+                size="sm"
+                className="h-9 shrink-0 cursor-pointer rounded-xl px-5"
+              >
+                <Search className="h-4 w-4" />
+                <span className="ml-1 hidden text-xs sm:inline">Search</span>
+              </Button>
             </div>
-            <Button
-              type="submit"
-              size="sm"
-              className="h-9 px-5 shrink-0 rounded-xl cursor-pointer"
-            >
-              <Search className="h-4 w-4" />
-              <span className="hidden sm:inline ml-1 text-xs">Search</span>
-            </Button>
+
+            <AnimatePresence>
+              {showSuggestions && searchQuery.trim().length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  className="absolute left-0 right-0 top-[calc(100%+8px)] z-30 overflow-hidden rounded-2xl border border-border/60 bg-white shadow-2xl dark:bg-card"
+                >
+                  {suggestions.length > 0 ? (
+                    <div className="max-h-72 overflow-y-auto p-2">
+                      {suggestions.map((product) => (
+                        <button
+                          key={product.id}
+                          type="button"
+                          onClick={() => navigate(`/products/${product.slug}`)}
+                          className="flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-left transition hover:bg-primary/10"
+                        >
+                          <div className="min-w-0">
+                            <p className="truncate text-sm font-semibold text-foreground">
+                              {product.name}
+                            </p>
+                            <p className="truncate text-xs text-muted-foreground">
+                              {product.composition} · {product.strength}
+                            </p>
+                          </div>
+                          <span className="shrink-0 rounded-full bg-primary/10 px-2 py-1 text-[10px] font-bold text-primary">
+                            {product.category}
+                          </span>
+                        </button>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={() => goToProducts()}
+                        className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-primary/5 px-3 py-2.5 text-xs font-bold text-primary hover:bg-primary/10"
+                      >
+                        <Search className="h-3.5 w-3.5" />
+                        View all results for “{searchQuery.trim()}”
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="p-4 text-center text-sm text-muted-foreground">
+                      No medicines found. Try another keyword or category.
+                    </div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </form>
           <div className="flex flex-wrap gap-4">
             <Link href="/products">

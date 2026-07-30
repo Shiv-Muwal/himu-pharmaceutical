@@ -1,5 +1,12 @@
 import { body } from "express-validator";
 
+export const registerValidation = [
+  body("name").trim().isLength({ min: 2, max: 100 }).withMessage("Name must be between 2 and 100 characters"),
+  body("email").trim().isEmail().normalizeEmail().withMessage("Valid email is required"),
+  body("password").isString().isLength({ min: 8, max: 128 }).withMessage("Password must be at least 8 characters"),
+  body("phone").optional({ checkFalsy: true }).trim().matches(/^\+?[0-9\s-]{10,16}$/).withMessage("Valid phone is required"),
+];
+
 export const loginValidation = [
   body("email").isEmail().withMessage("Valid email is required"),
   body("password").notEmpty().withMessage("Password is required"),
@@ -8,6 +15,7 @@ export const loginValidation = [
 export const profileValidation = [
   body("name").trim().isLength({ min: 2, max: 100 }).withMessage("Name must be between 2 and 100 characters"),
   body("email").trim().isEmail().normalizeEmail().withMessage("Valid email is required"),
+  body("phone").optional({ checkFalsy: true }).trim().matches(/^\+?[0-9\s-]{10,16}$/).withMessage("Valid phone is required"),
 ];
 
 export const passwordChangeValidation = [

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { CartProvider } from "@/providers/cart-provider";
+import { AuthProvider } from "@/providers/auth-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import {
@@ -13,10 +14,11 @@ import {
 } from "@/components/global/site-widgets";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 import { CheckoutModal } from "@/components/cart/checkout-modal";
+import { LoginModal } from "@/components/auth/login-modal";
 import { generateOrganizationSchema } from "@/lib/seo";
 import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
-import AdminPage from "@/pages/AdminPage";
+import AdminPage from "@/admin";
 import CareersPage from "@/pages/CareersPage";
 import CategoryPage from "@/pages/CategoryPage";
 import CertificationsPage from "@/pages/CertificationsPage";
@@ -32,6 +34,7 @@ import ProductDetailPage from "@/pages/ProductDetailPage";
 import QualityPage from "@/pages/QualityPage";
 import ResearchPage from "@/pages/ResearchPage";
 import TermsPage from "@/pages/TermsPage";
+import SignupPage from "@/pages/SignupPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 
 function ScrollToTop() {
@@ -59,6 +62,7 @@ function AppLayout() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="/careers" element={<CareersPage />} />
           <Route path="/categories/:slug" element={<CategoryPage />} />
           <Route path="/certifications" element={<CertificationsPage />} />
@@ -83,6 +87,7 @@ function AppLayout() {
       {!isAdmin && <FloatingButtons />}
       <CartDrawer />
       <CheckoutModal />
+      {!isAdmin && <LoginModal />}
     </>
   );
 }
@@ -101,9 +106,11 @@ export default function App() {
   return (
     <BrowserRouter>
       <ThemeProvider>
-        <CartProvider>
-          <AppLayout />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <AppLayout />
+          </CartProvider>
+        </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>
   );

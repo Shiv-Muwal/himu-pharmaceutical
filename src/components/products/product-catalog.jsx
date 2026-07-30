@@ -25,6 +25,12 @@ export function ProductCatalog({
     setLocalProducts(getMockProducts());
   }, []);
 
+  useEffect(() => {
+    setSearch(initialSearch);
+    setCategory(initialCategory);
+    setPage(1);
+  }, [initialSearch, initialCategory]);
+
   const filtered = useMemo(() => {
     let result = [...localProducts];
     if (search) {

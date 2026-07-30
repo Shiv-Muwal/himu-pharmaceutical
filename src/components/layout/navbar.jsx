@@ -23,6 +23,10 @@ import {
   BookOpen,
   Briefcase,
   ShoppingBag,
+  LogIn,
+  UserPlus,
+  LogOut,
+  User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -30,6 +34,7 @@ import { Input } from "@/components/ui/input";
 import { NAV_LINKS } from "@/lib/constants";
 import { products } from "@/data/products";
 import { useCart } from "@/providers/cart-provider";
+import { useAuth } from "@/providers/auth-provider";
 
 const clinicalCategories = [
   { name: "Antibiotics", href: "/categories/antibiotics", icon: Pill },
@@ -57,12 +62,14 @@ const aboutChildren = [
 
 export function Navbar() {
   const { cartCount, setCartOpen } = useCart();
+  const { user, isAuthenticated, openLogin, logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [accountOpen, setAccountOpen] = useState(false);
   const { pathname } = useLocation();
   const [mounted, setMounted] = useState(false);
   const [prevPathname, setPrevPathname] = useState(pathname);
@@ -331,19 +338,63 @@ export function Navbar() {
                 </span>
               )}
             </button>
-            <select
-              className="hidden md:block text-xs bg-transparent border border-border rounded-lg px-2 py-1.5 cursor-pointer text-foreground"
-              defaultValue="en"
-              aria-label="Language"
-            >
-              <option value="en">EN</option>
-              <option value="hi">HI</option>
-            </select>
-            <Link href="/contact" className="hidden md:block">
-              <Button size="sm" variant="default">
-                Contact Us
-              </Button>
-            </Link>
+
+            {isAuthenticated ? (
+              <div
+                className="relative hidden md:block"
+                onMouseEnter={() => setAccountOpen(true)}
+                onMouseLeave={() => setAccountOpen(false)}
+              >
+                <button
+                  type="button"
+                  className="flex items-center gap-2 rounded-xl border border-primary/15 bg-primary/5 px-3 py-1.5 text-xs font-bold text-primary transition hover:bg-primary/10"
+                >
+                  <User className="h-4 w-4" />
+                  <span className="max-w-[90px] truncate">{user?.name?.split(" ")[0]}</span>
+                </button>
+                <AnimatePresence>
+                  {accountOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
+                      className="absolute right-0 mt-2 w-48 overflow-hidden rounded-2xl border border-border/60 bg-[#fff8e7] p-2 shadow-xl"
+                    >
+                      <p className="truncate px-3 py-2 text-[11px] text-muted-foreground">
+                        {user?.email}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={logout}
+                        className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-bold text-red-600 hover:bg-red-500/10"
+                      >
+                        <LogOut className="h-3.5 w-3.5" />
+                        Sign out
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ) : (
+              <div className="hidden items-center gap-1.5 md:flex">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={openLogin}
+                  className="gap-1.5 px-3"
+                >
+                  <LogIn className="h-3.5 w-3.5" />
+                  Login
+                </Button>
+                <Link href="/signup">
+                  <Button size="sm" variant="outline" className="gap-1.5 px-3">
+                    <UserPlus className="h-3.5 w-3.5" />
+                    Signup
+                  </Button>
+                </Link>
+              </div>
+            )}
+
             <button
               className="lg:hidden p-2 rounded-lg hover:bg-muted text-foreground"
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -434,6 +485,46 @@ export function Navbar() {
               onClick={() => setMobileOpen(false)}
             />
             <div className="absolute right-0 top-0 h-full w-80 max-w-full glass shadow-2xl p-6 pt-20 overflow-y-auto">
+              <div className="mb-4 space-y-2 border-b border-border/40 pb-4">
+                {isAuthenticated ? (
+                  <>
+                    <p className="px-2 text-sm font-bold text-foreground">{user?.name}</p>
+                    <p className="px-2 text-xs text-muted-foreground">{user?.email}</p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        logout();
+                        setMobileOpen(false);
+                      }}
+                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-red-600 hover:bg-red-500/10"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Sign out
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        openLogin();
+                        setMobileOpen(false);
+                      }}
+                      className="flex w-full items-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground"
+                    >
+                      <LogIn className="h-4 w-4" />
+                      Login
+                    </button>
+                    <Link
+                      href="/signup"
+                      className="flex w-full items-center gap-2 rounded-xl border border-primary/30 px-4 py-3 text-sm font-bold text-primary"
+                    >
+                      <UserPlus className="h-4 w-4" />
+                      Signup
+                    </Link>
+                  </>
+                )}
+              </div>
               <div className="space-y-1">
                 {NAV_LINKS.map((link) => (
                   <div key={link.name}>

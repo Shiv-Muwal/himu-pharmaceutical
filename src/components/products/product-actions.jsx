@@ -7,7 +7,7 @@ import { useCart } from "@/providers/cart-provider";
 import { cn } from "@/lib/utils";
 
 export function ProductActions({ product }) {
-  const { addToCart, setCartOpen } = useCart();
+  const { addToCart, buyNow } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState(
     product.variants?.[0]?.name || product.name,
@@ -33,8 +33,7 @@ export function ProductActions({ product }) {
 
   const handleBuyNow = () => {
     if (!isAvailable) return;
-    addToCart(product, quantity, selectedVariant);
-    setCartOpen(true);
+    buyNow(product, quantity, selectedVariant);
   };
 
   const handleSubscribe = (e) => {

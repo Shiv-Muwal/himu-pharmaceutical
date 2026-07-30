@@ -6,9 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/providers/cart-provider";
 import { cn } from "@/lib/utils";
+import { ProductReviews } from "@/components/products/product-reviews";
 
 export function ProductCard({ product }) {
-  const { addToCart, setCartOpen } = useCart();
+  const { addToCart, buyNow } = useCart();
   const isAvailable =
     product.categorySlug === "dermatology" ||
     product.categorySlug === "skin-care";
@@ -17,8 +18,7 @@ export function ProductCard({ product }) {
     e.preventDefault();
     e.stopPropagation();
     if (!isAvailable) return;
-    addToCart(product, 1);
-    setCartOpen(true);
+    buyNow(product, 1);
   };
 
   const handleAddToCart = (e) => {
@@ -149,6 +149,7 @@ export function ProductCard({ product }) {
               Coming Soon - Notify Me
             </Button>
           )}
+          <ProductReviews product={product} variant="card" />
         </div>
       </CardContent>
     </Card>

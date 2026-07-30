@@ -10,6 +10,7 @@ import { Card } from "@/components/ui/card";
 import { AccordionItem } from "@/components/ui/accordion";
 import { FadeIn } from "@/components/animations/motion-components";
 import { ProductActions } from "@/components/products/product-actions";
+import { ProductReviews } from "@/components/products/product-reviews";
 import { getMockProducts } from "@/lib/mock-backend";
 import { PRODUCT_DISCLAIMER } from "@/lib/constants";
 
@@ -215,6 +216,8 @@ export function ProductDetailClient({
               </Card>
             ))}
           </div>
+
+          <ProductReviews product={product} variant="detail" />
 
           <div className="mt-12">
             <h2 className="font-bold text-2xl mb-6">
