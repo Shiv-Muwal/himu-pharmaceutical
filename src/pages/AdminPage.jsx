@@ -31,13 +31,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  getMockProducts,
-  saveMockProduct,
-  deleteMockProduct,
-  getMockOrders,
-  updateOrderStatus,
-} from "@/lib/mock-backend";
+import { api, adminSession } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
 export default function AdminPanelPage() {
@@ -64,7 +58,6 @@ export default function AdminPanelPage() {
     name: "HIMU Administrator",
     email: "admin@hemu.com",
   });
-  const [adminPassword, setAdminPassword] = useState("admin123");
   const [lastLoginTimestamp, setLastLoginTimestamp] = useState("Never");
 
   // Profile Edit State
@@ -107,99 +100,104 @@ export default function AdminPanelPage() {
 
   useEffect(() => {
     setMounted(true);
-
-    // Auth Session Check
-    if (localStorage.getItem("himu-admin-logged-in") === "true") {
-      setIsLoggedIn(true);
-    }
-
-    // Load Admin credentials
-    const savedPassword = localStorage.getItem("himu-admin-pwd") || "admin123";
-    setAdminPassword(savedPassword);
-    const savedProfile = localStorage.getItem("himu-admin-profile");
-    if (savedProfile) {
-      const parsed = JSON.parse(savedProfile);
-      setAdminProfile(parsed);
-      setEditProfileName(parsed.name);
-      setEditProfileEmail(parsed.email);
-    } else {
-      setEditProfileName("HIMU Administrator");
-      setEditProfileEmail("admin@hemu.com");
-    }
-    const savedLastLogin =
-      localStorage.getItem("himu-admin-last-login") || "First Session";
-    setLastLoginTimestamp(savedLastLogin);
-
-    // Load Database collections
-    setProducts(getMockProducts());
-    setOrders(getMockOrders());
+    const token = adminSession.get();
+    if (!token) return;
+    Promise.all([api("/auth/me", { token }), api("/products?limit=100", { token }), api("/orders?limit=100", { token })])
+      .then(([user, productsData, ordersData]) => {
+        setAdminProfile(user);
+        setEditProfileName(user.name);
+        setEditProfileEmail(user.email);
+        setProducts(productsData.items || []);
+        setOrders(ordersData.items || []);
+        setIsLoggedIn(true);
+      })
+      .catch(() => adminSession.clear());
   }, []);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoginError("");
-    if (
-      emailInput.trim() === adminProfile.email &&
-      passwordInput === adminPassword
-    ) {
+    try {
+      const result = await api("/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ email: emailInput.trim(), password: passwordInput }),
+      });
+      adminSession.set(result.token);
+      const [productsData, ordersData] = await Promise.all([
+        api("/products?limit=100", { token: result.token }),
+        api("/orders?limit=100", { token: result.token }),
+      ]);
+      setAdminProfile(result.user);
+      setEditProfileName(result.user.name);
+      setEditProfileEmail(result.user.email);
+      setProducts(productsData.items || []);
+      setOrders(ordersData.items || []);
       const loginTime = new Date().toLocaleString("en-IN", {
         timeZone: "Asia/Kolkata",
         dateStyle: "medium",
         timeStyle: "short",
       });
-      localStorage.setItem("himu-admin-logged-in", "true");
-      localStorage.setItem("himu-admin-last-login", loginTime);
       setLastLoginTimestamp(loginTime);
       setIsLoggedIn(true);
       setEmailInput("");
       setPasswordInput("");
-    } else {
-      setLoginError("Invalid email address or password.");
+    } catch (error) {
+      setLoginError(error.message || "Unable to sign in. Please try again.");
     }
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("himu-admin-logged-in");
+    adminSession.clear();
     setIsLoggedIn(false);
   };
 
-  const handleUpdateProfile = (e) => {
+  const handleUpdateProfile = async (e) => {
     e.preventDefault();
     setProfileSuccessMsg("");
     if (!editProfileName.trim() || !editProfileEmail.trim()) {
       alert("Name and Email are required fields.");
       return;
     }
-    const newProfile = { name: editProfileName, email: editProfileEmail };
-    localStorage.setItem("himu-admin-profile", JSON.stringify(newProfile));
-    setAdminProfile(newProfile);
-    setProfileSuccessMsg("Profile details updated successfully!");
-    setTimeout(() => setProfileSuccessMsg(""), 3000);
+    try {
+      const newProfile = await api("/auth/me", {
+        method: "PATCH",
+        token: adminSession.get(),
+        body: JSON.stringify({ name: editProfileName, email: editProfileEmail }),
+      });
+      setAdminProfile(newProfile);
+      setProfileSuccessMsg("Profile details updated successfully!");
+      setTimeout(() => setProfileSuccessMsg(""), 3000);
+    } catch (error) {
+      setProfileSuccessMsg(error.message || "Unable to update profile");
+    }
   };
 
-  const handlePasswordReset = (e) => {
+  const handlePasswordReset = async (e) => {
     e.preventDefault();
     setPwdError("");
     setPwdSuccessMsg("");
-    if (currentPassword !== adminPassword) {
-      setPwdError("Current password is incorrect.");
-      return;
-    }
-    if (!newPassword || newPassword.length < 6) {
-      setPwdError("New password must be at least 6 characters long.");
+    if (!newPassword || newPassword.length < 12) {
+      setPwdError("New password must be at least 12 characters long.");
       return;
     }
     if (newPassword !== confirmNewPassword) {
       setPwdError("Confirm password does not match new password.");
       return;
     }
-    localStorage.setItem("himu-admin-pwd", newPassword);
-    setAdminPassword(newPassword);
-    setPwdSuccessMsg("Password reset successfully!");
-    setCurrentPassword("");
-    setNewPassword("");
-    setConfirmNewPassword("");
-    setTimeout(() => setPwdSuccessMsg(""), 3000);
+    try {
+      await api("/auth/password", {
+        method: "PATCH",
+        token: adminSession.get(),
+        body: JSON.stringify({ currentPassword, newPassword }),
+      });
+      setPwdSuccessMsg("Password reset successfully!");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmNewPassword("");
+      setTimeout(() => setPwdSuccessMsg(""), 3000);
+    } catch (error) {
+      setPwdError(error.message || "Unable to reset password");
+    }
   };
 
   // Dynamic timeframe filtering logic
@@ -317,7 +315,7 @@ export default function AdminPanelPage() {
   }, [products, searchProduct]);
 
   // Product CRUD saving
-  const handleProductSubmit = (e) => {
+  const handleProductSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
     if (!productForm.name.trim()) newErrors.name = "Product name is required";
@@ -337,7 +335,6 @@ export default function AdminPanelPage() {
       .replace(/\s+/g, "-");
     const imageUrl = imagePresets[productForm.imageKey] || imagePresets.cream;
     const dataToSave = {
-      ...(editingProduct ? { id: editingProduct.id } : {}),
       name: productForm.name,
       category: productForm.category,
       categorySlug,
@@ -358,13 +355,22 @@ export default function AdminPanelPage() {
       shelfLife: productForm.shelfLife,
       variants: [{ name: productForm.name, strength: productForm.strength }],
     };
-    saveMockProduct(dataToSave);
-
-    // Refresh products list
-    setProducts(getMockProducts());
-    setIsProductModalOpen(false);
-    setEditingProduct(null);
-    setFormErrors({});
+    try {
+      const token = adminSession.get();
+      const saved = await api(editingProduct ? `/products/${editingProduct.id}` : "/products", {
+        method: editingProduct ? "PUT" : "POST",
+        token,
+        body: JSON.stringify(dataToSave),
+      });
+      setProducts((current) => editingProduct
+        ? current.map((product) => product.id === saved.id ? saved : product)
+        : [saved, ...current]);
+      setIsProductModalOpen(false);
+      setEditingProduct(null);
+      setFormErrors({});
+    } catch (error) {
+      setFormErrors({ submit: error.message || "Unable to save product" });
+    }
   };
 
   const handleOpenAddModal = () => {
@@ -418,20 +424,30 @@ export default function AdminPanelPage() {
     setIsProductModalOpen(true);
   };
 
-  const handleDeleteProduct = (productId) => {
+  const handleDeleteProduct = async (productId) => {
     if (
       confirm("Are you sure you want to delete this product from the catalog?")
     ) {
-      const updated = deleteMockProduct(productId);
-      setProducts(updated);
+      try {
+        await api(`/products/${productId}`, { method: "DELETE", token: adminSession.get() });
+        setProducts((current) => current.filter((product) => product.id !== productId));
+      } catch (error) {
+        alert(error.message || "Unable to delete product");
+      }
     }
   };
 
-  const handleUpdateStatus = (orderId, status) => {
-    const updated = updateOrderStatus(orderId, status);
-    setOrders(updated);
-    if (selectedOrder && selectedOrder.id === orderId) {
-      setSelectedOrder(updated.find((o) => o.id === orderId) || null);
+  const handleUpdateStatus = async (orderId, status) => {
+    try {
+      const updated = await api(`/orders/${orderId}/status`, {
+        method: "PATCH",
+        token: adminSession.get(),
+        body: JSON.stringify({ status }),
+      });
+      setOrders((current) => current.map((order) => order.id === orderId ? updated : order));
+      if (selectedOrder?.id === orderId) setSelectedOrder(updated);
+    } catch (error) {
+      alert(error.message || "Unable to update order");
     }
   };
 
@@ -1407,6 +1423,9 @@ export default function AdminPanelPage() {
                   <p className="text-red-500 text-[10px] mt-1">
                     {formErrors.shortDescription}
                   </p>
+                )}
+                {formErrors.submit && (
+                  <p className="text-red-500 text-xs mt-2" role="alert">{formErrors.submit}</p>
                 )}
               </div>
               <div>

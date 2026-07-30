@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { CheckCircle } from "lucide-react";
+import { api } from "@/lib/api";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -26,9 +27,13 @@ export function ContactForm() {
     resolver: zodResolver(contactSchema),
   });
 
-  const onSubmit = async () => {
-    await new Promise((r) => setTimeout(r, 1000));
-    setSubmitted(true);
+  const onSubmit = async (values) => {
+    try {
+      await api("/contact", { method: "POST", body: JSON.stringify(values) });
+      setSubmitted(true);
+    } catch (error) {
+      alert(error.message || "Unable to send your message. Please try again.");
+    }
   };
 
   if (submitted) {
@@ -107,9 +112,13 @@ export function CareerApplicationForm({ positions }) {
     resolver: zodResolver(careerSchema),
   });
 
-  const onSubmit = async () => {
-    await new Promise((r) => setTimeout(r, 1000));
-    setSubmitted(true);
+  const onSubmit = async (values) => {
+    try {
+      await api("/careers/apply", { method: "POST", body: JSON.stringify(values) });
+      setSubmitted(true);
+    } catch (error) {
+      alert(error.message || "Unable to submit your application. Please try again.");
+    }
   };
 
   if (submitted) {

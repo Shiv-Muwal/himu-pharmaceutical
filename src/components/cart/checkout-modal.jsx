@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { COMPANY } from "@/lib/constants";
-import { saveMockOrder } from "@/lib/mock-backend";
+import { api } from "@/lib/api";
 
 export function CheckoutModal() {
   const {
@@ -108,14 +108,15 @@ export function CheckoutModal() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
     setIsSubmitting(true);
 
-    // Simulate backend API request
-    setTimeout(() => {
-      const order = saveMockOrder({
+    try {
+      const order = await api("/orders", {
+        method: "POST",
+        body: JSON.stringify({
         customer: {
           name: formData.name,
           phone: formData.phone,
@@ -127,12 +128,11 @@ export function CheckoutModal() {
         items: cartItems.map((item) => ({
           productId: item.product.id,
           productName: item.product.name,
-          price: item.product.price,
           quantity: item.quantity,
           selectedVariant: item.selectedVariant || item.product.name,
         })),
-        total: cartTotal,
         paymentMethod: formData.paymentMethod,
+        }),
       });
       setGeneratedOrderId(order.id);
       setOrderDate(order.date);
@@ -151,7 +151,11 @@ export function CheckoutModal() {
         const whatsappUrl = `https://wa.me/9118001234567?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, "_blank");
       }
-    }, 1500);
+    } catch (error) {
+      setErrors({ submit: error.message || "Unable to place your order. Please try again." });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCloseSuccess = () => {
@@ -433,6 +437,9 @@ export function CheckoutModal() {
                     </motion.div>
                   )}
                   {/* Submission */}
+                  {errors.submit && (
+                    <p className="mt-4 text-sm text-red-600" role="alert">{errors.submit}</p>
+                  )}
                   <Button
                     type="submit"
                     disabled={isSubmitting}
