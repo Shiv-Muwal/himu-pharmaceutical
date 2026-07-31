@@ -4,6 +4,7 @@ import { success, paginated } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { generateOrderId, formatOrderDate } from "../utils/helpers.js";
 import { Product } from "../models/Product.js";
+import { logActivity } from "../utils/activity.js";
 
 function toClientOrder(doc) {
   const obj = doc.toObject ? doc.toObject() : doc;
@@ -44,6 +45,14 @@ export const createOrder = asyncHandler(async (req, res) => {
   });
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+  for (const item of items) {
+    const product = await Product.findOne({ productId: item.productId });
+    if (!product) continue;
+    const nextStock = Math.max(0, Number(product.stock ?? 0) - item.quantity);
+    product.stock = nextStock;
+    await product.save();
+  }
+
   const order = await Order.create({
     orderId: generateOrderId(),
     date: formatOrderDate(),
@@ -54,12 +63,18 @@ export const createOrder = asyncHandler(async (req, res) => {
     status: "Pending",
   });
 
+  await logActivity({
+    type: "order_create",
+    message: `New order ${order.orderId} from ${order.customer.name}`,
+    meta: { orderId: order.orderId },
+  });
+
   success(res, toClientOrder(order), "Order placed successfully", 201);
 });
 
 export const getOrders = asyncHandler(async (req, res) => {
   const page = Math.max(1, Number(req.query.page) || 1);
-  const limit = Math.min(100, Math.max(1, Number(req.query.limit) || 20));
+  const limit = Math.min(200, Math.max(1, Number(req.query.limit) || 20));
   const skip = (page - 1) * limit;
 
   const filter = {};
@@ -70,11 +85,12 @@ export const getOrders = asyncHandler(async (req, res) => {
     Order.countDocuments(filter),
   ]);
 
-  paginated(
-    res,
-    items.map(toClientOrder),
-    { page, limit, total, pages: Math.ceil(total / limit) }
-  );
+  paginated(res, items.map(toClientOrder), {
+    page,
+    limit,
+    total,
+    pages: Math.ceil(total / limit) || 1,
+  });
 });
 
 export const getOrderById = asyncHandler(async (req, res) => {
@@ -91,5 +107,10 @@ export const updateOrderStatus = asyncHandler(async (req, res) => {
   );
 
   if (!order) throw new ApiError(404, "Order not found");
+  await logActivity({
+    type: "order_status",
+    message: `Order ${order.orderId} marked ${order.status}`,
+    meta: { orderId: order.orderId, status: order.status },
+  });
   success(res, toClientOrder(order), "Order status updated");
 });

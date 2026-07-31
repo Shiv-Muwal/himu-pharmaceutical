@@ -6,7 +6,6 @@ import {
   Settings,
   LogOut,
   Grid,
-  BarChart3,
   Warehouse,
   Users,
   ExternalLink,
@@ -20,7 +19,6 @@ const STOREFRONT_URL = import.meta.env.VITE_STOREFRONT_URL || "http://localhost:
 
 const ICONS = {
   overview: LayoutDashboard,
-  analytics: BarChart3,
   products: Pill,
   inventory: Warehouse,
   orders: ClipboardList,
@@ -29,8 +27,6 @@ const ICONS = {
 };
 
 export function AdminSidebar({
-  adminProfile,
-  lastLoginTimestamp,
   activeTab,
   setActiveTab,
   sidebarOpen,
@@ -38,15 +34,6 @@ export function AdminSidebar({
   handleLogout,
   stats,
 }) {
-  const initials = adminProfile.name
-    ? adminProfile.name
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .slice(0, 2)
-        .toUpperCase()
-    : "AD";
-
   const badges = {
     orders: stats?.pendingOrders || 0,
     inventory: stats?.lowStockCount || 0,
@@ -73,23 +60,8 @@ export function AdminSidebar({
           <div className="mb-4 flex items-center justify-center rounded-2xl bg-white/95 p-2">
             <AdminLogo size="md" className="mx-auto" />
           </div>
-          <div className="mb-3 text-center text-[10px] font-black tracking-[0.25em] text-[#d4af37]">
+          <div className="text-center text-[10px] font-black tracking-[0.25em] text-[#d4af37]">
             ADMIN CONTROL
-          </div>
-          <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#d4af37]/30 bg-white/10 font-[family-name:var(--font-heading)] text-sm font-black text-[#d4af37]">
-              {initials}
-            </div>
-            <div className="min-w-0">
-              <p className="truncate text-sm font-bold leading-snug">{adminProfile.name}</p>
-              <p className="mt-0.5 truncate text-[10px] font-semibold text-white/55">
-                Super Administrator
-              </p>
-            </div>
-          </div>
-          <div className="mt-3 space-y-1 text-[10px] text-white/45">
-            <p>Last login</p>
-            <p className="font-bold text-white/80">{lastLoginTimestamp}</p>
           </div>
         </div>
 

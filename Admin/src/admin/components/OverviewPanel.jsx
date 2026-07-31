@@ -1,21 +1,17 @@
 import { motion } from "framer-motion";
 import {
-  DollarSign,
   ShoppingBag,
   Package,
   RefreshCw,
   ChevronRight,
   Eye,
   Users,
-  TrendingUp,
   AlertTriangle,
   Truck,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { TIMEFRAME_FILTERS } from "@/admin/constants";
 
 const statusTone = (status) =>
   status === "Delivered"
@@ -27,14 +23,7 @@ const statusTone = (status) =>
         : "bg-amber-500/10 text-amber-500";
 
 export function OverviewPanel({
-  timeFilter,
-  setTimeFilter,
-  customStartDate,
-  setCustomStartDate,
-  customEndDate,
-  setCustomEndDate,
   stats,
-  monthlyStats,
   filteredOrders,
   topProducts,
   lowStockProducts,
@@ -45,25 +34,11 @@ export function OverviewPanel({
 }) {
   const cards = [
     {
-      label: "Revenue",
-      value: `₹${stats.totalRevenue.toLocaleString("en-IN")}`,
-      desc: "Delivered orders",
-      icon: DollarSign,
-      accent: "from-emerald-500/20 to-emerald-500/5 text-emerald-700",
-    },
-    {
       label: "Orders",
       value: stats.totalOrders,
       desc: `${stats.pendingOrders} pending`,
       icon: ShoppingBag,
       accent: "from-primary/20 to-primary/5 text-primary",
-    },
-    {
-      label: "AOV",
-      value: `₹${stats.avgOrderValue}`,
-      desc: `${stats.conversionRate}% delivered`,
-      icon: TrendingUp,
-      accent: "from-[#d4af37]/25 to-[#d4af37]/5 text-[#9a7d1a]",
     },
     {
       label: "Customers",
@@ -76,40 +51,7 @@ export function OverviewPanel({
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col justify-between gap-4 rounded-3xl border border-border/30 bg-white/80 p-4 shadow-sm backdrop-blur md:flex-row md:items-center">
-        <div className="flex flex-wrap gap-2">
-          {TIMEFRAME_FILTERS.map((filter) => (
-            <button
-              key={filter.id}
-              type="button"
-              onClick={() => setTimeFilter(filter.id)}
-              className={cn(
-                "rounded-xl border px-3.5 py-1.5 text-xs font-bold transition-all",
-                timeFilter === filter.id
-                  ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                  : "border-border/30 bg-muted/40 text-muted-foreground hover:bg-muted hover:text-foreground",
-              )}
-            >
-              {filter.label}
-            </button>
-          ))}
-        </div>
-        {timeFilter === "custom" && (
-          <div className="flex flex-wrap items-center gap-2 text-xs">
-            <Input
-              type="date"
-              value={customStartDate}
-              onChange={(e) => setCustomStartDate(e.target.value)}
-              className="h-8 w-32 px-2 py-1 text-xs"
-            />
-            <Input
-              type="date"
-              value={customEndDate}
-              onChange={(e) => setCustomEndDate(e.target.value)}
-              className="h-8 w-32 px-2 py-1 text-xs"
-            />
-          </div>
-        )}
+      <div className="flex flex-col justify-between gap-4 rounded-3xl border border-border/30 bg-white/80 p-4 shadow-sm backdrop-blur md:flex-row md:items-center md:justify-end">
         <div className="flex flex-wrap gap-2">
           <Button size="sm" variant="outline" onClick={() => setActiveTab("orders")}>
             <Truck className="h-3.5 w-3.5" /> Dispatch
@@ -120,7 +62,7 @@ export function OverviewPanel({
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         {cards.map((stat, i) => {
           const Icon = stat.icon;
           return (
@@ -157,34 +99,7 @@ export function OverviewPanel({
       </div>
 
       <div className="grid gap-6 xl:grid-cols-12">
-        <Card className="overflow-hidden rounded-3xl border border-border/30 shadow-sm xl:col-span-4">
-          <div className="border-b border-border/20 p-5">
-            <h3 className="text-sm font-bold uppercase tracking-wide">Revenue Pulse</h3>
-            <p className="mt-0.5 text-[10px] text-muted-foreground">5-month trend</p>
-          </div>
-          <CardContent className="space-y-4 p-5">
-            {monthlyStats.map((ms, i) => (
-              <div key={ms.month} className="space-y-1">
-                <div className="flex justify-between text-xs font-semibold">
-                  <span>{ms.month}</span>
-                  <span className="font-bold text-primary">
-                    ₹{ms.revenue.toLocaleString("en-IN")} · {ms.orders}
-                  </span>
-                </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-primary/10">
-                  <motion.div
-                    className="h-full rounded-full bg-gradient-to-r from-primary to-[#d4af37]"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${ms.percentage}%` }}
-                    transition={{ duration: 0.8, delay: 0.08 * i }}
-                  />
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-
-        <Card className="overflow-hidden rounded-3xl border border-border/30 shadow-sm xl:col-span-5">
+        <Card className="overflow-hidden rounded-3xl border border-border/30 shadow-sm xl:col-span-8">
           <div className="flex items-center justify-between border-b border-border/20 p-5">
             <h3 className="text-sm font-bold uppercase tracking-wide">Recent Orders</h3>
             <button
@@ -246,7 +161,7 @@ export function OverviewPanel({
           </CardContent>
         </Card>
 
-        <div className="space-y-6 xl:col-span-3">
+        <div className="space-y-6 xl:col-span-4">
           <Card className="overflow-hidden rounded-3xl border border-border/30 shadow-sm">
             <div className="border-b border-border/20 p-4">
               <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide">

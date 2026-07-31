@@ -27,6 +27,9 @@ export const productValidation = [
   body("name").trim().isLength({ min: 2 }).withMessage("Product name is required"),
   body("category").trim().notEmpty().withMessage("Category is required"),
   body("price").isFloat({ min: 0 }).withMessage("Valid price is required"),
+  body("stock").optional().isInt({ min: 0 }).withMessage("Stock must be a non-negative integer"),
+  body("featured").optional().isBoolean().withMessage("Featured must be boolean"),
+  body("active").optional().isBoolean().withMessage("Active must be boolean"),
 ];
 
 export const productUpdateValidation = [
@@ -34,6 +37,9 @@ export const productUpdateValidation = [
   body("category").optional().trim().isLength({ min: 2, max: 100 }).withMessage("Category is required"),
   body("price").optional().isFloat({ min: 0 }).withMessage("Valid price is required"),
   body("compareAtPrice").optional().isFloat({ min: 0 }).withMessage("Valid compare-at price is required"),
+  body("stock").optional().isInt({ min: 0 }).withMessage("Stock must be a non-negative integer"),
+  body("featured").optional().isBoolean().withMessage("Featured must be boolean"),
+  body("active").optional().isBoolean().withMessage("Active must be boolean"),
 ];
 
 export const orderValidation = [

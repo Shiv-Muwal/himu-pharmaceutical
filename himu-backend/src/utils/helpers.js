@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+
 export function slugify(text) {
   return text
     .toLowerCase()
@@ -11,6 +13,10 @@ export function generateOrderId() {
   return `HIMU-${randomUUID().replaceAll("-", "").slice(0, 12).toUpperCase()}`;
 }
 
+export function generateId(prefix = "id") {
+  return `${prefix}_${randomUUID().replaceAll("-", "").slice(0, 12)}`;
+}
+
 export function formatOrderDate(date = new Date()) {
   return date.toLocaleString("en-IN", {
     timeZone: "Asia/Kolkata",
@@ -18,4 +24,3 @@ export function formatOrderDate(date = new Date()) {
     timeStyle: "short",
   });
 }
-import { randomUUID } from "node:crypto";

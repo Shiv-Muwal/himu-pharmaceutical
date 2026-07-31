@@ -4,7 +4,6 @@ import { AdminLogin } from "@/admin/components/AdminLogin";
 import { AdminSidebar, AdminMobileHeader } from "@/admin/components/AdminSidebar";
 import { AdminTopBar } from "@/admin/components/AdminTopBar";
 import { OverviewPanel } from "@/admin/components/OverviewPanel";
-import { AnalyticsPanel } from "@/admin/components/AnalyticsPanel";
 import { ProductsPanel, InventoryPanel } from "@/admin/components/ProductsPanel";
 import { OrdersPanel } from "@/admin/components/OrdersPanel";
 import { CustomersPanel } from "@/admin/components/CustomersPanel";
@@ -15,10 +14,6 @@ const TAB_META = {
   overview: {
     title: "Dashboard Overview",
     subtitle: "Live commerce health, alerts, and quick actions",
-  },
-  analytics: {
-    title: "Analytics Studio",
-    subtitle: "Revenue, catalog mix, payments and bestsellers",
   },
   products: {
     title: "Product Catalog",
@@ -66,8 +61,6 @@ export default function AdminPage() {
   return (
     <div className="flex min-h-screen bg-[radial-gradient(ellipse_at_top,_#f3f8f4_0%,_#f7f5ef_45%,_#efe8d8_100%)] text-foreground">
       <AdminSidebar
-        adminProfile={dash.adminProfile}
-        lastLoginTimestamp={dash.lastLoginTimestamp}
         activeTab={dash.activeTab}
         setActiveTab={dash.setActiveTab}
         sidebarOpen={dash.sidebarOpen}
@@ -127,14 +120,7 @@ export default function AdminPage() {
             >
               {dash.activeTab === "overview" && (
                 <OverviewPanel
-                  timeFilter={dash.timeFilter}
-                  setTimeFilter={dash.setTimeFilter}
-                  customStartDate={dash.customStartDate}
-                  setCustomStartDate={dash.setCustomStartDate}
-                  customEndDate={dash.customEndDate}
-                  setCustomEndDate={dash.setCustomEndDate}
                   stats={dash.stats}
-                  monthlyStats={dash.monthlyStats}
                   filteredOrders={dash.filteredOrdersByTime}
                   topProducts={dash.topProducts}
                   lowStockProducts={dash.lowStockProducts}
@@ -142,15 +128,6 @@ export default function AdminPage() {
                   setActiveTab={dash.setActiveTab}
                   setSelectedOrder={dash.setSelectedOrder}
                   handleOpenAddModal={dash.handleOpenAddModal}
-                />
-              )}
-              {dash.activeTab === "analytics" && (
-                <AnalyticsPanel
-                  stats={dash.stats}
-                  monthlyStats={dash.monthlyStats}
-                  categoryBreakdown={dash.categoryBreakdown}
-                  paymentBreakdown={dash.paymentBreakdown}
-                  topProducts={dash.topProducts}
                 />
               )}
               {dash.activeTab === "products" && (

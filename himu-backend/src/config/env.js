@@ -10,14 +10,21 @@ if (nodeEnv === "production" && (!jwtSecret || jwtSecret.length < 32)) {
 }
 
 export const env = {
-  port: Number(process.env.PORT) || 5000,
+  port: Number(process.env.PORT) || 5001,
   nodeEnv,
   mongoUri: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/himu-pharmacy",
+  useMemoryDb:
+    process.env.USE_MEMORY_DB === "true" ||
+    process.env.MONGODB_URI === "memory",
+  autoSeed: process.env.AUTO_SEED !== "false",
   jwtSecret: jwtSecret || "development-only-secret-do-not-use-in-production",
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || "8h",
   adminEmail: process.env.ADMIN_EMAIL || "admin@himupharmacy.com",
   adminPassword: process.env.ADMIN_PASSWORD || "admin123",
-  clientUrls: (process.env.CLIENT_URL || "http://localhost:5173")
+  clientUrls: (
+    process.env.CLIENT_URL ||
+    "http://localhost:5173,http://localhost:5174"
+  )
     .split(",")
     .map((url) => url.trim())
     .filter(Boolean),

@@ -85,6 +85,9 @@ function buildProduct(seed, index) {
     relatedSlugs: [],
     price,
     compareAtPrice,
+    stock: [8, 15, 42, 120, 5, 67, 33, 90, 12, 200][index % 10],
+    featured: index % 4 === 0,
+    active: true,
     rating,
     reviewCount,
   };

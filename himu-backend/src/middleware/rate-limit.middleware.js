@@ -22,5 +22,5 @@ function createRateLimit({ windowMs, max, keyPrefix }) {
   };
 }
 
-export const apiRateLimit = createRateLimit({ windowMs: 15 * 60 * 1000, max: 300, keyPrefix: "api" });
-export const authRateLimit = createRateLimit({ windowMs: 15 * 60 * 1000, max: 10, keyPrefix: "auth" });
+export const apiRateLimit = createRateLimit({ windowMs: 15 * 60 * 1000, max: 500, keyPrefix: "api" });
+export const authRateLimit = createRateLimit({ windowMs: 15 * 60 * 1000, max: 60, keyPrefix: "auth" });

@@ -9,7 +9,7 @@ import {
   updateOrderStatus,
 } from "@/lib/mock-backend";
 
-const API_BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:5000/api").replace(/\/$/, "");
+const API_BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001/api").replace(/\/$/, "");
 const USE_LOCAL_ADMIN = import.meta.env.VITE_USE_LOCAL_ADMIN === "true";
 const LOCAL_ADMIN_KEY = "himu-local-admin-profile";
 const LOCAL_ADMIN_TOKEN = "himu-local-admin-token";
@@ -145,6 +145,14 @@ function localApi(path, { token, method = "GET", ...options } = {}) {
     });
   }
 
+  if (path === "/contact" && method === "POST") {
+    return { id: `contact_${Date.now()}`, ok: true };
+  }
+
+  if (path === "/careers/apply" && method === "POST") {
+    return { id: `career_${Date.now()}`, ok: true };
+  }
+
   const session = requireLocalAuth(token);
 
   if (path === "/auth/me" && method === "GET") {
@@ -249,7 +257,12 @@ export async function api(path, { token, ...options } = {}) {
   });
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) throw new ApiError(payload.message || "Request failed", response.status);
-  return payload.data;
+
+  const data = payload.data;
+  if (Array.isArray(data)) {
+    return { items: data, pagination: payload.pagination };
+  }
+  return data;
 }
 
 export const adminSession = {

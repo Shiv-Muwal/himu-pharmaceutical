@@ -5,7 +5,6 @@ import {
   IMAGE_PRESETS,
   LOW_STOCK_THRESHOLD,
   downloadCsv,
-  parseOrderDate,
 } from "@/admin/constants";
 
 export function useAdminDashboard() {
@@ -20,9 +19,6 @@ export function useAdminDashboard() {
   const [orders, setOrders] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [activity, setActivity] = useState([]);
-  const [timeFilter, setTimeFilter] = useState("monthly");
-  const [customStartDate, setCustomStartDate] = useState("");
-  const [customEndDate, setCustomEndDate] = useState("");
   const [adminProfile, setAdminProfile] = useState({
     name: "HIMU Administrator",
     email: "admin@himu.local",
@@ -184,32 +180,7 @@ export function useAdminDashboard() {
     }
   };
 
-  const filteredOrdersByTime = useMemo(() => {
-    return orders.filter((order) => {
-      const orderDate = parseOrderDate(order.date);
-      const now = new Date();
-      if (!orderDate) return true;
-      if (timeFilter === "all") return true;
-      if (timeFilter === "live") {
-        const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        return orderDate >= startOfToday;
-      }
-      if (timeFilter === "weekly") {
-        return orderDate >= new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-      }
-      if (timeFilter === "monthly") {
-        return orderDate >= new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-      }
-      if (timeFilter === "custom") {
-        if (!customStartDate) return true;
-        const start = new Date(customStartDate);
-        const end = customEndDate ? new Date(customEndDate) : new Date();
-        end.setHours(23, 59, 59, 999);
-        return orderDate >= start && orderDate <= end;
-      }
-      return true;
-    });
-  }, [orders, timeFilter, customStartDate, customEndDate]);
+  const filteredOrdersByTime = useMemo(() => orders, [orders]);
 
   const filteredOrders = useMemo(() => {
     return filteredOrdersByTime.filter((order) => {
@@ -254,57 +225,6 @@ export function useAdminDashboard() {
         totalOrders > 0 ? Math.round((delivered.length / totalOrders) * 100) : 0,
     };
   }, [filteredOrdersByTime, products, customers]);
-
-  const monthlyStats = useMemo(() => {
-    const months = ["Mar", "Apr", "May", "Jun", "Jul"];
-    const base = [
-      { month: "Mar", revenue: 15400, orders: 48 },
-      { month: "Apr", revenue: 24200, orders: 72 },
-      { month: "May", revenue: 38900, orders: 110 },
-      { month: "Jun", revenue: 41200, orders: 125 },
-      {
-        month: "Jul",
-        revenue: stats.totalRevenue || 28500,
-        orders: stats.totalOrders || 64,
-      },
-    ];
-    const max = Math.max(...base.map((m) => m.revenue), 1);
-    return base.map((m) => ({
-      ...m,
-      percentage: Math.round((m.revenue / max) * 100),
-      monthLabel: months.includes(m.month) ? m.month : m.month,
-    }));
-  }, [stats.totalRevenue, stats.totalOrders]);
-
-  const categoryBreakdown = useMemo(() => {
-    const map = {};
-    products.forEach((p) => {
-      map[p.category] = (map[p.category] || 0) + 1;
-    });
-    const total = products.length || 1;
-    return Object.entries(map)
-      .map(([name, count]) => ({
-        name,
-        count,
-        percentage: Math.round((count / total) * 100),
-      }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 8);
-  }, [products]);
-
-  const paymentBreakdown = useMemo(() => {
-    const map = {};
-    filteredOrdersByTime.forEach((o) => {
-      const key = (o.paymentMethod || "other").toUpperCase();
-      map[key] = (map[key] || 0) + 1;
-    });
-    const total = filteredOrdersByTime.length || 1;
-    return Object.entries(map).map(([name, count]) => ({
-      name,
-      count,
-      percentage: Math.round((count / total) * 100),
-    }));
-  }, [filteredOrdersByTime]);
 
   const topProducts = useMemo(() => {
     const map = {};
@@ -654,12 +574,6 @@ export function useAdminDashboard() {
     orders,
     customers,
     activity,
-    timeFilter,
-    setTimeFilter,
-    customStartDate,
-    setCustomStartDate,
-    customEndDate,
-    setCustomEndDate,
     adminProfile,
     lastLoginTimestamp,
     editProfileName,
@@ -680,9 +594,6 @@ export function useAdminDashboard() {
     filteredOrders,
     filteredOrdersByTime,
     stats,
-    monthlyStats,
-    categoryBreakdown,
-    paymentBreakdown,
     topProducts,
     lowStockProducts,
     searchProduct,

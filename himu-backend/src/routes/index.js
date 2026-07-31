@@ -8,6 +8,8 @@ import faqRoutes from "./faq.routes.js";
 import contactRoutes from "./contact.routes.js";
 import careersRoutes from "./careers.routes.js";
 import companyRoutes from "./company.routes.js";
+import customersRoutes from "./customers.routes.js";
+import activityRoutes from "./activity.routes.js";
 
 const router = Router();
 
@@ -22,6 +24,8 @@ router.get("/health", (_req, res) => {
 router.use("/auth", authRoutes);
 router.use("/products", productsRoutes);
 router.use("/orders", ordersRoutes);
+router.use("/customers", customersRoutes);
+router.use("/activity", activityRoutes);
 router.use("/categories", categoriesRoutes);
 router.use("/blogs", blogsRoutes);
 router.use("/faq", faqRoutes);

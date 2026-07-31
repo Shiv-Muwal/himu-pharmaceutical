@@ -48,20 +48,11 @@ export const EMPTY_PRODUCT_FORM = {
 
 export const SIDEBAR_TABS = [
   { id: "overview", label: "Overview", hint: "Live store pulse" },
-  { id: "analytics", label: "Analytics", hint: "Deep insights" },
   { id: "products", label: "Products", hint: "Catalog control" },
   { id: "inventory", label: "Inventory", hint: "Stock & alerts" },
   { id: "orders", label: "Orders", hint: "Fulfillment desk" },
   { id: "customers", label: "Customers", hint: "Buyer directory" },
   { id: "settings", label: "Settings", hint: "Account & security" },
-];
-
-export const TIMEFRAME_FILTERS = [
-  { id: "live", label: "Today" },
-  { id: "weekly", label: "7 Days" },
-  { id: "monthly", label: "30 Days" },
-  { id: "all", label: "All Time" },
-  { id: "custom", label: "Custom" },
 ];
 
 export const ORDER_STATUSES = ["Pending", "Shipped", "Delivered", "Cancelled"];
@@ -83,11 +74,4 @@ export function downloadCsv(filename, rows) {
   link.download = filename;
   link.click();
   URL.revokeObjectURL(url);
-}
-
-export function parseOrderDate(dateStr) {
-  if (!dateStr) return null;
-  const cleaned = String(dateStr).replace(/,/g, "");
-  const parsed = new Date(cleaned);
-  return Number.isNaN(parsed.getTime()) ? null : parsed;
 }

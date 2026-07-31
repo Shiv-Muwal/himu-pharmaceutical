@@ -50,7 +50,7 @@ export function AdminLogin({
               HIMU Admin
             </h1>
             <p className="mt-2 text-sm text-white/55">
-              Operations suite for catalog, orders, inventory & analytics
+              Operations suite for catalog, orders & inventory
             </p>
           </div>
 
