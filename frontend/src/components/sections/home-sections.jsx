@@ -15,6 +15,11 @@ import {
   Search,
   Mic,
   MicOff,
+  MessageCircle,
+  ChevronLeft,
+  ChevronRight,
+  ShoppingBag,
+  Tag,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -71,6 +76,19 @@ const whyChoose = [
   },
 ];
 
+const HERO_SUBLINES = [
+  {
+    id: "innovating",
+    title: "Innovating Today for a Healthier Tomorrow",
+    body: "Experience world-class pharmaceutical excellence with premium healthcare products, advanced research, and a commitment to quality you can trust.",
+  },
+  {
+    id: "partner",
+    title: "Your Trusted Partner in Modern Healthcare",
+    body: "Explore a comprehensive range of authentic medicines and wellness solutions, backed by innovation, uncompromising quality, and patient-first care.",
+  },
+];
+
 export function HeroSection() {
   const navigate = useNavigate();
   const searchRef = useRef(null);
@@ -79,12 +97,20 @@ export function HeroSection() {
   const [isListening, setIsListening] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [catalog, setCatalog] = useState(products);
+  const [sublineIndex, setSublineIndex] = useState(0);
   const [placeholderText, setPlaceholderText] = useState(
     "Search medicines, categories, compositions...",
   );
 
   useEffect(() => {
     setCatalog(getMockProducts());
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSublineIndex((prev) => (prev + 1) % HERO_SUBLINES.length);
+    }, 5500);
+    return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
@@ -159,68 +185,96 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section className="relative min-h-[100svh] overflow-hidden">
       <Image
         src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&h=1080&fit=crop"
         alt="Pharmaceutical laboratory"
         fill
-        className="object-cover"
+        className="object-cover object-[68%_center] sm:object-[72%_center]"
         priority
       />
-      <div className="absolute inset-0 gradient-hero" />
-      <div className="absolute inset-0 molecular-bg" />
-      {[...Array(6)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-8 h-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20"
-          style={{
-            left: `${15 + i * 14}%`,
-            top: `${20 + (i % 3) * 25}%`,
-          }}
-          animate={{
-            y: [0, -20, 0],
-            rotate: [0, 10, -10, 0],
-          }}
-          transition={{
-            duration: 4 + i,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-      <div className="container-custom relative z-10 pt-32 pb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-3xl"
-        >
-          <Badge
-            variant="gold"
-            className="mb-6 bg-white/20 text-white border-0"
+      <div className="absolute inset-0 gradient-hero-mobile md:hidden" />
+      <div className="absolute inset-0 hidden gradient-hero md:block" />
+      <div className="absolute inset-y-0 left-0 hidden w-1/2 bg-gradient-to-r from-[#061610]/40 to-transparent md:block" />
+
+      <div className="container-custom relative z-10 flex min-h-[100svh] items-start md:items-center">
+        <div className="w-full max-w-xl pt-28 pb-16 sm:pt-32 sm:pb-20 lg:max-w-3xl lg:pt-36">
+          <motion.h1
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, ease: "easeOut" }}
+            className="mb-6 font-[family-name:var(--font-heading)] text-[2.1rem] font-bold leading-[1.1] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            {COMPANY.tagline}
-          </Badge>
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight font-[family-name:var(--font-heading)]">
-            Healthcare Innovation for{" "}
-            <span className="text-gold">Medical Upliftment</span>
-          </h1>
-          <p className="text-lg md:text-xl text-white/80 mb-8 leading-relaxed max-w-2xl">
-            HIMU Pharmacy is a global pharmaceutical leader committed to
-            advancing healthcare through scientific innovation, premium quality
-            manufacturing, and compassionate patient care.
-          </p>
-          {/* Amazon-like Search Bar with Category and Voice Mic Search */}
-          <form
+            <span className="block">
+              <span className="text-gold">H</span>ealthcare{" "}
+              <span className="text-gold">I</span>nnovation
+            </span>
+            <span className="mt-1 block sm:mt-2">
+              for <span className="text-gold">M</span>edical{" "}
+              <span className="text-gold">U</span>pliftment
+            </span>
+          </motion.h1>
+
+          <div className="relative mb-8 min-h-[7.5rem] max-w-lg sm:min-h-[6.75rem] lg:min-h-[7.25rem]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={HERO_SUBLINES[sublineIndex].id}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.45, ease: "easeOut" }}
+                className="absolute inset-x-0 top-0"
+              >
+                {HERO_SUBLINES[sublineIndex].title && (
+                  <p className="mb-1.5 font-[family-name:var(--font-heading)] text-sm font-bold text-gold sm:text-base">
+                    {HERO_SUBLINES[sublineIndex].title}
+                  </p>
+                )}
+                <p className="text-sm leading-relaxed text-white/80 sm:text-base lg:text-lg">
+                  {HERO_SUBLINES[sublineIndex].body}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.24, ease: "easeOut" }}
+            className="mb-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
+          >
+            <Link href="/products" className="w-full sm:w-auto">
+              <Button size="lg" variant="secondary" className="w-full sm:w-auto">
+                Explore Products
+                <ArrowRight className="h-5 w-5" />
+              </Button>
+            </Link>
+            <Link href="/contact" className="group w-full sm:w-auto">
+              <Button
+                size="lg"
+                variant="ghost"
+                className="w-full border-2 border-gold/80 bg-white/5 text-gold backdrop-blur-sm hover:border-gold hover:bg-gold hover:text-[#1a2e1f] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(212,175,55,0.35)] sm:w-auto"
+              >
+                <MessageCircle className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
+                Contact Us
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </Button>
+            </Link>
+          </motion.div>
+
+          <motion.form
             ref={searchRef}
             onSubmit={handleSearchSubmit}
-            className="relative mb-8 w-full max-w-2xl"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.34, ease: "easeOut" }}
+            className="relative w-full max-w-xl"
           >
-            <div className="flex items-center gap-1.5 rounded-2xl border-2 border-secondary bg-white p-1.5 shadow-2xl transition-all focus-within:border-primary dark:bg-card">
+            <div className="flex flex-col gap-2 rounded-2xl border border-white/20 bg-white/95 p-2 shadow-2xl backdrop-blur-md sm:flex-row sm:items-center sm:gap-1.5 dark:bg-card/95">
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="shrink-0 cursor-pointer border-r border-border bg-transparent px-3 py-2 text-xs font-bold text-foreground outline-none"
+                className="w-full shrink-0 cursor-pointer rounded-xl bg-muted/50 px-3 py-2.5 text-xs font-bold text-foreground outline-none sm:w-auto sm:rounded-none sm:border-r sm:border-border sm:bg-transparent sm:py-2"
                 aria-label="Category"
               >
                 <option value="" className="text-foreground">
@@ -242,7 +296,7 @@ export function HeroSection() {
                   }}
                   onFocus={() => setShowSuggestions(true)}
                   placeholder={placeholderText}
-                  className={`w-full border-0 bg-transparent px-2 text-sm font-medium text-foreground outline-none placeholder:text-muted-foreground ${isListening ? "animate-pulse text-primary" : ""}`}
+                  className={`w-full border-0 bg-transparent px-3 py-2.5 text-sm font-medium text-foreground outline-none placeholder:text-muted-foreground sm:px-2 sm:py-2 ${isListening ? "animate-pulse text-primary" : ""}`}
                   autoComplete="off"
                 />
                 <button
@@ -250,21 +304,22 @@ export function HeroSection() {
                   onClick={startListening}
                   className={`shrink-0 cursor-pointer rounded-full p-2 transition-colors hover:bg-muted ${isListening ? "animate-pulse bg-red-100 text-red-500 dark:bg-red-950/30" : "text-muted-foreground hover:text-primary"}`}
                   title="Voice Search"
+                  aria-label="Voice search"
                 >
                   {isListening ? (
-                    <MicOff className="h-4.5 w-4.5" />
+                    <MicOff className="h-4 w-4" />
                   ) : (
-                    <Mic className="h-4.5 w-4.5" />
+                    <Mic className="h-4 w-4" />
                   )}
                 </button>
               </div>
               <Button
                 type="submit"
                 size="sm"
-                className="h-9 shrink-0 cursor-pointer rounded-xl px-5"
+                className="h-11 w-full shrink-0 cursor-pointer rounded-xl px-5 sm:h-9 sm:w-auto"
               >
                 <Search className="h-4 w-4" />
-                <span className="ml-1 hidden text-xs sm:inline">Search</span>
+                <span className="ml-1 text-xs">Search</span>
               </Button>
             </div>
 
@@ -315,33 +370,18 @@ export function HeroSection() {
                 </motion.div>
               )}
             </AnimatePresence>
-          </form>
-          <div className="flex flex-wrap gap-4">
-            <Link href="/products">
-              <Button size="lg" variant="secondary">
-                Explore Products
-                <ArrowRight className="h-5 w-5" />
-              </Button>
-            </Link>
-            <Link href="/contact">
-              <Button
-                size="lg"
-                variant="glass"
-                className="text-white border-white/30"
-              >
-                Contact Us
-              </Button>
-            </Link>
-          </div>
-        </motion.div>
+          </motion.form>
+        </div>
       </div>
+
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
+        className="absolute bottom-6 left-4 z-10 hidden sm:left-6 sm:block md:left-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:left-[max(2rem,calc((100vw-80rem)/2+2rem))]"
+        animate={{ y: [0, 8, 0] }}
+        transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
+        aria-hidden
       >
-        <div className="w-6 h-10 rounded-full border-2 border-white/40 flex items-start justify-center p-2">
-          <div className="w-1 h-2 bg-white/60 rounded-full" />
+        <div className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/35 p-2">
+          <div className="h-2 w-1 rounded-full bg-white/70" />
         </div>
       </motion.div>
     </section>
@@ -372,41 +412,122 @@ export function StatsSection() {
   );
 }
 
+const OVERVIEW_PILLARS = [
+  {
+    icon: FlaskConical,
+    title: "Clinically crafted portfolio",
+    text: "Antibiotics, dermatology, skin & hair care, injectables, and wellness essentials—built for real patient outcomes.",
+  },
+  {
+    icon: Shield,
+    title: "GMP-led quality promise",
+    text: "Every batch is manufactured under rigorous quality systems so pharmacies and clinicians can dispense with confidence.",
+  },
+  {
+    icon: Microscope,
+    title: "Research that compounds value",
+    text: "Formulation science and continuous improvement keep our medicines effective, stable, and market-ready.",
+  },
+];
+
 export function OverviewSection() {
   return (
-    <section className="section-padding">
-      <div className="container-custom">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <FadeIn direction="left">
-            <div className="relative h-80 md:h-[450px] rounded-2xl overflow-hidden shadow-2xl">
+    <section className="relative overflow-hidden section-padding">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_20%,rgba(11,93,59,0.08),transparent_45%),radial-gradient(ellipse_at_90%_80%,rgba(212,175,55,0.1),transparent_40%)]" />
+      <div className="container-custom relative">
+        <div className="grid items-stretch gap-10 lg:grid-cols-12 lg:gap-14">
+          <FadeIn direction="left" className="lg:col-span-5">
+            <div className="relative h-72 overflow-hidden sm:h-96 lg:h-full lg:min-h-[520px]">
               <Image
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop"
-                alt="HIMU Pharmacy facility"
+                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900&h=1100&fit=crop"
+                alt="HIMU research and manufacturing excellence"
                 fill
                 className="object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#061610]/85 via-[#061610]/25 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
+                <p className="font-[family-name:var(--font-heading)] text-3xl font-black tracking-tight text-gold sm:text-4xl">
+                  20+
+                </p>
+                <p className="mt-1 text-sm font-semibold text-white">
+                  years elevating accessible, trusted care
+                </p>
+                <p className="mt-3 max-w-xs text-xs leading-relaxed text-white/75">
+                  From discovery-inspired formulation to last-mile pharmacy
+                  shelves—quality you can prescribe and recommend.
+                </p>
+              </div>
             </div>
           </FadeIn>
-          <FadeIn direction="right">
-            <Badge className="mb-4">Company Overview</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-[family-name:var(--font-heading)]">
-              Two Decades of Pharmaceutical Excellence
+
+          <FadeIn direction="right" className="lg:col-span-7">
+            <h2 className="mb-5 max-w-xl font-[family-name:var(--font-heading)] text-3xl font-bold leading-[1.15] text-foreground md:text-4xl lg:text-[2.75rem]">
+              Medicines engineered for trust.
+              <span className="mt-2 block text-primary">
+                Care designed for everyday excellence.
+              </span>
             </h2>
-            <p className="text-muted-foreground leading-relaxed mb-4">
-              Founded in 2004, HIMU Pharmacy has grown from a single
-              manufacturing facility to a global pharmaceutical enterprise
-              serving 50+ countries with over 500 medicines.
+            <p className="mb-4 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+              HIMU Pharmacy unites{" "}
+              <span className="font-semibold text-foreground">
+                {COMPANY.fullForm}
+              </span>{" "}
+              with a performance-ready catalog—helping individuals, pharmacies,
+              and healthcare professionals choose authentic therapeutics without
+              compromise.
             </p>
-            <p className="text-muted-foreground leading-relaxed mb-6">
-              Our commitment to Healthcare Innovation for Medical Upliftment
-              drives everything we do—from research and development to
-              manufacturing and community healthcare initiatives.
+            <p className="mb-8 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
+              Whether you need precision antibiotics, dermatology care,
+              injectables, or daily wellness support, our portfolio is built to
+              move faster from shelf to patient—with clarity, consistency, and
+              clinical integrity.
             </p>
-            <Link href="/about">
-              <Button>
-                About HIMU <ArrowRight className="h-4 w-4" />
-              </Button>
-            </Link>
+
+            <div className="mb-9 space-y-5 border-l-2 border-gold/50 pl-5">
+              {OVERVIEW_PILLARS.map((pillar, i) => {
+                const Icon = pillar.icon;
+                return (
+                  <motion.div
+                    key={pillar.title}
+                    initial={{ opacity: 0, x: 16 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.45, delay: 0.08 * i }}
+                    className="flex gap-3"
+                  >
+                    <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center bg-primary/10 text-primary">
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <h3 className="font-[family-name:var(--font-heading)] text-sm font-bold text-foreground sm:text-base">
+                        {pillar.title}
+                      </h3>
+                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                        {pillar.text}
+                      </p>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Link href="/products">
+                <Button size="lg" className="w-full sm:w-auto">
+                  Explore Our Medicines
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </Link>
+              <Link href="/contact">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full border-primary/30 sm:w-auto"
+                >
+                  Partner With HIMU
+                </Button>
+              </Link>
+            </div>
           </FadeIn>
         </div>
       </div>
@@ -461,25 +582,35 @@ export function CategoriesSection() {
 
 export function WhyChooseSection() {
   return (
-    <section className="section-padding">
-      <div className="container-custom">
-        <SectionHeading
-          badge="Why HIMU"
-          title="Why Choose HIMU Pharmacy"
-          description="Trusted by healthcare professionals worldwide for quality, innovation, and reliability."
-        />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section className="relative overflow-hidden section-padding bg-[#0b5d3b]">
+      <div className="pointer-events-none absolute inset-0 opacity-30 molecular-bg" />
+      <div className="pointer-events-none absolute -right-20 top-10 h-64 w-64 rounded-full bg-gold/15 blur-3xl" />
+      <div className="container-custom relative">
+        <div className="mb-10 max-w-2xl">
+          <h2 className="font-[family-name:var(--font-heading)] text-3xl font-bold leading-tight text-white md:text-4xl">
+            Why healthcare partners
+            <span className="mt-2 block text-gold">choose HIMU Pharmacy</span>
+          </h2>
+          <p className="mt-4 text-sm leading-relaxed text-white/75 md:text-base">
+            From research labs to pharmacy counters, teams trust HIMU for
+            dependable quality, progressive science, and patient-first delivery
+            across every therapeutic line we manufacture.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {whyChoose.map((item, i) => (
             <FadeIn key={item.title} delay={i * 0.08}>
-              <Card className="p-6 h-full hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 transition-all group">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
-                  <item.icon className="h-6 w-6" />
+              <div className="group h-full border border-white/10 bg-white/[0.06] p-6 backdrop-blur-sm transition hover:border-gold/40 hover:bg-white/[0.1]">
+                <div className="mb-4 flex h-11 w-11 items-center justify-center bg-gold/15 text-gold transition group-hover:bg-gold group-hover:text-[#1a2e1f]">
+                  <item.icon className="h-5 w-5" />
                 </div>
-                <h3 className="font-bold text-lg mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <h3 className="mb-2 font-[family-name:var(--font-heading)] text-lg font-bold text-white">
+                  {item.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-white/70">
                   {item.description}
                 </p>
-              </Card>
+              </div>
             </FadeIn>
           ))}
         </div>
@@ -489,31 +620,139 @@ export function WhyChooseSection() {
 }
 
 export function FeaturedProductsSection() {
-  const featured = products
-    .filter(
-      (p) => p.categorySlug === "dermatology" || p.categorySlug === "skin-care",
-    )
-    .slice(0, 4);
+  const scrollerRef = useRef(null);
+  const [paused, setPaused] = useState(false);
+  const [catalog, setCatalog] = useState(products);
+
+  useEffect(() => {
+    const list = getMockProducts();
+    const ranked = [...list].sort(
+      (a, b) => (Number(b.rating) || 0) - (Number(a.rating) || 0),
+    );
+    setCatalog(ranked.slice(0, 14));
+  }, []);
+
+  const loopItems = useMemo(() => [...catalog, ...catalog], [catalog]);
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el || catalog.length === 0) return;
+
+    let frame = 0;
+    let last = performance.now();
+    const speed = 0.45;
+
+    const tick = (now) => {
+      const dt = now - last;
+      last = now;
+      if (!paused) {
+        el.scrollLeft += speed * (dt / 16.67);
+        const half = el.scrollWidth / 2;
+        if (el.scrollLeft >= half) {
+          el.scrollLeft -= half;
+        }
+      }
+      frame = requestAnimationFrame(tick);
+    };
+
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [paused, catalog.length]);
+
+  const scrollByCard = (dir) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * 300, behavior: "smooth" });
+  };
+
   return (
-    <section className="section-padding bg-muted/50">
-      <div className="container-custom">
-        <SectionHeading
-          badge="Featured"
-          title="Popular Medicines"
-          description="Discover our most trusted pharmaceutical products."
-        />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featured.map((product, i) => (
-            <FadeIn key={product.id} delay={i * 0.08}>
-              <ProductCard product={product} />
-            </FadeIn>
-          ))}
+    <section className="relative overflow-hidden section-padding bg-gradient-to-b from-[#fff8e7] via-[#f3f8f4] to-[#fff8e7]">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+      <div className="container-custom mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+        <div className="max-w-xl">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
+            <ShoppingBag className="h-3.5 w-3.5" />
+            Best sellers
+          </div>
+          <h2 className="font-[family-name:var(--font-heading)] text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+            Shop popular medicines
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground md:text-base">
+            Top-rated formulations with clear pricing. Add to cart or buy now —
+            fast checkout for pharmacies and personal care.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald/25 bg-emerald/10 px-3 py-1 text-[11px] font-bold text-emerald">
+              <Tag className="h-3 w-3" />
+              Deal prices live
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-[11px] font-bold text-primary">
+              Add to cart · Buy now
+            </span>
+          </div>
         </div>
-        <div className="text-center mt-10">
-          <Link href="/products">
-            <Button size="lg">View All Products</Button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => scrollByCard(-1)}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-white text-primary shadow-sm transition hover:bg-primary hover:text-white"
+            aria-label="Previous products"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollByCard(1)}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-white text-primary shadow-sm transition hover:bg-primary hover:text-white"
+            aria-label="Next products"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+          <Link href="/products" className="ml-1">
+            <Button size="sm" className="gap-1.5">
+              Shop all
+              <ArrowRight className="h-4 w-4" />
+            </Button>
           </Link>
         </div>
+      </div>
+
+      <div
+        className="relative"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onTouchStart={() => setPaused(true)}
+        onTouchEnd={() => setPaused(false)}
+      >
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[#fff8e7] to-transparent sm:w-16" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#fff8e7] to-transparent sm:w-16" />
+        <div
+          ref={scrollerRef}
+          className="flex gap-4 overflow-x-auto px-4 pb-2 scrollbar-none sm:px-8"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {loopItems.map((product, index) => (
+            <div
+              key={`${product.id}-${index}`}
+              className="w-[260px] shrink-0 sm:w-[280px]"
+            >
+              <ProductCard product={product} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="container-custom mt-8 flex flex-col items-center justify-between gap-3 rounded-2xl border border-primary/15 bg-white/70 px-5 py-4 text-center backdrop-blur sm:flex-row sm:text-left">
+        <p className="text-sm font-semibold text-foreground">
+          Need bulk or pharmacy supply? Browse the full catalog and checkout in
+          minutes.
+        </p>
+        <Link href="/products">
+          <Button variant="secondary" className="gap-1.5">
+            Continue shopping
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </Link>
       </div>
     </section>
   );
@@ -728,28 +967,6 @@ export function CTASection() {
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-export function NewsletterSection() {
-  return (
-    <section className="section-padding bg-muted/30">
-      <div className="container-custom max-w-2xl text-center">
-        <SectionHeading
-          badge="Newsletter"
-          title="Stay Informed"
-          description="Subscribe to receive the latest news, research updates, and product information."
-        />
-        <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-          <input
-            type="email"
-            placeholder="Enter your email"
-            className="flex-1 h-11 rounded-xl border border-border bg-background px-4 text-sm"
-          />
-          <Button type="button">Subscribe</Button>
-        </form>
       </div>
     </section>
   );

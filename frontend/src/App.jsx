@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { CartProvider } from "@/providers/cart-provider";
-import { AuthProvider } from "@/providers/auth-provider";
+import { AuthProvider, useAuth } from "@/providers/auth-provider";
+import { LocationProvider } from "@/providers/location-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import {
@@ -36,6 +37,8 @@ import TermsPage from "@/pages/TermsPage";
 import SignupPage from "@/pages/SignupPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 
+const LOGIN_SCROLL_KEY = "himu-scroll-login-prompted";
+
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -46,10 +49,34 @@ function ScrollToTop() {
   return null;
 }
 
+function ScrollLoginPrompt() {
+  const { pathname } = useLocation();
+  const { isAuthenticated, loading, loginOpen, openLogin } = useAuth();
+
+  useEffect(() => {
+    if (loading || isAuthenticated || loginOpen) return;
+    if (pathname === "/signup") return;
+    if (sessionStorage.getItem(LOGIN_SCROLL_KEY) === "1") return;
+
+    const onScroll = () => {
+      if (window.scrollY < 160) return;
+      if (sessionStorage.getItem(LOGIN_SCROLL_KEY) === "1") return;
+      sessionStorage.setItem(LOGIN_SCROLL_KEY, "1");
+      openLogin();
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isAuthenticated, loading, loginOpen, openLogin, pathname]);
+
+  return null;
+}
+
 function AppLayout() {
   return (
     <>
       <ScrollToTop />
+      <ScrollLoginPrompt />
       <PageLoader />
       <ScrollProgressBar />
       <Navbar />
@@ -102,9 +129,11 @@ export default function App() {
     <BrowserRouter>
       <ThemeProvider>
         <AuthProvider>
-          <CartProvider>
-            <AppLayout />
-          </CartProvider>
+          <LocationProvider>
+            <CartProvider>
+              <AppLayout />
+            </CartProvider>
+          </LocationProvider>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>

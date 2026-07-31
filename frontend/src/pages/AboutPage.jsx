@@ -8,6 +8,11 @@ import { InteractiveTimeline } from "@/components/sections/timeline";
 import { Card } from "@/components/ui/card";
 import { teamMembers, companyTimeline, coreValues } from "@/data/company";
 import { Target, Eye, Heart } from "lucide-react";
+import {
+  OverviewSection,
+  WhyChooseSection,
+} from "@/components/sections/home-sections";
+
 export default function AboutPage() {
   return (
     <>
@@ -17,9 +22,13 @@ export default function AboutPage() {
         image="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=1600&h=600&fit=crop"
         badge="Our Story"
       />
+
+      <OverviewSection />
+      <WhyChooseSection />
+
       <section className="section-padding">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
             <FadeIn direction="left">
               <SectionHeading
                 badge="Company Story"
@@ -44,7 +53,7 @@ export default function AboutPage() {
               </div>
             </FadeIn>
             <FadeIn direction="right">
-              <div className="relative h-80 rounded-2xl overflow-hidden shadow-xl">
+              <div className="relative h-80 overflow-hidden rounded-2xl shadow-xl">
                 <Image
                   src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop"
                   alt="HIMU manufacturing"
@@ -56,8 +65,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
       <section className="section-padding bg-muted/30">
-        <div className="container-custom grid md:grid-cols-3 gap-8">
+        <div className="container-custom grid gap-8 md:grid-cols-3">
           {[
             {
               icon: Target,
@@ -75,13 +85,13 @@ export default function AboutPage() {
               text: "Every medicine we create is a step toward medical upliftment — bridging the gap between scientific innovation and patient care.",
             },
           ].map((item, i) => (
-            <FadeIn delay={i * 0.1}>
-              <Card className="p-8 h-full text-center">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary mx-auto mb-4">
+            <FadeIn key={item.title} delay={i * 0.1}>
+              <Card className="h-full p-8 text-center">
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                   <item.icon className="h-7 w-7" />
                 </div>
-                <h3 className="font-bold text-xl mb-3">{item.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <h3 className="mb-3 text-xl font-bold">{item.title}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">
                   {item.text}
                 </p>
               </Card>
@@ -89,14 +99,15 @@ export default function AboutPage() {
           ))}
         </div>
       </section>
+
       <section className="section-padding">
         <div className="container-custom">
           <SectionHeading badge="Core Values" title="What We Stand For" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {coreValues.map((v, i) => (
-              <FadeIn delay={i * 0.08}>
-                <Card className="p-6 hover:shadow-lg transition-shadow">
-                  <h3 className="font-bold text-lg text-primary mb-2">
+              <FadeIn key={v.title} delay={i * 0.08}>
+                <Card className="p-6 transition-shadow hover:shadow-lg">
+                  <h3 className="mb-2 text-lg font-bold text-primary">
                     {v.title}
                   </h3>
                   <p className="text-sm text-muted-foreground">
@@ -108,13 +119,14 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
       <section className="section-padding bg-muted/30">
         <div className="container-custom">
           <SectionHeading badge="Leadership" title="Our Leadership Team" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {teamMembers.map((member, i) => (
-              <FadeIn delay={i * 0.08}>
-                <Card className="overflow-hidden group hover:shadow-xl transition-shadow">
+              <FadeIn key={member.name} delay={i * 0.08}>
+                <Card className="group overflow-hidden transition-shadow hover:shadow-xl">
                   <div className="relative h-64 overflow-hidden">
                     <Image
                       src={member.image}
@@ -124,13 +136,11 @@ export default function AboutPage() {
                     />
                   </div>
                   <div className="p-5">
-                    <h3 className="font-bold text-lg">{member.name}</h3>
-                    <p className="text-primary text-sm font-medium mb-2">
+                    <h3 className="text-lg font-bold">{member.name}</h3>
+                    <p className="mb-2 text-sm font-medium text-primary">
                       {member.role}
                     </p>
-                    <p className="text-sm text-muted-foreground">
-                      {member.bio}
-                    </p>
+                    <p className="text-sm text-muted-foreground">{member.bio}</p>
                   </div>
                 </Card>
               </FadeIn>
@@ -138,13 +148,14 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
       <section className="section-padding">
         <div className="container-custom">
           <SectionHeading
             badge="Infrastructure"
             title="Manufacturing & Research Facilities"
           />
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
+          <div className="mb-12 grid gap-6 md:grid-cols-2">
             {[
               {
                 src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop",
@@ -163,16 +174,16 @@ export default function AboutPage() {
                 title: "Quality Control Lab — Ahmedabad",
               },
             ].map((img, i) => (
-              <FadeIn delay={i * 0.08}>
-                <div className="relative h-56 rounded-2xl overflow-hidden shadow-lg group">
+              <FadeIn key={img.title} delay={i * 0.08}>
+                <div className="group relative h-56 overflow-hidden rounded-2xl shadow-lg">
                   <Image
                     src={img.src}
                     alt={img.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-5">
-                    <h3 className="text-white font-bold">{img.title}</h3>
+                  <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 to-transparent p-5">
+                    <h3 className="font-bold text-white">{img.title}</h3>
                   </div>
                 </div>
               </FadeIn>
@@ -180,25 +191,27 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
       <section className="section-padding bg-muted/30">
         <div className="container-custom">
           <SectionHeading badge="Timeline" title="Company Milestones" />
           <InteractiveTimeline events={companyTimeline} />
         </div>
       </section>
+
       <section className="section-padding">
         <div className="container-custom">
           <SectionHeading badge="CSR" title="Corporate Responsibility" />
           <FadeIn>
             <Card className="p-8 md:p-12">
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <p className="mb-4 leading-relaxed text-muted-foreground">
                 HIMU Pharmacy is deeply committed to corporate social
                 responsibility. Our initiatives include free health camps in
                 underserved communities, medicine donations during emergencies,
                 environmental sustainability programs, and educational
                 scholarships for pharmacy students.
               </p>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="leading-relaxed text-muted-foreground">
                 In 2025 alone, our CSR programs reached over 200,000
                 beneficiaries across 15 states in India, reinforcing our belief
                 that quality healthcare is a fundamental human right.

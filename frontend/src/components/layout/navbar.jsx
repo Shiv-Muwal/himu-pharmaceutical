@@ -27,6 +27,7 @@ import {
   UserPlus,
   LogOut,
   User,
+  MapPin,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -35,6 +36,7 @@ import { NAV_LINKS } from "@/lib/constants";
 import { products } from "@/data/products";
 import { useCart } from "@/providers/cart-provider";
 import { useAuth } from "@/providers/auth-provider";
+import { useLocationInfo } from "@/providers/location-provider";
 
 const clinicalCategories = [
   { name: "Antibiotics", href: "/categories/antibiotics", icon: Pill },
@@ -63,6 +65,7 @@ const aboutChildren = [
 export function Navbar() {
   const { cartCount, setCartOpen } = useCart();
   const { user, isAuthenticated, openLogin, logout } = useAuth();
+  const { location, status } = useLocationInfo();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
@@ -318,6 +321,19 @@ export function Navbar() {
             )}
           </div>
           <div className="flex items-center gap-2">
+            <div
+              className="flex max-w-[110px] items-center gap-1 rounded-xl border border-primary/15 bg-primary/5 px-2 py-1.5 text-primary sm:max-w-[140px] sm:gap-1.5 sm:px-2.5 xl:max-w-[180px]"
+              title={location?.label || "Detecting your location"}
+            >
+              <MapPin className="h-3.5 w-3.5 shrink-0" />
+              <span className="truncate text-[10px] font-bold sm:text-[11px]">
+                {status === "requesting" || status === "idle"
+                  ? "Locating..."
+                  : status === "denied" || status === "unsupported"
+                    ? "Location"
+                    : location?.city || location?.label || "Your area"}
+              </span>
+            </div>
             <button
               onClick={() => setSearchOpen(!searchOpen)}
               className="p-2 rounded-lg transition-colors hover:bg-muted text-foreground cursor-pointer"

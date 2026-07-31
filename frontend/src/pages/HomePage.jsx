@@ -1,16 +1,13 @@
 import {
   HeroSection,
   StatsSection,
-  OverviewSection,
   CategoriesSection,
-  WhyChooseSection,
   FeaturedProductsSection,
   ResearchSection,
   TestimonialsSection,
   NewsSection,
   PartnersSection,
   CTASection,
-  NewsletterSection,
 } from "@/components/sections/home-sections";
 
 export default function HomePage() {
@@ -18,16 +15,13 @@ export default function HomePage() {
     <>
       <HeroSection />
       <StatsSection />
-      <OverviewSection />
       <CategoriesSection />
-      <WhyChooseSection />
       <FeaturedProductsSection />
       <ResearchSection />
       <TestimonialsSection />
       <NewsSection />
       <PartnersSection />
       <CTASection />
-      <NewsletterSection />
     </>
   );
 }

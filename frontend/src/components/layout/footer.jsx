@@ -4,8 +4,6 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { COMPANY, NAV_LINKS } from "@/lib/constants";
 import { categories } from "@/data/categories";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 
 const socialLinks = [
   { name: "LinkedIn", href: "#", label: "in" },
@@ -135,20 +133,6 @@ export function Footer() {
                   <span>{COMPANY.email}</span>
                 </li>
               </ul>
-              <div className="mt-6 p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                <p className="text-xs text-white/60 mb-2 font-semibold">
-                  Subscribe to our newsletter
-                </p>
-                <form className="flex gap-2">
-                  <Input
-                    placeholder="Your email"
-                    className="bg-white/10 border-white/10 text-white placeholder:text-white/40 text-sm h-10 rounded-xl focus-visible:ring-gold"
-                  />
-                  <Button size="sm" variant="secondary" type="button" className="rounded-xl h-10 px-4">
-                    Join
-                  </Button>
-                </form>
-              </div>
             </div>
           </div>
         </div>
