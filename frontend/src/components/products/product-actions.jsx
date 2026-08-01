@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { ShoppingCart, Zap, Plus, Minus, Star, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
-import { useCart } from "@/providers/cart-provider";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Card } from "@/components/ui/Card";
+import { useCart } from "@/providers/CartProvider";
 import { cn } from "@/lib/utils";
 
 export function ProductActions({ product }) {

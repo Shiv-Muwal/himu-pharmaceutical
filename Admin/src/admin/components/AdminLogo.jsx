@@ -1,4 +1,4 @@
-import { BrandLogo } from "@/components/ui/brand-logo";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { cn } from "@/lib/utils";
 
 export function AdminLogo({

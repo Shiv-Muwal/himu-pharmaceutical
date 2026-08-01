@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { BrandLogo } from "@/components/ui/brand-logo";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 
 export function AdminPreloader() {
   const [loading, setLoading] = useState(true);

@@ -1,8 +1,8 @@
 import { useSearchParams } from "react-router-dom";
-import { PageHero } from "@/components/sections/page-hero";
-import { ProductCatalog } from "@/components/products/product-catalog";
+import { PageHero } from "@/components/sections/Page-hero";
+import { ProductCatalog } from "@/components/products/Product-catalog";
 import { products } from "@/data/products";
-import { Breadcrumbs } from "@/components/ui/breadcrumbs";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 export default function ProductsPage() {
   const [searchParams] = useSearchParams();
   return (

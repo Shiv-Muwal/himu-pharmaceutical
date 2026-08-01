@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { getProductBySlug, products } from "@/data/products";
 import { generateProductSchema, generateBreadcrumbSchema } from "@/lib/seo";
-import { ProductDetailClient } from "@/components/products/product-detail-client";
+import { ProductDetailClient } from "@/components/products/Product-detail-client";
 export default function ProductDetailPage() {
   const { slug = "" } = useParams();
   const product = getProductBySlug(slug);

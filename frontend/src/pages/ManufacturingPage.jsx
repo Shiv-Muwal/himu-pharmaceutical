@@ -1,11 +1,11 @@
-import { Image } from "@/components/ui/image";
-import { PageHero } from "@/components/sections/page-hero";
+import { Image } from "@/components/ui/Image";
+import { PageHero } from "@/components/sections/Page-hero";
 import {
   FadeIn,
   SectionHeading,
-} from "@/components/animations/motion-components";
-import { InteractiveTimeline } from "@/components/sections/timeline";
-import { Card } from "@/components/ui/card";
+} from "@/components/animations/Motion-components";
+import { InteractiveTimeline } from "@/components/sections/Timeline";
+import { Card } from "@/components/ui/Card";
 import { Cog, Package, Warehouse, Globe, Truck } from "lucide-react";
 const processes = [
   {
@@ -134,7 +134,7 @@ export default function ManufacturingPage() {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent flex items-end p-4">
                     <h3 className="text-white font-semibold text-sm">
                       {img.title}
                     </h3>

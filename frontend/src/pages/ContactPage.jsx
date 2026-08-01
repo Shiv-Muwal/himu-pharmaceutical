@@ -1,11 +1,11 @@
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
-import { PageHero } from "@/components/sections/page-hero";
+import { PageHero } from "@/components/sections/Page-hero";
 import {
   FadeIn,
   SectionHeading,
-} from "@/components/animations/motion-components";
-import { Card } from "@/components/ui/card";
-import { ContactForm } from "@/components/forms/contact-form";
+} from "@/components/animations/Motion-components";
+import { Card } from "@/components/ui/Card";
+import { ContactForm } from "@/components/forms/Contact-form";
 import { COMPANY } from "@/lib/constants";
 const departments = [
   {

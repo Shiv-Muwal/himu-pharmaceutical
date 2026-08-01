@@ -14,16 +14,16 @@ import {
   BadgePercent,
   ShoppingBag,
 } from "lucide-react";
-import { Link } from "@/components/ui/link";
-import { Image } from "@/components/ui/image";
-import { Button } from "@/components/ui/button";
-import { ProductCard } from "@/components/products/product-card";
+import { Link } from "@/components/ui/Link";
+import { Image } from "@/components/ui/Image";
+import { Button } from "@/components/ui/Button";
+import { ProductCard } from "@/components/products/Product-card";
 import { categories } from "@/data/categories";
 import { DEFAULT_BANNERS } from "@/data/banners";
 import { products } from "@/data/products";
 import { getMockProducts } from "@/lib/mock-backend";
 import { api } from "@/lib/api";
-import { FadeIn } from "@/components/animations/motion-components";
+import { FadeIn } from "@/components/animations/Motion-components";
 import { searchProductsSmart } from "@/lib/product-search";
 import { getApiOrigin } from "@/lib/api-base";
 
@@ -309,7 +309,10 @@ export function ShopSearchBar() {
   };
 
   return (
-    <section className="relative z-20 -mt-5 px-4 sm:-mt-7 sm:px-6">
+    <section
+      className="sticky top-[7.5rem] z-40 -mt-5 bg-[#f8f3e6] px-4 py-2 sm:top-32 sm:-mt-7 sm:px-6"
+      style={{ backgroundColor: "#f8f3e6" }}
+    >
       <form
         ref={searchRef}
         onSubmit={(e) => {
@@ -318,11 +321,14 @@ export function ShopSearchBar() {
         }}
         className="container-custom relative"
       >
-        <div className="flex flex-col gap-2 rounded-2xl border border-border/50 bg-white p-2 shadow-[0_18px_50px_rgba(6,22,16,0.16)] sm:flex-row sm:items-center dark:bg-card">
+        <div
+          className="flex flex-col gap-2 rounded-2xl border border-border/50 bg-white p-2 shadow-[0_18px_50px_rgba(6,22,16,0.16)] sm:flex-row sm:items-center dark:bg-card"
+          style={{ backgroundColor: "#ffffff", opacity: 1 }}
+        >
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full cursor-pointer rounded-xl bg-muted/60 px-3 py-2.5 text-xs font-bold outline-none sm:w-44"
+            className="w-full cursor-pointer rounded-xl bg-[#f4f0e5] px-3 py-2.5 text-xs font-bold outline-none sm:w-44 dark:bg-muted"
             aria-label="Category"
           >
             <option value="">All categories</option>
@@ -437,47 +443,54 @@ export function QuickCategoryRail() {
             All products <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
-        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none" style={{ scrollbarWidth: "none" }}>
-          {ordered.map((cat, i) => {
-            const highlight = DERMA_SLUGS.has(cat.slug);
-            return (
-              <FadeIn key={cat.slug} delay={i * 0.04}>
-                <Link
-                  href={`/products?category=${cat.slug}`}
-                  className={`group relative flex w-[132px] shrink-0 flex-col overflow-hidden rounded-2xl border transition sm:w-[148px] ${
-                    highlight
-                      ? "border-gold/50 bg-gradient-to-b from-[#f8f3e6] to-white shadow-[0_10px_30px_rgba(214, 176, 77,0.18)]"
-                      : "border-border/50 bg-white hover:border-primary/30 hover:shadow-lg dark:bg-card"
-                  }`}
-                >
-                  <div className="relative h-24 overflow-hidden sm:h-28">
-                    <Image
-                      src={cat.image}
-                      alt={cat.name}
-                      fill
-                      className="object-cover transition duration-500 group-hover:scale-110"
-                    />
-                    {highlight && (
-                      <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">
-                        Focus
-                      </span>
-                    )}
-                  </div>
-                  <div className="p-3">
-                    <p className="text-sm font-bold text-foreground">{cat.name}</p>
-                    <p className="mt-0.5 text-[10px] font-semibold text-primary">Shop now →</p>
-                  </div>
-                </Link>
-              </FadeIn>
-            );
-          })}
+        <div className="relative">
+          <div
+            className="flex gap-3 overflow-x-auto overflow-y-hidden pb-2 scrollbar-none"
+            style={{ scrollbarWidth: "none" }}
+          >
+            {ordered.map((cat, i) => {
+              const highlight = DERMA_SLUGS.has(cat.slug);
+              return (
+                <FadeIn key={cat.slug} delay={i * 0.04}>
+                  <Link
+                    href={`/products?category=${cat.slug}`}
+                    className={`group relative flex w-[132px] shrink-0 flex-col overflow-hidden rounded-2xl border transition sm:w-[148px] ${
+                      highlight
+                        ? "border-gold/50 bg-gradient-to-b from-[#f8f3e6] to-white shadow-[0_10px_30px_rgba(214, 176, 77,0.18)]"
+                        : "border-border/50 bg-white hover:border-primary/30 hover:shadow-lg dark:bg-card"
+                    }`}
+                  >
+                    <div className="relative h-24 overflow-hidden sm:h-28">
+                      <Image
+                        src={cat.image}
+                        alt={cat.name}
+                        fill
+                        className="object-cover transition duration-500 group-hover:scale-110"
+                      />
+                      {highlight && (
+                        <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">
+                          Focus
+                        </span>
+                      )}
+                    </div>
+                    <div className="p-3">
+                      <p className="text-sm font-bold text-foreground">{cat.name}</p>
+                      <p className="mt-0.5 text-[10px] font-semibold text-primary">Shop now →</p>
+                    </div>
+                  </Link>
+                </FadeIn>
+              );
+            })}
+          </div>
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-7 bg-gradient-to-r from-[#f8f3e6] to-transparent sm:w-10" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-7 bg-gradient-to-l from-[#f8f3e6] to-transparent sm:w-10" />
         </div>
       </div>
     </section>
   );
 }
 
-function ProductScroller({ title, subtitle, badge, items, href }) {
+function ProductScroller({ title, subtitle, badge, items, href, showReviews = true }) {
   const scrollerRef = useRef(null);
   const [paused, setPaused] = useState(false);
 
@@ -600,7 +613,7 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
               data-product-slide
               className="w-[72vw] max-w-[260px] shrink-0 snap-start sm:w-[260px] sm:max-w-none md:w-[280px]"
             >
-              <ProductCard product={product} />
+              <ProductCard product={product} showReviews={showReviews} />
             </div>
           ))}
         </div>
@@ -627,6 +640,7 @@ export function DermaSpotlightSection() {
         subtitle="Starting focus: derma formulations first — clear prices, cart-ready packs."
         items={items}
         href="/products?category=dermatology"
+        showReviews={false}
       />
     </div>
   );
@@ -647,6 +661,7 @@ export function PopularShopSection() {
         subtitle="High-demand HIMU medicines with deal pricing — add to cart or buy now."
         items={items}
         href="/products"
+        showReviews={false}
       />
     </div>
   );

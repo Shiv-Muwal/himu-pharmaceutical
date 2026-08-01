@@ -10,9 +10,9 @@ import {
   Leaf,
   Sparkles,
 } from "lucide-react";
-import { Image } from "@/components/ui/image";
-import { useCart } from "@/providers/cart-provider";
-import { Button } from "@/components/ui/button";
+import { Image } from "@/components/ui/Image";
+import { useCart } from "@/providers/CartProvider";
+import { Button } from "@/components/ui/Button";
 
 export function CartDrawer() {
   const {

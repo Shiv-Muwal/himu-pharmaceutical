@@ -1,6 +1,6 @@
-import { Link } from "@/components/ui/link";
-import { Image } from "@/components/ui/image";
-import { Button } from "@/components/ui/button";
+import { Link } from "@/components/ui/Link";
+import { Image } from "@/components/ui/Image";
+import { Button } from "@/components/ui/Button";
 
 export function PageHero({ title, description, image, badge, cta }) {
   return (

@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { Image } from "@/components/ui/image";
-import { Link } from "@/components/ui/link";
+import { Image } from "@/components/ui/Image";
+import { Link } from "@/components/ui/Link";
 import { Download, ArrowRight, ArrowLeft, X } from "lucide-react";
-import { ProductCard } from "@/components/products/product-card";
-import { Breadcrumbs } from "@/components/ui/breadcrumbs";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { AccordionItem } from "@/components/ui/accordion";
-import { FadeIn } from "@/components/animations/motion-components";
-import { ProductActions } from "@/components/products/product-actions";
-import { ProductReviews } from "@/components/products/product-reviews";
+import { ProductCard } from "@/components/products/Product-card";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { AccordionItem } from "@/components/ui/Accordion";
+import { FadeIn } from "@/components/animations/Motion-components";
+import { ProductActions } from "@/components/products/Product-actions";
+import { ProductReviews } from "@/components/products/Product-reviews";
 import { getMockProducts } from "@/lib/mock-backend";
 import { PRODUCT_DISCLAIMER } from "@/lib/constants";
 

@@ -7,10 +7,10 @@ import {
   X,
   ChevronDown,
 } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 import { ProductCard } from "./product-card";
-import { FadeIn } from "@/components/animations/motion-components";
+import { FadeIn } from "@/components/animations/Motion-components";
 import { categories } from "@/data/categories";
 import { getMockProducts } from "@/lib/mock-backend";
 import {

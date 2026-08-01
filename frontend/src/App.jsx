@@ -1,21 +1,21 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { ThemeProvider } from "@/providers/theme-provider";
-import { CartProvider } from "@/providers/cart-provider";
-import { AuthProvider, useAuth } from "@/providers/auth-provider";
-import { LocationProvider } from "@/providers/location-provider";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
+import { ThemeProvider } from "@/providers/ThemeProvider";
+import { CartProvider } from "@/providers/CartProvider";
+import { AuthProvider, useAuth } from "@/providers/AuthProvider";
+import { LocationProvider } from "@/providers/LocationProvider";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 import {
   ScrollProgressBar,
   BackToTop,
   CookieBanner,
   FloatingButtons,
   PageLoader,
-} from "@/components/global/site-widgets";
-import { CartDrawer } from "@/components/cart/cart-drawer";
-import { CheckoutModal } from "@/components/cart/checkout-modal";
-import { LoginModal } from "@/components/auth/login-modal";
+} from "@/components/global/Site-widgets";
+import { CartDrawer } from "@/components/cart/Cart-drawer";
+import { CheckoutModal } from "@/components/cart/Checkout-modal";
+import { LoginModal } from "@/components/auth/Login-modal";
 import { generateOrganizationSchema } from "@/lib/seo";
 import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";

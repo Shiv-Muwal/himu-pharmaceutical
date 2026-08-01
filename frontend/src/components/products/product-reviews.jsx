@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MessageSquarePlus, Send, Star, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
 import { cn } from "@/lib/utils";
 
 function StarPicker({ value, onChange, size = "md" }) {
@@ -199,19 +199,19 @@ export function ProductReviews({ product, variant = "card" }) {
 
   return (
     <div className="mt-3 border-t border-border/30 pt-3">
-      <button
-        type="button"
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setOpen((v) => !v);
-        }}
-        className="flex w-full items-center justify-between rounded-xl bg-muted/40 px-2.5 py-2 text-left transition hover:bg-primary/5"
-      >
-        <span className="flex items-center gap-1.5 text-[11px] font-bold text-foreground">
+      <div className="flex w-full items-center justify-between rounded-xl bg-muted/40 px-2.5 py-2">
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setOpen((v) => !v);
+          }}
+          className="flex items-center gap-1.5 rounded text-[11px] font-bold text-foreground transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+        >
           <MessageSquarePlus className="h-3.5 w-3.5 text-primary" />
           Write a review
-        </span>
+        </button>
         <StarPicker
           value={rating}
           onChange={(star) => {
@@ -220,7 +220,7 @@ export function ProductReviews({ product, variant = "card" }) {
           }}
           size="sm"
         />
-      </button>
+      </div>
 
       <AnimatePresence>
         {open && (

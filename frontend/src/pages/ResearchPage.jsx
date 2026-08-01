@@ -1,12 +1,12 @@
-import { Image } from "@/components/ui/image";
-import { PageHero } from "@/components/sections/page-hero";
+import { Image } from "@/components/ui/Image";
+import { PageHero } from "@/components/sections/Page-hero";
 import {
   FadeIn,
   SectionHeading,
   AnimatedCounter,
-} from "@/components/animations/motion-components";
-import { InteractiveTimeline } from "@/components/sections/timeline";
-import { Card } from "@/components/ui/card";
+} from "@/components/animations/Motion-components";
+import { InteractiveTimeline } from "@/components/sections/Timeline";
+import { Card } from "@/components/ui/Card";
 import { Microscope, FlaskConical, Brain, TestTube } from "lucide-react";
 const researchStats = [
   {

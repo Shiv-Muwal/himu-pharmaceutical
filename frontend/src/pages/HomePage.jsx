@@ -7,7 +7,7 @@ import {
   PopularShopSection,
   ShopTrustStrip,
   ShopCTASection,
-} from "@/components/sections/shop-home";
+} from "@/components/sections/Shop-home";
 
 export default function HomePage() {
   return (

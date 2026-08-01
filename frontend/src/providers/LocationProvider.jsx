@@ -3,6 +3,11 @@ import { createContext, useContext, useEffect, useState } from "react";
 const LocationContext = createContext(null);
 
 const STORAGE_KEY = "himu-user-location";
+const REQUESTED_KEY = "himu-location-requested";
+
+// React Strict Mode remounts components in development. Keep this outside the
+// component so it cannot open the browser permission prompt twice.
+let locationRequestStarted = false;
 
 function readCachedLocation() {
   try {
@@ -52,9 +57,20 @@ export function LocationProvider({ children }) {
     if (cached?.label) {
       setLocation(cached);
       setStatus("ready");
-    } else {
-      setStatus("requesting");
+      return;
     }
+
+    // After a visitor dismisses the browser prompt, do not request it again in
+    // the same tab. Repeated requests trigger Chrome's geolocation warning.
+    if (locationRequestStarted || sessionStorage.getItem(REQUESTED_KEY)) {
+      setStatus("denied");
+      setError("Location permission was not granted");
+      return;
+    }
+
+    locationRequestStarted = true;
+    sessionStorage.setItem(REQUESTED_KEY, "true");
+    setStatus("requesting");
 
     navigator.geolocation.getCurrentPosition(
       async (position) => {

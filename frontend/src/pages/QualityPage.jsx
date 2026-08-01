@@ -1,9 +1,9 @@
-import { PageHero } from "@/components/sections/page-hero";
+import { PageHero } from "@/components/sections/Page-hero";
 import {
   FadeIn,
   SectionHeading,
-} from "@/components/animations/motion-components";
-import { Card } from "@/components/ui/card";
+} from "@/components/animations/Motion-components";
+import { Card } from "@/components/ui/Card";
 import { Shield, CheckCircle, Award } from "lucide-react";
 const standards = [
   {

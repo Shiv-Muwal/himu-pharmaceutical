@@ -1,10 +1,10 @@
-import { Image } from "@/components/ui/image";
+import { Image } from "@/components/ui/Image";
 import {
   FadeIn,
   SectionHeading,
-} from "@/components/animations/motion-components";
-import { InteractiveTimeline } from "@/components/sections/timeline";
-import { Card } from "@/components/ui/card";
+} from "@/components/animations/Motion-components";
+import { InteractiveTimeline } from "@/components/sections/Timeline";
+import { Card } from "@/components/ui/Card";
 import { teamMembers, companyTimeline, coreValues } from "@/data/company";
 import { Target, Eye, Heart } from "lucide-react";
 import {
@@ -12,7 +12,7 @@ import {
   OverviewSection,
   StatsSection,
   WhyChooseSection,
-} from "@/components/sections/home-sections";
+} from "@/components/sections/Home-sections";
 
 export default function AboutPage() {
   return (
@@ -178,7 +178,7 @@ export default function AboutPage() {
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 to-transparent p-5">
+                  <div className="absolute inset-0 flex items-end bg-linear-to-t from-black/60 to-transparent p-5">
                     <h3 className="font-bold text-white">{img.title}</h3>
                   </div>
                 </div>

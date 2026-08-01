@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "@/components/ui/link";
-import { Image } from "@/components/ui/image";
+import { Link } from "@/components/ui/Link";
+import { Image } from "@/components/ui/Image";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
@@ -17,19 +17,19 @@ import {
   ShoppingBag,
   Tag,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
 import {
   AnimatedCounter,
   FadeIn,
   SectionHeading,
-} from "@/components/animations/motion-components";
+} from "@/components/animations/Motion-components";
 import { STATS, COMPANY } from "@/lib/constants";
 import { categories } from "@/data/categories";
 import { testimonials, partnerLogos } from "@/data/company";
 import { blogPosts } from "@/data/blogs";
-import { ProductCard } from "@/components/products/product-card";
+import { ProductCard } from "@/components/products/Product-card";
 import { products } from "@/data/products";
 import { getMockProducts } from "@/lib/mock-backend";
 

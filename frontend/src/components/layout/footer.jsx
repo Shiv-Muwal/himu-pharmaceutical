@@ -1,5 +1,5 @@
-import { Link } from "@/components/ui/link";
-import { BrandLogo } from "@/components/ui/brand-logo";
+import { Link } from "@/components/ui/Link";
+import { BrandLogo } from "@/components/ui/Brand-logo";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { COMPANY, NAV_LINKS } from "@/lib/constants";

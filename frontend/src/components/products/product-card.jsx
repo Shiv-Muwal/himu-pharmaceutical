@@ -1,14 +1,14 @@
-import { Link } from "@/components/ui/link";
-import { Image } from "@/components/ui/image";
+import { Link } from "@/components/ui/Link";
+import { Image } from "@/components/ui/Image";
 import { ShoppingCart, Zap, Star } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { useCart } from "@/providers/cart-provider";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { useCart } from "@/providers/CartProvider";
 import { cn } from "@/lib/utils";
-import { ProductReviews } from "@/components/products/product-reviews";
+import { ProductReviews } from "@/components/products/Product-reviews";
 
-export function ProductCard({ product }) {
+export function ProductCard({ product, showReviews = true }) {
   const { addToCart, buyNow } = useCart();
   const isAvailable =
     product.categorySlug === "dermatology" ||
@@ -153,7 +153,7 @@ export function ProductCard({ product }) {
               Coming Soon - Notify Me
             </Button>
           )}
-          <ProductReviews product={product} variant="card" />
+          {showReviews && <ProductReviews product={product} variant="card" />}
         </div>
       </CardContent>
     </Card>

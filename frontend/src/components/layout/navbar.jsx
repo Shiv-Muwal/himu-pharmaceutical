@@ -1,8 +1,8 @@
-import { Link } from "@/components/ui/link";
+import { Link } from "@/components/ui/Link";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BrandLogo } from "@/components/ui/brand-logo";
+import { BrandLogo } from "@/components/ui/Brand-logo";
 import {
   Menu,
   X,
@@ -30,14 +30,14 @@ import {
   MapPin,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
 import { NAV_LINKS } from "@/lib/constants";
 import { products } from "@/data/products";
 import { searchProductsSmart } from "@/lib/product-search";
-import { useCart } from "@/providers/cart-provider";
-import { useAuth } from "@/providers/auth-provider";
-import { useLocationInfo } from "@/providers/location-provider";
+import { useCart } from "@/providers/CartProvider";
+import { useAuth } from "@/providers/AuthProvider";
+import { useLocationInfo } from "@/providers/LocationProvider";
 
 const clinicalCategories = [
   { name: "Antibiotics", href: "/categories/antibiotics", icon: Pill },
