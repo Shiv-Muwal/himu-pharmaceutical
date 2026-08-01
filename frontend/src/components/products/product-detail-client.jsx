@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Image } from "@/components/ui/image";
 import { Link } from "@/components/ui/link";
-import { Download, ArrowRight, ArrowLeft, X } from "lucide-react";
+import { ArrowRight, ArrowLeft, X } from "lucide-react";
 import { ProductCard } from "@/components/products/product-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -170,14 +170,6 @@ export function ProductDetailClient({
               {/* Client action buttons (Cart, Qty, Variant, Buy Now) */}
               <div className="mb-6">
                 <ProductActions product={product} />
-              </div>
-              <div className="flex flex-wrap gap-3 mb-6">
-                <Button variant="outline">
-                  <Download className="h-4 w-4" /> Product Brochure
-                </Button>
-                <Button variant="outline">
-                  <Download className="h-4 w-4" /> Datasheet
-                </Button>
               </div>
               <Card className="p-4 bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800">
                 <p className="text-xs text-amber-800 dark:text-amber-200 leading-relaxed">

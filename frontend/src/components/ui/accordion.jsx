@@ -1,38 +1,38 @@
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 export function AccordionItem({ title, children, defaultOpen = false }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="border border-border rounded-xl overflow-hidden">
+    <div className="overflow-hidden rounded-xl border border-border">
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between p-5 text-left font-semibold hover:bg-muted/50 transition-colors"
+        type="button"
+        onClick={() => setIsOpen((v) => !v)}
+        className="flex w-full items-center justify-between p-4 text-left text-sm font-semibold transition-colors hover:bg-muted/50 sm:p-5 sm:text-base"
         aria-expanded={isOpen}
       >
-        <span>{title}</span>
+        <span className="pr-3">{title}</span>
         <ChevronDown
           className={cn(
-            "h-5 w-5 text-primary transition-transform duration-300",
-            isOpen && "rotate-180"
+            "h-5 w-5 shrink-0 text-primary transition-transform duration-200",
+            isOpen && "rotate-180",
           )}
         />
       </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="px-5 pb-5 text-muted-foreground leading-relaxed">{children}</div>
-          </motion.div>
+      <div
+        className={cn(
+          "grid transition-[grid-template-rows] duration-200 ease-out",
+          isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
         )}
-      </AnimatePresence>
+      >
+        <div className="overflow-hidden">
+          <div className="px-4 pb-4 text-sm leading-relaxed text-muted-foreground sm:px-5 sm:pb-5">
+            {children}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

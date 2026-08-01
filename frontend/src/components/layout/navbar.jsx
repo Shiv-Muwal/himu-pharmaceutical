@@ -120,6 +120,18 @@ export function Navbar() {
     };
   }, []);
 
+  // Lock page scroll while mobile drawer is open (prevents jank)
+  useEffect(() => {
+    if (!mobileOpen) return undefined;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
+
+  const closeMobileMenu = () => setMobileOpen(false);
+
   return (
     <>
       <header
@@ -500,18 +512,24 @@ export function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "spring", damping: 25 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
             className="fixed inset-0 z-[70] lg:hidden"
           >
-            <div
-              className="absolute inset-0 bg-black/50"
-              onClick={() => setMobileOpen(false)}
+            <button
+              type="button"
+              className="absolute inset-0 bg-black/40"
+              aria-label="Close menu"
+              onClick={closeMobileMenu}
             />
-            <div
-              className="absolute right-0 top-0 h-full w-80 max-w-full overflow-y-auto glass p-6 pt-20 shadow-2xl"
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute right-0 top-0 h-full w-80 max-w-full overflow-y-auto border-l border-border/40 bg-[#f8f3e6] p-6 pt-20 shadow-2xl"
               style={{
                 paddingBottom:
                   "calc(var(--mobile-nav-offset, 5.5rem) + 1.5rem)",
@@ -526,7 +544,7 @@ export function Navbar() {
                       type="button"
                       onClick={() => {
                         logout();
-                        setMobileOpen(false);
+                        closeMobileMenu();
                       }}
                       className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-red-600 hover:bg-red-500/10"
                     >
@@ -540,7 +558,7 @@ export function Navbar() {
                       type="button"
                       onClick={() => {
                         openLogin();
-                        setMobileOpen(false);
+                        closeMobileMenu();
                       }}
                       className="flex w-full items-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground"
                     >
@@ -549,7 +567,7 @@ export function Navbar() {
                     </button>
                     <Link
                       href="/signup"
-                      onClick={() => setMobileOpen(false)}
+                      onClick={closeMobileMenu}
                       className="flex w-full items-center gap-2 rounded-xl border border-primary/30 px-4 py-3 text-sm font-bold text-primary"
                     >
                       <UserPlus className="h-4 w-4" />
@@ -563,7 +581,7 @@ export function Navbar() {
                   <div key={link.name}>
                     <Link
                       href={link.href}
-                      onClick={() => setMobileOpen(false)}
+                      onClick={closeMobileMenu}
                       className="block rounded-xl px-4 py-3 text-base font-medium transition-colors hover:bg-primary/10 hover:text-primary"
                     >
                       {link.name}
@@ -574,7 +592,7 @@ export function Navbar() {
                           <Link
                             key={child.name}
                             href={child.href}
-                            onClick={() => setMobileOpen(false)}
+                            onClick={closeMobileMenu}
                             className="block rounded-lg px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-primary"
                           >
                             {child.name}
@@ -584,8 +602,15 @@ export function Navbar() {
                     )}
                   </div>
                 ))}
+                <Link
+                  href="/faq"
+                  onClick={closeMobileMenu}
+                  className="block rounded-xl px-4 py-3 text-base font-medium transition-colors hover:bg-primary/10 hover:text-primary"
+                >
+                  FAQ
+                </Link>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
