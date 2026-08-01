@@ -44,7 +44,7 @@ export default function AboutPage() {
                   scientists, and serve healthcare providers across 50+
                   countries. Our name — Healthcare Innovation for Medical
                   Upliftment — encapsulates our enduring commitment to improving
-                  lives worldwide.
+                  lives worldwide
                 </p>
               </div>
             </FadeIn>
