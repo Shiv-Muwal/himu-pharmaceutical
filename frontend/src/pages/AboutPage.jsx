@@ -205,7 +205,7 @@ export default function AboutPage() {
                 responsibility. Our initiatives include free health camps in
                 underserved communities, medicine donations during emergencies,
                 environmental sustainability programs, and educational
-                scholarships for pharmacy students.
+                scholarships for pharmacy students
               </p>
               <p className="leading-relaxed text-muted-foreground">
                 In 2025 alone, our CSR programs reached over 200,000
