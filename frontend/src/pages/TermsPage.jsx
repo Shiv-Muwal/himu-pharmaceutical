@@ -1,4 +1,4 @@
-import { PageHero } from "@/components/sections/Page-hero";
+import { PageHero } from "@/components/sections/page-hero";
 import { FadeIn } from "@/components/animations/Motion-components";
 import { Card } from "@/components/ui/Card";
 import { COMPANY } from "@/lib/constants";
