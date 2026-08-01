@@ -103,16 +103,63 @@ export async function runSeed({ clear = true } = {}) {
 
 async function ensureDemoCustomer() {
   const email = String(env.customerEmail || "").toLowerCase();
-  const existing = await User.findOne({ email });
-  if (existing) return;
-  console.log("Demo customer missing — creating customer@himu.local...");
-  await User.create({
-    name: env.customerName,
-    email: env.customerEmail,
-    password: env.customerPassword,
-    phone: env.customerPhone,
-    role: "customer",
-  });
+  let customer = await User.findOne({ email }).select("+password");
+  if (!customer) {
+    console.log(`Demo customer missing — creating ${email}...`);
+    await User.create({
+      name: env.customerName,
+      email: env.customerEmail,
+      password: env.customerPassword,
+      phone: env.customerPhone,
+      role: "customer",
+    });
+    return;
+  }
+
+  // Keep teammate laptops in sync with shared demo password (dev only)
+  if (env.nodeEnv !== "production") {
+    customer.password = env.customerPassword;
+    customer.role = "customer";
+    await customer.save();
+  }
+}
+
+async function ensureDemoAdmin() {
+  const email = String(env.adminEmail || "").toLowerCase();
+  const legacyEmails = ["admin@himupharmacy.com", "admin@himu.com"];
+
+  let admin = await User.findOne({ email }).select("+password");
+
+  if (!admin) {
+    for (const legacy of legacyEmails) {
+      const old = await User.findOne({ email: legacy }).select("+password");
+      if (!old) continue;
+      old.email = email;
+      old.name = old.name || "HIMU Admin";
+      old.password = env.adminPassword;
+      old.role = "admin";
+      await old.save();
+      console.log(`Migrated admin ${legacy} → ${email}`);
+      return;
+    }
+
+    console.log(`Demo admin missing — creating ${email}...`);
+    await User.create({
+      name: "HIMU Admin",
+      email: env.adminEmail,
+      password: env.adminPassword,
+      role: "admin",
+    });
+    console.log(`Admin login: ${env.adminEmail} / ${env.adminPassword}`);
+    return;
+  }
+
+  // Reset shared demo password so friends don't hit "Invalid email or password"
+  if (env.nodeEnv !== "production") {
+    admin.password = env.adminPassword;
+    admin.role = "admin";
+    await admin.save();
+  }
 }
 
 export async function ensureSeeded() {
@@ -129,6 +176,7 @@ export async function ensureSeeded() {
     await Banner.insertMany(seedBanners);
   }
 
+  await ensureDemoAdmin();
   await ensureDemoCustomer();
   return false;
 }
