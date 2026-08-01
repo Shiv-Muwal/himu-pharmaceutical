@@ -1,0 +1,71 @@
+/** Trusted institutional partners shown on the homepage. */
+export const trustedBrands = [
+  { id: "tb-apollo", name: "Apollo Hospitals", mark: "AH", accent: "#0b6a46" },
+  { id: "tb-fortis", name: "Fortis Healthcare", mark: "FH", accent: "#0f8157" },
+  { id: "tb-max", name: "Max Healthcare", mark: "MH", accent: "#1a4d35" },
+  { id: "tb-aiims", name: "AIIMS", mark: "AI", accent: "#d6b04d" },
+  { id: "tb-medsupply", name: "MedSupply Global", mark: "MG", accent: "#0b6a46" },
+  { id: "tb-pharmacorp", name: "PharmaCorp", mark: "PC", accent: "#0f8157" },
+  { id: "tb-healthfirst", name: "HealthFirst", mark: "HF", accent: "#1e2422" },
+  { id: "tb-biomed", name: "BioMed International", mark: "BI", accent: "#d6b04d" },
+  { id: "tb-carewell", name: "CareWell Network", mark: "CW", accent: "#0b6a46" },
+  { id: "tb-lifeline", name: "LifeLine Pharma", mark: "LP", accent: "#0f8157" },
+];
+
+/** Shop-by-brand tiles linking into catalog facets. */
+export const shopBrands = [
+  {
+    id: "sb-derma",
+    name: "HIMU Derma",
+    tagline: "Clinical skin therapeutics",
+    href: "/products?category=dermatology",
+    mark: "HD",
+    accent: "#0b6a46",
+    productsLabel: "Creams · Gels · Shields",
+  },
+  {
+    id: "sb-care",
+    name: "HIMU Care",
+    tagline: "Daily skin essentials",
+    href: "/products?category=skin-care",
+    mark: "HC",
+    accent: "#0f8157",
+    productsLabel: "Wash · Serum · Lotion",
+  },
+  {
+    id: "sb-cosmo",
+    name: "HIMU Cosmo",
+    tagline: "Pharma-grade beauty",
+    href: "/products?category=cosmetics",
+    mark: "CO",
+    accent: "#d6b04d",
+    productsLabel: "Glow · Tone · Finish",
+  },
+  {
+    id: "sb-hair",
+    name: "HIMU Follic",
+    tagline: "Scalp & hair science",
+    href: "/products?category=hair-care",
+    mark: "HF",
+    accent: "#1a4d35",
+    productsLabel: "Serum · Oil · Repair",
+  },
+  {
+    id: "sb-rx",
+    name: "HIMU Rx",
+    tagline: "Hospital-ready formulations",
+    href: "/products?category=antibiotics",
+    mark: "RX",
+    accent: "#0b6a46",
+    productsLabel: "Antibiotics · Capsules",
+  },
+  {
+    id: "sb-inject",
+    name: "HIMU Sterile",
+    tagline: "Aseptic injectables",
+    href: "/products?category=injectables",
+    mark: "ST",
+    accent: "#1e2422",
+    productsLabel: "Vials · Ampoules",
+  },
+];

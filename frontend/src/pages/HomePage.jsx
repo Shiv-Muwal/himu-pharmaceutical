@@ -8,6 +8,11 @@ import {
   ShopTrustStrip,
   ShopCTASection,
 } from "@/components/sections/shop-home";
+import {
+  TrustedBrandsSection,
+  ShopWithBrandsSection,
+  HomeBlogsSection,
+} from "@/components/sections/home-extras";
 
 export default function HomePage() {
   return (
@@ -19,7 +24,10 @@ export default function HomePage() {
       <DermaSpotlightSection />
       <ShopTrustStrip />
       <PopularShopSection />
+      <TrustedBrandsSection />
+      <ShopWithBrandsSection />
       <ShopCTASection />
+      <HomeBlogsSection />
     </>
   );
 }

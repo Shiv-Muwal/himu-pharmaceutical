@@ -9,6 +9,7 @@ import { OrdersPanel } from "@/admin/components/OrdersPanel";
 import { CustomersPanel } from "@/admin/components/CustomersPanel";
 import { SettingsPanel } from "@/admin/components/SettingsPanel";
 import { BannersPanel } from "@/admin/components/BannersPanel";
+import { BlogsPanel } from "@/admin/components/BlogsPanel";
 import { ProductModal, OrderDetailModal } from "@/admin/components/AdminModals";
 
 const TAB_META = {
@@ -35,6 +36,10 @@ const TAB_META = {
   banners: {
     title: "Homepage Banners",
     subtitle: "Add or remove carousel slides for the shopping home",
+  },
+  blogs: {
+    title: "Blog Management",
+    subtitle: "Create and manage news & insights for the storefront",
   },
   settings: {
     title: "Account Settings",
@@ -192,6 +197,18 @@ export default function AdminPage() {
                   handleDeleteBanner={dash.handleDeleteBanner}
                   handleToggleBanner={dash.handleToggleBanner}
                   resetBannerForm={dash.resetBannerForm}
+                />
+              )}
+              {dash.activeTab === "blogs" && (
+                <BlogsPanel
+                  blogs={dash.blogs}
+                  blogForm={dash.blogForm}
+                  setBlogForm={dash.setBlogForm}
+                  editingBlogId={dash.editingBlogId}
+                  handleBlogSubmit={dash.handleBlogSubmit}
+                  handleEditBlog={dash.handleEditBlog}
+                  handleDeleteBlog={dash.handleDeleteBlog}
+                  resetBlogForm={dash.resetBlogForm}
                 />
               )}
               {dash.activeTab === "settings" && (

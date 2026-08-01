@@ -10,6 +10,7 @@ import {
   Users,
   ExternalLink,
   ImageIcon,
+  Newspaper,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -17,13 +18,20 @@ import { SIDEBAR_TABS } from "@/admin/constants";
 import { AdminLogo } from "@/admin/components/AdminLogo";
 
 function getStorefrontUrl() {
-  if (typeof window !== "undefined") {
-    const host = window.location.hostname;
-    if (host && host !== "localhost" && host !== "127.0.0.1") {
-      return `${window.location.protocol}//${host}:5173`;
-    }
+  if (import.meta.env.VITE_STOREFRONT_URL) {
+    return String(import.meta.env.VITE_STOREFRONT_URL).replace(/\/$/, "");
   }
-  return import.meta.env.VITE_STOREFRONT_URL || "http://localhost:5173";
+  if (typeof window !== "undefined") {
+    const { protocol, hostname, port, origin } = window.location;
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+      return "http://localhost:5173";
+    }
+    if (["5173", "5174", "4173", "4174"].includes(port)) {
+      return `${protocol}//${hostname}:5173`;
+    }
+    return origin;
+  }
+  return "http://localhost:5173";
 }
 
 const ICONS = {
@@ -33,6 +41,7 @@ const ICONS = {
   orders: ClipboardList,
   customers: Users,
   banners: ImageIcon,
+  blogs: Newspaper,
   settings: Settings,
 };
 

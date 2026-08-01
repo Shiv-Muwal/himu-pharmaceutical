@@ -53,6 +53,7 @@ export const SIDEBAR_TABS = [
   { id: "orders", label: "Orders", hint: "Fulfillment desk" },
   { id: "customers", label: "Customers", hint: "Buyer directory" },
   { id: "banners", label: "Banners", hint: "Homepage slides" },
+  { id: "blogs", label: "Blogs", hint: "News & insights" },
   { id: "settings", label: "Settings", hint: "Account & security" },
 ];
 
@@ -63,6 +64,17 @@ export const EMPTY_BANNER_FORM = {
   link: "/products?category=dermatology",
   ctaLabel: "Shop now",
   order: "0",
+};
+
+export const EMPTY_BLOG_FORM = {
+  title: "",
+  excerpt: "",
+  content: "",
+  category: "Healthcare",
+  author: "HIMU Editorial",
+  date: new Date().toISOString().slice(0, 10),
+  image: "",
+  readTime: "3 min read",
 };
 
 export const ORDER_STATUSES = ["Pending", "Shipped", "Delivered", "Cancelled"];

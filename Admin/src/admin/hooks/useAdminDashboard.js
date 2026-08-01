@@ -3,6 +3,7 @@ import { api, adminSession } from "@/lib/api";
 import {
   EMPTY_PRODUCT_FORM,
   EMPTY_BANNER_FORM,
+  EMPTY_BLOG_FORM,
   IMAGE_PRESETS,
   LOW_STOCK_THRESHOLD,
   downloadCsv,
@@ -23,6 +24,9 @@ export function useAdminDashboard() {
   const [banners, setBanners] = useState([]);
   const [bannerForm, setBannerForm] = useState(EMPTY_BANNER_FORM);
   const [editingBannerId, setEditingBannerId] = useState(null);
+  const [blogs, setBlogs] = useState([]);
+  const [blogForm, setBlogForm] = useState(EMPTY_BLOG_FORM);
+  const [editingBlogId, setEditingBlogId] = useState(null);
   const [adminProfile, setAdminProfile] = useState({
     name: "HIMU Administrator",
     email: "admin@himu.local",
@@ -53,15 +57,23 @@ export function useAdminDashboard() {
   const [refreshing, setRefreshing] = useState(false);
 
   const loadDashboard = async (token) => {
-    const [user, productsData, ordersData, customersData, activityData, bannersData] =
-      await Promise.all([
-        api("/auth/me", { token }),
-        api("/products?limit=200", { token }),
-        api("/orders?limit=200", { token }),
-        api("/customers", { token }).catch(() => ({ items: [] })),
-        api("/activity", { token }).catch(() => ({ items: [] })),
-        api("/banners?all=true", { token }).catch(() => ({ items: [] })),
-      ]);
+    const [
+      user,
+      productsData,
+      ordersData,
+      customersData,
+      activityData,
+      bannersData,
+      blogsData,
+    ] = await Promise.all([
+      api("/auth/me", { token }),
+      api("/products?limit=200", { token }),
+      api("/orders?limit=200", { token }),
+      api("/customers", { token }).catch(() => ({ items: [] })),
+      api("/activity", { token }).catch(() => ({ items: [] })),
+      api("/banners?all=true", { token }).catch(() => ({ items: [] })),
+      api("/blogs", { token }).catch(() => ({ items: [] })),
+    ]);
     if (user.role && user.role !== "admin") {
       adminSession.clear();
       throw new Error("Not an administrator account");
@@ -74,6 +86,7 @@ export function useAdminDashboard() {
     setCustomers(customersData.items || []);
     setActivity(activityData.items || []);
     setBanners(bannersData.items || []);
+    setBlogs(blogsData.items || []);
   };
 
   useEffect(() => {
@@ -660,6 +673,78 @@ export function useAdminDashboard() {
     }
   };
 
+  const resetBlogForm = () => {
+    setEditingBlogId(null);
+    setBlogForm({
+      ...EMPTY_BLOG_FORM,
+      date: new Date().toISOString().slice(0, 10),
+    });
+  };
+
+  const handleEditBlog = (blog) => {
+    setEditingBlogId(blog.id || blog.blogId);
+    setBlogForm({
+      title: blog.title || "",
+      excerpt: blog.excerpt || "",
+      content: blog.content || "",
+      category: blog.category || "Healthcare",
+      author: blog.author || "HIMU Editorial",
+      date: blog.date || new Date().toISOString().slice(0, 10),
+      image: blog.image || "",
+      readTime: blog.readTime || "3 min read",
+    });
+    setActiveTab("blogs");
+  };
+
+  const handleBlogSubmit = async (e) => {
+    e.preventDefault();
+    const token = adminSession.get();
+    if (!token) return;
+    const payload = {
+      title: blogForm.title.trim(),
+      excerpt: blogForm.excerpt.trim(),
+      content: blogForm.content.trim(),
+      category: blogForm.category.trim() || "Healthcare",
+      author: blogForm.author.trim() || "HIMU Editorial",
+      date: blogForm.date || new Date().toISOString().slice(0, 10),
+      image: blogForm.image.trim(),
+      readTime: blogForm.readTime.trim() || "3 min read",
+    };
+    try {
+      if (editingBlogId) {
+        await api(`/blogs/${editingBlogId}`, {
+          method: "PUT",
+          token,
+          body: JSON.stringify(payload),
+        });
+      } else {
+        await api("/blogs", {
+          method: "POST",
+          token,
+          body: JSON.stringify(payload),
+        });
+      }
+      const blogsData = await api("/blogs", { token });
+      setBlogs(blogsData.items || []);
+      resetBlogForm();
+    } catch (error) {
+      alert(error.message || "Unable to save blog");
+    }
+  };
+
+  const handleDeleteBlog = async (blog) => {
+    const id = blog.id || blog.blogId;
+    if (!id || !confirm(`Delete blog “${blog.title}”?`)) return;
+    const token = adminSession.get();
+    try {
+      await api(`/blogs/${id}`, { method: "DELETE", token });
+      setBlogs((prev) => prev.filter((b) => (b.id || b.blogId) !== id));
+      if (editingBlogId === id) resetBlogForm();
+    } catch (error) {
+      alert(error.message || "Unable to delete blog");
+    }
+  };
+
   return {
     mounted,
     isLoggedIn,
@@ -750,6 +835,14 @@ export function useAdminDashboard() {
     handleDeleteBanner,
     handleToggleBanner,
     resetBannerForm,
+    blogs,
+    blogForm,
+    setBlogForm,
+    editingBlogId,
+    handleBlogSubmit,
+    handleEditBlog,
+    handleDeleteBlog,
+    resetBlogForm,
     sidebarOpen,
     setSidebarOpen,
   };
