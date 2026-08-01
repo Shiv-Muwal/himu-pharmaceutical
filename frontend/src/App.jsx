@@ -83,7 +83,7 @@ function AppLayout() {
       <ScrollProgressBar />
       <Navbar />
       <main
-        className="min-h-screen flex-1 pb-[calc(4.25rem+env(safe-area-inset-bottom))] md:pb-0"
+        className="min-h-screen flex-1"
         style={{ paddingTop: "var(--site-header-height, 4.5rem)" }}
       >
         <Routes>

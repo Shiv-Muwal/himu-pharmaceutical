@@ -13,7 +13,6 @@ export default function ProductsPage() {
         title="Shop Medicines & Care"
         description="Browse HIMU shelves — derma, wellness & pharmacy essentials."
         image="/banners/banner-shop-medicines.jpg"
-        badge="HIMU Store"
       />
       <section className="section-padding pt-4 sm:pt-6">
         <div className="container-custom">

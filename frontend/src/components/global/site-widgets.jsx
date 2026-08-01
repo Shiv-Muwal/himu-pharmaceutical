@@ -34,7 +34,7 @@ export function BackToTop() {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-[calc(6.5rem+env(safe-area-inset-bottom))] right-4 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:scale-110 transition-transform cursor-pointer md:bottom-24 md:right-6 md:h-12 md:w-12"
+      className="fixed bottom-[calc(var(--mobile-nav-offset)+1.25rem)] right-4 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:scale-110 transition-transform cursor-pointer md:bottom-24 md:right-6 md:h-12 md:w-12"
       aria-label="Back to top"
     >
       ↑
@@ -64,7 +64,7 @@ export function CookieBanner() {
     <motion.div
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="fixed bottom-[calc(4.25rem+env(safe-area-inset-bottom))] left-0 right-0 z-[60] p-3 md:bottom-0 md:p-4"
+      className="fixed bottom-[var(--mobile-nav-offset)] left-0 right-0 z-[60] p-3 md:bottom-0 md:p-4"
     >
       <div className="container-custom">
         <div className="glass rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-2xl">

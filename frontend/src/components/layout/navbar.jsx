@@ -504,13 +504,19 @@ export function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ type: "spring", damping: 25 }}
-            className="fixed inset-0 z-40 lg:hidden"
+            className="fixed inset-0 z-[70] lg:hidden"
           >
             <div
               className="absolute inset-0 bg-black/50"
               onClick={() => setMobileOpen(false)}
             />
-            <div className="absolute right-0 top-0 h-full w-80 max-w-full glass shadow-2xl p-6 pt-20 overflow-y-auto">
+            <div
+              className="absolute right-0 top-0 h-full w-80 max-w-full overflow-y-auto glass p-6 pt-20 shadow-2xl"
+              style={{
+                paddingBottom:
+                  "calc(var(--mobile-nav-offset, 5.5rem) + 1.5rem)",
+              }}
+            >
               <div className="mb-4 space-y-2 border-b border-border/40 pb-4">
                 {isAuthenticated ? (
                   <>
@@ -543,6 +549,7 @@ export function Navbar() {
                     </button>
                     <Link
                       href="/signup"
+                      onClick={() => setMobileOpen(false)}
                       className="flex w-full items-center gap-2 rounded-xl border border-primary/30 px-4 py-3 text-sm font-bold text-primary"
                     >
                       <UserPlus className="h-4 w-4" />
@@ -556,7 +563,8 @@ export function Navbar() {
                   <div key={link.name}>
                     <Link
                       href={link.href}
-                      className="block px-4 py-3 rounded-xl text-base font-medium hover:bg-primary/10 hover:text-primary transition-colors"
+                      onClick={() => setMobileOpen(false)}
+                      className="block rounded-xl px-4 py-3 text-base font-medium transition-colors hover:bg-primary/10 hover:text-primary"
                     >
                       {link.name}
                     </Link>
@@ -566,7 +574,8 @@ export function Navbar() {
                           <Link
                             key={child.name}
                             href={child.href}
-                            className="block px-4 py-2 rounded-lg text-sm text-muted-foreground hover:text-primary transition-colors"
+                            onClick={() => setMobileOpen(false)}
+                            className="block rounded-lg px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-primary"
                           >
                             {child.name}
                           </Link>

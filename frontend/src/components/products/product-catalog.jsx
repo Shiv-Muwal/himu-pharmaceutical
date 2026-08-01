@@ -1,12 +1,15 @@
 import { useState, useMemo, useEffect } from "react";
+import { ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ProductCard } from "./product-card";
+import { FadeIn } from "@/components/animations/motion-components";
+import { categories } from "@/data/categories";
+import { getMockProducts } from "@/lib/mock-backend";
 import {
-  Search,
-  SlidersHorizontal,
-  Grid3X3,
-  LayoutGrid,
-  X,
-  ChevronDown,
-} from "lucide-react";
+  BUDGET_RANGES,
+  collectFilterFacets,
+  filterProducts,
+} from "@/lib/product-search";
 
 function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = useState(() =>
@@ -23,17 +26,6 @@ function useIsMobile(breakpoint = 768) {
 
   return isMobile;
 }
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { ProductCard } from "./product-card";
-import { FadeIn } from "@/components/animations/motion-components";
-import { categories } from "@/data/categories";
-import { getMockProducts } from "@/lib/mock-backend";
-import {
-  BUDGET_RANGES,
-  collectFilterFacets,
-  filterProducts,
-} from "@/lib/product-search";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -86,8 +78,6 @@ export function ProductCatalog({
   const [budgets, setBudgets] = useState([]);
   const [sort, setSort] = useState(initialSearch ? "relevance" : "name-asc");
   const [page, setPage] = useState(1);
-  const [gridCols, setGridCols] = useState(3);
-  const [filtersOpen, setFiltersOpen] = useState(false);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -236,142 +226,6 @@ export function ProductCatalog({
 
   return (
     <div>
-      <div className="relative mb-4 overflow-hidden rounded-[1.35rem] border border-primary/10 bg-gradient-to-br from-white via-[#fbf8ef] to-[#eef6f1] p-3 shadow-[0_12px_32px_rgba(11,106,70,0.08)] sm:mb-6 sm:rounded-[1.6rem] sm:p-4 md:p-5">
-        <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-gold/20 blur-2xl" />
-        <div className="pointer-events-none absolute -bottom-12 -left-8 h-28 w-28 rounded-full bg-primary/10 blur-2xl" />
-
-        <div className="relative flex flex-col gap-2.5 sm:gap-3 lg:flex-row lg:items-center">
-          <div className="relative flex-1">
-            <div className="flex items-center gap-2 rounded-2xl border border-primary/15 bg-white px-3 py-1.5 shadow-inner sm:px-3.5 sm:py-2">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary text-white sm:h-9 sm:w-9">
-                <Search className="h-4 w-4" />
-              </span>
-              <Input
-                placeholder="Search medicines, derma, care..."
-                value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  setSort("relevance");
-                  setPage(1);
-                }}
-                className="h-9 border-0 bg-transparent px-0 text-sm shadow-none focus-visible:ring-0 sm:h-10"
-              />
-              {search && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearch("");
-                    setPage(1);
-                  }}
-                  className="rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
-                  aria-label="Clear search"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              )}
-            </div>
-          </div>
-
-          <div className="relative grid grid-cols-2 gap-2 sm:flex sm:flex-wrap lg:shrink-0">
-            <Button
-              type="button"
-              className="h-11 gap-2 rounded-2xl bg-primary text-white shadow-md shadow-primary/20 lg:hidden"
-              onClick={() => setFiltersOpen(true)}
-            >
-              <SlidersHorizontal className="h-4 w-4" />
-              Filters
-              {activeCount > 0 && (
-                <span className="rounded-full bg-gold px-1.5 text-[10px] font-black text-[#1a2e1f]">
-                  {activeCount}
-                </span>
-              )}
-            </Button>
-            <select
-              value={sort}
-              onChange={(e) => setSort(e.target.value)}
-              className="h-11 w-full rounded-2xl border border-primary/15 bg-white px-3 text-sm font-semibold text-foreground shadow-sm outline-none focus:border-primary sm:min-w-[160px]"
-            >
-              <option value="relevance">Relevance</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="name-asc">Name A-Z</option>
-              <option value="name-desc">Name Z-A</option>
-              <option value="rating">Top rated</option>
-              <option value="category">Category</option>
-            </select>
-            <Button
-              variant="outline"
-              size="icon"
-              className="hidden h-11 w-11 rounded-2xl border-primary/15 sm:inline-flex"
-              onClick={() => setGridCols(gridCols === 3 ? 4 : 3)}
-            >
-              {gridCols === 3 ? (
-                <LayoutGrid className="h-4 w-4" />
-              ) : (
-                <Grid3X3 className="h-4 w-4" />
-              )}
-            </Button>
-          </div>
-        </div>
-
-        {(search || activeCount > 0) && (
-          <div className="relative mt-3 flex flex-wrap items-center gap-2">
-            {search && (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                “{search}”
-                <button type="button" onClick={() => setSearch("")} aria-label="Remove search">
-                  <X className="h-3 w-3" />
-                </button>
-              </span>
-            )}
-            {brands.map((b) => (
-              <span
-                key={b}
-                className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1 text-xs font-semibold"
-              >
-                {b}
-                <button type="button" onClick={() => toggle(brands, b, setBrands)}>
-                  <X className="h-3 w-3" />
-                </button>
-              </span>
-            ))}
-            {types.map((t) => (
-              <span
-                key={t}
-                className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1 text-xs font-semibold"
-              >
-                {t}
-                <button type="button" onClick={() => toggle(types, t, setTypes)}>
-                  <X className="h-3 w-3" />
-                </button>
-              </span>
-            ))}
-            {budgets.map((id) => {
-              const range = BUDGET_RANGES.find((r) => r.id === id);
-              return (
-                <span
-                  key={id}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1 text-xs font-semibold"
-                >
-                  {range?.label || id}
-                  <button type="button" onClick={() => toggle(budgets, id, setBudgets)}>
-                    <X className="h-3 w-3" />
-                  </button>
-                </span>
-              );
-            })}
-          </div>
-        )}
-
-        <div className="relative mt-3 flex items-center justify-between gap-2">
-          <p className="inline-flex items-center gap-2 rounded-full bg-primary/8 px-3 py-1 text-xs font-semibold text-primary sm:text-sm">
-            <SlidersHorizontal className="h-3.5 w-3.5" />
-            {filtered.length} products
-            {search ? ` for “${search}”` : " ready to shop"}
-          </p>
-        </div>
-      </div>
-
       <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
         <aside className="sticky top-24 hidden h-fit rounded-2xl border border-border/40 bg-white p-4 shadow-sm lg:block dark:bg-card">
           {filterPanel}
@@ -391,11 +245,7 @@ export function ProductCatalog({
               </Button>
             </div>
           ) : (
-            <div
-              className={`grid grid-cols-2 gap-2.5 sm:gap-5 ${
-                gridCols === 3 ? "xl:grid-cols-3" : "xl:grid-cols-4"
-              }`}
-            >
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-5 xl:grid-cols-3">
               {visibleProducts.map((product, i) => (
                 <FadeIn key={product.id} delay={Math.min(i * 0.03, 0.2)}>
                   <ProductCard product={product} compact />
@@ -436,36 +286,6 @@ export function ProductCatalog({
           )}
         </div>
       </div>
-
-      {filtersOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <button
-            type="button"
-            className="absolute inset-0 bg-black/45"
-            aria-label="Close filters"
-            onClick={() => setFiltersOpen(false)}
-          />
-          <div className="absolute inset-x-0 bottom-0 max-h-[85vh] overflow-y-auto rounded-t-3xl bg-white p-5 shadow-2xl dark:bg-card">
-            <div className="mb-3 flex items-center justify-between">
-              <h3 className="font-[family-name:var(--font-heading)] text-lg font-bold">
-                Filters
-              </h3>
-              <button
-                type="button"
-                onClick={() => setFiltersOpen(false)}
-                className="rounded-full p-2 hover:bg-muted"
-                aria-label="Close"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-            {filterPanel}
-            <Button className="mt-4 h-11 w-full" onClick={() => setFiltersOpen(false)}>
-              Show {filtered.length} products
-            </Button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

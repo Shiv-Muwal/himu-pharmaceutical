@@ -14,7 +14,7 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="relative mt-0 text-white md:mt-12">
+    <footer className="relative mt-0 pb-[var(--mobile-nav-offset)] text-white md:mt-12 md:pb-0">
       {/* Mobile: single soft cream → green blend (no double layer) */}
       <div
         aria-hidden

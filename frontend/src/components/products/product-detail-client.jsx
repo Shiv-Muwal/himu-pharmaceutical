@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Image } from "@/components/ui/image";
 import { Link } from "@/components/ui/link";
 import { Download, ArrowRight, ArrowLeft, X } from "lucide-react";
 import { ProductCard } from "@/components/products/product-card";
-import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -13,6 +12,7 @@ import { ProductActions } from "@/components/products/product-actions";
 import { ProductReviews } from "@/components/products/product-reviews";
 import { getMockProducts } from "@/lib/mock-backend";
 import { PRODUCT_DISCLAIMER } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 export function ProductDetailClient({
   initialProduct,
@@ -22,15 +22,18 @@ export function ProductDetailClient({
   const [product, setProduct] = useState(initialProduct);
   const [related, setRelated] = useState(initialRelatedProducts);
   const [notFound, setNotFound] = useState(false);
+  const [activeImage, setActiveImage] = useState(
+    initialProduct?.image || initialProduct?.images?.[0] || "",
+  );
 
   useEffect(() => {
     const allProducts = getMockProducts();
     const foundProduct = allProducts.find((p) => p.slug === slug);
     if (foundProduct) {
       setProduct(foundProduct);
+      setActiveImage(foundProduct.image || foundProduct.images?.[0] || "");
       setNotFound(false);
 
-      // Hydrate related products
       const relatedItems = foundProduct.relatedSlugs
         .map((s) => allProducts.find((p) => p.slug === s))
         .filter((p) => !!p)
@@ -40,6 +43,12 @@ export function ProductDetailClient({
       setNotFound(true);
     }
   }, [slug]);
+
+  const gallery = useMemo(() => {
+    if (!product) return [];
+    const list = [product.image, ...(product.images || [])].filter(Boolean);
+    return [...new Set(list)];
+  }, [product]);
 
   if (notFound) {
     return (
@@ -83,49 +92,51 @@ export function ProductDetailClient({
 
   return (
     <>
-      <section className="pt-28 pb-8 bg-muted/30">
+      <section className="pb-6 pt-3 sm:pb-8 sm:pt-4 md:pb-10">
         <div className="container-custom">
-          <Breadcrumbs
-            items={[
-              { label: "Products", href: "/products" },
-              {
-                label: product.category,
-                href: `/categories/${product.categorySlug}`,
-              },
-              { label: product.name },
-            ]}
-          />
-        </div>
-      </section>
-      <section className="section-padding pt-0">
-        <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid gap-6 lg:grid-cols-2 lg:gap-10">
             <FadeIn direction="left">
-              <div className="space-y-4">
-                <div className="relative aspect-square rounded-2xl overflow-hidden shadow-xl bg-muted">
+              <div className="flex flex-col gap-3 sm:gap-4 lg:flex-row-reverse">
+                <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-muted shadow-xl">
                   <Image
-                    src={product.image}
+                    key={activeImage}
+                    src={activeImage || product.image}
                     alt={product.name}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-opacity duration-200"
                     priority
                   />
                 </div>
-                <div className="grid grid-cols-3 gap-3">
-                  {product.images.map((img, i) => (
-                    <div
-                      key={i}
-                      className="relative aspect-square rounded-xl overflow-hidden border-2 border-border"
-                    >
-                      <Image
-                        src={img}
-                        alt={`${product.name} view ${i + 1}`}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
+
+                {gallery.length > 1 && (
+                  <div className="flex gap-2 overflow-x-auto pb-1 lg:w-[72px] lg:flex-col lg:overflow-visible lg:pb-0 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                    {gallery.map((img, i) => {
+                      const selected = img === activeImage;
+                      return (
+                        <button
+                          key={`${img}-${i}`}
+                          type="button"
+                          onClick={() => setActiveImage(img)}
+                          className={cn(
+                            "relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 transition sm:h-[4.5rem] sm:w-[4.5rem] lg:h-[4.25rem] lg:w-full",
+                            selected
+                              ? "border-primary shadow-md ring-2 ring-primary/20"
+                              : "border-border/60 opacity-80 hover:border-primary/40 hover:opacity-100",
+                          )}
+                          aria-label={`View image ${i + 1}`}
+                          aria-pressed={selected}
+                        >
+                          <Image
+                            src={img}
+                            alt={`${product.name} view ${i + 1}`}
+                            fill
+                            className="object-cover"
+                          />
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </FadeIn>
             <FadeIn direction="right">
