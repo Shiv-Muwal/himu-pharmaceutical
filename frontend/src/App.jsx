@@ -6,6 +6,7 @@ import { AuthProvider, useAuth } from "@/providers/AuthProvider";
 import { LocationProvider } from "@/providers/LocationProvider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { MobileAppNav } from "@/components/layout/mobile-app-nav";
 import {
   ScrollProgressBar,
   BackToTop,
@@ -13,6 +14,7 @@ import {
   FloatingButtons,
   PageLoader,
 } from "@/components/global/site-widgets";
+import { InstallPrompt } from "@/components/global/install-prompt";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 import { CheckoutModal } from "@/components/cart/checkout-modal";
 import { LoginModal } from "@/components/auth/login-modal";
@@ -81,7 +83,7 @@ function AppLayout() {
       <ScrollProgressBar />
       <Navbar />
       <main
-        className="min-h-screen flex-1"
+        className="min-h-screen flex-1 pb-[calc(4.25rem+env(safe-area-inset-bottom))] md:pb-0"
         style={{ paddingTop: "var(--site-header-height, 4.5rem)" }}
       >
         <Routes>
@@ -107,6 +109,8 @@ function AppLayout() {
         </Routes>
       </main>
       <Footer />
+      <MobileAppNav />
+      <InstallPrompt />
       <BackToTop />
       <CookieBanner />
       <FloatingButtons />

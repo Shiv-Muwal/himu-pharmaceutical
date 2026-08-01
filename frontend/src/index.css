@@ -106,11 +106,34 @@ body {
 @media (display-mode: standalone) {
   body {
     user-select: none;
+    -webkit-user-select: none;
   }
 
   input,
-  textarea {
+  textarea,
+  [contenteditable="true"] {
     user-select: text;
+    -webkit-user-select: text;
+  }
+
+  /* Hide browser-like chrome cues when launched from home screen */
+  .pwa-hide-standalone {
+    display: none !important;
+  }
+}
+
+@supports (padding: max(0px)) {
+  .safe-bottom {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* App-like touch targets on small screens */
+@media (max-width: 767px) {
+  button,
+  a,
+  [role="button"] {
+    touch-action: manipulation;
   }
 }
 
