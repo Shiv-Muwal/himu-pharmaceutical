@@ -7,6 +7,7 @@
 :root {
   --font-poppins: "Poppins", system-ui, sans-serif;
   --font-plus-jakarta: "Plus Jakarta Sans", system-ui, sans-serif;
+  --site-header-height: 4.5rem;
   --background: #f8f3e6;
   --foreground: #1a2e1f;
   --card: rgba(255, 252, 240, 0.92);

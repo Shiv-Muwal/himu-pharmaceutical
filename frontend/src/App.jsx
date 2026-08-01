@@ -4,18 +4,18 @@ import { ThemeProvider } from "@/providers/ThemeProvider";
 import { CartProvider } from "@/providers/CartProvider";
 import { AuthProvider, useAuth } from "@/providers/AuthProvider";
 import { LocationProvider } from "@/providers/LocationProvider";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
 import {
   ScrollProgressBar,
   BackToTop,
   CookieBanner,
   FloatingButtons,
   PageLoader,
-} from "@/components/global/Site-widgets";
-import { CartDrawer } from "@/components/cart/Cart-drawer";
-import { CheckoutModal } from "@/components/cart/Checkout-modal";
-import { LoginModal } from "@/components/auth/Login-modal";
+} from "@/components/global/site-widgets";
+import { CartDrawer } from "@/components/cart/cart-drawer";
+import { CheckoutModal } from "@/components/cart/checkout-modal";
+import { LoginModal } from "@/components/auth/login-modal";
 import { generateOrganizationSchema } from "@/lib/seo";
 import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
@@ -80,7 +80,10 @@ function AppLayout() {
       <PageLoader />
       <ScrollProgressBar />
       <Navbar />
-      <main className="flex-1 min-h-screen">
+      <main
+        className="min-h-screen flex-1"
+        style={{ paddingTop: "var(--site-header-height, 4.5rem)" }}
+      >
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />

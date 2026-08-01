@@ -158,7 +158,7 @@ export function BannerCarousel() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="container-custom relative z-10 flex h-full items-end pb-14 pt-20 sm:items-center sm:pb-10 sm:pt-8">
+        <div className="container-custom relative z-10 flex h-full items-end pb-8 pt-8 sm:items-center sm:pb-10 sm:pt-6">
           <motion.div
             key={`copy-${active.id || index}`}
             initial={{ opacity: 0, y: 14 }}
@@ -310,8 +310,11 @@ export function ShopSearchBar() {
 
   return (
     <section
-      className="sticky top-[7.5rem] z-40 -mt-5 bg-[#f8f3e6] px-4 py-2 sm:top-32 sm:-mt-7 sm:px-6"
-      style={{ backgroundColor: "#f8f3e6" }}
+      className="sticky z-40 border-b border-border/40 bg-[#f8f3e6] px-4 py-3 sm:px-6"
+      style={{
+        top: "var(--site-header-height, 4.5rem)",
+        backgroundColor: "#f8f3e6",
+      }}
     >
       <form
         ref={searchRef}
@@ -321,10 +324,7 @@ export function ShopSearchBar() {
         }}
         className="container-custom relative"
       >
-        <div
-          className="flex flex-col gap-2 rounded-2xl border border-border/50 bg-white p-2 shadow-[0_18px_50px_rgba(6,22,16,0.16)] sm:flex-row sm:items-center dark:bg-card"
-          style={{ backgroundColor: "#ffffff", opacity: 1 }}
-        >
+        <div className="flex flex-col gap-2 rounded-2xl border border-border/50 bg-white p-2 shadow-[0_10px_28px_rgba(6,22,16,0.12)] sm:flex-row sm:items-center dark:bg-card">
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
@@ -556,7 +556,7 @@ function ProductScroller({ title, subtitle, badge, items, href, showReviews = tr
   if (!items.length) return null;
 
   return (
-    <section className="relative overflow-hidden py-10 sm:py-12">
+    <section className="relative overflow-x-clip py-8 sm:py-10">
       <div className="container-custom mb-5 flex flex-col gap-4 sm:mb-6 md:flex-row md:items-end md:justify-between">
         <div className="max-w-xl">
           <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary">

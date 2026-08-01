@@ -1,8 +1,8 @@
 import { Link } from "@/components/ui/Link";
 import { useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BrandLogo } from "@/components/ui/Brand-logo";
+import { BrandLogo } from "@/components/ui/brand-logo";
 import {
   Menu,
   X,
@@ -77,6 +77,7 @@ export function Navbar() {
   const { pathname } = useLocation();
   const [mounted, setMounted] = useState(false);
   const [prevPathname, setPrevPathname] = useState(pathname);
+  const headerRef = useRef(null);
 
   const filteredProducts =
     searchQuery.trim() !== ""
@@ -100,17 +101,38 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return undefined;
+
+    const syncHeaderHeight = () => {
+      const height = Math.ceil(el.getBoundingClientRect().height);
+      document.documentElement.style.setProperty("--site-header-height", `${height}px`);
+    };
+
+    syncHeaderHeight();
+    const observer = new ResizeObserver(syncHeaderHeight);
+    observer.observe(el);
+    window.addEventListener("resize", syncHeaderHeight);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", syncHeaderHeight);
+    };
+  }, []);
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-[#f8f3e6]/95 backdrop-blur-md border-b border-border/60 py-5 shadow-lg shadow-black/5">
+      <header
+        ref={headerRef}
+        className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-[#f8f3e6]/95 py-2.5 shadow-lg shadow-black/5 backdrop-blur-md transition-all duration-500 sm:py-3"
+      >
         <nav
           className="container-custom flex items-center justify-between gap-2 xl:gap-4"
           aria-label="Main navigation"
         >
-          <Link href="/" className="group flex items-center shrink-0">
+          <Link href="/" className="group flex shrink-0 items-center">
             <BrandLogo
-              className="h-14 w-44 transition-transform group-hover:scale-105 sm:h-16 sm:w-52 md:h-[4.5rem] md:w-60"
+              className="h-11 w-36 transition-transform group-hover:scale-105 sm:h-12 sm:w-44 md:h-14 md:w-52"
               priority
             />
           </Link>
