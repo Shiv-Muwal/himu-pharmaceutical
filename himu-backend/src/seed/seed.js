@@ -8,12 +8,14 @@ import { FAQ } from "../models/FAQ.js";
 import { Order } from "../models/Order.js";
 import { User } from "../models/User.js";
 import { Activity } from "../models/Activity.js";
+import { Banner } from "../models/Banner.js";
 import {
   seedProducts,
   seedCategories,
   seedBlogs,
   seedFaqs,
   seedOrders,
+  seedBanners,
 } from "./seedData.js";
 
 async function updateRelatedSlugs() {
@@ -47,11 +49,15 @@ export async function runSeed({ clear = true } = {}) {
       Order.deleteMany({}),
       User.deleteMany({}),
       Activity.deleteMany({}),
+      Banner.deleteMany({}),
     ]);
   }
 
   console.log("Seeding categories...");
   await Category.insertMany(seedCategories);
+
+  console.log("Seeding banners...");
+  await Banner.insertMany(seedBanners);
 
   console.log("Seeding products...");
   await Product.insertMany(seedProducts);
@@ -74,6 +80,15 @@ export async function runSeed({ clear = true } = {}) {
     role: "admin",
   });
 
+  console.log("Creating demo customer...");
+  await User.create({
+    name: env.customerName,
+    email: env.customerEmail,
+    password: env.customerPassword,
+    phone: env.customerPhone,
+    role: "customer",
+  });
+
   await Activity.create({
     activityId: "act_seed_ready",
     type: "system",
@@ -83,14 +98,39 @@ export async function runSeed({ clear = true } = {}) {
 
   console.log("Seed completed successfully!");
   console.log(`Admin login: ${env.adminEmail} / ${env.adminPassword}`);
+  console.log(`Customer login: ${env.customerEmail} / ${env.customerPassword}`);
+}
+
+async function ensureDemoCustomer() {
+  const email = String(env.customerEmail || "").toLowerCase();
+  const existing = await User.findOne({ email });
+  if (existing) return;
+  console.log("Demo customer missing — creating customer@himu.local...");
+  await User.create({
+    name: env.customerName,
+    email: env.customerEmail,
+    password: env.customerPassword,
+    phone: env.customerPhone,
+    role: "customer",
+  });
 }
 
 export async function ensureSeeded() {
   const productCount = await Product.countDocuments();
-  if (productCount > 0) return false;
-  console.log("Empty database detected — seeding defaults...");
-  await runSeed({ clear: true });
-  return true;
+  if (productCount === 0) {
+    console.log("Empty database detected — seeding defaults...");
+    await runSeed({ clear: true });
+    return true;
+  }
+
+  const bannerCount = await Banner.countDocuments();
+  if (bannerCount === 0) {
+    console.log("No banners found — seeding default homepage banners...");
+    await Banner.insertMany(seedBanners);
+  }
+
+  await ensureDemoCustomer();
+  return false;
 }
 
 const isDirectRun = process.argv[1] === fileURLToPath(import.meta.url);

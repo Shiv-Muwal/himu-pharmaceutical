@@ -123,6 +123,49 @@ export const seedFaqs = [
   { faqId: "faq-05", category: "Contact", question: "How can I contact HIMU Pharmacy?", answer: "Reach us at info@himupharmacy.com or call +91 1800-123-4567." },
 ];
 
+export const seedBanners = [
+  {
+    bannerId: "bnr-derma-01",
+    title: "Dermatology care, delivered",
+    subtitle: "Clinically trusted creams & topicals — shop HIMU derma first.",
+    image: "/banners/banner-derma-care.png",
+    link: "/products?category=dermatology",
+    ctaLabel: "Shop derma",
+    order: 0,
+    active: true,
+  },
+  {
+    bannerId: "bnr-wellness-02",
+    title: "Everyday wellness deals",
+    subtitle: "Stock up on essentials with clear pricing and fast checkout.",
+    image: "/banners/banner-wellness-deals.png",
+    link: "/products",
+    ctaLabel: "Browse deals",
+    order: 1,
+    active: true,
+  },
+  {
+    bannerId: "bnr-skin-03",
+    title: "Skin specialists’ shelf",
+    subtitle: "Serums, ointments & skin-care formulated for visible results.",
+    image: "/banners/banner-skin-specialists.png",
+    link: "/products?category=skin-care",
+    ctaLabel: "Shop skin care",
+    order: 2,
+    active: true,
+  },
+  {
+    bannerId: "bnr-fast-04",
+    title: "Care that moves with you",
+    subtitle: "Add to cart in seconds — pharmacy-ready packaging, trusted quality.",
+    image: "/banners/banner-fast-care.png",
+    link: "/products?category=dermatology",
+    ctaLabel: "Start shopping",
+    order: 3,
+    active: true,
+  },
+];
+
 export const seedOrders = [
   {
     orderId: "HIMU-382910",

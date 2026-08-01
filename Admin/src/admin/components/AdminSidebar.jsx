@@ -9,13 +9,22 @@ import {
   Warehouse,
   Users,
   ExternalLink,
+  ImageIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SIDEBAR_TABS } from "@/admin/constants";
 import { AdminLogo } from "@/admin/components/AdminLogo";
 
-const STOREFRONT_URL = import.meta.env.VITE_STOREFRONT_URL || "http://localhost:5173";
+function getStorefrontUrl() {
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    if (host && host !== "localhost" && host !== "127.0.0.1") {
+      return `${window.location.protocol}//${host}:5173`;
+    }
+  }
+  return import.meta.env.VITE_STOREFRONT_URL || "http://localhost:5173";
+}
 
 const ICONS = {
   overview: LayoutDashboard,
@@ -23,6 +32,7 @@ const ICONS = {
   inventory: Warehouse,
   orders: ClipboardList,
   customers: Users,
+  banners: ImageIcon,
   settings: Settings,
 };
 
@@ -52,15 +62,18 @@ export function AdminSidebar({
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex w-72 flex-col justify-between border-r border-white/10 bg-gradient-to-b from-[#072016] via-[#0b5d3b] to-[#053527] text-white transition-transform duration-300 lg:static lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 flex w-72 flex-col justify-between border-r border-white/10 bg-gradient-to-b from-[#1e2422] via-[#0b6a46] to-[#064d32] text-white transition-transform duration-300 lg:static lg:translate-x-0",
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
         )}
       >
         <div className="border-b border-white/10 p-5">
-          <div className="mb-4 flex items-center justify-center rounded-2xl bg-white/95 p-2">
-            <AdminLogo size="md" className="mx-auto" />
+          <div className="mb-4 flex items-center justify-center">
+            <AdminLogo
+              size="md"
+              className="mx-auto drop-shadow-[0_2px_12px_rgba(255,255,255,0.3)]"
+            />
           </div>
-          <div className="text-center text-[10px] font-black tracking-[0.25em] text-[#d4af37]">
+          <div className="text-center text-[10px] font-black tracking-[0.25em] text-[#d6b04d]">
             ADMIN CONTROL
           </div>
         </div>
@@ -84,7 +97,7 @@ export function AdminSidebar({
                 className={cn(
                   "group flex w-full items-center gap-3 rounded-2xl border px-3.5 py-2.5 text-left transition-all",
                   active
-                    ? "border-[#d4af37]/40 bg-[#fff8e7] text-[#0b5d3b] shadow-lg shadow-black/20"
+                    ? "border-[#d6b04d]/40 bg-[#f8f3e6] text-[#0b6a46] shadow-lg shadow-black/20"
                     : "border-transparent text-white/70 hover:bg-white/5 hover:text-white",
                 )}
               >
@@ -94,7 +107,7 @@ export function AdminSidebar({
                   <span
                     className={cn(
                       "block text-[10px]",
-                      active ? "text-[#0b5d3b]/70" : "text-white/40",
+                      active ? "text-[#0b6a46]/70" : "text-white/40",
                     )}
                   >
                     {tab.hint}
@@ -104,7 +117,7 @@ export function AdminSidebar({
                   <span
                     className={cn(
                       "rounded-full px-1.5 py-0.5 text-[9px] font-black",
-                      active ? "bg-primary text-white" : "bg-[#d4af37] text-[#06150f]",
+                      active ? "bg-primary text-white" : "bg-[#d6b04d] text-[#1e2422]",
                     )}
                   >
                     {badge}
@@ -117,7 +130,7 @@ export function AdminSidebar({
 
         <div className="space-y-2 border-t border-white/10 p-4">
           <a
-            href={STOREFRONT_URL}
+            href={getStorefrontUrl()}
             className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 px-3 py-2.5 text-xs font-bold text-white/80 hover:bg-white/10"
           >
             <ExternalLink className="h-3.5 w-3.5" />
@@ -139,7 +152,7 @@ export function AdminSidebar({
 
 export function AdminMobileHeader({ sidebarOpen, setSidebarOpen }) {
   return (
-    <header className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-[#072016] px-4 text-white lg:hidden">
+    <header className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-[#1e2422] px-4 text-white lg:hidden">
       <button
         type="button"
         onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -147,8 +160,8 @@ export function AdminMobileHeader({ sidebarOpen, setSidebarOpen }) {
       >
         <Grid className="h-6 w-6" />
       </button>
-      <AdminLogo size="sm" className="bg-white" />
-      <AdminLogo markOnly size="sm" />
+      <AdminLogo size="sm" />
+      <span className="w-6" aria-hidden />
     </header>
   );
 }

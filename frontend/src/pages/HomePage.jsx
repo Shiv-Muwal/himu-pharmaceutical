@@ -1,27 +1,25 @@
 import {
-  HeroSection,
-  StatsSection,
-  CategoriesSection,
-  FeaturedProductsSection,
-  ResearchSection,
-  TestimonialsSection,
-  NewsSection,
-  PartnersSection,
-  CTASection,
-} from "@/components/sections/home-sections";
+  ShopPromoStrip,
+  BannerCarousel,
+  ShopSearchBar,
+  QuickCategoryRail,
+  DermaSpotlightSection,
+  PopularShopSection,
+  ShopTrustStrip,
+  ShopCTASection,
+} from "@/components/sections/shop-home";
 
 export default function HomePage() {
   return (
     <>
-      <HeroSection />
-      <StatsSection />
-      <CategoriesSection />
-      <FeaturedProductsSection />
-      <ResearchSection />
-      <TestimonialsSection />
-      <NewsSection />
-      <PartnersSection />
-      <CTASection />
+      <ShopPromoStrip />
+      <BannerCarousel />
+      <ShopSearchBar />
+      <QuickCategoryRail />
+      <DermaSpotlightSection />
+      <ShopTrustStrip />
+      <PopularShopSection />
+      <ShopCTASection />
     </>
   );
 }

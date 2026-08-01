@@ -19,7 +19,7 @@ export function ProductModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4">
       <button type="button" className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <Card className="relative z-10 flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border border-border/40 bg-[#fff8e7] text-xs shadow-2xl">
+      <Card className="relative z-10 flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border border-border/40 bg-[#f8f3e6] text-xs shadow-2xl">
         <div className="flex items-center justify-between border-b border-border/30 p-6">
           <h3 className="font-[family-name:var(--font-heading)] text-lg font-bold">
             {editingProduct ? "Modify Product Details" : "Add New Product"}
@@ -213,7 +213,7 @@ export function OrderDetailModal({ order, onClose, handleUpdateStatus }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4">
       <button type="button" className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <Card className="relative z-10 flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-3xl border border-border/40 bg-[#fff8e7] text-xs shadow-2xl">
+      <Card className="relative z-10 flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-3xl border border-border/40 bg-[#f8f3e6] text-xs shadow-2xl">
         <div className="flex items-center justify-between border-b border-border/30 p-5">
           <h3 className="font-[family-name:var(--font-heading)] text-base font-bold">
             Order: {order.id}

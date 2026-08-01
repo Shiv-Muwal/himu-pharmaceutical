@@ -8,10 +8,10 @@ export default function ProductsPage() {
   return (
     <>
       <PageHero
-        title="Product Catalogue"
-        description="Explore our comprehensive portfolio of pharmaceutical products. Information only — no online purchasing."
+        title="Shop Medicines & Care"
+        description="Search anything — face cleaner, acne gel, antibiotics — then filter by brand, type, and budget."
         image="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1600&h=600&fit=crop"
-        badge="500+ Medicines"
+        badge="HIMU Store"
       />
       <section className="section-padding">
         <div className="container-custom">

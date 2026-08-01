@@ -1,0 +1,25 @@
+{
+  "name": "HIMU Admin",
+  "short_name": "HIMU Admin",
+  "description": "HIMU Pharmacy admin operations suite.",
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#06150f",
+  "theme_color": "#0b5d3b",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

@@ -52,8 +52,18 @@ export const SIDEBAR_TABS = [
   { id: "inventory", label: "Inventory", hint: "Stock & alerts" },
   { id: "orders", label: "Orders", hint: "Fulfillment desk" },
   { id: "customers", label: "Customers", hint: "Buyer directory" },
+  { id: "banners", label: "Banners", hint: "Homepage slides" },
   { id: "settings", label: "Settings", hint: "Account & security" },
 ];
+
+export const EMPTY_BANNER_FORM = {
+  title: "",
+  subtitle: "",
+  image: "",
+  link: "/products?category=dermatology",
+  ctaLabel: "Shop now",
+  order: "0",
+};
 
 export const ORDER_STATUSES = ["Pending", "Shipped", "Delivered", "Cancelled"];
 

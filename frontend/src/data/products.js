@@ -1,4 +1,6 @@
 import { slugify } from "@/lib/utils";
+import { searchProductsSmart } from "@/lib/product-search";
+
 const IMAGES = {
   capsule: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&h=800&fit=crop",
   tablet: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&h=800&fit=crop",
@@ -73,6 +75,28 @@ const seeds = [{
   strength: "625mg",
   imageKey: "tablet",
   shortDescription: "Beta-lactamase inhibitor combination antibiotic."
+}, {
+  name: "HIMU Face Cleanse Foam",
+  category: "Skin Care",
+  categorySlug: "skin-care",
+  composition: "Salicylic Acid + Aloe Vera",
+  strength: "100ml",
+  imageKey: "skincare",
+  shortDescription: "Gentle face cleanser foam that removes dirt, oil and makeup without stripping skin.",
+  productType: "Face Cleanser",
+  brand: "HIMU Derma",
+  tags: ["face cleanser", "face cleaner", "face wash", "cleanser", "foaming cleanser"]
+}, {
+  name: "HIMU Daily Face Wash",
+  category: "Skin Care",
+  categorySlug: "skin-care",
+  composition: "Glycolic Acid + Green Tea",
+  strength: "150ml",
+  imageKey: "skincare",
+  shortDescription: "Everyday face wash for clear, refreshed skin — ideal facial cleaner for oily and combination skin.",
+  productType: "Face Wash",
+  brand: "HIMU Care",
+  tags: ["face wash", "face cleaner", "cleanser", "facial wash", "cleanse"]
 }, {
   name: "HIMU SkinCare Cream",
   category: "Skin Care",
@@ -428,8 +452,82 @@ const categoryBasePrices = {
   "tablets": 149,
   "syrups": 129,
   "injectables": 899,
-  "ointments": 179
+  "ointments": 179,
+  "creams": 229
 };
+
+const BRAND_BY_CATEGORY = {
+  dermatology: "HIMU Derma",
+  "skin-care": "HIMU Care",
+  cosmetics: "HIMU Glow",
+  "hair-care": "HIMU Hair",
+  antibiotics: "HIMU Pharma",
+  capsules: "HIMU Pharma",
+  tablets: "HIMU Pharma",
+  syrups: "HIMU Pharma",
+  injectables: "HIMU Pharma",
+  creams: "HIMU Derma",
+  ointments: "HIMU Derma",
+};
+
+function inferProductType(seed) {
+  if (seed.productType) return seed.productType;
+  const name = `${seed.name} ${seed.shortDescription}`.toLowerCase();
+  if (name.includes("face wash")) return "Face Wash";
+  if (name.includes("cleanser") || name.includes("cleanse") || name.includes("cleaner")) {
+    return "Face Cleanser";
+  }
+  if (name.includes("serum")) return "Serum";
+  if (name.includes("shampoo") || name.includes("scalp")) return "Shampoo";
+  if (name.includes("sunscreen") || name.includes("spf") || name.includes("sun shield")) {
+    return "Sunscreen";
+  }
+  if (name.includes("lotion")) return "Lotion";
+  if (name.includes("gel")) return "Gel";
+  if (name.includes("ointment")) return "Ointment";
+  if (name.includes("syrup")) return "Syrup";
+  if (name.includes("inject")) return "Injectable";
+  if (seed.categorySlug === "tablets" || name.includes("tablet")) return "Tablet";
+  if (seed.categorySlug === "capsules" || name.includes("capsule")) return "Capsule";
+  if (seed.categorySlug === "creams" || name.includes("cream")) return "Cream";
+  if (seed.categorySlug === "cosmetics") return "Cosmetic";
+  if (seed.categorySlug === "hair-care") return "Hair Care";
+  if (seed.categorySlug === "dermatology") return "Dermatology";
+  if (seed.categorySlug === "skin-care") return "Skin Care";
+  if (seed.categorySlug === "antibiotics") return "Antibiotic";
+  return seed.category || "General";
+}
+
+function buildTags(seed, productType, brand) {
+  const base = new Set([
+    ...(seed.tags || []),
+    seed.category,
+    seed.categorySlug?.replace(/-/g, " "),
+    productType,
+    brand,
+    seed.composition,
+    ...String(seed.name).toLowerCase().split(/\s+/),
+  ].filter(Boolean).map((t) => String(t).toLowerCase()));
+
+  const blob = `${seed.name} ${seed.shortDescription} ${productType}`.toLowerCase();
+  if (/(clean|wash|foam|facial)/.test(blob)) {
+    ["face cleanser", "face cleaner", "face wash", "cleanser", "cleaner", "facial wash"].forEach((t) => base.add(t));
+  }
+  if (/moist|hydrat|lotion|cream/.test(blob)) {
+    ["moisturizer", "moisturiser", "hydration", "cream"].forEach((t) => base.add(t));
+  }
+  if (/serum|radiance|glow/.test(blob)) {
+    ["serum", "glow", "brightening"].forEach((t) => base.add(t));
+  }
+  if (/acne|pimple/.test(blob)) {
+    ["acne", "pimple", "anti acne"].forEach((t) => base.add(t));
+  }
+  if (/sun|spf/.test(blob)) {
+    ["sunscreen", "spf", "sunblock"].forEach((t) => base.add(t));
+  }
+  return [...base];
+}
+
 function buildProduct(seed, index) {
   const slug = slugify(seed.name);
   const image = IMAGES[seed.imageKey];
@@ -440,10 +538,17 @@ function buildProduct(seed, index) {
   const compareAtPrice = Math.round(price * 1.35 / 10) * 10 - 1;
   const rating = Number((4.1 + index % 9 * 0.1).toFixed(1));
   const reviewCount = 35 + index % 12 * 17 + index % 5 * 3;
+  const brand = seed.brand || BRAND_BY_CATEGORY[seed.categorySlug] || "HIMU";
+  const productType = inferProductType(seed);
+  const tags = buildTags(seed, productType, brand);
   return {
     id: `prod-${String(index + 1).padStart(3, "0")}`,
     slug,
     name: seed.name,
+    brand,
+    productType,
+    tags,
+    keywords: tags,
     category: seed.category,
     categorySlug: seed.categorySlug,
     shortDescription: seed.shortDescription,
@@ -512,6 +617,7 @@ export function getAllProductSlugs() {
   return products.map(p => p.slug);
 }
 export function searchProducts(query) {
-  const q = query.toLowerCase();
-  return products.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q) || p.composition.toLowerCase().includes(q) || p.shortDescription.toLowerCase().includes(q));
+  return searchProductsSmart(products, query);
 }
+
+export { searchProductsSmart };

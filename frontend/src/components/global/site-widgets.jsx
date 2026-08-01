@@ -112,12 +112,16 @@ export function FloatingButtons() {
 }
 
 export function PageLoader() {
-  const { pathname } = useLocation();
   const [loading, setLoading] = useState(true);
+  const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1500);
-    return () => clearTimeout(timer);
+    const show = setTimeout(() => setLeaving(true), 1600);
+    const hide = setTimeout(() => setLoading(false), 2100);
+    return () => {
+      clearTimeout(show);
+      clearTimeout(hide);
+    };
   }, []);
 
   if (!loading) return null;
@@ -125,23 +129,54 @@ export function PageLoader() {
   return (
     <motion.div
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-background"
+      animate={{ opacity: leaving ? 0 : 1 }}
+      transition={{ duration: 0.45 }}
+      className="fixed inset-0 z-[120] flex items-center justify-center overflow-hidden bg-[#1e2422]"
     >
-      <div className="text-center">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgba(214, 176, 77,0.22),transparent_45%),radial-gradient(ellipse_at_70%_80%,rgba(16,185,129,0.2),transparent_50%)]" />
+      <motion.div
+        className="pointer-events-none absolute h-64 w-64 rounded-full border border-gold/20"
+        animate={{ scale: [0.85, 1.15, 0.85], opacity: [0.25, 0.55, 0.25] }}
+        transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <div className="relative z-10 flex flex-col items-center px-6 text-center">
         <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-          className="h-16 w-16 mx-auto mb-4 rounded-full border-4 border-primary/20 border-t-primary"
-        />
+          initial={{ scale: 0.7, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 220, damping: 18 }}
+          className="relative mb-5 flex h-20 w-64 items-center justify-center sm:h-24 sm:w-80"
+        >
+          <motion.img
+            src="/logo.png"
+            alt="HIMU Pharmacy"
+            className="h-full w-full object-contain drop-shadow-[0_12px_40px_rgba(214, 176, 77,0.35)]"
+            animate={{ y: [0, -4, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </motion.div>
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-lg font-bold text-primary font-[family-name:var(--font-heading)]"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="font-[family-name:var(--font-heading)] text-xl font-black tracking-tight text-white"
         >
           HIMU Pharmacy
         </motion.p>
-        <p className="text-xs text-muted-foreground mt-1">Loading excellence...</p>
+        <motion.div
+          className="mt-4 h-1 w-36 overflow-hidden rounded-full bg-white/15"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          <motion.div
+            className="h-full rounded-full bg-gradient-to-r from-emerald-400 via-gold to-emerald-300"
+            initial={{ x: "-100%" }}
+            animate={{ x: "100%" }}
+            transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </motion.div>
+        <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/50">
+          Preparing your care
+        </p>
       </div>
     </motion.div>
   );

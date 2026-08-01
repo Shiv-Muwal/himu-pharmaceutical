@@ -57,6 +57,10 @@ export function ProductCard({ product }) {
       <CardContent className="p-5 flex flex-col flex-1 justify-between">
         <div>
           <Link href={`/products/${product.slug}`} className="block">
+            <p className="mb-0.5 text-[10px] font-bold uppercase tracking-wider text-primary/80">
+              {product.brand || "HIMU"}
+              {product.productType ? ` · ${product.productType}` : ""}
+            </p>
             <h3 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors line-clamp-1">
               {product.name}
             </h3>

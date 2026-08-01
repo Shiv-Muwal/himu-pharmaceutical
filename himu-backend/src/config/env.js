@@ -21,6 +21,10 @@ export const env = {
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || "8h",
   adminEmail: process.env.ADMIN_EMAIL || "admin@himupharmacy.com",
   adminPassword: process.env.ADMIN_PASSWORD || "admin123",
+  customerEmail: process.env.CUSTOMER_EMAIL || "customer@himu.local",
+  customerPassword: process.env.CUSTOMER_PASSWORD || "HimuCustomer@2026",
+  customerName: process.env.CUSTOMER_NAME || "Demo Customer",
+  customerPhone: process.env.CUSTOMER_PHONE || "9876543210",
   clientUrls: (
     process.env.CLIENT_URL ||
     "http://localhost:5173,http://localhost:5174"

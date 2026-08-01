@@ -1,5 +1,5 @@
 import { Link } from "@/components/ui/link";
-import { Image } from "@/components/ui/image";
+import { BrandLogo } from "@/components/ui/brand-logo";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { COMPANY, NAV_LINKS } from "@/lib/constants";
@@ -17,14 +17,14 @@ export function Footer() {
   const { pathname } = useLocation();
 
   return (
-    <footer className="bg-primary text-primary-foreground relative mt-24">
+    <footer className="relative mt-24 bg-footer text-footer-foreground">
       {/* Wave effect */}
       <div className="absolute top-0 left-0 right-0 w-full overflow-hidden leading-[0] -translate-y-[98%] pointer-events-none">
         <svg
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"
           className="relative block w-full h-[60px]"
-          style={{ fill: "var(--primary)" }}
+          style={{ fill: "var(--footer)" }}
         >
           <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C26.9,8.75,55.05,16.22,83.1,22.87,143.21,37.12,204.11,48.56,265.34,53.86A496.31,496.31,0,0,0,321.39,56.44Z" />
         </svg>
@@ -40,16 +40,9 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
             <div>
               <div className="mb-6">
-                <div className="relative h-16 w-72 flex items-center justify-start overflow-hidden">
-                  <Image
-                    src="/logo.png"
-                    alt="HIMU Pharmacy Logo"
-                    fill
-                    className="object-contain brightness-0 invert scale-[4.2]"
-                  />
-                </div>
+                <BrandLogo className="h-16 w-52 drop-shadow-[0_2px_12px_rgba(255,255,255,0.35)] sm:h-20 sm:w-64" />
               </div>
-              <p className="text-white/70 text-sm leading-relaxed mb-6">
+              <p className="mb-6 text-sm leading-relaxed text-footer-muted">
                 {COMPANY.fullForm}. Advancing global healthcare through innovation, quality, and
                 compassion since 2004.
               </p>
@@ -74,7 +67,7 @@ export function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-white/70 hover:text-gold hover:translate-x-1.5 transition-all duration-300 inline-block"
+                      className="inline-block text-sm text-footer-muted transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
                     >
                       {link.name}
                     </Link>
@@ -83,7 +76,7 @@ export function Footer() {
                 <li>
                   <Link
                     href="/faq"
-                    className="text-sm text-white/70 hover:text-gold hover:translate-x-1.5 transition-all duration-300 inline-block"
+                    className="inline-block text-sm text-footer-muted transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
                   >
                     FAQ
                   </Link>
@@ -91,7 +84,7 @@ export function Footer() {
                 <li>
                   <Link
                     href="/certifications"
-                    className="text-sm text-white/70 hover:text-gold hover:translate-x-1.5 transition-all duration-300 inline-block"
+                    className="inline-block text-sm text-footer-muted transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
                   >
                     Certifications
                   </Link>
@@ -108,7 +101,7 @@ export function Footer() {
                   <li key={cat.slug}>
                     <Link
                       href={`/categories/${cat.slug}`}
-                      className="text-sm text-white/70 hover:text-gold hover:translate-x-1.5 transition-all duration-300 inline-block"
+                      className="inline-block text-sm text-footer-muted transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
                     >
                       {cat.name}
                     </Link>
@@ -119,7 +112,7 @@ export function Footer() {
 
             <div>
               <h4 className="font-bold mb-4 text-gold tracking-wide text-base">Contact Info</h4>
-              <ul className="space-y-3.5 text-sm text-white/70">
+              <ul className="space-y-3.5 text-sm text-footer-muted">
                 <li className="flex items-start gap-2.5">
                   <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-gold" />
                   <span>{COMPANY.address}</span>
@@ -138,7 +131,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10">
-          <div className="container-custom py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50">
+          <div className="container-custom flex flex-col items-center justify-between gap-4 py-6 text-xs text-footer-muted md:flex-row">
             <p>
               © {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
             </p>
@@ -146,7 +139,7 @@ export function Footer() {
               <span>License: {COMPANY.licenseNumber}</span>
               <span>CIN: {COMPANY.cinNumber}</span>
             </div>
-            <div className="flex gap-4">
+            <div className="flex flex-wrap items-center gap-4">
               <Link href="/privacy" className="hover:text-gold transition-colors">
                 Privacy
               </Link>
@@ -156,6 +149,14 @@ export function Footer() {
               <Link href="/disclaimer" className="hover:text-gold transition-colors">
                 Disclaimer
               </Link>
+              <a
+                href={import.meta.env.VITE_ADMIN_URL || "http://localhost:5174/admin/"}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-semibold text-gold transition hover:bg-gold hover:text-[#1a2e1f]"
+              >
+                Open Admin Panel
+              </a>
             </div>
           </div>
         </div>

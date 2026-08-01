@@ -2,24 +2,23 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
-  CheckCircle2,
   CreditCard,
   MapPin,
   User,
   Mail,
   Phone,
-  Printer,
   ShieldCheck,
   Package,
   Leaf,
 } from "lucide-react";
 import { Image } from "@/components/ui/image";
 import { useCart } from "@/providers/cart-provider";
+import { useAuth } from "@/providers/auth-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { COMPANY } from "@/lib/constants";
 import { api } from "@/lib/api";
+import { OrderSuccessView } from "@/components/cart/order-success";
 
 export function CheckoutModal() {
   const {
@@ -32,6 +31,7 @@ export function CheckoutModal() {
     checkoutSavings,
     clearCart,
   } = useCart();
+  const { user, isAuthenticated, openLogin } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -63,6 +63,16 @@ export function CheckoutModal() {
       document.body.style.overflow = "unset";
     };
   }, [isCheckoutOpen]);
+
+  useEffect(() => {
+    if (!isCheckoutOpen || !user) return;
+    setFormData((prev) => ({
+      ...prev,
+      name: prev.name || user.name || "",
+      email: prev.email || user.email || "",
+      phone: prev.phone || user.phone || "",
+    }));
+  }, [isCheckoutOpen, user]);
 
   if (!isCheckoutOpen) return null;
 
@@ -215,7 +225,7 @@ export function CheckoutModal() {
             <>
               <div className="col-span-12 max-h-[92vh] overflow-y-auto p-6 md:col-span-7 md:p-8">
                 <div className="mb-6 flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#e8f3ec] text-[#3d7a5a]">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#e7f3ec] text-[#3d7a5a]">
                     <ShieldCheck className="h-5 w-5" />
                   </div>
                   <div>
@@ -229,6 +239,19 @@ export function CheckoutModal() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {!isAuthenticated && (
+                    <div className="rounded-2xl border border-amber-200/80 bg-amber-50/90 px-4 py-3 text-xs text-amber-900">
+                      Tip:{" "}
+                      <button
+                        type="button"
+                        onClick={openLogin}
+                        className="font-bold text-primary underline"
+                      >
+                        Sign in
+                      </button>{" "}
+                      with demo customer to autofill checkout details.
+                    </div>
+                  )}
                   <div className="rounded-3xl border border-white/80 bg-white/80 p-4 shadow-[0_8px_30px_rgba(61,122,90,0.05)]">
                     <p className="mb-3 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-[#7a9586]">
                       <User className="h-3.5 w-3.5" /> Contact details
@@ -343,7 +366,7 @@ export function CheckoutModal() {
                             }
                             className={`rounded-2xl border p-3.5 text-left transition ${
                               active
-                                ? "border-[#6fa987] bg-[#e8f3ec] shadow-sm"
+                                ? "border-[#6fa987] bg-[#e7f3ec] shadow-sm"
                                 : "border-[#e4eee7] bg-[#f8fbf8] hover:bg-white"
                             }`}
                           >
@@ -489,138 +512,16 @@ export function CheckoutModal() {
               </div>
             </>
           ) : (
-            <div className="col-span-12 max-h-[92vh] overflow-y-auto p-8 md:p-10">
-              <div className="mx-auto mb-8 max-w-lg text-center">
-                <div className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-[#e8f3ec] text-[#3d7a5a]">
-                  <CheckCircle2 className="h-9 w-9" />
-                </div>
-                <h2 className="font-[family-name:var(--font-heading)] text-3xl font-black text-[#1f3b2c]">
-                  Order Confirmed!
-                </h2>
-                <p className="mt-2 text-sm text-[#6f8679]">
-                  Thank you for ordering from {COMPANY.name}. Your order is being
-                  prepared.
-                </p>
-              </div>
-
-              <div className="mx-auto max-w-2xl space-y-6 rounded-3xl border border-[#dce8e0] bg-white/90 p-6 shadow-sm md:p-8">
-                <div className="flex items-start justify-between border-b border-[#e4eee7] pb-4">
-                  <div>
-                    <h1 className="font-[family-name:var(--font-heading)] text-xl font-extrabold text-[#3d7a5a]">
-                      {COMPANY.name}
-                    </h1>
-                    <p className="mt-1 max-w-xs text-[10px] leading-relaxed text-[#7a9586]">
-                      {COMPANY.address}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <span className="inline-block rounded-full bg-[#e8f3ec] px-3 py-1 text-[10px] font-bold uppercase text-[#3d7a5a]">
-                      Invoice
-                    </span>
-                    <p className="mt-2 text-[10px] text-[#7a9586]">
-                      Order ID: <b className="text-[#1f3b2c]">{generatedOrderId}</b>
-                    </p>
-                    <p className="text-[10px] text-[#7a9586]">Date: {orderDate}</p>
-                  </div>
-                </div>
-
-                <div className="grid gap-4 text-xs sm:grid-cols-2">
-                  <div>
-                    <h4 className="mb-1 text-[9px] font-bold uppercase tracking-wider text-[#7a9586]">
-                      Billed To
-                    </h4>
-                    <p className="font-bold text-[#1f3b2c]">{formData.name}</p>
-                    <p className="text-[#6f8679]">{formData.phone}</p>
-                    <p className="text-[#6f8679]">{formData.email}</p>
-                  </div>
-                  <div>
-                    <h4 className="mb-1 text-[9px] font-bold uppercase tracking-wider text-[#7a9586]">
-                      Shipping
-                    </h4>
-                    <p className="font-medium text-[#1f3b2c]">{formData.address}</p>
-                    <p className="text-[#6f8679]">
-                      {formData.city} - {formData.pincode}
-                    </p>
-                    <p className="capitalize text-[#6f8679]">
-                      Payment:{" "}
-                      {formData.paymentMethod === "cod"
-                        ? "Cash on Delivery"
-                        : "Card Payment"}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="overflow-hidden rounded-2xl border border-[#e4eee7] text-xs">
-                  <div className="grid grid-cols-12 bg-[#f4f9f5] p-2.5 text-[10px] font-bold uppercase text-[#7a9586]">
-                    <span className="col-span-6">Item</span>
-                    <span className="col-span-2 text-center">Price</span>
-                    <span className="col-span-2 text-center">Qty</span>
-                    <span className="col-span-2 text-right">Total</span>
-                  </div>
-                  <div className="divide-y divide-[#eef4f0]">
-                    {summaryItems.map((item) => (
-                      <div
-                        key={`${item.product.id}-${item.selectedVariant}`}
-                        className="grid grid-cols-12 items-center p-3"
-                      >
-                        <div className="col-span-6 min-w-0 pr-2">
-                          <p className="truncate font-bold text-[#1f3b2c]">
-                            {item.product.name}
-                          </p>
-                          <p className="mt-0.5 truncate text-[9px] text-[#7a9586]">
-                            {item.selectedVariant}
-                          </p>
-                        </div>
-                        <span className="col-span-2 text-center">₹{item.product.price}</span>
-                        <span className="col-span-2 text-center font-semibold">
-                          {item.quantity}
-                        </span>
-                        <span className="col-span-2 text-right font-bold text-[#3d7a5a]">
-                          ₹{item.product.price * item.quantity}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex justify-end">
-                  <div className="w-64 space-y-1.5 text-xs">
-                    <div className="flex justify-between text-[#6f8679]">
-                      <span>Subtotal</span>
-                      <span>₹{summaryOriginal}</span>
-                    </div>
-                    {summarySavings > 0 && (
-                      <div className="flex justify-between font-semibold text-[#5f9877]">
-                        <span>Savings</span>
-                        <span>- ₹{summarySavings}</span>
-                      </div>
-                    )}
-                    <div className="flex items-end justify-between border-t border-[#e4eee7] pt-2 text-sm font-bold text-[#3d7a5a]">
-                      <span>Total</span>
-                      <span className="font-[family-name:var(--font-heading)] text-lg font-black">
-                        ₹{summaryTotal}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Button
-                  onClick={handleCloseSuccess}
-                  className="rounded-2xl bg-[#6fa987] px-8 text-white hover:bg-[#5f9877]"
-                >
-                  Continue Shopping
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => window.print()}
-                  className="gap-2 rounded-2xl border-[#c9ddd1] text-[#3d7a5a]"
-                >
-                  <Printer className="h-4 w-4" /> Print Invoice
-                </Button>
-              </div>
-            </div>
+            <OrderSuccessView
+              orderId={generatedOrderId}
+              orderDate={orderDate}
+              formData={formData}
+              summaryItems={summaryItems}
+              summaryTotal={summaryTotal}
+              summaryOriginal={summaryOriginal}
+              summarySavings={summarySavings}
+              onContinue={handleCloseSuccess}
+            />
           )}
         </motion.div>
       </div>

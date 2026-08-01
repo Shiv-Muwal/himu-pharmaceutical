@@ -10,6 +10,7 @@ import careersRoutes from "./careers.routes.js";
 import companyRoutes from "./company.routes.js";
 import customersRoutes from "./customers.routes.js";
 import activityRoutes from "./activity.routes.js";
+import bannersRoutes from "./banners.routes.js";
 
 const router = Router();
 
@@ -32,5 +33,6 @@ router.use("/faq", faqRoutes);
 router.use("/contact", contactRoutes);
 router.use("/careers", careersRoutes);
 router.use("/company", companyRoutes);
+router.use("/banners", bannersRoutes);
 
 export default router;

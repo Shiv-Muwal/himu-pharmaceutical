@@ -1,14 +1,23 @@
 import { motion } from "framer-motion";
-import { Lock, Mail, AlertCircle, Sparkles, Eye, EyeOff } from "lucide-react";
+import { Lock, Mail, AlertCircle, Sparkles, Eye, EyeOff, LayoutDashboard, Copy, Check } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AdminLogo } from "@/admin/components/AdminLogo";
+import { LoginScene3D } from "@/admin/components/LoginScene3D";
 
-const SHOW_HINT = import.meta.env.VITE_USE_LOCAL_ADMIN === "true";
 const HINT_EMAIL = import.meta.env.VITE_LOCAL_ADMIN_EMAIL || "admin@himu.local";
 const HINT_PASSWORD = import.meta.env.VITE_LOCAL_ADMIN_PASSWORD || "HimuAdmin@2026";
-const STOREFRONT_URL = import.meta.env.VITE_STOREFRONT_URL || "http://localhost:5173";
+
+function getStorefrontUrl() {
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    if (host && host !== "localhost" && host !== "127.0.0.1") {
+      return `${window.location.protocol}//${host}:5173`;
+    }
+  }
+  return import.meta.env.VITE_STOREFRONT_URL || "http://localhost:5173";
+}
 
 export function AdminLogin({
   emailInput,
@@ -18,43 +27,62 @@ export function AdminLogin({
   loginError,
   loginLoading,
   handleLogin,
+  handleDemoLogin,
 }) {
   const [showPassword, setShowPassword] = useState(false);
+  const [copied, setCopied] = useState("");
+  const storefrontUrl = getStorefrontUrl();
+
+  const fillDemo = () => {
+    setEmailInput(HINT_EMAIL);
+    setPasswordInput(HINT_PASSWORD);
+  };
+
+  const copyText = async (label, value) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(label);
+      window.setTimeout(() => setCopied(""), 1600);
+    } catch {
+      // ignore
+    }
+  };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#06150f] text-white">
-      <div className="absolute inset-0">
-        <div className="absolute -left-16 -top-24 h-80 w-80 rounded-full bg-emerald-500/20 blur-3xl" />
-        <div className="absolute -right-20 top-1/3 h-96 w-96 rounded-full bg-[#d4af37]/15 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-teal-400/10 blur-3xl" />
-        <div className="absolute inset-0 opacity-30 molecular-bg" />
-      </div>
+    <div className="relative min-h-[100dvh] overflow-x-hidden overflow-y-auto bg-[#1e2422] text-white">
+      <LoginScene3D />
 
-      <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-16">
+      <div
+        className="relative z-10 flex min-h-[100dvh] items-start justify-center px-4 py-10 sm:items-center sm:py-14"
+        style={{
+          paddingTop: "max(2.5rem, env(safe-area-inset-top))",
+          paddingBottom: "max(2rem, env(safe-area-inset-bottom))",
+        }}
+      >
         <motion.div
           initial={{ opacity: 0, y: 28, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="w-full max-w-md"
         >
-          <div className="mb-8 text-center">
+          <div className="mb-7 text-center">
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.1 }}
-              className="mx-auto mb-5 flex justify-center"
+              className="mx-auto mb-4 flex justify-center"
             >
-              <AdminLogo size="lg" className="shadow-[0_0_50px_rgba(212,175,55,0.25)]" />
+              <AdminLogo
+                size="lg"
+                className="drop-shadow-[0_0_50px_rgba(214, 176, 77,0.35)]"
+              />
             </motion.div>
-            <h1 className="font-[family-name:var(--font-heading)] text-3xl font-black tracking-tight">
-              HIMU Admin
-            </h1>
-            <p className="mt-2 text-sm text-white/55">
+            <p className="text-sm text-white/60">
               Operations suite for catalog, orders & inventory
             </p>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/[0.06] p-8 shadow-2xl backdrop-blur-xl">
+          <div className="rounded-3xl border border-white/10 bg-white/[0.07] p-7 shadow-2xl backdrop-blur-xl sm:p-8">
             {loginError && (
               <motion.div
                 initial={{ opacity: 0, y: -8 }}
@@ -66,16 +94,20 @@ export function AdminLogin({
               </motion.div>
             )}
 
-            <form onSubmit={handleLogin} className="space-y-4">
+            <form id="himu-admin-login-form" onSubmit={handleLogin} className="space-y-4">
               <div className="relative">
                 <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
                 <Input
                   type="email"
+                  inputMode="email"
+                  enterKeyHint="next"
                   placeholder="Admin email / ID"
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
-                  className="h-12 border-white/10 bg-white/5 pl-11 text-white placeholder:text-white/35"
+                  className="h-12 border-white/10 bg-white/5 pl-11 text-base text-white placeholder:text-white/35 sm:text-sm"
                   autoComplete="username"
+                  autoCapitalize="none"
+                  autoCorrect="off"
                   required
                 />
               </div>
@@ -83,17 +115,18 @@ export function AdminLogin({
                 <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
                 <Input
                   type={showPassword ? "text" : "password"}
+                  enterKeyHint="go"
                   placeholder="Password"
                   value={passwordInput}
                   onChange={(e) => setPasswordInput(e.target.value)}
-                  className="h-12 border-white/10 bg-white/5 pl-11 pr-11 text-white placeholder:text-white/35"
+                  className="h-12 border-white/10 bg-white/5 pl-11 pr-12 text-base text-white placeholder:text-white/35 sm:text-sm"
                   autoComplete="current-password"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
+                  className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center text-white/40 hover:text-white"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -101,36 +134,78 @@ export function AdminLogin({
               <Button
                 type="submit"
                 disabled={loginLoading}
-                className="h-12 w-full bg-[#d4af37] text-[#06150f] shadow-none hover:bg-[#e0c15a]"
+                className="h-12 w-full touch-manipulation bg-primary text-base text-white shadow-none hover:bg-primary-hover sm:text-sm"
               >
                 {loginLoading ? "Authenticating..." : "Enter Dashboard"}
               </Button>
             </form>
 
-            {SHOW_HINT && (
+            <Button
+              type="button"
+              variant="outline"
+              disabled={loginLoading}
+              onClick={(e) => {
+                e.preventDefault();
+                handleDemoLogin();
+              }}
+              className="mt-3 h-11 w-full touch-manipulation gap-2 border-emerald-300/30 bg-emerald-500/10 text-emerald-100 hover:bg-emerald-500/20 hover:text-white"
+            >
+              <LayoutDashboard className="h-4 w-4" />
+              Open admin panel (demo login)
+            </Button>
+
+            <div className="mt-5 rounded-2xl border border-white/10 bg-black/25 p-4">
+              <p className="mb-3 text-[10px] font-black uppercase tracking-[0.18em] text-gold">
+                Dummy credentials
+              </p>
+              <div className="space-y-2 text-xs">
+                <div className="flex items-center justify-between gap-2 rounded-xl bg-white/5 px-3 py-2">
+                  <div>
+                    <p className="text-[10px] text-white/45">ID / Email</p>
+                    <p className="font-semibold text-white/90">{HINT_EMAIL}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => copyText("email", HINT_EMAIL)}
+                    className="rounded-lg p-2 text-white/50 hover:bg-white/10 hover:text-white"
+                    aria-label="Copy email"
+                  >
+                    {copied === "email" ? <Check className="h-3.5 w-3.5 text-emerald-300" /> : <Copy className="h-3.5 w-3.5" />}
+                  </button>
+                </div>
+                <div className="flex items-center justify-between gap-2 rounded-xl bg-white/5 px-3 py-2">
+                  <div>
+                    <p className="text-[10px] text-white/45">Password</p>
+                    <p className="font-semibold text-white/90">{HINT_PASSWORD}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => copyText("password", HINT_PASSWORD)}
+                    className="rounded-lg p-2 text-white/50 hover:bg-white/10 hover:text-white"
+                    aria-label="Copy password"
+                  >
+                    {copied === "password" ? <Check className="h-3.5 w-3.5 text-emerald-300" /> : <Copy className="h-3.5 w-3.5" />}
+                  </button>
+                </div>
+              </div>
               <button
                 type="button"
-                onClick={() => {
-                  setEmailInput(HINT_EMAIL);
-                  setPasswordInput(HINT_PASSWORD);
-                }}
-                className="mt-4 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-left text-[11px] text-white/55 transition hover:bg-white/10 hover:text-white/80"
+                onClick={fillDemo}
+                className="mt-3 w-full text-center text-[11px] font-semibold text-gold hover:underline"
               >
-                <span className="font-bold text-[#d4af37]">Demo credentials</span>
-                <br />
-                {HINT_EMAIL} · click to autofill
+                Autofill demo ID & password
               </button>
-            )}
+            </div>
 
             <div className="mt-5 flex items-center justify-center gap-2 text-[11px] text-white/40">
-              <Sparkles className="h-3.5 w-3.5 text-[#d4af37]" />
+              <Sparkles className="h-3.5 w-3.5 text-[#d6b04d]" />
               Encrypted session · Admin only
             </div>
           </div>
 
           <div className="mt-6 text-center">
             <a
-              href={STOREFRONT_URL}
+              href={storefrontUrl}
               className="text-xs font-semibold text-emerald-300/80 hover:text-emerald-200"
             >
               ← Back to storefront

@@ -29,3 +29,20 @@ export const restrictTo = (...roles) =>
     }
     next();
   });
+
+export const optionalAuth = asyncHandler(async (req, _res, next) => {
+  const header = req.headers.authorization;
+  if (!header?.startsWith("Bearer ")) {
+    return next();
+  }
+
+  try {
+    const token = header.split(" ")[1];
+    const decoded = jwt.verify(token, env.jwtSecret, { algorithms: ["HS256"] });
+    const user = await User.findById(decoded.id);
+    if (user) req.user = user;
+  } catch {
+    // ignore invalid tokens for public routes
+  }
+  next();
+});

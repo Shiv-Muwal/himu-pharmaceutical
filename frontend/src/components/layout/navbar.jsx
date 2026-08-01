@@ -2,7 +2,7 @@ import { Link } from "@/components/ui/link";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Image } from "@/components/ui/image";
+import { BrandLogo } from "@/components/ui/brand-logo";
 import {
   Menu,
   X,
@@ -34,6 +34,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { NAV_LINKS } from "@/lib/constants";
 import { products } from "@/data/products";
+import { searchProductsSmart } from "@/lib/product-search";
 import { useCart } from "@/providers/cart-provider";
 import { useAuth } from "@/providers/auth-provider";
 import { useLocationInfo } from "@/providers/location-provider";
@@ -79,14 +80,7 @@ export function Navbar() {
 
   const filteredProducts =
     searchQuery.trim() !== ""
-      ? products
-          .filter(
-            (p) =>
-              p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              p.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              p.composition.toLowerCase().includes(searchQuery.toLowerCase()),
-          )
-          .slice(0, 5)
+      ? searchProductsSmart(products, searchQuery, { limit: 6 })
       : [];
 
   if (pathname !== prevPathname) {
@@ -109,21 +103,16 @@ export function Navbar() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-[#fff8e7]/95 backdrop-blur-md border-b border-border/60 py-5 shadow-lg shadow-black/5">
+      <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-[#f8f3e6]/95 backdrop-blur-md border-b border-border/60 py-5 shadow-lg shadow-black/5">
         <nav
           className="container-custom flex items-center justify-between gap-2 xl:gap-4"
           aria-label="Main navigation"
         >
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative h-16 w-56 xl:w-72 flex items-center justify-center group-hover:scale-105 transition-transform overflow-hidden">
-              <Image
-                src="/logo.png"
-                alt="HIMU Pharmacy Logo"
-                fill
-                className="object-contain scale-[4.8]"
-                priority
-              />
-            </div>
+          <Link href="/" className="group flex items-center shrink-0">
+            <BrandLogo
+              className="h-14 w-44 transition-transform group-hover:scale-105 sm:h-16 sm:w-52 md:h-[4.5rem] md:w-60"
+              priority
+            />
           </Link>
           <div className="hidden lg:flex items-center gap-0 xl:gap-1">
             {NAV_LINKS.map((link) =>
@@ -277,7 +266,7 @@ export function Navbar() {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 10 }}
-                          className="absolute left-0 mt-3 w-64 bg-[#fff8e7] border border-border/60 rounded-2xl shadow-2xl p-2 grid gap-1 z-50"
+                          className="absolute left-0 mt-3 w-64 bg-[#f8f3e6] border border-border/60 rounded-2xl shadow-2xl p-2 grid gap-1 z-50"
                         >
                           {aboutChildren.map((child) => {
                             const Icon = child.icon;
@@ -348,7 +337,7 @@ export function Navbar() {
             >
               <ShoppingBag className="h-5 w-5" />
               {mounted && cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 h-5 w-5 rounded-full bg-primary text-primary-foreground text-[9px] font-black flex items-center justify-center border-2 border-[#fff8e7] dark:border-[#0a1410] animate-bounce">
+                <span className="absolute -top-0.5 -right-0.5 h-5 w-5 rounded-full bg-primary text-primary-foreground text-[9px] font-black flex items-center justify-center border-2 border-[#f8f3e6] dark:border-[#0a1410] animate-bounce">
                   {cartCount}
                 </span>
               )}
@@ -373,7 +362,7 @@ export function Navbar() {
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
-                      className="absolute right-0 mt-2 w-48 overflow-hidden rounded-2xl border border-border/60 bg-[#fff8e7] p-2 shadow-xl"
+                      className="absolute right-0 mt-2 w-48 overflow-hidden rounded-2xl border border-border/60 bg-[#f8f3e6] p-2 shadow-xl"
                     >
                       <p className="truncate px-3 py-2 text-[11px] text-muted-foreground">
                         {user?.email}
@@ -435,7 +424,7 @@ export function Navbar() {
                 <form action="/products" method="get" className="flex gap-2">
                   <Input
                     name="q"
-                    placeholder="Search medicines, categories..."
+                    placeholder="Search face cleaner, acne, serum, medicines..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="glass h-12 text-base px-4"

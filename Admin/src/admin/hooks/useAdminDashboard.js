@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { api, adminSession } from "@/lib/api";
 import {
   EMPTY_PRODUCT_FORM,
+  EMPTY_BANNER_FORM,
   IMAGE_PRESETS,
   LOW_STOCK_THRESHOLD,
   downloadCsv,
@@ -19,6 +20,9 @@ export function useAdminDashboard() {
   const [orders, setOrders] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [activity, setActivity] = useState([]);
+  const [banners, setBanners] = useState([]);
+  const [bannerForm, setBannerForm] = useState(EMPTY_BANNER_FORM);
+  const [editingBannerId, setEditingBannerId] = useState(null);
   const [adminProfile, setAdminProfile] = useState({
     name: "HIMU Administrator",
     email: "admin@himu.local",
@@ -49,13 +53,15 @@ export function useAdminDashboard() {
   const [refreshing, setRefreshing] = useState(false);
 
   const loadDashboard = async (token) => {
-    const [user, productsData, ordersData, customersData, activityData] = await Promise.all([
-      api("/auth/me", { token }),
-      api("/products?limit=200", { token }),
-      api("/orders?limit=200", { token }),
-      api("/customers", { token }).catch(() => ({ items: [] })),
-      api("/activity", { token }).catch(() => ({ items: [] })),
-    ]);
+    const [user, productsData, ordersData, customersData, activityData, bannersData] =
+      await Promise.all([
+        api("/auth/me", { token }),
+        api("/products?limit=200", { token }),
+        api("/orders?limit=200", { token }),
+        api("/customers", { token }).catch(() => ({ items: [] })),
+        api("/activity", { token }).catch(() => ({ items: [] })),
+        api("/banners?all=true", { token }).catch(() => ({ items: [] })),
+      ]);
     if (user.role && user.role !== "admin") {
       adminSession.clear();
       throw new Error("Not an administrator account");
@@ -67,6 +73,7 @@ export function useAdminDashboard() {
     setOrders(ordersData.items || []);
     setCustomers(customersData.items || []);
     setActivity(activityData.items || []);
+    setBanners(bannersData.items || []);
   };
 
   useEffect(() => {
@@ -78,16 +85,15 @@ export function useAdminDashboard() {
       .catch(() => adminSession.clear());
   }, []);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const loginWithCredentials = async (email, password) => {
     setLoginError("");
     setLoginLoading(true);
     try {
       const result = await api("/auth/login", {
         method: "POST",
         body: JSON.stringify({
-          email: emailInput.trim(),
-          password: passwordInput,
+          email: String(email || "").trim(),
+          password: String(password || ""),
         }),
       });
       if (result.user.role && result.user.role !== "admin") {
@@ -111,6 +117,19 @@ export function useAdminDashboard() {
     } finally {
       setLoginLoading(false);
     }
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    await loginWithCredentials(emailInput, passwordInput);
+  };
+
+  const handleDemoLogin = async () => {
+    const email = import.meta.env.VITE_LOCAL_ADMIN_EMAIL || "admin@himu.local";
+    const password = import.meta.env.VITE_LOCAL_ADMIN_PASSWORD || "HimuAdmin@2026";
+    setEmailInput(email);
+    setPasswordInput(password);
+    await loginWithCredentials(email, password);
   };
 
   const handleLogout = () => {
@@ -555,6 +574,92 @@ export function useAdminDashboard() {
     );
   };
 
+  const resetBannerForm = () => {
+    setEditingBannerId(null);
+    setBannerForm(EMPTY_BANNER_FORM);
+  };
+
+  const handleEditBanner = (banner) => {
+    setEditingBannerId(banner.id || banner.bannerId);
+    setBannerForm({
+      title: banner.title || "",
+      subtitle: banner.subtitle || "",
+      image: banner.image || "",
+      link: banner.link || "/products",
+      ctaLabel: banner.ctaLabel || "Shop now",
+      order: String(banner.order ?? 0),
+    });
+    setActiveTab("banners");
+  };
+
+  const handleBannerSubmit = async (e) => {
+    e.preventDefault();
+    const token = adminSession.get();
+    if (!token) return;
+    if (!bannerForm.image?.trim()) {
+      alert("Please upload a WebP banner image first.");
+      return;
+    }
+    const payload = {
+      title: bannerForm.title.trim(),
+      subtitle: bannerForm.subtitle.trim(),
+      image: bannerForm.image.trim(),
+      link: bannerForm.link.trim() || "/products",
+      ctaLabel: bannerForm.ctaLabel.trim() || "Shop now",
+      order: Number(bannerForm.order) || 0,
+      active: true,
+    };
+    try {
+      if (editingBannerId) {
+        await api(`/banners/${editingBannerId}`, {
+          method: "PUT",
+          token,
+          body: JSON.stringify(payload),
+        });
+      } else {
+        await api("/banners", {
+          method: "POST",
+          token,
+          body: JSON.stringify(payload),
+        });
+      }
+      const bannersData = await api("/banners?all=true", { token });
+      setBanners(bannersData.items || []);
+      resetBannerForm();
+    } catch (error) {
+      alert(error.message || "Unable to save banner");
+    }
+  };
+
+  const handleDeleteBanner = async (banner) => {
+    const id = banner.id || banner.bannerId;
+    if (!id || !confirm(`Remove banner “${banner.title}”?`)) return;
+    const token = adminSession.get();
+    try {
+      await api(`/banners/${id}`, { method: "DELETE", token });
+      setBanners((prev) => prev.filter((b) => (b.id || b.bannerId) !== id));
+      if (editingBannerId === id) resetBannerForm();
+    } catch (error) {
+      alert(error.message || "Unable to delete banner");
+    }
+  };
+
+  const handleToggleBanner = async (banner) => {
+    const id = banner.id || banner.bannerId;
+    const token = adminSession.get();
+    try {
+      await api(`/banners/${id}`, {
+        method: "PUT",
+        token,
+        body: JSON.stringify({ active: banner.active === false }),
+      });
+      const bannersData = await api("/banners?all=true", { token });
+      setBanners(bannersData.items || []);
+    } catch (error) {
+      alert(error.message || "Unable to update banner");
+    }
+  };
+
   return {
     mounted,
     isLoggedIn,
@@ -565,6 +670,7 @@ export function useAdminDashboard() {
     loginError,
     loginLoading,
     handleLogin,
+    handleDemoLogin,
     handleLogout,
     handleRefresh,
     refreshing,
@@ -635,6 +741,15 @@ export function useAdminDashboard() {
     exportOrders,
     exportProducts,
     exportCustomers,
+    banners,
+    bannerForm,
+    setBannerForm,
+    editingBannerId,
+    handleBannerSubmit,
+    handleEditBanner,
+    handleDeleteBanner,
+    handleToggleBanner,
+    resetBannerForm,
     sidebarOpen,
     setSidebarOpen,
   };

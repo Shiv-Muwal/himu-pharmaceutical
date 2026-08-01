@@ -1,7 +1,7 @@
 import { products as seedProducts } from "@/data/products";
 import { slugify } from "@/lib/utils";
 
-const PRODUCTS_KEY = "himu-products";
+const PRODUCTS_KEY = "himu-products-v2";
 const ORDERS_KEY = "himu-orders";
 const ACTIVITY_KEY = "himu-admin-activity";
 const isClient = typeof window !== "undefined";
@@ -293,6 +293,10 @@ export function saveMockProduct(productData) {
       id: nextId,
       slug,
       name: productData.name,
+      brand: productData.brand || "HIMU",
+      productType: productData.productType || productData.category || "General",
+      tags: productData.tags || [],
+      keywords: productData.keywords || productData.tags || [],
       category: productData.category || "General",
       categorySlug: slugify(productData.category || "general"),
       composition: productData.composition || "N/A",

@@ -8,8 +8,8 @@ import {
   saveMockProduct,
   updateOrderStatus,
 } from "@/lib/mock-backend";
+import { getApiBaseUrl, getApiOrigin } from "@/lib/api-base";
 
-const API_BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001/api").replace(/\/$/, "");
 const USE_LOCAL_ADMIN = import.meta.env.VITE_USE_LOCAL_ADMIN === "true";
 const LOCAL_ADMIN_KEY = "himu-local-admin-profile";
 const LOCAL_ADMIN_TOKEN = "himu-local-admin-token";
@@ -247,7 +247,7 @@ export async function api(path, { token, ...options } = {}) {
     return localApi(path, { token, ...options });
   }
 
-  const response = await fetch(`${API_BASE_URL}${path}`, {
+  const response = await fetch(`${getApiBaseUrl()}${path}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -263,6 +263,38 @@ export async function api(path, { token, ...options } = {}) {
     return { items: data, pagination: payload.pagination };
   }
   return data;
+}
+
+/** Multipart upload helper (do not set Content-Type — browser sets boundary). */
+export async function uploadApi(path, formData, { token } = {}) {
+  if (USE_LOCAL_ADMIN) {
+    throw new ApiError("File upload requires the live API (disable VITE_USE_LOCAL_ADMIN)", 501);
+  }
+
+  const response = await fetch(`${getApiBaseUrl()}${path}`, {
+    method: "POST",
+    headers: {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: formData,
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) throw new ApiError(payload.message || "Upload failed", response.status);
+  return payload.data;
+}
+
+export function mediaUrl(src) {
+  if (!src) return "";
+  if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:")) {
+    return src;
+  }
+  if (src.startsWith("/uploads/")) {
+    return `${getApiOrigin()}${src}`;
+  }
+  if (src.startsWith("/") && import.meta.env.BASE_URL && import.meta.env.BASE_URL !== "/") {
+    return `${import.meta.env.BASE_URL}${src.replace(/^\//, "")}`;
+  }
+  return src;
 }
 
 export const adminSession = {

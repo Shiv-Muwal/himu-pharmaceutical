@@ -22,10 +22,10 @@ export function AdminTopBar({
   refreshing,
 }) {
   return (
-    <div className="sticky top-0 z-20 border-b border-border/30 bg-[#fffaf0]/90 px-4 py-3 backdrop-blur-xl md:px-8">
+    <div className="sticky top-0 z-20 border-b border-border/30 bg-[#f8f3e6]/90 px-4 py-3 backdrop-blur-xl md:px-8">
       <div className="flex items-center gap-3">
         <div className="hidden xl:block">
-          <AdminLogo size="sm" />
+          <AdminLogo size="md" />
         </div>
 
         <div className="relative min-w-0 flex-1">

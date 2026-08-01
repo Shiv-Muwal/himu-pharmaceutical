@@ -1,5 +1,4 @@
 import { Image } from "@/components/ui/image";
-import { PageHero } from "@/components/sections/page-hero";
 import {
   FadeIn,
   SectionHeading,
@@ -9,20 +8,17 @@ import { Card } from "@/components/ui/card";
 import { teamMembers, companyTimeline, coreValues } from "@/data/company";
 import { Target, Eye, Heart } from "lucide-react";
 import {
+  BrandStoryHero,
   OverviewSection,
+  StatsSection,
   WhyChooseSection,
 } from "@/components/sections/home-sections";
 
 export default function AboutPage() {
   return (
     <>
-      <PageHero
-        title="About HIMU Pharmacy"
-        description="Healthcare Innovation for Medical Upliftment — advancing global healthcare since 2004."
-        image="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=1600&h=600&fit=crop"
-        badge="Our Story"
-      />
-
+      <BrandStoryHero />
+      <StatsSection />
       <OverviewSection />
       <WhyChooseSection />
 

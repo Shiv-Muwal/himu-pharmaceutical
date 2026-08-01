@@ -68,7 +68,7 @@ export function CartDrawer() {
             <div className="relative border-b border-[#dce8e0] bg-white/70 px-5 py-4 backdrop-blur-xl">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#e8f3ec] text-[#3d7a5a]">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#e7f3ec] text-[#3d7a5a]">
                     <ShoppingBag className="h-5 w-5" />
                   </div>
                   <div>
@@ -77,7 +77,7 @@ export function CartDrawer() {
                     </p>
                     <h2 className="font-[family-name:var(--font-heading)] text-lg font-black text-[#1f3b2c]">
                       Your Cart
-                      <span className="ml-2 rounded-full bg-[#e8f3ec] px-2 py-0.5 text-xs font-bold text-[#3d7a5a]">
+                      <span className="ml-2 rounded-full bg-[#e7f3ec] px-2 py-0.5 text-xs font-bold text-[#3d7a5a]">
                         {cartItems.length}
                       </span>
                     </h2>
@@ -165,7 +165,7 @@ export function CartDrawer() {
                                   item.selectedVariant,
                                 )
                               }
-                              className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#3d7a5a] shadow-sm transition hover:bg-[#e8f3ec]"
+                              className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#3d7a5a] shadow-sm transition hover:bg-[#e7f3ec]"
                             >
                               <Minus className="h-3 w-3" />
                             </button>
@@ -180,7 +180,7 @@ export function CartDrawer() {
                                   item.selectedVariant,
                                 )
                               }
-                              className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#3d7a5a] shadow-sm transition hover:bg-[#e8f3ec]"
+                              className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#3d7a5a] shadow-sm transition hover:bg-[#e7f3ec]"
                             >
                               <Plus className="h-3 w-3" />
                             </button>

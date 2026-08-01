@@ -8,8 +8,8 @@ import {
   saveMockProduct,
   updateOrderStatus,
 } from "@/lib/mock-backend";
+import { getApiBaseUrl } from "@/lib/api-base";
 
-const API_BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:5001/api").replace(/\/$/, "");
 const USE_LOCAL_ADMIN = import.meta.env.VITE_USE_LOCAL_ADMIN === "true";
 const LOCAL_ADMIN_KEY = "himu-local-admin-profile";
 const LOCAL_ADMIN_TOKEN = "himu-local-admin-token";
@@ -247,7 +247,7 @@ export async function api(path, { token, ...options } = {}) {
     return localApi(path, { token, ...options });
   }
 
-  const response = await fetch(`${API_BASE_URL}${path}`, {
+  const response = await fetch(`${getApiBaseUrl()}${path}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",

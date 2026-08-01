@@ -8,6 +8,7 @@ import { ProductsPanel, InventoryPanel } from "@/admin/components/ProductsPanel"
 import { OrdersPanel } from "@/admin/components/OrdersPanel";
 import { CustomersPanel } from "@/admin/components/CustomersPanel";
 import { SettingsPanel } from "@/admin/components/SettingsPanel";
+import { BannersPanel } from "@/admin/components/BannersPanel";
 import { ProductModal, OrderDetailModal } from "@/admin/components/AdminModals";
 
 const TAB_META = {
@@ -31,6 +32,10 @@ const TAB_META = {
     title: "Customer Directory",
     subtitle: "Buyers from orders and registered accounts",
   },
+  banners: {
+    title: "Homepage Banners",
+    subtitle: "Add or remove carousel slides for the shopping home",
+  },
   settings: {
     title: "Account Settings",
     subtitle: "Profile identity and credential security",
@@ -52,6 +57,7 @@ export default function AdminPage() {
         loginError={dash.loginError}
         loginLoading={dash.loginLoading}
         handleLogin={dash.handleLogin}
+        handleDemoLogin={dash.handleDemoLogin}
       />
     );
   }
@@ -59,7 +65,7 @@ export default function AdminPage() {
   const meta = TAB_META[dash.activeTab];
 
   return (
-    <div className="flex min-h-screen bg-[radial-gradient(ellipse_at_top,_#f3f8f4_0%,_#f7f5ef_45%,_#efe8d8_100%)] text-foreground">
+    <div className="flex min-h-screen bg-[radial-gradient(ellipse_at_top,_#f3f7f0_0%,_#f7f5ef_45%,_#efe8d8_100%)] text-foreground">
       <AdminSidebar
         activeTab={dash.activeTab}
         setActiveTab={dash.setActiveTab}
@@ -173,6 +179,19 @@ export default function AdminPage() {
                   customerSearch={dash.customerSearch}
                   setCustomerSearch={dash.setCustomerSearch}
                   exportCustomers={dash.exportCustomers}
+                />
+              )}
+              {dash.activeTab === "banners" && (
+                <BannersPanel
+                  banners={dash.banners}
+                  bannerForm={dash.bannerForm}
+                  setBannerForm={dash.setBannerForm}
+                  editingBannerId={dash.editingBannerId}
+                  handleBannerSubmit={dash.handleBannerSubmit}
+                  handleEditBanner={dash.handleEditBanner}
+                  handleDeleteBanner={dash.handleDeleteBanner}
+                  handleToggleBanner={dash.handleToggleBanner}
+                  resetBannerForm={dash.resetBannerForm}
                 />
               )}
               {dash.activeTab === "settings" && (

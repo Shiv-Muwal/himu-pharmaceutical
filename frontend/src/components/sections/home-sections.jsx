@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Link } from "@/components/ui/link";
 import { Image } from "@/components/ui/image";
 import { AnimatePresence, motion } from "framer-motion";
@@ -12,9 +11,6 @@ import {
   Microscope,
   Factory,
   Award,
-  Search,
-  Mic,
-  MicOff,
   MessageCircle,
   ChevronLeft,
   ChevronRight,
@@ -76,7 +72,7 @@ const whyChoose = [
   },
 ];
 
-const HERO_SUBLINES = [
+const BRAND_SUBLINES = [
   {
     id: "innovating",
     title: "Innovating Today for a Healthier Tomorrow",
@@ -89,116 +85,39 @@ const HERO_SUBLINES = [
   },
 ];
 
-export function HeroSection() {
-  const navigate = useNavigate();
-  const searchRef = useRef(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [isListening, setIsListening] = useState(false);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [catalog, setCatalog] = useState(products);
+/** Brand story hero — lives on About Us (shopping home uses banner carousel). */
+export function BrandStoryHero() {
   const [sublineIndex, setSublineIndex] = useState(0);
-  const [placeholderText, setPlaceholderText] = useState(
-    "Search medicines, categories, compositions...",
-  );
-
-  useEffect(() => {
-    setCatalog(getMockProducts());
-  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setSublineIndex((prev) => (prev + 1) % HERO_SUBLINES.length);
+      setSublineIndex((prev) => (prev + 1) % BRAND_SUBLINES.length);
     }, 5500);
     return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    const onClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setShowSuggestions(false);
-      }
-    };
-    document.addEventListener("mousedown", onClickOutside);
-    return () => document.removeEventListener("mousedown", onClickOutside);
-  }, []);
-
-  const goToProducts = (query = searchQuery, category = selectedCategory) => {
-    const params = new URLSearchParams();
-    if (query.trim()) params.set("q", query.trim());
-    if (category) params.set("category", category);
-    const qs = params.toString();
-    navigate(qs ? `/products?${qs}` : "/products");
-    setShowSuggestions(false);
-  };
-
-  const suggestions = useMemo(() => {
-    const q = searchQuery.trim().toLowerCase();
-    if (q.length < 1) return [];
-    return catalog
-      .filter((p) => {
-        const matchesQuery =
-          p.name.toLowerCase().includes(q) ||
-          p.composition?.toLowerCase().includes(q) ||
-          p.category?.toLowerCase().includes(q);
-        const matchesCategory = !selectedCategory || p.categorySlug === selectedCategory;
-        return matchesQuery && matchesCategory;
-      })
-      .slice(0, 6);
-  }, [catalog, searchQuery, selectedCategory]);
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    goToProducts();
-  };
-
-  const startListening = () => {
-    if (typeof window === "undefined") return;
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert("Voice recognition is not supported in this browser. Please try typing.");
-      return;
-    }
-    const recognition = new SpeechRecognition();
-    recognition.continuous = false;
-    recognition.lang = "en-IN";
-    recognition.interimResults = false;
-    recognition.onstart = () => {
-      setIsListening(true);
-      setPlaceholderText("Listening... Speak now");
-    };
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      setSearchQuery(transcript);
-      setIsListening(false);
-      setPlaceholderText("Search medicines, categories, compositions...");
-      goToProducts(transcript, selectedCategory);
-    };
-    recognition.onerror = () => {
-      setIsListening(false);
-      setPlaceholderText("Search medicines, categories, compositions...");
-      alert("Speech recognition error. Please type or try speaking again.");
-    };
-    recognition.onend = () => setIsListening(false);
-    recognition.start();
-  };
-
   return (
-    <section className="relative min-h-[100svh] overflow-hidden">
+    <section className="relative min-h-[88svh] overflow-hidden md:min-h-[92svh]">
       <Image
         src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&h=1080&fit=crop"
-        alt="Pharmaceutical laboratory"
+        alt="HIMU healthcare professionals"
         fill
         className="object-cover object-[68%_center] sm:object-[72%_center]"
         priority
       />
       <div className="absolute inset-0 gradient-hero-mobile md:hidden" />
       <div className="absolute inset-0 hidden gradient-hero md:block" />
-      <div className="absolute inset-y-0 left-0 hidden w-1/2 bg-gradient-to-r from-[#061610]/40 to-transparent md:block" />
+      <div className="absolute inset-y-0 left-0 hidden w-1/2 bg-gradient-to-r from-[#061610]/45 to-transparent md:block" />
 
-      <div className="container-custom relative z-10 flex min-h-[100svh] items-start md:items-center">
+      <div className="container-custom relative z-10 flex min-h-[88svh] items-start md:min-h-[92svh] md:items-center">
         <div className="w-full max-w-xl pt-28 pb-16 sm:pt-32 sm:pb-20 lg:max-w-3xl lg:pt-36">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-4 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-white/5 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-gold backdrop-blur-sm"
+          >
+            About HIMU Pharmacy
+          </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
@@ -218,20 +137,18 @@ export function HeroSection() {
           <div className="relative mb-8 min-h-[7.5rem] max-w-lg sm:min-h-[6.75rem] lg:min-h-[7.25rem]">
             <AnimatePresence mode="wait">
               <motion.div
-                key={HERO_SUBLINES[sublineIndex].id}
+                key={BRAND_SUBLINES[sublineIndex].id}
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.45, ease: "easeOut" }}
                 className="absolute inset-x-0 top-0"
               >
-                {HERO_SUBLINES[sublineIndex].title && (
-                  <p className="mb-1.5 font-[family-name:var(--font-heading)] text-sm font-bold text-gold sm:text-base">
-                    {HERO_SUBLINES[sublineIndex].title}
-                  </p>
-                )}
+                <p className="mb-1.5 font-[family-name:var(--font-heading)] text-sm font-bold text-gold sm:text-base">
+                  {BRAND_SUBLINES[sublineIndex].title}
+                </p>
                 <p className="text-sm leading-relaxed text-white/80 sm:text-base lg:text-lg">
-                  {HERO_SUBLINES[sublineIndex].body}
+                  {BRAND_SUBLINES[sublineIndex].body}
                 </p>
               </motion.div>
             </AnimatePresence>
@@ -241,7 +158,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.24, ease: "easeOut" }}
-            className="mb-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
+            className="flex flex-col gap-3 sm:flex-row sm:flex-wrap"
           >
             <Link href="/products" className="w-full sm:w-auto">
               <Button size="lg" variant="secondary" className="w-full sm:w-auto">
@@ -253,7 +170,7 @@ export function HeroSection() {
               <Button
                 size="lg"
                 variant="ghost"
-                className="w-full border-2 border-gold/80 bg-white/5 text-gold backdrop-blur-sm hover:border-gold hover:bg-gold hover:text-[#1a2e1f] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(212,175,55,0.35)] sm:w-auto"
+                className="w-full border-2 border-gold/80 bg-white/5 text-gold backdrop-blur-sm hover:border-gold hover:bg-gold hover:text-[#1a2e1f] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(214, 176, 77,0.35)] sm:w-auto"
               >
                 <MessageCircle className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
                 Contact Us
@@ -261,129 +178,8 @@ export function HeroSection() {
               </Button>
             </Link>
           </motion.div>
-
-          <motion.form
-            ref={searchRef}
-            onSubmit={handleSearchSubmit}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.34, ease: "easeOut" }}
-            className="relative w-full max-w-xl"
-          >
-            <div className="flex flex-col gap-2 rounded-2xl border border-white/20 bg-white/95 p-2 shadow-2xl backdrop-blur-md sm:flex-row sm:items-center sm:gap-1.5 dark:bg-card/95">
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full shrink-0 cursor-pointer rounded-xl bg-muted/50 px-3 py-2.5 text-xs font-bold text-foreground outline-none sm:w-auto sm:rounded-none sm:border-r sm:border-border sm:bg-transparent sm:py-2"
-                aria-label="Category"
-              >
-                <option value="" className="text-foreground">
-                  All Categories
-                </option>
-                {categories.map((c) => (
-                  <option key={c.slug} value={c.slug} className="text-foreground">
-                    {c.name}
-                  </option>
-                ))}
-              </select>
-              <div className="relative flex flex-1 items-center">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    setShowSuggestions(true);
-                  }}
-                  onFocus={() => setShowSuggestions(true)}
-                  placeholder={placeholderText}
-                  className={`w-full border-0 bg-transparent px-3 py-2.5 text-sm font-medium text-foreground outline-none placeholder:text-muted-foreground sm:px-2 sm:py-2 ${isListening ? "animate-pulse text-primary" : ""}`}
-                  autoComplete="off"
-                />
-                <button
-                  type="button"
-                  onClick={startListening}
-                  className={`shrink-0 cursor-pointer rounded-full p-2 transition-colors hover:bg-muted ${isListening ? "animate-pulse bg-red-100 text-red-500 dark:bg-red-950/30" : "text-muted-foreground hover:text-primary"}`}
-                  title="Voice Search"
-                  aria-label="Voice search"
-                >
-                  {isListening ? (
-                    <MicOff className="h-4 w-4" />
-                  ) : (
-                    <Mic className="h-4 w-4" />
-                  )}
-                </button>
-              </div>
-              <Button
-                type="submit"
-                size="sm"
-                className="h-11 w-full shrink-0 cursor-pointer rounded-xl px-5 sm:h-9 sm:w-auto"
-              >
-                <Search className="h-4 w-4" />
-                <span className="ml-1 text-xs">Search</span>
-              </Button>
-            </div>
-
-            <AnimatePresence>
-              {showSuggestions && searchQuery.trim().length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 8 }}
-                  className="absolute left-0 right-0 top-[calc(100%+8px)] z-30 overflow-hidden rounded-2xl border border-border/60 bg-white shadow-2xl dark:bg-card"
-                >
-                  {suggestions.length > 0 ? (
-                    <div className="max-h-72 overflow-y-auto p-2">
-                      {suggestions.map((product) => (
-                        <button
-                          key={product.id}
-                          type="button"
-                          onClick={() => navigate(`/products/${product.slug}`)}
-                          className="flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-left transition hover:bg-primary/10"
-                        >
-                          <div className="min-w-0">
-                            <p className="truncate text-sm font-semibold text-foreground">
-                              {product.name}
-                            </p>
-                            <p className="truncate text-xs text-muted-foreground">
-                              {product.composition} · {product.strength}
-                            </p>
-                          </div>
-                          <span className="shrink-0 rounded-full bg-primary/10 px-2 py-1 text-[10px] font-bold text-primary">
-                            {product.category}
-                          </span>
-                        </button>
-                      ))}
-                      <button
-                        type="button"
-                        onClick={() => goToProducts()}
-                        className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-primary/5 px-3 py-2.5 text-xs font-bold text-primary hover:bg-primary/10"
-                      >
-                        <Search className="h-3.5 w-3.5" />
-                        View all results for “{searchQuery.trim()}”
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="p-4 text-center text-sm text-muted-foreground">
-                      No medicines found. Try another keyword or category.
-                    </div>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.form>
         </div>
       </div>
-
-      <motion.div
-        className="absolute bottom-6 left-4 z-10 hidden sm:left-6 sm:block md:left-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:left-[max(2rem,calc((100vw-80rem)/2+2rem))]"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
-        aria-hidden
-      >
-        <div className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/35 p-2">
-          <div className="h-2 w-1 rounded-full bg-white/70" />
-        </div>
-      </motion.div>
     </section>
   );
 }
@@ -433,7 +229,7 @@ const OVERVIEW_PILLARS = [
 export function OverviewSection() {
   return (
     <section className="relative overflow-hidden section-padding">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_20%,rgba(11,93,59,0.08),transparent_45%),radial-gradient(ellipse_at_90%_80%,rgba(212,175,55,0.1),transparent_40%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_20%,rgba(11, 106, 70,0.08),transparent_45%),radial-gradient(ellipse_at_90%_80%,rgba(214, 176, 77,0.1),transparent_40%)]" />
       <div className="container-custom relative">
         <div className="grid items-stretch gap-10 lg:grid-cols-12 lg:gap-14">
           <FadeIn direction="left" className="lg:col-span-5">
@@ -582,7 +378,7 @@ export function CategoriesSection() {
 
 export function WhyChooseSection() {
   return (
-    <section className="relative overflow-hidden section-padding bg-[#0b5d3b]">
+    <section className="relative overflow-hidden section-padding bg-[#0b6a46]">
       <div className="pointer-events-none absolute inset-0 opacity-30 molecular-bg" />
       <div className="pointer-events-none absolute -right-20 top-10 h-64 w-64 rounded-full bg-gold/15 blur-3xl" />
       <div className="container-custom relative">
@@ -666,7 +462,7 @@ export function FeaturedProductsSection() {
   };
 
   return (
-    <section className="relative overflow-hidden section-padding bg-gradient-to-b from-[#fff8e7] via-[#f3f8f4] to-[#fff8e7]">
+    <section className="relative overflow-hidden section-padding bg-gradient-to-b from-[#f8f3e6] via-[#f3f7f0] to-[#f8f3e6]">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
       <div className="container-custom mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <div className="max-w-xl">
@@ -724,8 +520,8 @@ export function FeaturedProductsSection() {
         onTouchStart={() => setPaused(true)}
         onTouchEnd={() => setPaused(false)}
       >
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[#fff8e7] to-transparent sm:w-16" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#fff8e7] to-transparent sm:w-16" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[#f8f3e6] to-transparent sm:w-16" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#f8f3e6] to-transparent sm:w-16" />
         <div
           ref={scrollerRef}
           className="flex gap-4 overflow-x-auto px-4 pb-2 scrollbar-none sm:px-8"
