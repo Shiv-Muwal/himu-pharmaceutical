@@ -14,7 +14,17 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="relative mt-0 bg-primary text-white md:mt-12">
+    <footer className="relative mt-0 text-white md:mt-12">
+      {/* Mobile: single soft cream → green blend (no double layer) */}
+      <div
+        aria-hidden
+        className="h-16 w-full md:hidden"
+        style={{
+          background:
+            "linear-gradient(180deg, #f8f3e6 0%, #e8efe6 28%, #9fbfab 58%, #3d8a64 82%, #0b6a46 100%)",
+        }}
+      />
+
       {/* Desktop wave */}
       <div className="pointer-events-none absolute left-0 right-0 top-0 hidden w-full -translate-y-[98%] overflow-hidden leading-[0] md:block">
         <svg
@@ -27,151 +37,151 @@ export function Footer() {
         </svg>
       </div>
 
-      {/* Mobile: soft color merge (no hard line / no wave) */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-24 -translate-y-full md:hidden"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(248,243,230,0) 0%, rgba(168,196,176,0.35) 38%, rgba(11,106,70,0.55) 72%, #0b6a46 100%)",
-        }}
-      />
+      <div className="relative bg-primary">
+        <div className="pointer-events-none absolute top-10 left-10 h-56 w-56 rounded-full bg-gold/15 blur-3xl" />
+        <div className="pointer-events-none absolute right-10 bottom-10 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+        <div className="pointer-events-none absolute inset-0 opacity-10 molecular-bg" />
 
-      <div className="pointer-events-none absolute top-10 left-10 h-56 w-56 rounded-full bg-gold/15 blur-3xl" />
-      <div className="pointer-events-none absolute right-10 bottom-10 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
-      <div className="pointer-events-none absolute inset-0 opacity-10 molecular-bg" />
-
-      <div className="relative z-10">
-        <div className="container-custom py-8 md:py-12">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-            <div>
-              <div className="mb-4 inline-flex flex-col gap-2">
-                <div className="rounded-2xl border border-white/15 bg-white/10 px-3 py-2 shadow-[0_10px_40px_rgba(0,0,0,0.18)] backdrop-blur-sm transition hover:bg-white/15">
-                  <BrandLogo
-                    variant="white"
-                    className="h-12 w-44 sm:h-14 sm:w-52"
-                    priority
-                  />
+        <div className="relative z-10">
+          <div className="container-custom py-7 md:py-12">
+            <div className="grid grid-cols-2 gap-x-5 gap-y-8 lg:grid-cols-4 lg:gap-8">
+              {/* Brand — full width on mobile */}
+              <div className="col-span-2 lg:col-span-1">
+                <div className="mb-4 inline-flex flex-col gap-2">
+                  <div className="rounded-2xl border border-white/15 bg-white/10 px-3 py-2 shadow-[0_10px_40px_rgba(0,0,0,0.18)] backdrop-blur-sm transition hover:bg-white/15">
+                    <BrandLogo
+                      variant="white"
+                      className="h-12 w-44 sm:h-14 sm:w-52"
+                      priority
+                    />
+                  </div>
+                  <p className="pl-1 text-[10px] font-bold uppercase tracking-[0.28em] text-gold">
+                    Healthcare Innovation
+                  </p>
                 </div>
-                <p className="pl-1 text-[10px] font-bold uppercase tracking-[0.28em] text-gold">
-                  Healthcare Innovation
+                <p className="mb-5 max-w-md text-sm leading-relaxed text-white/75">
+                  {COMPANY.fullForm}. Advancing global healthcare through innovation, quality, and
+                  compassion since 2004.
                 </p>
-              </div>
-              <p className="mb-5 text-sm leading-relaxed text-white/75">
-                {COMPANY.fullForm}. Advancing global healthcare through innovation, quality, and
-                compassion since 2004.
-              </p>
-              <div className="flex gap-2.5">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.href}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 text-xs font-bold uppercase transition-all duration-300 hover:scale-110 hover:border-gold hover:text-gold"
-                    aria-label={social.name}
-                  >
-                    {social.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="mb-3 text-base font-bold tracking-wide text-gold">Quick Links</h4>
-              <ul className="space-y-2">
-                {NAV_LINKS.slice(0, 8).map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="inline-block text-sm text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
+                <div className="flex gap-2.5">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 text-xs font-bold uppercase transition-all duration-300 hover:scale-110 hover:border-gold hover:text-gold"
+                      aria-label={social.name}
                     >
-                      {link.name}
+                      {social.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quick Links — left column beside categories on mobile */}
+              <div>
+                <h4 className="mb-3 text-sm font-bold tracking-wide text-gold sm:text-base">
+                  Quick Links
+                </h4>
+                <ul className="space-y-2">
+                  {NAV_LINKS.slice(0, 8).map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="inline-block text-xs text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
+                      >
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                  <li>
+                    <Link
+                      href="/faq"
+                      className="inline-block text-xs text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
+                    >
+                      FAQ
                     </Link>
                   </li>
-                ))}
-                <li>
-                  <Link
-                    href="/faq"
-                    className="inline-block text-sm text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
-                  >
-                    FAQ
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/certifications"
-                    className="inline-block text-sm text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
-                  >
-                    Certifications
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="mb-3 text-base font-bold tracking-wide text-gold">
-                Product Categories
-              </h4>
-              <ul className="space-y-2">
-                {categories.slice(0, 8).map((cat) => (
-                  <li key={cat.slug}>
+                  <li>
                     <Link
-                      href={`/categories/${cat.slug}`}
-                      className="inline-block text-sm text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
+                      href="/certifications"
+                      className="inline-block text-xs text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
                     >
-                      {cat.name}
+                      Certifications
                     </Link>
                   </li>
-                ))}
-              </ul>
-            </div>
+                </ul>
+              </div>
 
-            <div>
-              <h4 className="mb-3 text-base font-bold tracking-wide text-gold">Contact Info</h4>
-              <ul className="space-y-3 text-sm text-white/75">
-                <li className="flex items-start gap-2.5">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                  <span>{COMPANY.address}</span>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <Phone className="h-4 w-4 shrink-0 text-gold" />
-                  <span>{COMPANY.phone}</span>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <Mail className="h-4 w-4 shrink-0 text-gold" />
-                  <span>{COMPANY.email}</span>
-                </li>
-              </ul>
+              {/* Product Categories — right of Quick Links on mobile */}
+              <div>
+                <h4 className="mb-3 text-sm font-bold tracking-wide text-gold sm:text-base">
+                  Product Categories
+                </h4>
+                <ul className="space-y-2">
+                  {categories.slice(0, 8).map((cat) => (
+                    <li key={cat.slug}>
+                      <Link
+                        href={`/categories/${cat.slug}`}
+                        className="inline-block text-xs text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
+                      >
+                        {cat.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Contact — full width under the two columns on mobile */}
+              <div className="col-span-2 lg:col-span-1">
+                <h4 className="mb-3 text-sm font-bold tracking-wide text-gold sm:text-base">
+                  Contact Info
+                </h4>
+                <ul className="space-y-3 text-xs text-white/75 sm:text-sm">
+                  <li className="flex items-start gap-2.5">
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+                    <span>{COMPANY.address}</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Phone className="h-4 w-4 shrink-0 text-gold" />
+                    <span>{COMPANY.phone}</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Mail className="h-4 w-4 shrink-0 text-gold" />
+                    <span>{COMPANY.email}</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="border-t border-white/10">
-          <div className="container-custom flex flex-col items-center justify-between gap-3 py-4 text-xs text-white/60 md:flex-row">
-            <p>
-              © {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <span>License: {COMPANY.licenseNumber}</span>
-              <span>CIN: {COMPANY.cinNumber}</span>
-            </div>
-            <div className="flex flex-wrap items-center gap-4">
-              <Link href="/privacy" className="transition-colors hover:text-gold">
-                Privacy
-              </Link>
-              <Link href="/terms" className="transition-colors hover:text-gold">
-                Terms & Conditions
-              </Link>
-              <Link href="/disclaimer" className="transition-colors hover:text-gold">
-                Disclaimer
-              </Link>
-              <a
-                href={import.meta.env.VITE_ADMIN_URL || "http://localhost:5174/admin/"}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-semibold text-gold transition hover:bg-gold hover:text-[#0b6a46]"
-              >
-                Open Admin Panel
-              </a>
+          <div className="border-t border-white/10">
+            <div className="container-custom flex flex-col items-center justify-between gap-3 py-4 text-xs text-white/60 md:flex-row">
+              <p>
+                © {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <span>License: {COMPANY.licenseNumber}</span>
+                <span>CIN: {COMPANY.cinNumber}</span>
+              </div>
+              <div className="flex flex-wrap items-center gap-4">
+                <Link href="/privacy" className="transition-colors hover:text-gold">
+                  Privacy
+                </Link>
+                <Link href="/terms" className="transition-colors hover:text-gold">
+                  Terms & Conditions
+                </Link>
+                <Link href="/disclaimer" className="transition-colors hover:text-gold">
+                  Disclaimer
+                </Link>
+                <a
+                  href={import.meta.env.VITE_ADMIN_URL || "http://localhost:5174/admin/"}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-semibold text-gold transition hover:bg-gold hover:text-[#0b6a46]"
+                >
+                  Open Admin Panel
+                </a>
+              </div>
             </div>
           </div>
         </div>

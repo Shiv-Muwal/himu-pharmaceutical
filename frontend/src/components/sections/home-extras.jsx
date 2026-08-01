@@ -148,12 +148,8 @@ export function HomeBlogsSection() {
   if (!featured) return null;
 
   return (
-    <section className="section-padding relative bg-gradient-to-b from-[#f8f3e6] via-white to-[#f3f7f0] pb-10 md:pb-[var(--section-padding,3rem)]">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent via-[#7fad93]/25 to-[#0b6a46] md:hidden"
-      />
-      <div className="container-custom relative z-[1]">
+    <section className="section-padding bg-gradient-to-b from-[#f8f3e6] via-white to-[#f8f3e6] pb-4 md:pb-[var(--section-padding,3rem)]">
+      <div className="container-custom">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="mb-1 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
