@@ -11,7 +11,7 @@ import {
   ExternalLink,
   ImageIcon,
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SIDEBAR_TABS } from "@/admin/constants";
 import { AdminLogo } from "@/admin/components/AdminLogo";

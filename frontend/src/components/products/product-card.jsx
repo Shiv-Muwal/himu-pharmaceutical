@@ -1,12 +1,12 @@
-import { Link } from "@/components/ui/Link";
-import { Image } from "@/components/ui/Image";
+import { Link } from "@/components/ui/link";
+import { Image } from "@/components/ui/image";
 import { ShoppingCart, Zap, Star } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { useCart } from "@/providers/CartProvider";
 import { cn } from "@/lib/utils";
-import { ProductReviews } from "@/components/products/Product-reviews";
+import { ProductReviews } from "@/components/products/product-reviews";
 
 export function ProductCard({ product, showReviews = true }) {
   const { addToCart, buyNow } = useCart();

@@ -1,12 +1,12 @@
-import { Image } from "@/components/ui/Image";
+import { Image } from "@/components/ui/image";
 import { Download } from "lucide-react";
-import { PageHero } from "@/components/sections/Page-hero";
+import { PageHero } from "@/components/sections/page-hero";
 import {
   FadeIn,
   SectionHeading,
-} from "@/components/animations/Motion-components";
-import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
+} from "@/components/animations/motion-components";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { certifications } from "@/data/company";
 import { COMPANY } from "@/lib/constants";
 export default function CertificationsPage() {

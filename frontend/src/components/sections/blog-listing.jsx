@@ -1,11 +1,11 @@
 import { useState, useMemo } from "react";
-import { Link } from "@/components/ui/Link";
-import { Image } from "@/components/ui/Image";
+import { Link } from "@/components/ui/link";
+import { Image } from "@/components/ui/image";
 import { Search } from "lucide-react";
-import { Input } from "@/components/ui/Input";
-import { Card, CardContent } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
-import { FadeIn } from "@/components/animations/Motion-components";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { FadeIn } from "@/components/animations/motion-components";
 import { blogPosts, blogCategories } from "@/data/blogs";
 import { formatDate } from "@/lib/utils";
 export function BlogListing() {

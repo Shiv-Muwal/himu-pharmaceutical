@@ -1,11 +1,11 @@
-import { PageHero } from "@/components/sections/Page-hero";
+import { PageHero } from "@/components/sections/page-hero";
 import {
   FadeIn,
   SectionHeading,
-} from "@/components/animations/Motion-components";
-import { Card } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
-import { CareerApplicationForm } from "@/components/forms/Contact-form";
+} from "@/components/animations/motion-components";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CareerApplicationForm } from "@/components/forms/contact-form";
 import { jobOpenings } from "@/data/company";
 import { Heart, GraduationCap, Users, TrendingUp } from "lucide-react";
 const benefits = [

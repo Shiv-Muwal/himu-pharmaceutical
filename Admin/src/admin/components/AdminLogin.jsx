@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Lock, Mail, AlertCircle, Sparkles, Eye, EyeOff, LayoutDashboard, Copy, Check } from "lucide-react";
 import { useState } from "react";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { AdminLogo } from "@/admin/components/AdminLogo";
 import { LoginScene3D } from "@/admin/components/LoginScene3D";
 

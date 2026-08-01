@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
-import { PageHero } from "@/components/sections/Page-hero";
-import { AccordionItem } from "@/components/ui/Accordion";
-import { FadeIn } from "@/components/animations/Motion-components";
+import { PageHero } from "@/components/sections/page-hero";
+import { AccordionItem } from "@/components/ui/accordion";
+import { FadeIn } from "@/components/animations/motion-components";
 import { faqs, faqCategories } from "@/data/faq";
 export function FAQContent() {
   const [category, setCategory] = useState("All");

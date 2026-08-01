@@ -1,5 +1,5 @@
-import { PageHero } from "@/components/sections/Page-hero";
-import { BlogListing } from "@/components/sections/Blog-listing";
+import { PageHero } from "@/components/sections/page-hero";
+import { BlogListing } from "@/components/sections/blog-listing";
 export default function NewsPage() {
   return (
     <>

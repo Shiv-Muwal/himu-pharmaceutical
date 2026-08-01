@@ -1,10 +1,10 @@
-import { Image } from "@/components/ui/Image";
+import { Image } from "@/components/ui/image";
 import {
   FadeIn,
   SectionHeading,
-} from "@/components/animations/Motion-components";
-import { InteractiveTimeline } from "@/components/sections/Timeline";
-import { Card } from "@/components/ui/Card";
+} from "@/components/animations/motion-components";
+import { InteractiveTimeline } from "@/components/sections/timeline";
+import { Card } from "@/components/ui/card";
 import { teamMembers, companyTimeline, coreValues } from "@/data/company";
 import { Target, Eye, Heart } from "lucide-react";
 import {
@@ -12,7 +12,7 @@ import {
   OverviewSection,
   StatsSection,
   WhyChooseSection,
-} from "@/components/sections/Home-sections";
+} from "@/components/sections/home-sections";
 
 export default function AboutPage() {
   return (

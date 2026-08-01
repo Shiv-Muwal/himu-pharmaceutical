@@ -1,4 +1,4 @@
-import { FadeIn } from "@/components/animations/Motion-components";
+import { FadeIn } from "@/components/animations/motion-components";
 export function InteractiveTimeline({ events }) {
   return (
     <div className="relative">

@@ -1,4 +1,4 @@
-import { Link } from "@/components/ui/Link";
+import { Link } from "@/components/ui/link";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -30,8 +30,8 @@ import {
   MapPin,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { NAV_LINKS } from "@/lib/constants";
 import { products } from "@/data/products";
 import { searchProductsSmart } from "@/lib/product-search";

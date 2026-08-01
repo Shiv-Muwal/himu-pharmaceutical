@@ -1,4 +1,4 @@
-import { Link } from "@/components/ui/Link";
+import { Link } from "@/components/ui/link";
 import { ChevronRight, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
 

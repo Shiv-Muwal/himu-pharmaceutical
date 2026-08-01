@@ -11,14 +11,14 @@ import {
   Package,
   Leaf,
 } from "lucide-react";
-import { Image } from "@/components/ui/Image";
+import { Image } from "@/components/ui/image";
 import { useCart } from "@/providers/CartProvider";
 import { useAuth } from "@/providers/AuthProvider";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Textarea } from "@/components/ui/Textarea";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/lib/api";
-import { OrderSuccessView } from "@/components/cart/Order-success";
+import { OrderSuccessView } from "@/components/cart/order-success";
 
 export function CheckoutModal() {
   const {

@@ -13,9 +13,9 @@ import {
   ArrowRight,
   UserRound,
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { BrandLogo } from "@/components/ui/Brand-logo";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { BrandLogo } from "@/components/ui/brand-logo";
 import { useAuth } from "@/providers/AuthProvider";
 
 const DEMO_CUSTOMER_EMAIL =

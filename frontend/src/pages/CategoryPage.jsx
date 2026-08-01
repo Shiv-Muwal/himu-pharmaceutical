@@ -1,9 +1,9 @@
 import { Navigate, useParams } from "react-router-dom";
-import { PageHero } from "@/components/sections/Page-hero";
-import { ProductCatalog } from "@/components/products/Product-catalog";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
-import { FadeIn } from "@/components/animations/Motion-components";
-import { Card } from "@/components/ui/Card";
+import { PageHero } from "@/components/sections/page-hero";
+import { ProductCatalog } from "@/components/products/product-catalog";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
+import { FadeIn } from "@/components/animations/motion-components";
+import { Card } from "@/components/ui/card";
 import { getCategoryBySlug } from "@/data/categories";
 import { getProductsByCategory } from "@/data/products";
 export default function CategoryPage() {

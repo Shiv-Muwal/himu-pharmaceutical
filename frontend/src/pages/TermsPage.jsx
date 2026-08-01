@@ -1,6 +1,6 @@
 import { PageHero } from "@/components/sections/page-hero";
-import { FadeIn } from "@/components/animations/Motion-components";
-import { Card } from "@/components/ui/Card";
+import { FadeIn } from "@/components/animations/motion-components";
+import { Card } from "@/components/ui/card";
 import { COMPANY } from "@/lib/constants";
 
 export default function TermsPage() {

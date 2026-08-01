@@ -1,9 +1,9 @@
 import { Download, Plus, Search, Edit, Trash2 } from "lucide-react";
-import { Image } from "@/components/ui/Image";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Badge } from "@/components/ui/Badge";
-import { Card, CardContent } from "@/components/ui/Card";
+import { Image } from "@/components/ui/image";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { CATEGORIES_LIST, LOW_STOCK_THRESHOLD } from "@/admin/constants";
 import { cn } from "@/lib/utils";
 

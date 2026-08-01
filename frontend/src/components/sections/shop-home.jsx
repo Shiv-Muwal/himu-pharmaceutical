@@ -14,16 +14,16 @@ import {
   BadgePercent,
   ShoppingBag,
 } from "lucide-react";
-import { Link } from "@/components/ui/Link";
-import { Image } from "@/components/ui/Image";
-import { Button } from "@/components/ui/Button";
-import { ProductCard } from "@/components/products/Product-card";
+import { Link } from "@/components/ui/link";
+import { Image } from "@/components/ui/image";
+import { Button } from "@/components/ui/button";
+import { ProductCard } from "@/components/products/product-card";
 import { categories } from "@/data/categories";
 import { DEFAULT_BANNERS } from "@/data/banners";
 import { products } from "@/data/products";
 import { getMockProducts } from "@/lib/mock-backend";
 import { api } from "@/lib/api";
-import { FadeIn } from "@/components/animations/Motion-components";
+import { FadeIn } from "@/components/animations/motion-components";
 import { searchProductsSmart } from "@/lib/product-search";
 import { getApiOrigin } from "@/lib/api-base";
 

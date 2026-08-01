@@ -1,11 +1,11 @@
-import { Image } from "@/components/ui/Image";
-import { PageHero } from "@/components/sections/Page-hero";
+import { Image } from "@/components/ui/image";
+import { PageHero } from "@/components/sections/page-hero";
 import {
   FadeIn,
   SectionHeading,
-} from "@/components/animations/Motion-components";
-import { InteractiveTimeline } from "@/components/sections/Timeline";
-import { Card } from "@/components/ui/Card";
+} from "@/components/animations/motion-components";
+import { InteractiveTimeline } from "@/components/sections/timeline";
+import { Card } from "@/components/ui/card";
 import { Cog, Package, Warehouse, Globe, Truck } from "lucide-react";
 const processes = [
   {

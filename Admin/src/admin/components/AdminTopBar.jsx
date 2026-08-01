@@ -5,7 +5,7 @@ import {
   Search,
   X,
 } from "lucide-react";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/input";
 import { AdminLogo } from "@/admin/components/AdminLogo";
 import { cn } from "@/lib/utils";
 

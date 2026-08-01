@@ -1,8 +1,8 @@
 import { Navigate, useParams } from "react-router-dom";
-import { Image } from "@/components/ui/Image";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
-import { Badge } from "@/components/ui/Badge";
-import { FadeIn } from "@/components/animations/Motion-components";
+import { Image } from "@/components/ui/image";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
+import { Badge } from "@/components/ui/badge";
+import { FadeIn } from "@/components/animations/motion-components";
 import { getBlogBySlug } from "@/data/blogs";
 import { formatDate } from "@/lib/utils";
 export default function NewsDetailPage() {
