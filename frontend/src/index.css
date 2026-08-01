@@ -235,6 +235,13 @@ body {
   animation: marquee 25s linear infinite;
 }
 
-.animate-marquee:hover {
+.animate-marquee-slow {
+  display: flex;
+  width: max-content;
+  animation: marquee 55s linear infinite;
+}
+
+.animate-marquee:hover,
+.animate-marquee-slow:hover {
   animation-play-state: paused;
 }

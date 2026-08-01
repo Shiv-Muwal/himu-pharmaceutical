@@ -202,7 +202,7 @@ export function BannerCarousel() {
             <button
               type="button"
               onClick={() => go(-1)}
-              className="absolute left-2 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/45 text-white backdrop-blur transition hover:bg-black/65 active:scale-95 sm:left-5 sm:h-11 sm:w-11"
+              className="absolute left-5 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/45 text-white backdrop-blur transition hover:bg-black/65 active:scale-95 md:flex"
               aria-label="Previous banner"
             >
               <ChevronLeft className="h-5 w-5" />
@@ -210,19 +210,19 @@ export function BannerCarousel() {
             <button
               type="button"
               onClick={() => go(1)}
-              className="absolute right-2 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/45 text-white backdrop-blur transition hover:bg-black/65 active:scale-95 sm:right-5 sm:h-11 sm:w-11"
+              className="absolute right-5 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/45 text-white backdrop-blur transition hover:bg-black/65 active:scale-95 md:flex"
               aria-label="Next banner"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
-            <div className="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 gap-2 sm:bottom-4">
+            <div className="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 gap-1.5 sm:bottom-4 sm:gap-2">
               {banners.map((banner, i) => (
                 <button
                   key={banner.id || banner.image}
                   type="button"
                   onClick={() => setIndex(i)}
-                  className={`h-2 rounded-full transition-all ${
-                    i === index ? "w-7 bg-gold" : "w-2.5 bg-white/45 hover:bg-white/70"
+                  className={`h-1.5 rounded-full transition-all sm:h-2 ${
+                    i === index ? "w-5 bg-gold sm:w-7" : "w-1.5 bg-white/45 hover:bg-white/70 sm:w-2.5"
                   }`}
                   aria-label={`Go to banner ${i + 1}`}
                 />
@@ -460,14 +460,14 @@ export function QuickCategoryRail() {
   }, [paused, ordered.length]);
 
   return (
-    <section className="section-padding pb-4 pt-6 sm:pt-8">
+    <section className="section-padding pb-4 pt-5 sm:pt-8">
       <div className="container-custom">
         <div className="mb-4 flex items-end justify-between gap-3">
           <div>
             <p className="mb-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
               Shop by category
             </p>
-            <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold text-foreground md:text-3xl">
+            <h2 className="font-[family-name:var(--font-heading)] text-xl font-bold text-foreground sm:text-2xl md:text-3xl">
               Find care faster
             </h2>
           </div>
@@ -475,7 +475,7 @@ export function QuickCategoryRail() {
             <button
               type="button"
               onClick={() => scrollByCard(-1)}
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-white text-primary shadow-sm transition hover:bg-primary hover:text-white sm:inline-flex"
+              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-white text-primary shadow-sm transition hover:bg-primary hover:text-white md:inline-flex"
               aria-label="Previous categories"
             >
               <ChevronLeft className="h-4 w-4" />
@@ -483,25 +483,61 @@ export function QuickCategoryRail() {
             <button
               type="button"
               onClick={() => scrollByCard(1)}
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-white text-primary shadow-sm transition hover:bg-primary hover:text-white sm:inline-flex"
+              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-white text-primary shadow-sm transition hover:bg-primary hover:text-white md:inline-flex"
               aria-label="Next categories"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
             <Link
               href="/products"
-              className="hidden text-sm font-semibold text-primary hover:underline sm:inline-flex sm:items-center sm:gap-1"
+              className="text-xs font-semibold text-primary hover:underline sm:text-sm sm:inline-flex sm:items-center sm:gap-1"
             >
-              All products <ArrowRight className="h-4 w-4" />
+              All <ArrowRight className="ml-0.5 inline h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </Link>
           </div>
         </div>
+
+        {/* Mobile: compact 2-column grid */}
+        <div className="grid grid-cols-2 gap-2.5 sm:hidden">
+          {ordered.map((cat) => {
+            const highlight = DERMA_SLUGS.has(cat.slug);
+            return (
+              <Link
+                key={cat.slug}
+                href={`/products?category=${cat.slug}`}
+                className={`group relative flex flex-col overflow-hidden rounded-2xl border transition active:scale-[0.98] ${
+                  highlight
+                    ? "border-gold/50 bg-gradient-to-b from-[#f8f3e6] to-white shadow-[0_8px_22px_rgba(214,176,77,0.16)]"
+                    : "border-border/50 bg-white shadow-sm dark:bg-card"
+                }`}
+              >
+                <div className="relative aspect-[5/3] overflow-hidden">
+                  <Image
+                    src={cat.image}
+                    alt={cat.name}
+                    fill
+                    className="object-cover transition duration-500 group-active:scale-105"
+                  />
+                  {highlight && (
+                    <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[8px] font-black uppercase tracking-wider text-white">
+                      Focus
+                    </span>
+                  )}
+                </div>
+                <div className="px-2.5 py-2.5">
+                  <p className="truncate text-[13px] font-bold text-foreground">{cat.name}</p>
+                  <p className="mt-0.5 text-[10px] font-semibold text-primary">Shop now →</p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Tablet/desktop: auto-scroll rail */}
         <div
-          className="relative"
+          className="relative hidden sm:block"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
-          onTouchStart={() => setPaused(true)}
-          onTouchEnd={() => setPaused(false)}
         >
           <div
             ref={scrollerRef}
@@ -514,13 +550,13 @@ export function QuickCategoryRail() {
                   <Link
                     href={`/products?category=${cat.slug}`}
                     data-category-slide
-                    className={`group relative flex w-[132px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border transition sm:w-[148px] ${
+                    className={`group relative flex w-[148px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border transition ${
                       highlight
                         ? "border-gold/50 bg-gradient-to-b from-[#f8f3e6] to-white shadow-[0_10px_30px_rgba(214,176,77,0.18)]"
                         : "border-border/50 bg-white hover:border-primary/30 hover:shadow-lg dark:bg-card"
                     }`}
                   >
-                    <div className="relative h-24 overflow-hidden sm:h-28">
+                    <div className="relative h-28 overflow-hidden">
                       <Image
                         src={cat.image}
                         alt={cat.name}
@@ -542,8 +578,8 @@ export function QuickCategoryRail() {
               );
             })}
           </div>
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-7 bg-gradient-to-r from-[#f8f3e6] to-transparent sm:w-10" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-7 bg-gradient-to-l from-[#f8f3e6] to-transparent sm:w-10" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#f8f3e6] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#f8f3e6] to-transparent" />
         </div>
       </div>
     </section>
@@ -557,6 +593,10 @@ function ProductScroller({ title, subtitle, badge, items, href, showReviews = tr
   const getCardStep = () => {
     const el = scrollerRef.current;
     if (!el) return 280;
+    // Mobile shows 2 cards — page by full viewport; desktop by one card
+    if (window.matchMedia("(max-width: 639px)").matches) {
+      return Math.max(el.clientWidth * 0.92, 200);
+    }
     const card = el.querySelector("[data-product-slide]");
     if (!card) return Math.min(280, el.clientWidth * 0.85);
     const styles = window.getComputedStyle(el);
@@ -582,7 +622,7 @@ function ProductScroller({ title, subtitle, badge, items, href, showReviews = tr
   };
 
   useEffect(() => {
-    if (paused || items.length < 2) return undefined;
+    if (paused || items.length < 3) return undefined;
     const timer = setInterval(() => {
       const el = scrollerRef.current;
       if (!el) return;
@@ -592,14 +632,8 @@ function ProductScroller({ title, subtitle, badge, items, href, showReviews = tr
         el.scrollTo({ left: 0, behavior: "smooth" });
         return;
       }
-      const card = el.querySelector("[data-product-slide]");
-      const styles = window.getComputedStyle(el);
-      const gap = Number.parseFloat(styles.columnGap || styles.gap || "16") || 16;
-      const step = card
-        ? card.getBoundingClientRect().width + gap
-        : Math.min(280, el.clientWidth * 0.85);
-      el.scrollBy({ left: step, behavior: "smooth" });
-    }, 5000);
+      el.scrollBy({ left: getCardStep(), behavior: "smooth" });
+    }, 3000);
     return () => clearInterval(timer);
   }, [paused, items.length]);
 
@@ -616,17 +650,17 @@ function ProductScroller({ title, subtitle, badge, items, href, showReviews = tr
   if (!items.length) return null;
 
   return (
-    <section className="relative overflow-x-clip py-6 sm:py-8">
-      <div className="container-custom mb-4 flex flex-col gap-3 sm:mb-5 md:flex-row md:items-end md:justify-between">
+    <section className="relative overflow-x-clip py-5 sm:py-8">
+      <div className="container-custom mb-3 flex flex-col gap-2.5 sm:mb-5 sm:gap-3 md:flex-row md:items-end md:justify-between">
         <div className="max-w-xl">
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
+          <div className="mb-1.5 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
             <ShoppingBag className="h-3.5 w-3.5" />
             {badge}
           </div>
-          <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold tracking-tight md:text-3xl">
+          <h2 className="font-[family-name:var(--font-heading)] text-xl font-bold tracking-tight sm:text-2xl md:text-3xl">
             {title}
           </h2>
-          <p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>
+          <p className="mt-1.5 text-xs text-muted-foreground sm:mt-2 sm:text-sm">{subtitle}</p>
         </div>
         <Link href={href}>
           <Button size="sm" className="gap-1.5">
@@ -645,7 +679,7 @@ function ProductScroller({ title, subtitle, badge, items, href, showReviews = tr
         <button
           type="button"
           onClick={() => scrollByCard(-1)}
-          className="absolute left-1 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-white/95 text-primary shadow-md backdrop-blur transition hover:bg-primary hover:text-white sm:left-2 sm:h-11 sm:w-11 md:left-3"
+          className="absolute left-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-white/95 text-primary shadow-md backdrop-blur transition hover:bg-primary hover:text-white md:flex md:left-3"
           aria-label="Previous products"
         >
           <ChevronLeft className="h-5 w-5" />
@@ -653,7 +687,7 @@ function ProductScroller({ title, subtitle, badge, items, href, showReviews = tr
         <button
           type="button"
           onClick={() => scrollByCard(1)}
-          className="absolute right-1 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-white/95 text-primary shadow-md backdrop-blur transition hover:bg-primary hover:text-white sm:right-2 sm:h-11 sm:w-11 md:right-3"
+          className="absolute right-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-white/95 text-primary shadow-md backdrop-blur transition hover:bg-primary hover:text-white md:flex md:right-3"
           aria-label="Next products"
         >
           <ChevronRight className="h-5 w-5" />
@@ -665,15 +699,15 @@ function ProductScroller({ title, subtitle, badge, items, href, showReviews = tr
           role="region"
           aria-label={title}
           onKeyDown={onKeyDown}
-          className="flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-4 pb-3 pt-1 outline-none focus-visible:ring-2 focus-visible:ring-primary/40 sm:gap-4 sm:px-10 md:px-14 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex snap-x snap-mandatory gap-2.5 overflow-x-auto scroll-smooth px-4 pb-3 pt-1 outline-none focus-visible:ring-2 focus-visible:ring-primary/40 sm:gap-4 sm:px-10 md:px-14 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {items.map((product) => (
             <div
               key={product.id}
               data-product-slide
-              className="w-[72vw] max-w-[260px] shrink-0 snap-start sm:w-[260px] sm:max-w-none md:w-[280px]"
+              className="w-[calc((100vw-2rem-0.625rem)/2)] shrink-0 snap-start sm:w-[260px] md:w-[280px]"
             >
-              <ProductCard product={product} showReviews={showReviews} />
+              <ProductCard product={product} showReviews={showReviews} compact />
             </div>
           ))}
         </div>

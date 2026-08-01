@@ -14,8 +14,9 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="relative mt-12 bg-primary text-white">
-      <div className="pointer-events-none absolute top-0 left-0 right-0 w-full -translate-y-[98%] overflow-hidden leading-[0]">
+    <footer className="relative mt-0 bg-primary text-white md:mt-12">
+      {/* Desktop wave */}
+      <div className="pointer-events-none absolute left-0 right-0 top-0 hidden w-full -translate-y-[98%] overflow-hidden leading-[0] md:block">
         <svg
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"
@@ -26,12 +27,22 @@ export function Footer() {
         </svg>
       </div>
 
+      {/* Mobile: soft color merge (no hard line / no wave) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-24 -translate-y-full md:hidden"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(248,243,230,0) 0%, rgba(168,196,176,0.35) 38%, rgba(11,106,70,0.55) 72%, #0b6a46 100%)",
+        }}
+      />
+
       <div className="pointer-events-none absolute top-10 left-10 h-56 w-56 rounded-full bg-gold/15 blur-3xl" />
       <div className="pointer-events-none absolute right-10 bottom-10 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
       <div className="pointer-events-none absolute inset-0 opacity-10 molecular-bg" />
 
       <div className="relative z-10">
-        <div className="container-custom py-10 md:py-12">
+        <div className="container-custom py-8 md:py-12">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             <div>
               <div className="mb-4 inline-flex flex-col gap-2">

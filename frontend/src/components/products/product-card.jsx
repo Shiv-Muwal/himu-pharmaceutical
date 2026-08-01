@@ -8,7 +8,7 @@ import { useCart } from "@/providers/CartProvider";
 import { cn } from "@/lib/utils";
 import { ProductReviews } from "@/components/products/product-reviews";
 
-export function ProductCard({ product, showReviews = true }) {
+export function ProductCard({ product, showReviews = true, compact = false }) {
   const { addToCart, buyNow } = useCart();
   const isAvailable =
     product.categorySlug === "dermatology" ||
@@ -29,7 +29,12 @@ export function ProductCard({ product, showReviews = true }) {
   };
 
   return (
-    <Card className="group overflow-hidden hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 flex flex-col justify-between h-full bg-card relative">
+    <Card
+      className={cn(
+        "group relative flex h-full flex-col justify-between overflow-hidden bg-card hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1",
+        compact && "shadow-sm",
+      )}
+    >
       <Link href={`/products/${product.slug}`} className="block">
         <div className="relative aspect-square overflow-hidden bg-muted">
           <Image
@@ -40,37 +45,58 @@ export function ProductCard({ product, showReviews = true }) {
               "object-cover transition-transform duration-500 group-hover:scale-110",
               !isAvailable && "opacity-80 blur-[1px]",
             )}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
           />
-          <div className="absolute top-3 left-3 z-10">
-            <Badge variant="gold">{product.category}</Badge>
+          <div className={cn("absolute z-10", compact ? "left-2 top-2" : "left-3 top-3")}>
+            <Badge variant="gold" className={compact ? "px-1.5 py-0 text-[8px]" : undefined}>
+              {product.category}
+            </Badge>
           </div>
           {!isAvailable && (
-            <div className="absolute top-3 right-3 z-10">
-              <Badge className="bg-gradient-to-r from-secondary to-amber-600 hover:from-secondary hover:to-amber-600 text-[#1a2e1f] font-black border-0 text-[9px] uppercase tracking-wider animate-pulse px-2 py-0.5 rounded-full shadow-sm">
-                Coming Soon
+            <div className={cn("absolute z-10", compact ? "right-2 top-2" : "right-3 top-3")}>
+              <Badge className="rounded-full border-0 bg-gradient-to-r from-secondary to-amber-600 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-[#1a2e1f] animate-pulse shadow-sm hover:from-secondary hover:to-amber-600">
+                Soon
               </Badge>
             </div>
           )}
         </div>
       </Link>
-      <CardContent className="p-5 flex flex-col flex-1 justify-between">
+      <CardContent
+        className={cn(
+          "flex flex-1 flex-col justify-between",
+          compact ? "p-2.5 sm:p-5" : "p-5",
+        )}
+      >
         <div>
           <Link href={`/products/${product.slug}`} className="block">
-            <p className="mb-0.5 text-[10px] font-bold uppercase tracking-wider text-primary/80">
+            <p
+              className={cn(
+                "mb-0.5 font-bold uppercase tracking-wider text-primary/80",
+                compact ? "text-[8px] sm:text-[10px]" : "text-[10px]",
+              )}
+            >
               {product.brand || "HIMU"}
               {product.productType ? ` · ${product.productType}` : ""}
             </p>
-            <h3 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors line-clamp-1">
+            <h3
+              className={cn(
+                "mb-1 font-bold transition-colors line-clamp-2 group-hover:text-primary sm:line-clamp-1",
+                compact ? "text-[13px] leading-snug sm:text-lg" : "text-lg",
+              )}
+            >
               {product.name}
             </h3>
           </Link>
-          <p className="text-xs text-muted-foreground mb-2">
+          <p
+            className={cn(
+              "mb-2 text-muted-foreground",
+              compact ? "hidden text-xs sm:block" : "text-xs",
+            )}
+          >
             {product.composition} · {product.strength}
           </p>
-          {/* Ratings row */}
-          {product.rating && (
-            <div className="flex items-center gap-1 mb-2">
+          {product.rating && !compact && (
+            <div className="mb-2 flex items-center gap-1">
               <div className="flex text-amber-400">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
@@ -84,45 +110,56 @@ export function ProductCard({ product, showReviews = true }) {
                   />
                 ))}
               </div>
-              <span className="text-[10px] text-muted-foreground font-bold">
+              <span className="text-[10px] font-bold text-muted-foreground">
                 {product.rating} ({product.reviewCount} reviews)
               </span>
             </div>
           )}
-          <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+          <p
+            className={cn(
+              "mb-3 line-clamp-2 text-muted-foreground",
+              compact ? "hidden text-sm sm:block" : "text-sm",
+            )}
+          >
             {product.shortDescription}
           </p>
         </div>
         <div>
-          {/* Pricing Row */}
-          <div className="flex items-baseline gap-1.5 mb-4">
-            <span className="text-lg font-black text-primary font-[family-name:var(--font-heading)]">
+          <div className={cn("flex items-baseline gap-1 mb-3 sm:mb-4", compact && "gap-1")}>
+            <span
+              className={cn(
+                "font-black text-primary font-[family-name:var(--font-heading)]",
+                compact ? "text-base sm:text-lg" : "text-lg",
+              )}
+            >
               ₹{product.price}
             </span>
             {product.compareAtPrice && (
               <>
-                <span className="text-xs text-muted-foreground line-through">
+                <span className="text-[10px] text-muted-foreground line-through sm:text-xs">
                   ₹{product.compareAtPrice}
                 </span>
-                <span className="text-[9px] text-emerald font-black bg-emerald/10 dark:bg-emerald/20 px-1.5 py-0.5 rounded ml-1 shrink-0">
+                <span className="ml-0.5 shrink-0 rounded bg-emerald/10 px-1 py-0.5 text-[8px] font-black text-emerald dark:bg-emerald/20 sm:text-[9px] sm:px-1.5">
                   {Math.round(
                     ((product.compareAtPrice - product.price) /
                       product.compareAtPrice) *
                       100,
                   )}
-                  % OFF
+                  %
                 </span>
               </>
             )}
           </div>
-          {/* Action Buttons */}
           {isAvailable ? (
-            <div className="grid grid-cols-2 gap-2 mt-auto">
+            <div className={cn("mt-auto grid grid-cols-2", compact ? "gap-1.5" : "gap-2")}>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handleAddToCart}
-                className="flex items-center justify-center gap-1 h-9 px-3 rounded-lg text-xs cursor-pointer hover:bg-primary hover:text-primary-foreground hover:border-primary"
+                className={cn(
+                  "flex cursor-pointer items-center justify-center gap-1 rounded-lg hover:border-primary hover:bg-primary hover:text-primary-foreground",
+                  compact ? "h-8 px-1.5 text-[10px] sm:h-9 sm:px-3 sm:text-xs" : "h-9 px-3 text-xs",
+                )}
               >
                 <ShoppingCart className="h-3.5 w-3.5" />
                 Add
@@ -131,10 +168,13 @@ export function ProductCard({ product, showReviews = true }) {
                 variant="default"
                 size="sm"
                 onClick={handleBuyNow}
-                className="flex items-center justify-center gap-1 h-9 px-3 rounded-lg text-xs cursor-pointer bg-primary text-primary-foreground hover:bg-primary/95"
+                className={cn(
+                  "flex cursor-pointer items-center justify-center gap-1 rounded-lg bg-primary text-primary-foreground hover:bg-primary/95",
+                  compact ? "h-8 px-1.5 text-[10px] sm:h-9 sm:px-3 sm:text-xs" : "h-9 px-3 text-xs",
+                )}
               >
                 <Zap className="h-3.5 w-3.5 fill-current" />
-                Buy Now
+                Buy
               </Button>
             </div>
           ) : (
@@ -148,9 +188,9 @@ export function ProductCard({ product, showReviews = true }) {
                   `Thank you for your interest! ${product.name} is launching soon. We'll notify you once it's available!`,
                 );
               }}
-              className="w-full h-9 rounded-lg text-xs cursor-pointer border-2 border-dashed border-secondary/60 text-secondary hover:bg-secondary/10 font-bold"
+              className="h-9 w-full cursor-pointer rounded-lg border-2 border-dashed border-secondary/60 text-xs font-bold text-secondary hover:bg-secondary/10"
             >
-              Coming Soon - Notify Me
+              Notify Me
             </Button>
           )}
           {showReviews && <ProductReviews product={product} variant="card" />}

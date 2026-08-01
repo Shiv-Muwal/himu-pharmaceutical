@@ -32,11 +32,11 @@ export function TrustedBrandsSection() {
       <div className="relative">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#0b6a46] to-transparent sm:w-24" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#0b6a46] to-transparent sm:w-24" />
-        <div className="animate-marquee flex w-max gap-4 px-4">
+        <div className="animate-marquee-slow flex w-max gap-4 px-4">
           {loop.map((brand, index) => (
             <div
               key={`${brand.id}-${index}`}
-              className="group flex min-w-[210px] items-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-white/15"
+              className="group flex min-w-[180px] items-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-white/15 sm:min-w-[210px]"
             >
               <div
                 className="flex h-11 w-11 items-center justify-center rounded-xl text-xs font-black tracking-wide text-white shadow-inner"
@@ -82,38 +82,40 @@ export function ShopWithBrandsSection() {
           </Link>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-3">
           {shopBrands.map((brand, i) => (
             <FadeIn key={brand.id} delay={i * 0.05}>
               <Link
                 href={brand.href}
-                className="group relative block overflow-hidden rounded-[1.5rem] border border-border/50 bg-white p-5 shadow-[0_10px_30px_rgba(11,106,70,0.06)] transition hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_18px_40px_rgba(11,106,70,0.12)] dark:bg-card"
+                className="group relative block h-full overflow-hidden rounded-2xl border border-border/50 bg-white p-3 shadow-[0_10px_30px_rgba(11,106,70,0.06)] transition active:scale-[0.98] hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_18px_40px_rgba(11,106,70,0.12)] sm:rounded-[1.5rem] sm:p-5 dark:bg-card"
               >
                 <div
-                  className="absolute -right-8 -top-8 h-28 w-28 rounded-full opacity-20 blur-2xl transition group-hover:opacity-40"
+                  className="absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-20 blur-2xl transition group-hover:opacity-40 sm:h-28 sm:w-28"
                   style={{ background: brand.accent }}
                 />
-                <div className="relative flex items-start justify-between gap-3">
+                <div className="relative flex items-start justify-between gap-2">
                   <div
-                    className="flex h-14 w-14 items-center justify-center rounded-2xl text-sm font-black text-white shadow-lg"
+                    className="flex h-11 w-11 items-center justify-center rounded-xl text-[11px] font-black text-white shadow-lg sm:h-14 sm:w-14 sm:rounded-2xl sm:text-sm"
                     style={{ background: brand.accent }}
                   >
                     {brand.mark}
                   </div>
-                  <span className="rounded-full bg-[#f8f3e6] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary">
+                  <span className="rounded-full bg-[#f8f3e6] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-primary sm:px-2.5 sm:py-1 sm:text-[10px]">
                     Shop
                   </span>
                 </div>
-                <h3 className="relative mt-4 font-[family-name:var(--font-heading)] text-xl font-bold text-foreground">
+                <h3 className="relative mt-3 font-[family-name:var(--font-heading)] text-[15px] font-bold leading-snug text-foreground sm:mt-4 sm:text-xl">
                   {brand.name}
                 </h3>
-                <p className="relative mt-1 text-sm text-muted-foreground">{brand.tagline}</p>
-                <p className="relative mt-4 text-xs font-semibold text-primary/80">
+                <p className="relative mt-1 line-clamp-2 text-[11px] text-muted-foreground sm:text-sm">
+                  {brand.tagline}
+                </p>
+                <p className="relative mt-2.5 text-[10px] font-semibold text-primary/80 sm:mt-4 sm:text-xs">
                   {brand.productsLabel}
                 </p>
-                <span className="relative mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary">
-                  Open shelf
-                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                <span className="relative mt-2 inline-flex items-center gap-1 text-xs font-bold text-primary sm:mt-3 sm:text-sm">
+                  Open
+                  <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1 sm:h-4 sm:w-4" />
                 </span>
               </Link>
             </FadeIn>
@@ -146,8 +148,12 @@ export function HomeBlogsSection() {
   if (!featured) return null;
 
   return (
-    <section className="section-padding bg-gradient-to-b from-[#f8f3e6] via-white to-[#f3f7f0]">
-      <div className="container-custom">
+    <section className="section-padding relative bg-gradient-to-b from-[#f8f3e6] via-white to-[#f3f7f0] pb-10 md:pb-[var(--section-padding,3rem)]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent via-[#7fad93]/25 to-[#0b6a46] md:hidden"
+      />
+      <div className="container-custom relative z-[1]">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="mb-1 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
