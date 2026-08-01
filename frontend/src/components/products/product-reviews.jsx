@@ -121,17 +121,17 @@ export function ProductReviews({ product, variant = "detail" }) {
   };
 
   return (
-    <div className="mt-12 rounded-3xl border border-border/40 bg-white/70 p-6 shadow-sm md:p-8">
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div className="rounded-2xl border border-border/40 bg-white p-4 shadow-sm md:rounded-3xl md:p-6">
+      <div className="mb-4 flex flex-col gap-3 sm:mb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold">
+          <h2 className="font-[family-name:var(--font-heading)] text-lg font-bold md:text-2xl">
             Customer Reviews
           </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
             Rated {product.rating || 4.5} · {product.reviewCount || 0} reviews
           </p>
         </div>
-        <Button type="button" onClick={() => setOpen((v) => !v)} className="gap-2">
+        <Button type="button" onClick={() => setOpen((v) => !v)} className="h-10 gap-2 text-sm">
           <MessageSquarePlus className="h-4 w-4" />
           Write a Review
         </Button>

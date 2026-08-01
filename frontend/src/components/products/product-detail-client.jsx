@@ -1,17 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Image } from "@/components/ui/image";
 import { Link } from "@/components/ui/link";
-import { ArrowRight, ArrowLeft, X } from "lucide-react";
+import { ArrowLeft, Star, X } from "lucide-react";
 import { ProductCard } from "@/components/products/product-card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { AccordionItem } from "@/components/ui/accordion";
-import { FadeIn } from "@/components/animations/motion-components";
 import { ProductActions } from "@/components/products/product-actions";
 import { ProductReviews } from "@/components/products/product-reviews";
 import { getMockProducts } from "@/lib/mock-backend";
-import { PRODUCT_DISCLAIMER } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 export function ProductDetailClient({
@@ -22,23 +18,28 @@ export function ProductDetailClient({
   const [product, setProduct] = useState(initialProduct);
   const [related, setRelated] = useState(initialRelatedProducts);
   const [notFound, setNotFound] = useState(false);
-  const [activeImage, setActiveImage] = useState(
-    initialProduct?.image || initialProduct?.images?.[0] || "",
-  );
+  const [activeIndex, setActiveIndex] = useState(0);
+  const scrollerRef = useRef(null);
 
   useEffect(() => {
     const allProducts = getMockProducts();
     const foundProduct = allProducts.find((p) => p.slug === slug);
     if (foundProduct) {
       setProduct(foundProduct);
-      setActiveImage(foundProduct.image || foundProduct.images?.[0] || "");
+      setActiveIndex(0);
       setNotFound(false);
 
-      const relatedItems = foundProduct.relatedSlugs
+      const fromRelated = (foundProduct.relatedSlugs || [])
         .map((s) => allProducts.find((p) => p.slug === s))
-        .filter((p) => !!p)
-        .slice(0, 4);
-      setRelated(relatedItems);
+        .filter(Boolean);
+      const similar = allProducts.filter(
+        (p) =>
+          p.id !== foundProduct.id &&
+          p.categorySlug === foundProduct.categorySlug &&
+          !fromRelated.some((r) => r.id === p.id),
+      );
+      const merged = [...fromRelated, ...similar].slice(0, 8);
+      setRelated(merged);
     } else {
       setNotFound(true);
     }
@@ -50,21 +51,73 @@ export function ProductDetailClient({
     return [...new Set(list)];
   }, [product]);
 
+  const goToImage = useCallback(
+    (index, { smooth = true } = {}) => {
+      if (!gallery.length) return;
+      const next = Math.max(0, Math.min(gallery.length - 1, index));
+      setActiveIndex(next);
+      const el = scrollerRef.current;
+      if (!el) return;
+      const width = el.clientWidth;
+      el.scrollTo({ left: next * width, behavior: smooth ? "smooth" : "auto" });
+    },
+    [gallery.length],
+  );
+
+  const onGalleryScroll = () => {
+    const el = scrollerRef.current;
+    if (!el || !el.clientWidth) return;
+    const index = Math.round(el.scrollLeft / el.clientWidth);
+    if (index !== activeIndex && index >= 0 && index < gallery.length) {
+      setActiveIndex(index);
+    }
+  };
+
+  // Reset carousel when product changes
+  useEffect(() => {
+    goToImage(0, { smooth: false });
+  }, [slug, goToImage]);
+
+  // Keep active slide aligned after rotate / resize
+  useEffect(() => {
+    const onResize = () => goToImage(activeIndex, { smooth: false });
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [activeIndex, goToImage]);
+
+  const infoSections = useMemo(() => {
+    if (!product) return [];
+    return [
+      { title: "About this product", content: product.description },
+      { title: "Uses", items: product.uses },
+      { title: "Benefits", items: product.benefits },
+      { title: "Dosage", content: product.dosage },
+      {
+        title: "Product details",
+        content: [
+          product.composition && `Composition: ${product.composition}`,
+          product.strength && `Strength: ${product.strength}`,
+          product.packaging && `Packaging: ${product.packaging}`,
+          product.shelfLife && `Shelf life: ${product.shelfLife}`,
+          product.manufacturer && `Manufacturer: ${product.manufacturer}`,
+        ]
+          .filter(Boolean)
+          .join("\n"),
+      },
+    ].filter((s) => s.content || (s.items && s.items.length));
+  }, [product]);
+
   if (notFound) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4 pt-32 pb-16">
-        <div className="h-16 w-16 bg-red-100 dark:bg-red-950/20 text-red-500 rounded-full flex items-center justify-center mb-4">
-          <X className="h-8 w-8" />
+      <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 py-16 text-center">
+        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-100 text-red-500">
+          <X className="h-7 w-7" />
         </div>
-        <h1 className="text-2xl font-bold font-[family-name:var(--font-heading)] mb-2">
+        <h1 className="mb-2 font-[family-name:var(--font-heading)] text-2xl font-bold">
           Product Not Found
         </h1>
-        <p className="text-muted-foreground text-sm max-w-sm mb-6">
-          The product you are looking for has been removed or is no longer
-          available in our catalog.
-        </p>
         <Link href="/products">
-          <Button variant="default" className="gap-2">
+          <Button className="mt-4 gap-2">
             <ArrowLeft className="h-4 w-4" /> Back to Products
           </Button>
         </Link>
@@ -72,189 +125,201 @@ export function ProductDetailClient({
     );
   }
 
-  const infoSections = [
-    { title: "Description", content: product.description },
-    { title: "Benefits", items: product.benefits },
-    { title: "Uses", items: product.uses },
-    { title: "Indications", items: product.indications },
-    { title: "Dosage", content: product.dosage },
-    { title: "Administration", content: product.administration },
-    { title: "Precautions", items: product.precautions },
-    { title: "Warnings", items: product.warnings },
-    { title: "Side Effects", items: product.sideEffects },
-  ];
-
-  const metaBlocks = [
-    { label: "Storage", value: product.storage },
-    { label: "Packaging", value: product.packaging },
-    { label: "Shelf Life", value: product.shelfLife },
-  ];
+  const offPercent =
+    product.compareAtPrice && product.compareAtPrice > product.price
+      ? Math.round(
+          ((product.compareAtPrice - product.price) / product.compareAtPrice) *
+            100,
+        )
+      : 0;
 
   return (
-    <>
-      <section className="pb-6 pt-3 sm:pb-8 sm:pt-4 md:pb-10">
-        <div className="container-custom">
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-10">
-            <FadeIn direction="left">
-              <div className="flex flex-col gap-3 sm:gap-4 lg:flex-row-reverse">
-                <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-muted shadow-xl">
-                  <Image
-                    key={activeImage}
-                    src={activeImage || product.image}
-                    alt={product.name}
-                    fill
-                    className="object-cover transition-opacity duration-200"
-                    priority
-                  />
+    <div className="bg-[#f8f3e6] pb-4 md:bg-transparent md:pb-10">
+      {/* Gallery — edge-to-edge on mobile */}
+      <section className="bg-white md:bg-transparent">
+        <div className="md:container-custom md:pt-4">
+          <div className="grid gap-0 lg:grid-cols-2 lg:gap-10 lg:pt-2">
+            <div className="bg-white">
+              <div className="relative aspect-square w-full overflow-hidden bg-[#f3f1ea] md:rounded-2xl md:shadow-lg">
+                <div
+                  ref={scrollerRef}
+                  onScroll={onGalleryScroll}
+                  className="flex h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                >
+                  {gallery.map((img, i) => (
+                    <div
+                      key={`${img}-${i}`}
+                      className="relative h-full w-full shrink-0 snap-center"
+                    >
+                      <Image
+                        src={img}
+                        alt={`${product.name} ${i + 1}`}
+                        fill
+                        className="object-cover"
+                        priority={i === 0}
+                      />
+                    </div>
+                  ))}
                 </div>
 
+                {offPercent > 0 && (
+                  <span className="pointer-events-none absolute left-3 top-3 z-10 rounded-md bg-[#cc0c39] px-2 py-1 text-[11px] font-black text-white">
+                    -{offPercent}%
+                  </span>
+                )}
+
                 {gallery.length > 1 && (
-                  <div className="flex gap-2 overflow-x-auto pb-1 lg:w-[72px] lg:flex-col lg:overflow-visible lg:pb-0 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                    {gallery.map((img, i) => {
-                      const selected = img === activeImage;
-                      return (
-                        <button
-                          key={`${img}-${i}`}
-                          type="button"
-                          onClick={() => setActiveImage(img)}
-                          className={cn(
-                            "relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 transition sm:h-[4.5rem] sm:w-[4.5rem] lg:h-[4.25rem] lg:w-full",
-                            selected
-                              ? "border-primary shadow-md ring-2 ring-primary/20"
-                              : "border-border/60 opacity-80 hover:border-primary/40 hover:opacity-100",
-                          )}
-                          aria-label={`View image ${i + 1}`}
-                          aria-pressed={selected}
-                        >
-                          <Image
-                            src={img}
-                            alt={`${product.name} view ${i + 1}`}
-                            fill
-                            className="object-cover"
-                          />
-                        </button>
-                      );
-                    })}
+                  <div className="pointer-events-none absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5 rounded-full bg-black/35 px-2 py-1 backdrop-blur-sm">
+                    {gallery.map((_, i) => (
+                      <span
+                        key={i}
+                        className={cn(
+                          "h-1.5 rounded-full transition-all",
+                          i === activeIndex ? "w-4 bg-white" : "w-1.5 bg-white/50",
+                        )}
+                      />
+                    ))}
                   </div>
                 )}
               </div>
-            </FadeIn>
-            <FadeIn direction="right">
-              <Badge className="mb-3">{product.category}</Badge>
-              <h1 className="text-3xl md:text-4xl font-bold mb-2 font-[family-name:var(--font-heading)]">
+
+              {gallery.length > 1 && (
+                <div className="flex gap-2 overflow-x-auto px-3 py-3 md:px-0 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  {gallery.map((img, i) => {
+                    const selected = i === activeIndex;
+                    return (
+                      <button
+                        key={`${img}-thumb-${i}`}
+                        type="button"
+                        onClick={() => goToImage(i)}
+                        className={cn(
+                          "relative h-[58px] w-[58px] shrink-0 overflow-hidden rounded-lg border-2 transition",
+                          selected
+                            ? "border-primary ring-2 ring-primary/20"
+                            : "border-border/50 opacity-80",
+                        )}
+                        aria-label={`View image ${i + 1}`}
+                      >
+                        <Image src={img} alt="" fill className="object-cover" />
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* Buy box */}
+            <div className="space-y-3 px-4 pb-4 pt-3 md:px-0 md:pt-0">
+              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-primary">
+                {product.brand || "HIMU"} · {product.category}
+              </p>
+              <h1 className="font-[family-name:var(--font-heading)] text-[1.35rem] font-bold leading-snug text-foreground sm:text-2xl md:text-3xl">
                 {product.name}
               </h1>
-              <p className="text-muted-foreground mb-4">
+
+              {product.rating && (
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center gap-1 rounded-md bg-[#0b6a46] px-2 py-0.5 text-xs font-bold text-white">
+                    {product.rating}
+                    <Star className="h-3 w-3 fill-current" />
+                  </span>
+                  <span className="text-xs font-semibold text-primary">
+                    {product.reviewCount || 0} ratings
+                  </span>
+                </div>
+              )}
+
+              <p className="text-sm leading-relaxed text-muted-foreground">
                 {product.shortDescription}
               </p>
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="glass rounded-xl p-4">
-                  <p className="text-xs text-muted-foreground mb-1">Strength</p>
-                  <p className="font-semibold">{product.strength}</p>
-                </div>
-                <div className="glass rounded-xl p-4">
-                  <p className="text-xs text-muted-foreground mb-1">
-                    Manufacturer
-                  </p>
-                  <p className="font-semibold text-sm">
-                    {product.manufacturer}
-                  </p>
-                </div>
-                <div className="glass rounded-xl p-4 col-span-2">
-                  <p className="text-xs text-muted-foreground mb-1">
-                    Composition
-                  </p>
-                  <p className="font-semibold">{product.composition}</p>
-                </div>
+
+              <div className="flex flex-wrap gap-2 text-[11px] font-semibold text-foreground/80">
+                {product.strength && (
+                  <span className="rounded-full bg-primary/8 px-2.5 py-1">
+                    {product.strength}
+                  </span>
+                )}
+                {product.productType && (
+                  <span className="rounded-full bg-primary/8 px-2.5 py-1">
+                    {product.productType}
+                  </span>
+                )}
+                {product.composition && (
+                  <span className="rounded-full bg-primary/8 px-2.5 py-1">
+                    {product.composition}
+                  </span>
+                )}
               </div>
-              {/* Client action buttons (Cart, Qty, Variant, Buy Now) */}
-              <div className="mb-6">
+
+              <div className="rounded-2xl border border-border/40 bg-white p-3 shadow-sm md:p-4">
                 <ProductActions product={product} />
               </div>
-              <Card className="p-4 bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800">
-                <p className="text-xs text-amber-800 dark:text-amber-200 leading-relaxed">
-                  {PRODUCT_DISCLAIMER}
-                </p>
-              </Card>
-            </FadeIn>
+            </div>
           </div>
+        </div>
+      </section>
 
-          <div className="mt-16 grid md:grid-cols-2 gap-8">
+      {/* Essential info — accordion only */}
+      <section className="mt-2 bg-white px-4 py-4 md:mt-8 md:bg-transparent md:px-0">
+        <div className="container-custom max-w-3xl px-0 md:px-4">
+          <h2 className="mb-3 font-[family-name:var(--font-heading)] text-lg font-bold md:text-xl">
+            Product information
+          </h2>
+          <div className="space-y-2">
             {infoSections.map((section) => (
-              <FadeIn key={section.title}>
-                <Card className="p-6 h-full">
-                  <h2 className="font-bold text-lg mb-3 text-primary">
-                    {section.title}
-                  </h2>
-                  {section.content && (
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {section.content}
-                    </p>
-                  )}
-                  {section.items && (
-                    <ul className="space-y-2">
-                      {section.items.map((item, i) => (
-                        <li
-                          key={i}
-                          className="text-sm text-muted-foreground flex items-start gap-2"
-                        >
-                          <span className="text-primary mt-1">•</span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </Card>
-              </FadeIn>
+              <AccordionItem key={section.title} title={section.title}>
+                {section.content && (
+                  <p className="whitespace-pre-line">{section.content}</p>
+                )}
+                {section.items && (
+                  <ul className="space-y-1.5">
+                    {section.items.map((item, i) => (
+                      <li key={i} className="flex gap-2">
+                        <span className="text-primary">•</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </AccordionItem>
+            ))}
+            {(product.faq || []).slice(0, 3).map((item, i) => (
+              <AccordionItem key={`faq-${i}`} title={item.question}>
+                {item.answer}
+              </AccordionItem>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="mt-8 grid sm:grid-cols-3 gap-6">
-            {metaBlocks.map((item) => (
-              <Card key={item.label} className="p-5">
-                <h3 className="font-bold text-sm text-primary mb-2">
-                  {item.label}
-                </h3>
-                <p className="text-sm text-muted-foreground">{item.value}</p>
-              </Card>
-            ))}
-          </div>
-
+      <section className="mt-2 bg-white px-4 py-4 md:mt-6 md:bg-transparent md:px-0">
+        <div className="container-custom px-0 md:px-4">
           <ProductReviews product={product} variant="detail" />
+        </div>
+      </section>
 
-          <div className="mt-12">
-            <h2 className="font-bold text-2xl mb-6">
-              Frequently Asked Questions
-            </h2>
-            <div className="space-y-3">
-              {product.faq.map((item, i) => (
-                <AccordionItem key={i} title={item.question}>
-                  {item.answer}
-                </AccordionItem>
+      {related.length > 0 && (
+        <section className="mt-2 bg-white px-4 py-5 md:mt-8 md:bg-transparent md:px-0">
+          <div className="container-custom px-0 md:px-4">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <h2 className="font-[family-name:var(--font-heading)] text-lg font-bold md:text-xl">
+                Related & similar
+              </h2>
+              <Link
+                href={`/products?category=${product.categorySlug}`}
+                className="text-xs font-bold text-primary"
+              >
+                See all
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-4 lg:grid-cols-4">
+              {related.map((p) => (
+                <ProductCard key={p.id} product={p} compact />
               ))}
             </div>
           </div>
-
-          {related.length > 0 && (
-            <div className="mt-16">
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="font-bold text-2xl">Related Medicines</h2>
-                <Link
-                  href={`/categories/${product.categorySlug}`}
-                  className="text-primary text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all"
-                >
-                  View Category <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {related.map(
-                  (p) => p && <ProductCard key={p.id} product={p} />,
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
-    </>
+        </section>
+      )}
+    </div>
   );
 }

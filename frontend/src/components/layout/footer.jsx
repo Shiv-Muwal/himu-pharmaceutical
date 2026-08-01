@@ -15,17 +15,7 @@ const socialLinks = [
 export function Footer() {
   return (
     <footer className="relative mt-0 pb-[var(--mobile-nav-offset)] text-white md:mt-12 md:pb-0">
-      {/* Mobile: single soft cream → green blend (no double layer) */}
-      <div
-        aria-hidden
-        className="h-16 w-full md:hidden"
-        style={{
-          background:
-            "linear-gradient(180deg, #f8f3e6 0%, #e8efe6 28%, #9fbfab 58%, #3d8a64 82%, #0b6a46 100%)",
-        }}
-      />
-
-      {/* Desktop wave */}
+      {/* Desktop wave only — mobile merges cleanly without a hard line */}
       <div className="pointer-events-none absolute left-0 right-0 top-0 hidden w-full -translate-y-[98%] overflow-hidden leading-[0] md:block">
         <svg
           viewBox="0 0 1200 120"
@@ -37,7 +27,7 @@ export function Footer() {
         </svg>
       </div>
 
-      <div className="relative bg-primary">
+      <div className="relative bg-primary pt-2 md:pt-0">
         <div className="pointer-events-none absolute top-10 left-10 h-56 w-56 rounded-full bg-gold/15 blur-3xl" />
         <div className="pointer-events-none absolute right-10 bottom-10 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute inset-0 opacity-10 molecular-bg" />
@@ -154,7 +144,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="border-t border-white/10">
+          <div>
             <div className="container-custom flex flex-col items-center justify-between gap-3 py-4 text-xs text-white/60 md:flex-row">
               <p>
                 © {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
