@@ -6,9 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/providers/CartProvider";
 import { cn } from "@/lib/utils";
-import { ProductReviews } from "@/components/products/product-reviews";
 
-export function ProductCard({ product, showReviews = true, compact = false }) {
+export function ProductCard({ product, compact = false }) {
   const { addToCart, buyNow } = useCart();
   const isAvailable =
     product.categorySlug === "dermatology" ||
@@ -193,7 +192,6 @@ export function ProductCard({ product, showReviews = true, compact = false }) {
               Notify Me
             </Button>
           )}
-          {showReviews && <ProductReviews product={product} variant="card" />}
         </div>
       </CardContent>
     </Card>

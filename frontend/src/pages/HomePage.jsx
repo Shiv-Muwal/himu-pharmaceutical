@@ -19,9 +19,7 @@ export default function HomePage() {
     <>
       <ShopPromoStrip />
       <BannerCarousel />
-      <div className="hidden md:block">
-        <ShopSearchBar />
-      </div>
+      <ShopSearchBar />
       <QuickCategoryRail />
       <DermaSpotlightSection />
       <ShopTrustStrip />

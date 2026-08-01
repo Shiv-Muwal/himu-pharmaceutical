@@ -1,33 +1,32 @@
 import { motion } from "framer-motion";
-import { Printer } from "lucide-react";
+import { CalendarDays, Copy, Printer, TicketPercent, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/constants";
+import { useState } from "react";
 
 export function OrderSuccessTick({ orderId }) {
   return (
-    <div className="relative mx-auto mb-6 flex h-36 w-36 items-center justify-center sm:h-40 sm:w-40">
-      {/* Soft pulse rings — Messenger-style */}
+    <div className="relative mx-auto mb-5 flex h-40 w-40 items-center justify-center sm:h-44 sm:w-44">
       <motion.span
-        className="absolute inset-0 rounded-full bg-[#00c853]/20"
+        className="absolute inset-0 rounded-full bg-[#00c853]/25"
         initial={{ scale: 0.6, opacity: 0.8 }}
-        animate={{ scale: [0.85, 1.35], opacity: [0.55, 0] }}
-        transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
+        animate={{ scale: [0.85, 1.45], opacity: [0.55, 0] }}
+        transition={{ duration: 1.35, repeat: Infinity, ease: "easeOut" }}
       />
       <motion.span
-        className="absolute inset-2 rounded-full bg-[#00c853]/15"
+        className="absolute inset-3 rounded-full bg-[#00c853]/18"
         initial={{ scale: 0.7, opacity: 0.6 }}
-        animate={{ scale: [0.9, 1.25], opacity: [0.4, 0] }}
-        transition={{ duration: 1.4, delay: 0.25, repeat: Infinity, ease: "easeOut" }}
+        animate={{ scale: [0.9, 1.3], opacity: [0.4, 0] }}
+        transition={{ duration: 1.35, delay: 0.22, repeat: Infinity, ease: "easeOut" }}
       />
 
-      {/* Main circle */}
       <motion.div
-        className="relative flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-[#00e676] via-[#00c853] to-[#00a844] shadow-[0_12px_40px_rgba(0,200,83,0.45)] sm:h-32 sm:w-32"
-        initial={{ scale: 0, rotate: -20 }}
+        className="relative flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-[#00e676] via-[#00c853] to-[#00a844] shadow-[0_16px_48px_rgba(0,200,83,0.5)] sm:h-36 sm:w-36"
+        initial={{ scale: 0, rotate: -24 }}
         animate={{ scale: 1, rotate: 0 }}
-        transition={{ type: "spring", stiffness: 260, damping: 16, delay: 0.05 }}
+        transition={{ type: "spring", stiffness: 260, damping: 14, delay: 0.05 }}
       >
-        <svg viewBox="0 0 52 52" className="h-14 w-14 sm:h-16 sm:w-16">
+        <svg viewBox="0 0 52 52" className="h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem]">
           <motion.path
             d="M14 27 L22 35 L38 17"
             fill="none"
@@ -42,24 +41,21 @@ export function OrderSuccessTick({ orderId }) {
         </svg>
       </motion.div>
 
-      {/* Tiny spark dots */}
-      {[0, 1, 2, 3, 4, 5].map((i) => (
+      {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
         <motion.span
           key={i}
           className="absolute h-1.5 w-1.5 rounded-full bg-[#d6b04d]"
           style={{
-            left: `${50 + Math.cos((i / 6) * Math.PI * 2) * 46}%`,
-            top: `${50 + Math.sin((i / 6) * Math.PI * 2) * 46}%`,
+            left: `${50 + Math.cos((i / 8) * Math.PI * 2) * 48}%`,
+            top: `${50 + Math.sin((i / 8) * Math.PI * 2) * 48}%`,
           }}
           initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: [0, 1.4, 0], opacity: [0, 1, 0] }}
-          transition={{ duration: 0.9, delay: 0.45 + i * 0.06 }}
+          animate={{ scale: [0, 1.5, 0], opacity: [0, 1, 0] }}
+          transition={{ duration: 0.95, delay: 0.4 + i * 0.05 }}
         />
       ))}
 
-      {orderId && (
-        <span className="sr-only">Order {orderId} confirmed</span>
-      )}
+      {orderId && <span className="sr-only">Order {orderId} confirmed</span>}
     </div>
   );
 }
@@ -72,121 +68,178 @@ export function OrderSuccessView({
   summaryTotal,
   summaryOriginal,
   summarySavings,
+  couponCode,
+  expectedDelivery,
   onContinue,
+  fullscreen = true,
 }) {
+  const [copied, setCopied] = useState(false);
+
+  const copyCoupon = async () => {
+    if (!couponCode) return;
+    try {
+      await navigator.clipboard.writeText(couponCode);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    } catch {
+      // ignore
+    }
+  };
+
   return (
-    <div className="col-span-12 max-h-[92vh] overflow-y-auto p-6 md:p-10">
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="mx-auto mb-6 max-w-lg text-center"
-      >
-        <OrderSuccessTick orderId={orderId} />
-        <motion.h2
-          initial={{ opacity: 0, y: 8 }}
+    <div
+      className={
+        fullscreen
+          ? "fixed inset-0 z-[80] overflow-y-auto bg-gradient-to-b from-[#eef8f1] via-[#f8fbf8] to-[#f8f3e6]"
+          : "col-span-12 max-h-[92vh] overflow-y-auto p-6 md:p-10"
+      }
+    >
+      <div className="mx-auto flex min-h-full max-w-lg flex-col px-5 pb-10 pt-12 sm:pt-16">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.55 }}
-          className="font-[family-name:var(--font-heading)] text-3xl font-black text-[#1f3b2c]"
+          transition={{ duration: 0.4 }}
+          className="mb-6 text-center"
         >
-          Order placed successfully
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7 }}
-          className="mt-2 text-sm text-[#6f8679]"
-        >
-          Payment confirmed · Your HIMU order is on the way
-        </motion.p>
-        <motion.p
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.8 }}
-          className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#e7f3ec] px-4 py-1.5 text-xs font-bold text-[#0b6a46]"
-        >
-          Order ID · {orderId}
-        </motion.p>
-      </motion.div>
+          <OrderSuccessTick orderId={orderId} />
+          <motion.h2
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.55 }}
+            className="font-[family-name:var(--font-heading)] text-3xl font-black text-[#1f3b2c]"
+          >
+            Order Placed!
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+            className="mt-2 text-sm text-[#6f8679]"
+          >
+            Thank you · Your HIMU order is confirmed
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.8 }}
+            className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#e7f3ec] px-4 py-1.5 text-xs font-bold text-[#0b6a46]"
+          >
+            Order ID · {orderId}
+          </motion.p>
+        </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.85 }}
-        className="mx-auto max-w-2xl space-y-6 rounded-3xl border border-[#dce8e0] bg-white/90 p-6 shadow-sm md:p-8"
-      >
-        <div className="flex items-start justify-between border-b border-[#e4eee7] pb-4">
-          <div>
-            <h1 className="font-[family-name:var(--font-heading)] text-xl font-extrabold text-[#3d7a5a]">
-              {COMPANY.name}
-            </h1>
-            <p className="mt-1 max-w-xs text-[10px] leading-relaxed text-[#7a9586]">
-              {COMPANY.address}
-            </p>
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.85 }}
+          className="mb-4 space-y-3"
+        >
+          <div className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-white p-4 shadow-sm">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <Truck className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-[0.16em] text-primary">
+                Expected delivery
+              </p>
+              <p className="mt-0.5 text-base font-bold text-[#1f3b2c]">
+                {expectedDelivery || "Within 5–7 days"}
+              </p>
+              <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
+                <CalendarDays className="h-3.5 w-3.5" />
+                Arriving by {expectedDelivery || "soon"}
+              </p>
+            </div>
           </div>
-          <div className="text-right">
-            <span className="inline-block rounded-full bg-[#e7f3ec] px-3 py-1 text-[10px] font-bold uppercase text-[#3d7a5a]">
-              Invoice
+
+          <div className="rounded-2xl border border-gold/40 bg-gradient-to-r from-[#fff8e8] to-white p-4 shadow-sm">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold/20 text-[#8a7020]">
+                  <TicketPercent className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#8a7020]">
+                    Order coupon
+                  </p>
+                  <p className="mt-0.5 font-[family-name:var(--font-heading)] text-lg font-black tracking-wider text-[#1f3b2c]">
+                    {couponCode || "HIMUCARE"}
+                  </p>
+                  <p className="text-[11px] text-muted-foreground">
+                    Save this code for your next order
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={copyCoupon}
+                className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-gold/40 bg-white px-3 text-xs font-bold text-[#8a7020]"
+              >
+                <Copy className="h-3.5 w-3.5" />
+                {copied ? "Copied" : "Copy"}
+              </button>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.95 }}
+          className="space-y-5 rounded-3xl border border-[#dce8e0] bg-white/95 p-5 shadow-sm"
+        >
+          <div className="flex items-start justify-between border-b border-[#e4eee7] pb-3">
+            <div>
+              <h1 className="font-[family-name:var(--font-heading)] text-lg font-extrabold text-[#3d7a5a]">
+                {COMPANY.name}
+              </h1>
+              <p className="mt-1 text-[10px] text-[#7a9586]">Date: {orderDate}</p>
+            </div>
+            <span className="rounded-full bg-[#e7f3ec] px-3 py-1 text-[10px] font-bold uppercase text-[#3d7a5a]">
+              Confirmed
             </span>
-            <p className="mt-2 text-[10px] text-[#7a9586]">Date: {orderDate}</p>
           </div>
-        </div>
 
-        <div className="grid gap-4 text-xs sm:grid-cols-2">
-          <div>
-            <h4 className="mb-1 text-[9px] font-bold uppercase tracking-wider text-[#7a9586]">
-              Billed To
-            </h4>
-            <p className="font-bold text-[#1f3b2c]">{formData.name}</p>
-            <p className="text-[#6f8679]">{formData.phone}</p>
-            <p className="text-[#6f8679]">{formData.email}</p>
+          <div className="grid gap-3 text-xs sm:grid-cols-2">
+            <div>
+              <h4 className="mb-1 text-[9px] font-bold uppercase tracking-wider text-[#7a9586]">
+                Deliver to
+              </h4>
+              <p className="font-bold text-[#1f3b2c]">{formData.name}</p>
+              <p className="text-[#6f8679]">{formData.phone}</p>
+              <p className="text-[#6f8679]">
+                {formData.address}, {formData.city} - {formData.pincode}
+              </p>
+            </div>
+            <div>
+              <h4 className="mb-1 text-[9px] font-bold uppercase tracking-wider text-[#7a9586]">
+                Payment
+              </h4>
+              <p className="capitalize text-[#1f3b2c]">
+                {formData.paymentMethod === "cod" ? "Cash on Delivery" : "Card Payment"}
+              </p>
+              <p className="mt-1 font-bold text-[#3d7a5a]">₹{summaryTotal}</p>
+            </div>
           </div>
-          <div>
-            <h4 className="mb-1 text-[9px] font-bold uppercase tracking-wider text-[#7a9586]">
-              Shipping
-            </h4>
-            <p className="font-medium text-[#1f3b2c]">{formData.address}</p>
-            <p className="text-[#6f8679]">
-              {formData.city} - {formData.pincode}
-            </p>
-            <p className="capitalize text-[#6f8679]">
-              Payment:{" "}
-              {formData.paymentMethod === "cod" ? "Cash on Delivery" : "Card Payment"}
-            </p>
-          </div>
-        </div>
 
-        <div className="overflow-hidden rounded-2xl border border-[#e4eee7] text-xs">
-          <div className="grid grid-cols-12 bg-[#f4f9f5] p-2.5 text-[10px] font-bold uppercase text-[#7a9586]">
-            <span className="col-span-6">Item</span>
-            <span className="col-span-2 text-center">Price</span>
-            <span className="col-span-2 text-center">Qty</span>
-            <span className="col-span-2 text-right">Total</span>
-          </div>
-          <div className="divide-y divide-[#eef4f0]">
+          <div className="divide-y divide-[#eef4f0] rounded-2xl border border-[#e4eee7] text-xs">
             {summaryItems.map((item) => (
               <div
                 key={`${item.product.id}-${item.selectedVariant}`}
-                className="grid grid-cols-12 items-center p-3"
+                className="flex items-center justify-between gap-3 p-3"
               >
-                <div className="col-span-6 min-w-0 pr-2">
+                <div className="min-w-0">
                   <p className="truncate font-bold text-[#1f3b2c]">{item.product.name}</p>
-                  <p className="mt-0.5 truncate text-[9px] text-[#7a9586]">
-                    {item.selectedVariant}
-                  </p>
+                  <p className="text-[10px] text-[#7a9586]">Qty {item.quantity}</p>
                 </div>
-                <span className="col-span-2 text-center">₹{item.product.price}</span>
-                <span className="col-span-2 text-center font-semibold">{item.quantity}</span>
-                <span className="col-span-2 text-right font-bold text-[#3d7a5a]">
+                <span className="shrink-0 font-bold text-[#3d7a5a]">
                   ₹{item.product.price * item.quantity}
                 </span>
               </div>
             ))}
           </div>
-        </div>
 
-        <div className="flex justify-end">
-          <div className="w-64 space-y-1.5 text-xs">
+          <div className="space-y-1.5 text-xs">
             <div className="flex justify-between text-[#6f8679]">
               <span>Subtotal</span>
               <span>₹{summaryOriginal}</span>
@@ -198,29 +251,29 @@ export function OrderSuccessView({
               </div>
             )}
             <div className="flex items-end justify-between border-t border-[#e4eee7] pt-2 text-sm font-bold text-[#3d7a5a]">
-              <span>Total</span>
-              <span className="font-[family-name:var(--font-heading)] text-lg font-black">
+              <span>Total paid</span>
+              <span className="font-[family-name:var(--font-heading)] text-xl font-black">
                 ₹{summaryTotal}
               </span>
             </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
 
-      <div className="mt-8 flex flex-wrap justify-center gap-3">
-        <Button
-          onClick={onContinue}
-          className="rounded-2xl bg-[#6fa987] px-8 text-white hover:bg-[#5f9877]"
-        >
-          Continue Shopping
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => window.print()}
-          className="gap-2 rounded-2xl border-[#c9ddd1] text-[#3d7a5a]"
-        >
-          <Printer className="h-4 w-4" /> Print Invoice
-        </Button>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <Button
+            onClick={onContinue}
+            className="h-12 rounded-2xl bg-primary px-8 text-white hover:bg-primary/95"
+          >
+            Continue Shopping
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => window.print()}
+            className="h-12 gap-2 rounded-2xl border-[#c9ddd1] text-[#3d7a5a]"
+          >
+            <Printer className="h-4 w-4" /> Print Invoice
+          </Button>
+        </div>
       </div>
     </div>
   );

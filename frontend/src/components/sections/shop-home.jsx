@@ -310,7 +310,7 @@ export function ShopSearchBar() {
 
   return (
     <section
-      className="sticky z-40 border-b border-border/40 bg-[#f8f3e6] px-4 py-3 sm:px-6"
+      className="sticky z-40 hidden border-b border-border/40 bg-[#f8f3e6] px-4 py-3 md:block sm:px-6"
       style={{
         top: "var(--site-header-height, 4.5rem)",
         backgroundColor: "#f8f3e6",
@@ -586,7 +586,7 @@ export function QuickCategoryRail() {
   );
 }
 
-function ProductScroller({ title, subtitle, badge, items, href, showReviews = true }) {
+function ProductScroller({ title, subtitle, badge, items, href }) {
   const scrollerRef = useRef(null);
   const [paused, setPaused] = useState(false);
 
@@ -707,7 +707,7 @@ function ProductScroller({ title, subtitle, badge, items, href, showReviews = tr
               data-product-slide
               className="w-[calc((100vw-2rem-0.625rem)/2)] shrink-0 snap-start sm:w-[260px] md:w-[280px]"
             >
-              <ProductCard product={product} showReviews={showReviews} compact />
+              <ProductCard product={product} compact />
             </div>
           ))}
         </div>
@@ -734,7 +734,6 @@ export function DermaSpotlightSection() {
         subtitle="Starting focus: derma formulations first — clear prices, cart-ready packs."
         items={items}
         href="/products?category=dermatology"
-        showReviews={false}
       />
     </div>
   );
@@ -755,7 +754,6 @@ export function PopularShopSection() {
         subtitle="High-demand HIMU medicines with deal pricing — add to cart or buy now."
         items={items}
         href="/products"
-        showReviews={false}
       />
     </div>
   );

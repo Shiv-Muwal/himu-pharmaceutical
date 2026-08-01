@@ -7,6 +7,22 @@ import {
   X,
   ChevronDown,
 } from "lucide-react";
+
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth < breakpoint : true,
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [breakpoint]);
+
+  return isMobile;
+}
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "./product-card";
@@ -72,6 +88,7 @@ export function ProductCatalog({
   const [page, setPage] = useState(1);
   const [gridCols, setGridCols] = useState(3);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     setLocalProducts(getMockProducts());
@@ -100,10 +117,10 @@ export function ProductCatalog({
   );
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE) || 1;
-  const paginated = filtered.slice(
-    (page - 1) * ITEMS_PER_PAGE,
-    page * ITEMS_PER_PAGE,
-  );
+  // Mobile: load all products on one page (no page numbers)
+  const visibleProducts = isMobile
+    ? filtered
+    : filtered.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
   const toggle = (list, value, setter) => {
     setter(
@@ -219,45 +236,52 @@ export function ProductCatalog({
 
   return (
     <div>
-      <div className="mb-6 space-y-4 rounded-2xl border border-border/40 bg-white/80 p-4 shadow-sm md:p-5 dark:bg-card/80">
-        <div className="flex flex-col gap-3 lg:flex-row">
+      <div className="relative mb-4 overflow-hidden rounded-[1.35rem] border border-primary/10 bg-gradient-to-br from-white via-[#fbf8ef] to-[#eef6f1] p-3 shadow-[0_12px_32px_rgba(11,106,70,0.08)] sm:mb-6 sm:rounded-[1.6rem] sm:p-4 md:p-5">
+        <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-gold/20 blur-2xl" />
+        <div className="pointer-events-none absolute -bottom-12 -left-8 h-28 w-28 rounded-full bg-primary/10 blur-2xl" />
+
+        <div className="relative flex flex-col gap-2.5 sm:gap-3 lg:flex-row lg:items-center">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              placeholder="Search anything — face cleaner, acne, serum, amoxi..."
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setSort("relevance");
-                setPage(1);
-              }}
-              className="h-11 pl-10"
-            />
-            {search && (
-              <button
-                type="button"
-                onClick={() => {
-                  setSearch("");
+            <div className="flex items-center gap-2 rounded-2xl border border-primary/15 bg-white px-3 py-1.5 shadow-inner sm:px-3.5 sm:py-2">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary text-white sm:h-9 sm:w-9">
+                <Search className="h-4 w-4" />
+              </span>
+              <Input
+                placeholder="Search medicines, derma, care..."
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  setSort("relevance");
                   setPage(1);
                 }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                aria-label="Clear search"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            )}
+                className="h-9 border-0 bg-transparent px-0 text-sm shadow-none focus-visible:ring-0 sm:h-10"
+              />
+              {search && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearch("");
+                    setPage(1);
+                  }}
+                  className="rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+                  aria-label="Clear search"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
           </div>
-          <div className="flex flex-wrap gap-2">
+
+          <div className="relative grid grid-cols-2 gap-2 sm:flex sm:flex-wrap lg:shrink-0">
             <Button
               type="button"
-              variant="outline"
-              className="h-11 gap-2 lg:hidden"
+              className="h-11 gap-2 rounded-2xl bg-primary text-white shadow-md shadow-primary/20 lg:hidden"
               onClick={() => setFiltersOpen(true)}
             >
               <SlidersHorizontal className="h-4 w-4" />
               Filters
               {activeCount > 0 && (
-                <span className="rounded-full bg-primary px-1.5 text-[10px] font-bold text-white">
+                <span className="rounded-full bg-gold px-1.5 text-[10px] font-black text-[#1a2e1f]">
                   {activeCount}
                 </span>
               )}
@@ -265,7 +289,7 @@ export function ProductCatalog({
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value)}
-              className="h-11 rounded-xl border border-border bg-background/50 px-4 text-sm"
+              className="h-11 w-full rounded-2xl border border-primary/15 bg-white px-3 text-sm font-semibold text-foreground shadow-sm outline-none focus:border-primary sm:min-w-[160px]"
             >
               <option value="relevance">Relevance</option>
               <option value="price-asc">Price: Low to High</option>
@@ -278,7 +302,7 @@ export function ProductCatalog({
             <Button
               variant="outline"
               size="icon"
-              className="hidden h-11 w-11 sm:inline-flex"
+              className="hidden h-11 w-11 rounded-2xl border-primary/15 sm:inline-flex"
               onClick={() => setGridCols(gridCols === 3 ? 4 : 3)}
             >
               {gridCols === 3 ? (
@@ -291,7 +315,7 @@ export function ProductCatalog({
         </div>
 
         {(search || activeCount > 0) && (
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="relative mt-3 flex flex-wrap items-center gap-2">
             {search && (
               <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
                 “{search}”
@@ -339,11 +363,13 @@ export function ProductCatalog({
           </div>
         )}
 
-        <p className="flex items-center gap-2 text-sm text-muted-foreground">
-          <SlidersHorizontal className="h-4 w-4" />
-          {filtered.length} products found
-          {search ? ` for “${search}”` : ""}
-        </p>
+        <div className="relative mt-3 flex items-center justify-between gap-2">
+          <p className="inline-flex items-center gap-2 rounded-full bg-primary/8 px-3 py-1 text-xs font-semibold text-primary sm:text-sm">
+            <SlidersHorizontal className="h-3.5 w-3.5" />
+            {filtered.length} products
+            {search ? ` for “${search}”` : " ready to shop"}
+          </p>
+        </div>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
@@ -352,7 +378,7 @@ export function ProductCatalog({
         </aside>
 
         <div>
-          {paginated.length === 0 ? (
+          {visibleProducts.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-border/60 py-20 text-center">
               <p className="text-lg text-muted-foreground">
                 No products found matching your criteria.
@@ -366,19 +392,19 @@ export function ProductCatalog({
             </div>
           ) : (
             <div
-              className={`grid grid-cols-1 gap-5 sm:grid-cols-2 ${
+              className={`grid grid-cols-2 gap-2.5 sm:gap-5 ${
                 gridCols === 3 ? "xl:grid-cols-3" : "xl:grid-cols-4"
               }`}
             >
-              {paginated.map((product, i) => (
-                <FadeIn key={product.id} delay={Math.min(i * 0.04, 0.24)}>
-                  <ProductCard product={product} />
+              {visibleProducts.map((product, i) => (
+                <FadeIn key={product.id} delay={Math.min(i * 0.03, 0.2)}>
+                  <ProductCard product={product} compact />
                 </FadeIn>
               ))}
             </div>
           )}
 
-          {totalPages > 1 && (
+          {!isMobile && totalPages > 1 && (
             <div className="mt-12 flex flex-wrap items-center justify-center gap-2">
               <Button
                 variant="outline"

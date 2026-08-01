@@ -1,6 +1,16 @@
 /* HIMU Pharmacy — lightweight app-shell service worker */
 const CACHE = "himu-shell-v2";
-const PRECACHE = ["/", "/manifest.webmanifest", "/favicon.png", "/logo.png", "/icons/icon-192.png", "/icons/icon-512.png"];
+const PRECACHE = [
+  "/",
+  "/manifest.webmanifest",
+  "/favicon.ico",
+  "/favicon.svg",
+  "/favicon-32x32.png",
+  "/apple-touch-icon.png",
+  "/logo.png",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png",
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(

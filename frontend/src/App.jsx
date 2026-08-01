@@ -14,7 +14,6 @@ import {
   FloatingButtons,
   PageLoader,
 } from "@/components/global/site-widgets";
-import { InstallPrompt } from "@/components/global/install-prompt";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 import { CheckoutModal } from "@/components/cart/checkout-modal";
 import { LoginModal } from "@/components/auth/login-modal";
@@ -37,6 +36,7 @@ import QualityPage from "@/pages/QualityPage";
 import ResearchPage from "@/pages/ResearchPage";
 import TermsPage from "@/pages/TermsPage";
 import SignupPage from "@/pages/SignupPage";
+import AccountPage from "@/pages/AccountPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 
 const LOGIN_SCROLL_KEY = "himu-scroll-login-prompted";
@@ -90,6 +90,7 @@ function AppLayout() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/account" element={<AccountPage />} />
           <Route path="/careers" element={<CareersPage />} />
           <Route path="/categories/:slug" element={<CategoryPage />} />
           <Route path="/certifications" element={<CertificationsPage />} />
@@ -110,7 +111,6 @@ function AppLayout() {
       </main>
       <Footer />
       <MobileAppNav />
-      <InstallPrompt />
       <BackToTop />
       <CookieBanner />
       <FloatingButtons />

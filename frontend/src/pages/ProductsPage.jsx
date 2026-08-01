@@ -3,17 +3,19 @@ import { PageHero } from "@/components/sections/page-hero";
 import { ProductCatalog } from "@/components/products/product-catalog";
 import { products } from "@/data/products";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
+
 export default function ProductsPage() {
   const [searchParams] = useSearchParams();
   return (
     <>
       <PageHero
+        compact
         title="Shop Medicines & Care"
-        description="Search anything — face cleaner, acne gel, antibiotics — then filter by brand, type, and budget."
-        image="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1600&h=600&fit=crop"
+        description="Browse HIMU shelves — derma, wellness & pharmacy essentials."
+        image="/banners/banner-shop-medicines.jpg"
         badge="HIMU Store"
       />
-      <section className="section-padding">
+      <section className="section-padding pt-4 sm:pt-6">
         <div className="container-custom">
           <Breadcrumbs
             items={[

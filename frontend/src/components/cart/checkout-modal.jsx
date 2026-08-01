@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/lib/api";
 import { OrderSuccessView } from "@/components/cart/order-success";
+import { saveCustomerOrder } from "@/lib/customer-orders";
 
 export function CheckoutModal() {
   const {
@@ -56,6 +57,8 @@ export function CheckoutModal() {
     original: 0,
     savings: 0,
   });
+  const [couponCode, setCouponCode] = useState("");
+  const [expectedDelivery, setExpectedDelivery] = useState("");
 
   useEffect(() => {
     if (isCheckoutOpen) document.body.style.overflow = "hidden";
@@ -153,6 +156,18 @@ export function CheckoutModal() {
           paymentMethod: formData.paymentMethod,
         }),
       });
+      const delivery =
+        order.expectedDelivery ||
+        new Date(Date.now() + 5 * 86400000).toLocaleDateString("en-IN", {
+          weekday: "short",
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        });
+      const coupon =
+        order.couponCode ||
+        `HIMU${String(order.id || "").replace(/\W/g, "").slice(-4).toUpperCase()}`;
+
       setPlacedItems(checkoutItems);
       setPlacedTotals({
         total: checkoutTotal,
@@ -161,6 +176,30 @@ export function CheckoutModal() {
       });
       setGeneratedOrderId(order.id);
       setOrderDate(order.date);
+      setCouponCode(coupon);
+      setExpectedDelivery(delivery);
+      saveCustomerOrder({
+        id: order.id,
+        date: order.date,
+        total: checkoutTotal,
+        status: order.status || "Pending",
+        couponCode: coupon,
+        expectedDelivery: delivery,
+        items: checkoutItems.map((item) => ({
+          name: item.product.name,
+          quantity: item.quantity,
+          price: item.product.price,
+        })),
+        customer: {
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          address: formData.address,
+          city: formData.city,
+          pincode: formData.pincode,
+        },
+        paymentMethod: formData.paymentMethod,
+      });
       setOrderSuccess(true);
       if (!isDirectCheckout) clearCart();
     } catch (error) {
@@ -175,6 +214,8 @@ export function CheckoutModal() {
   const handleCloseSuccess = () => {
     setOrderSuccess(false);
     setPlacedItems([]);
+    setCouponCode("");
+    setExpectedDelivery("");
     closeCheckout();
   };
 
@@ -188,6 +229,26 @@ export function CheckoutModal() {
   const summaryOriginal = orderSuccess ? placedTotals.original : checkoutTotalOriginal;
   const summarySavings = orderSuccess ? placedTotals.savings : checkoutSavings;
 
+  if (orderSuccess) {
+    return (
+      <AnimatePresence>
+        <OrderSuccessView
+          orderId={generatedOrderId}
+          orderDate={orderDate}
+          formData={formData}
+          summaryItems={summaryItems}
+          summaryTotal={summaryTotal}
+          summaryOriginal={summaryOriginal}
+          summarySavings={summarySavings}
+          couponCode={couponCode}
+          expectedDelivery={expectedDelivery}
+          onContinue={handleCloseSuccess}
+          fullscreen
+        />
+      </AnimatePresence>
+    );
+  }
+
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4">
@@ -195,9 +256,7 @@ export function CheckoutModal() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={() => {
-            if (!orderSuccess) closeCheckout();
-          }}
+          onClick={closeCheckout}
           className="fixed inset-0 bg-[#1a2e1f]/30 backdrop-blur-[6px]"
         />
 
@@ -212,17 +271,13 @@ export function CheckoutModal() {
 
           <button
             type="button"
-            onClick={() => {
-              if (orderSuccess) handleCloseSuccess();
-              else closeCheckout();
-            }}
+            onClick={closeCheckout}
             className="absolute right-4 top-4 z-20 rounded-xl bg-white/80 p-2 text-[#6b8576] shadow-sm transition hover:bg-[#eef4f0] hover:text-[#1f3b2c]"
           >
             <X className="h-5 w-5" />
           </button>
 
-          {!orderSuccess ? (
-            <>
+          <>
               <div className="col-span-12 max-h-[92vh] overflow-y-auto p-6 md:col-span-7 md:p-8">
                 <div className="mb-6 flex items-center gap-3">
                   <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#e7f3ec] text-[#3d7a5a]">
@@ -510,19 +565,7 @@ export function CheckoutModal() {
                   </div>
                 </div>
               </div>
-            </>
-          ) : (
-            <OrderSuccessView
-              orderId={generatedOrderId}
-              orderDate={orderDate}
-              formData={formData}
-              summaryItems={summaryItems}
-              summaryTotal={summaryTotal}
-              summaryOriginal={summaryOriginal}
-              summarySavings={summarySavings}
-              onContinue={handleCloseSuccess}
-            />
-          )}
+          </>
         </motion.div>
       </div>
     </AnimatePresence>

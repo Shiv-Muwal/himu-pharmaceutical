@@ -6,6 +6,22 @@ import { generateOrderId, formatOrderDate } from "../utils/helpers.js";
 import { Product } from "../models/Product.js";
 import { logActivity } from "../utils/activity.js";
 
+function makeCouponCode(orderId) {
+  const tail = String(orderId || "").replace(/\W/g, "").slice(-4).toUpperCase() || "HIMU";
+  return `HIMU${tail}`;
+}
+
+function makeExpectedDelivery(days = 5) {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  return d.toLocaleDateString("en-IN", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
+
 function toClientOrder(doc) {
   const obj = doc.toObject ? doc.toObject() : doc;
   return {
@@ -16,6 +32,8 @@ function toClientOrder(doc) {
     total: obj.total,
     paymentMethod: obj.paymentMethod,
     status: obj.status,
+    couponCode: obj.couponCode || makeCouponCode(obj.orderId),
+    expectedDelivery: obj.expectedDelivery || "",
     createdAt: obj.createdAt,
   };
 }
@@ -53,14 +71,17 @@ export const createOrder = asyncHandler(async (req, res) => {
     await product.save();
   }
 
+  const orderId = generateOrderId();
   const order = await Order.create({
-    orderId: generateOrderId(),
+    orderId,
     date: formatOrderDate(),
     customer: req.body.customer,
     items,
     total,
     paymentMethod: req.body.paymentMethod,
     status: "Pending",
+    couponCode: makeCouponCode(orderId),
+    expectedDelivery: makeExpectedDelivery(5),
   });
 
   await logActivity({
