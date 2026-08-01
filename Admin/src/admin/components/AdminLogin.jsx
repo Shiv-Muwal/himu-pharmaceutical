@@ -10,13 +10,20 @@ const HINT_EMAIL = import.meta.env.VITE_LOCAL_ADMIN_EMAIL || "admin@himu.local";
 const HINT_PASSWORD = import.meta.env.VITE_LOCAL_ADMIN_PASSWORD || "HimuAdmin@2026";
 
 function getStorefrontUrl() {
-  if (typeof window !== "undefined") {
-    const host = window.location.hostname;
-    if (host && host !== "localhost" && host !== "127.0.0.1") {
-      return `${window.location.protocol}//${host}:5173`;
-    }
+  if (import.meta.env.VITE_STOREFRONT_URL) {
+    return String(import.meta.env.VITE_STOREFRONT_URL).replace(/\/$/, "");
   }
-  return import.meta.env.VITE_STOREFRONT_URL || "http://localhost:5173";
+  if (typeof window !== "undefined") {
+    const { protocol, hostname, port, origin } = window.location;
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+      return "http://localhost:5173";
+    }
+    if (["5173", "5174", "4173", "4174"].includes(port)) {
+      return `${protocol}//${hostname}:5173`;
+    }
+    return origin;
+  }
+  return "http://localhost:5173";
 }
 
 export function AdminLogin({

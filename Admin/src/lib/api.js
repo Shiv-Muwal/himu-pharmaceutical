@@ -247,22 +247,40 @@ export async function api(path, { token, ...options } = {}) {
     return localApi(path, { token, ...options });
   }
 
-  const response = await fetch(`${getApiBaseUrl()}${path}`, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...options.headers,
-    },
-  });
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) throw new ApiError(payload.message || "Request failed", response.status);
+  const controller = new AbortController();
+  const timeoutMs = Number(import.meta.env.VITE_API_TIMEOUT_MS) || 15000;
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
 
-  const data = payload.data;
-  if (Array.isArray(data)) {
-    return { items: data, pagination: payload.pagination };
+  try {
+    const response = await fetch(`${getApiBaseUrl()}${path}`, {
+      ...options,
+      signal: controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...options.headers,
+      },
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new ApiError(payload.message || "Request failed", response.status);
+
+    const data = payload.data;
+    if (Array.isArray(data)) {
+      return { items: data, pagination: payload.pagination };
+    }
+    return data;
+  } catch (error) {
+    if (error?.name === "AbortError") {
+      throw new ApiError("Server took too long to respond. Check API / nginx proxy.", 408);
+    }
+    if (error instanceof ApiError) throw error;
+    throw new ApiError(
+      error?.message || "Network error — cannot reach API. Is /api proxied correctly?",
+      0,
+    );
+  } finally {
+    clearTimeout(timer);
   }
-  return data;
 }
 
 /** Multipart upload helper (do not set Content-Type — browser sets boundary). */
