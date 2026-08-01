@@ -415,6 +415,9 @@ export function ShopSearchBar() {
 }
 
 export function QuickCategoryRail() {
+  const scrollerRef = useRef(null);
+  const [paused, setPaused] = useState(false);
+
   const ordered = useMemo(() => {
     const priority = ["dermatology", "skin-care", "creams", "ointments", "cosmetics", "hair-care"];
     const rest = categories.filter((c) => !priority.includes(c.slug));
@@ -424,10 +427,42 @@ export function QuickCategoryRail() {
     return [...top, ...rest].slice(0, 10);
   }, []);
 
+  const getCardStep = () => {
+    const el = scrollerRef.current;
+    if (!el) return 160;
+    const card = el.querySelector("[data-category-slide]");
+    if (!card) return Math.min(160, el.clientWidth * 0.4);
+    const styles = window.getComputedStyle(el);
+    const gap = Number.parseFloat(styles.columnGap || styles.gap || "12") || 12;
+    return card.getBoundingClientRect().width + gap;
+  };
+
+  const scrollByCard = (dir = 1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    if (max <= 0) return;
+    if (dir > 0 && el.scrollLeft >= max - 4) {
+      el.scrollTo({ left: 0, behavior: "smooth" });
+      return;
+    }
+    if (dir < 0 && el.scrollLeft <= 4) {
+      el.scrollTo({ left: max, behavior: "smooth" });
+      return;
+    }
+    el.scrollBy({ left: dir * getCardStep(), behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    if (paused || ordered.length < 3) return undefined;
+    const timer = setInterval(() => scrollByCard(1), 3200);
+    return () => clearInterval(timer);
+  }, [paused, ordered.length]);
+
   return (
-    <section className="section-padding pb-6 pt-10 sm:pt-12">
+    <section className="section-padding pb-4 pt-6 sm:pt-8">
       <div className="container-custom">
-        <div className="mb-5 flex items-end justify-between gap-3">
+        <div className="mb-4 flex items-end justify-between gap-3">
           <div>
             <p className="mb-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
               Shop by category
@@ -436,17 +471,41 @@ export function QuickCategoryRail() {
               Find care faster
             </h2>
           </div>
-          <Link
-            href="/products"
-            className="hidden text-sm font-semibold text-primary hover:underline sm:inline-flex sm:items-center sm:gap-1"
-          >
-            All products <ArrowRight className="h-4 w-4" />
-          </Link>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => scrollByCard(-1)}
+              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-white text-primary shadow-sm transition hover:bg-primary hover:text-white sm:inline-flex"
+              aria-label="Previous categories"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollByCard(1)}
+              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-white text-primary shadow-sm transition hover:bg-primary hover:text-white sm:inline-flex"
+              aria-label="Next categories"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+            <Link
+              href="/products"
+              className="hidden text-sm font-semibold text-primary hover:underline sm:inline-flex sm:items-center sm:gap-1"
+            >
+              All products <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
-        <div className="relative">
+        <div
+          className="relative"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onTouchStart={() => setPaused(true)}
+          onTouchEnd={() => setPaused(false)}
+        >
           <div
-            className="flex gap-3 overflow-x-auto overflow-y-hidden pb-2 scrollbar-none"
-            style={{ scrollbarWidth: "none" }}
+            ref={scrollerRef}
+            className="flex snap-x snap-mandatory gap-3 overflow-x-auto overflow-y-hidden scroll-smooth pb-2 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {ordered.map((cat, i) => {
               const highlight = DERMA_SLUGS.has(cat.slug);
@@ -454,9 +513,10 @@ export function QuickCategoryRail() {
                 <FadeIn key={cat.slug} delay={i * 0.04}>
                   <Link
                     href={`/products?category=${cat.slug}`}
-                    className={`group relative flex w-[132px] shrink-0 flex-col overflow-hidden rounded-2xl border transition sm:w-[148px] ${
+                    data-category-slide
+                    className={`group relative flex w-[132px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border transition sm:w-[148px] ${
                       highlight
-                        ? "border-gold/50 bg-gradient-to-b from-[#f8f3e6] to-white shadow-[0_10px_30px_rgba(214, 176, 77,0.18)]"
+                        ? "border-gold/50 bg-gradient-to-b from-[#f8f3e6] to-white shadow-[0_10px_30px_rgba(214,176,77,0.18)]"
                         : "border-border/50 bg-white hover:border-primary/30 hover:shadow-lg dark:bg-card"
                     }`}
                   >
@@ -556,8 +616,8 @@ function ProductScroller({ title, subtitle, badge, items, href, showReviews = tr
   if (!items.length) return null;
 
   return (
-    <section className="relative overflow-x-clip py-8 sm:py-10">
-      <div className="container-custom mb-5 flex flex-col gap-4 sm:mb-6 md:flex-row md:items-end md:justify-between">
+    <section className="relative overflow-x-clip py-6 sm:py-8">
+      <div className="container-custom mb-4 flex flex-col gap-3 sm:mb-5 md:flex-row md:items-end md:justify-between">
         <div className="max-w-xl">
           <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
             <ShoppingBag className="h-3.5 w-3.5" />
@@ -676,7 +736,7 @@ export function ShopTrustStrip() {
   ];
 
   return (
-    <section className="border-y border-border/40 bg-[#f7faf8] py-8 dark:bg-muted/20">
+    <section className="border-y border-border/40 bg-[#f7faf8] py-5 dark:bg-muted/20">
       <div className="container-custom grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
         {items.map((item, i) => (
           <FadeIn key={item.title} delay={i * 0.05}>
@@ -698,8 +758,8 @@ export function ShopTrustStrip() {
 
 export function ShopCTASection() {
   return (
-    <section className="section-padding pt-4">
-      <div className="container-custom overflow-hidden rounded-[2rem] bg-[#0b6a46] px-6 py-10 sm:px-10 sm:py-12">
+    <section className="section-padding pt-2">
+      <div className="container-custom overflow-hidden rounded-[1.75rem] bg-[#0b6a46] px-5 py-7 sm:px-8 sm:py-9">
         <div className="relative grid items-center gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="relative z-10">
             <p className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-gold">

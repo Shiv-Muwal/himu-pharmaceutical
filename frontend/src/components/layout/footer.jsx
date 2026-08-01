@@ -1,7 +1,6 @@
-import { Link } from "@/components/ui/Link";
-import { BrandLogo } from "@/components/ui/Brand-logo";
+import { Link } from "@/components/ui/link";
+import { BrandLogo } from "@/components/ui/brand-logo";
 import { Mail, Phone, MapPin } from "lucide-react";
-import { useLocation } from "react-router-dom";
 import { COMPANY, NAV_LINKS } from "@/lib/constants";
 import { categories } from "@/data/categories";
 
@@ -14,44 +13,49 @@ const socialLinks = [
 ];
 
 export function Footer() {
-  const { pathname } = useLocation();
-
   return (
-    <footer className="relative mt-24 bg-footer text-footer-foreground">
-      {/* Wave effect */}
-      <div className="absolute top-0 left-0 right-0 w-full overflow-hidden leading-[0] -translate-y-[98%] pointer-events-none">
+    <footer className="relative mt-12 bg-primary text-white">
+      <div className="pointer-events-none absolute top-0 left-0 right-0 w-full -translate-y-[98%] overflow-hidden leading-[0]">
         <svg
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"
-          className="relative block w-full h-[60px]"
-          style={{ fill: "var(--footer)" }}
+          className="relative block h-[48px] w-full"
+          style={{ fill: "var(--primary)" }}
         >
           <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C26.9,8.75,55.05,16.22,83.1,22.87,143.21,37.12,204.11,48.56,265.34,53.86A496.31,496.31,0,0,0,321.39,56.44Z" />
         </svg>
       </div>
 
-      {/* Decorative Ambient Glow Spheres */}
-      <div className="absolute top-12 left-12 w-64 h-64 bg-emerald/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-12 right-12 w-80 h-80 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute inset-0 opacity-10 molecular-bg pointer-events-none" />
+      <div className="pointer-events-none absolute top-10 left-10 h-56 w-56 rounded-full bg-gold/15 blur-3xl" />
+      <div className="pointer-events-none absolute right-10 bottom-10 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+      <div className="pointer-events-none absolute inset-0 opacity-10 molecular-bg" />
 
       <div className="relative z-10">
-        <div className="container-custom py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="container-custom py-10 md:py-12">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             <div>
-              <div className="mb-6">
-                <BrandLogo className="h-16 w-52 drop-shadow-[0_2px_12px_rgba(255,255,255,0.35)] sm:h-20 sm:w-64" />
+              <div className="mb-4 inline-flex flex-col gap-2">
+                <div className="rounded-2xl border border-white/15 bg-white/10 px-3 py-2 shadow-[0_10px_40px_rgba(0,0,0,0.18)] backdrop-blur-sm transition hover:bg-white/15">
+                  <BrandLogo
+                    variant="white"
+                    className="h-12 w-44 sm:h-14 sm:w-52"
+                    priority
+                  />
+                </div>
+                <p className="pl-1 text-[10px] font-bold uppercase tracking-[0.28em] text-gold">
+                  Healthcare Innovation
+                </p>
               </div>
-              <p className="mb-6 text-sm leading-relaxed text-footer-muted">
+              <p className="mb-5 text-sm leading-relaxed text-white/75">
                 {COMPANY.fullForm}. Advancing global healthcare through innovation, quality, and
                 compassion since 2004.
               </p>
-              <div className="flex gap-3">
+              <div className="flex gap-2.5">
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}
                     href={social.href}
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 border border-white/10 hover:border-gold hover:text-gold hover:scale-110 transition-all duration-300 text-sm font-bold uppercase"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 text-xs font-bold uppercase transition-all duration-300 hover:scale-110 hover:border-gold hover:text-gold"
                     aria-label={social.name}
                   >
                     {social.label}
@@ -61,13 +65,13 @@ export function Footer() {
             </div>
 
             <div>
-              <h4 className="font-bold mb-4 text-gold tracking-wide text-base">Quick Links</h4>
-              <ul className="space-y-2.5">
+              <h4 className="mb-3 text-base font-bold tracking-wide text-gold">Quick Links</h4>
+              <ul className="space-y-2">
                 {NAV_LINKS.slice(0, 8).map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="inline-block text-sm text-footer-muted transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
+                      className="inline-block text-sm text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
                     >
                       {link.name}
                     </Link>
@@ -76,7 +80,7 @@ export function Footer() {
                 <li>
                   <Link
                     href="/faq"
-                    className="inline-block text-sm text-footer-muted transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
+                    className="inline-block text-sm text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
                   >
                     FAQ
                   </Link>
@@ -84,7 +88,7 @@ export function Footer() {
                 <li>
                   <Link
                     href="/certifications"
-                    className="inline-block text-sm text-footer-muted transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
+                    className="inline-block text-sm text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
                   >
                     Certifications
                   </Link>
@@ -93,15 +97,15 @@ export function Footer() {
             </div>
 
             <div>
-              <h4 className="font-bold mb-4 text-gold tracking-wide text-base">
+              <h4 className="mb-3 text-base font-bold tracking-wide text-gold">
                 Product Categories
               </h4>
-              <ul className="space-y-2.5">
+              <ul className="space-y-2">
                 {categories.slice(0, 8).map((cat) => (
                   <li key={cat.slug}>
                     <Link
                       href={`/categories/${cat.slug}`}
-                      className="inline-block text-sm text-footer-muted transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
+                      className="inline-block text-sm text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold"
                     >
                       {cat.name}
                     </Link>
@@ -111,10 +115,10 @@ export function Footer() {
             </div>
 
             <div>
-              <h4 className="font-bold mb-4 text-gold tracking-wide text-base">Contact Info</h4>
-              <ul className="space-y-3.5 text-sm text-footer-muted">
+              <h4 className="mb-3 text-base font-bold tracking-wide text-gold">Contact Info</h4>
+              <ul className="space-y-3 text-sm text-white/75">
                 <li className="flex items-start gap-2.5">
-                  <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-gold" />
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                   <span>{COMPANY.address}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
@@ -131,7 +135,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10">
-          <div className="container-custom flex flex-col items-center justify-between gap-4 py-6 text-xs text-footer-muted md:flex-row">
+          <div className="container-custom flex flex-col items-center justify-between gap-3 py-4 text-xs text-white/60 md:flex-row">
             <p>
               © {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
             </p>
@@ -140,20 +144,20 @@ export function Footer() {
               <span>CIN: {COMPANY.cinNumber}</span>
             </div>
             <div className="flex flex-wrap items-center gap-4">
-              <Link href="/privacy" className="hover:text-gold transition-colors">
+              <Link href="/privacy" className="transition-colors hover:text-gold">
                 Privacy
               </Link>
-              <Link href="/terms" className="hover:text-gold transition-colors">
+              <Link href="/terms" className="transition-colors hover:text-gold">
                 Terms & Conditions
               </Link>
-              <Link href="/disclaimer" className="hover:text-gold transition-colors">
+              <Link href="/disclaimer" className="transition-colors hover:text-gold">
                 Disclaimer
               </Link>
               <a
                 href={import.meta.env.VITE_ADMIN_URL || "http://localhost:5174/admin/"}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-semibold text-gold transition hover:bg-gold hover:text-[#1a2e1f]"
+                className="rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-semibold text-gold transition hover:bg-gold hover:text-[#0b6a46]"
               >
                 Open Admin Panel
               </a>

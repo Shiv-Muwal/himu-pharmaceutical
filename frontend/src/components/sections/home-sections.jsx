@@ -695,7 +695,7 @@ const partnerIcons = {
 export function PartnersSection() {
   const duplicatedLogos = [...partnerLogos, ...partnerLogos];
   return (
-    <section className="py-16 overflow-hidden relative">
+    <section className="relative overflow-hidden py-10">
       <div className="container-custom mb-10 text-center">
         <SectionHeading
           badge="Partners"
