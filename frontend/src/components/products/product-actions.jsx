@@ -3,9 +3,11 @@ import { ShoppingCart, Zap, Plus, Minus, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/providers/CartProvider";
+import { useAuth } from "@/providers/AuthProvider";
 
 export function ProductActions({ product }) {
   const { addToCart, buyNow } = useCart();
+  const { isAuthenticated, openLogin } = useAuth();
   const [quantity, setQuantity] = useState(1);
   const [selectedVariant, setSelectedVariant] = useState(
     product.variants?.[0]?.name || product.name,
@@ -23,6 +25,10 @@ export function ProductActions({ product }) {
 
   const handleBuyNow = () => {
     if (!isAvailable) return;
+    if (!isAuthenticated) {
+      openLogin();
+      return;
+    }
     buyNow(product, quantity, selectedVariant);
   };
 

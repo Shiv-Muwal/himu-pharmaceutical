@@ -35,7 +35,7 @@ const fieldMotion = {
 };
 
 export default function SignupPage() {
-  const { register, openLogin, isAuthenticated } = useAuth();
+  const { register, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
@@ -277,16 +277,9 @@ export default function SignupPage() {
 
           <p className="relative mt-6 text-center text-xs text-muted-foreground">
             Already have an account?{" "}
-            <button
-              type="button"
-              onClick={() => {
-                openLogin();
-                navigate("/");
-              }}
-              className="font-bold text-ink-accent hover:underline"
-            >
-              Sign in
-            </button>
+            <Link to="/products" className="font-bold text-ink-accent hover:underline">
+              Browse products
+            </Link>
             {" · "}
             <Link to="/" className="font-semibold text-foreground/70 hover:text-ink-accent">
               Back home

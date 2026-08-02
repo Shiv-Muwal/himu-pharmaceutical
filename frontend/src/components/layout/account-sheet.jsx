@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { History, LogIn, LogOut, Package, UserRound, X } from "lucide-react";
+import { History, LogOut, Package, UserRound, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/providers/AuthProvider";
 
@@ -11,12 +11,12 @@ const OPTIONS = [
 
 export function AccountSheet({ open, onClose }) {
   const navigate = useNavigate();
-  const { user, isAuthenticated, openLogin, logout } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
 
   const go = (tab) => {
     onClose();
     if (!isAuthenticated) {
-      openLogin();
+      navigate("/products");
       return;
     }
     navigate(`/account?tab=${tab}`);
@@ -95,21 +95,7 @@ export function AccountSheet({ open, onClose }) {
                   </span>
                   <span className="text-sm font-bold text-red-700">Logout</span>
                 </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onClose();
-                    openLogin();
-                  }}
-                  className="flex w-full items-center gap-3 rounded-2xl bg-primary px-4 py-3.5 text-left text-white"
-                >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15">
-                    <LogIn className="h-5 w-5" />
-                  </span>
-                  <span className="text-sm font-bold">Login / Signup</span>
-                </button>
-              )}
+              ) : null}
             </div>
           </motion.div>
         </div>

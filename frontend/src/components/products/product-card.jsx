@@ -5,10 +5,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/providers/CartProvider";
+import { useAuth } from "@/providers/AuthProvider";
 import { cn } from "@/lib/utils";
 
 export function ProductCard({ product, compact = false }) {
   const { addToCart, buyNow } = useCart();
+  const { isAuthenticated, openLogin } = useAuth();
   const isAvailable =
     product.categorySlug === "dermatology" ||
     product.categorySlug === "skin-care";
@@ -17,6 +19,10 @@ export function ProductCard({ product, compact = false }) {
     e.preventDefault();
     e.stopPropagation();
     if (!isAvailable) return;
+    if (!isAuthenticated) {
+      openLogin();
+      return;
+    }
     buyNow(product, 1);
   };
 

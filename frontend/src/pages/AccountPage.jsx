@@ -10,7 +10,6 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/providers/AuthProvider";
 import { getStoredOrders } from "@/lib/customer-orders";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const TABS = [
@@ -22,7 +21,7 @@ const TABS = [
 export default function AccountPage() {
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
-  const { user, isAuthenticated, loading, openLogin, logout } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
   const [orders, setOrders] = useState([]);
 
   const tab = params.get("tab") || "profile";
@@ -30,10 +29,6 @@ export default function AccountPage() {
   useEffect(() => {
     setOrders(getStoredOrders());
   }, [tab]);
-
-  useEffect(() => {
-    if (!loading && !isAuthenticated) openLogin();
-  }, [loading, isAuthenticated, openLogin]);
 
   const list = useMemo(() => {
     if (tab === "orders") {
@@ -81,11 +76,8 @@ export default function AccountPage() {
             {!isAuthenticated ? (
               <div className="py-8 text-center">
                 <p className="text-sm text-muted-foreground">
-                  Login to view your profile and orders.
+                  Sign in from a product's Buy button to view your profile and orders.
                 </p>
-                <Button className="mt-4" onClick={openLogin}>
-                  Login
-                </Button>
               </div>
             ) : (
               <>

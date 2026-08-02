@@ -32,7 +32,7 @@ export function CheckoutModal() {
     checkoutSavings,
     clearCart,
   } = useCart();
-  const { user, isAuthenticated, openLogin } = useAuth();
+  const { user } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -294,19 +294,6 @@ export function CheckoutModal() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  {!isAuthenticated && (
-                    <div className="rounded-2xl border border-amber-200/80 bg-amber-50/90 px-4 py-3 text-xs text-amber-900">
-                      Tip:{" "}
-                      <button
-                        type="button"
-                        onClick={openLogin}
-                        className="font-bold text-primary underline"
-                      >
-                        Sign in
-                      </button>{" "}
-                      with demo customer to autofill checkout details.
-                    </div>
-                  )}
                   <div className="rounded-3xl border border-white/80 bg-white/80 p-4 shadow-[0_8px_30px_rgba(61,122,90,0.05)]">
                     <p className="mb-3 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-[#7a9586]">
                       <User className="h-3.5 w-3.5" /> Contact details

@@ -23,7 +23,6 @@ import {
   BookOpen,
   Briefcase,
   ShoppingBag,
-  LogIn,
   UserPlus,
   LogOut,
   User,
@@ -65,7 +64,7 @@ const aboutChildren = [
 
 export function Navbar() {
   const { cartCount, setCartOpen } = useCart();
-  const { user, isAuthenticated, openLogin, logout } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
   const { location, status } = useLocationInfo();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -414,16 +413,7 @@ export function Navbar() {
                 </AnimatePresence>
               </div>
             ) : (
-              <div className="hidden items-center gap-1.5 md:flex">
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={openLogin}
-                  className="gap-1.5 px-3"
-                >
-                  <LogIn className="h-3.5 w-3.5" />
-                  Login
-                </Button>
+              <div className="hidden items-center md:flex">
                 <Link href="/signup">
                   <Button size="sm" variant="outline" className="gap-1.5 px-3">
                     <UserPlus className="h-3.5 w-3.5" />
@@ -553,19 +543,7 @@ export function Navbar() {
                     </button>
                   </>
                 ) : (
-                  <>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        openLogin();
-                        closeMobileMenu();
-                      }}
-                      className="flex w-full items-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground"
-                    >
-                      <LogIn className="h-4 w-4" />
-                      Login
-                    </button>
-                    <Link
+                  <Link
                       href="/signup"
                       onClick={closeMobileMenu}
                       className="flex w-full items-center gap-2 rounded-xl border border-primary/30 px-4 py-3 text-sm font-bold text-primary"
@@ -573,7 +551,6 @@ export function Navbar() {
                       <UserPlus className="h-4 w-4" />
                       Signup
                     </Link>
-                  </>
                 )}
               </div>
               <div className="space-y-1">

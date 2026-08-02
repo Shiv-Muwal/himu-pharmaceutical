@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { CartProvider } from "@/providers/CartProvider";
-import { AuthProvider, useAuth } from "@/providers/AuthProvider";
+import { AuthProvider } from "@/providers/AuthProvider";
 import { LocationProvider } from "@/providers/LocationProvider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -39,8 +39,6 @@ import SignupPage from "@/pages/SignupPage";
 import AccountPage from "@/pages/AccountPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 
-const LOGIN_SCROLL_KEY = "himu-scroll-login-prompted";
-
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -51,34 +49,10 @@ function ScrollToTop() {
   return null;
 }
 
-function ScrollLoginPrompt() {
-  const { pathname } = useLocation();
-  const { isAuthenticated, loading, loginOpen, openLogin } = useAuth();
-
-  useEffect(() => {
-    if (loading || isAuthenticated || loginOpen) return;
-    if (pathname === "/signup") return;
-    if (sessionStorage.getItem(LOGIN_SCROLL_KEY) === "1") return;
-
-    const onScroll = () => {
-      if (window.scrollY < 160) return;
-      if (sessionStorage.getItem(LOGIN_SCROLL_KEY) === "1") return;
-      sessionStorage.setItem(LOGIN_SCROLL_KEY, "1");
-      openLogin();
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [isAuthenticated, loading, loginOpen, openLogin, pathname]);
-
-  return null;
-}
-
 function AppLayout() {
   return (
     <>
       <ScrollToTop />
-      <ScrollLoginPrompt />
       <PageLoader />
       <ScrollProgressBar />
       <Navbar />
