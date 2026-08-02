@@ -49,8 +49,8 @@ function rankForShop(list) {
 
 export function ShopPromoStrip() {
   return (
-    <div className="relative overflow-hidden bg-[#0b6a46] text-white">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(214, 176, 77,0.18),transparent_40%,rgba(214, 176, 77,0.12))]" />
+    <div className="relative overflow-hidden bg-[#ffc5aa] text-primary-foreground">
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255, 197, 170,0.18),transparent_40%,rgba(255, 197, 170,0.12))]" />
       <div className="container-custom relative flex flex-wrap items-center justify-center gap-x-6 gap-y-2 py-2.5 text-[11px] font-semibold tracking-wide sm:justify-between sm:text-xs">
         <span className="inline-flex items-center gap-1.5">
           <Sparkles className="h-3.5 w-3.5 text-gold" />
@@ -62,7 +62,7 @@ export function ShopPromoStrip() {
         </span>
         <Link
           href="/products?category=dermatology"
-          className="inline-flex items-center gap-1 text-gold transition hover:text-white"
+          className="inline-flex items-center gap-1 text-gold transition hover:text-primary-foreground"
         >
           Shop derma now <ArrowRight className="h-3.5 w-3.5" />
         </Link>
@@ -127,7 +127,7 @@ export function BannerCarousel() {
 
   return (
     <section
-      className="relative overflow-hidden bg-[#061610]"
+      className="relative overflow-hidden bg-[#ffc5aa]"
       tabIndex={0}
       role="region"
       aria-roledescription="carousel"
@@ -153,8 +153,8 @@ export function BannerCarousel() {
               className="object-cover"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1e2422]/88 via-[#1e2422]/45 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1e2422]/70 via-transparent to-[#1e2422]/25" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#bbf1d2]/88 via-[#bbf1d2]/45 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#bbf1d2]/70 via-transparent to-[#bbf1d2]/25" />
           </motion.div>
         </AnimatePresence>
 
@@ -169,11 +169,11 @@ export function BannerCarousel() {
             <p className="mb-2 font-[family-name:var(--font-heading)] text-[10px] font-bold uppercase tracking-[0.2em] text-gold sm:text-sm">
               HIMU Pharmacy
             </p>
-            <h1 className="font-[family-name:var(--font-heading)] text-2xl font-bold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl">
+            <h1 className="font-[family-name:var(--font-heading)] text-2xl font-bold leading-tight tracking-tight text-primary-foreground sm:text-4xl md:text-5xl">
               {active.title}
             </h1>
             {active.subtitle && (
-              <p className="mt-2 max-w-md text-xs leading-relaxed text-white/80 sm:mt-3 sm:text-base">
+              <p className="mt-2 max-w-md text-xs leading-relaxed text-primary-foreground/80 sm:mt-3 sm:text-base">
                 {active.subtitle}
               </p>
             )}
@@ -188,7 +188,7 @@ export function BannerCarousel() {
                 <Button
                   size="lg"
                   variant="ghost"
-                  className="h-10 border border-white/30 bg-white/5 px-4 text-sm text-white hover:bg-white hover:text-[#0b6a46] sm:h-11"
+                  className="h-10 border border-primary-foreground/30 bg-primary-foreground/5 px-4 text-sm text-primary-foreground hover:bg-[var(--c-lime)] hover:text-[#ffc5aa] sm:h-11"
                 >
                   Dermatology picks
                 </Button>
@@ -202,7 +202,7 @@ export function BannerCarousel() {
             <button
               type="button"
               onClick={() => go(-1)}
-              className="absolute left-5 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/45 text-white backdrop-blur transition hover:bg-black/65 active:scale-95 md:flex"
+              className="absolute left-5 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-primary-foreground/30 bg-black/45 text-primary-foreground backdrop-blur transition hover:bg-black/65 active:scale-95 md:flex"
               aria-label="Previous banner"
             >
               <ChevronLeft className="h-5 w-5" />
@@ -210,7 +210,7 @@ export function BannerCarousel() {
             <button
               type="button"
               onClick={() => go(1)}
-              className="absolute right-5 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/45 text-white backdrop-blur transition hover:bg-black/65 active:scale-95 md:flex"
+              className="absolute right-5 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-primary-foreground/30 bg-black/45 text-primary-foreground backdrop-blur transition hover:bg-black/65 active:scale-95 md:flex"
               aria-label="Next banner"
             >
               <ChevronRight className="h-5 w-5" />
@@ -222,7 +222,7 @@ export function BannerCarousel() {
                   type="button"
                   onClick={() => setIndex(i)}
                   className={`h-1.5 rounded-full transition-all sm:h-2 ${
-                    i === index ? "w-5 bg-gold sm:w-7" : "w-1.5 bg-white/45 hover:bg-white/70 sm:w-2.5"
+                    i === index ? "w-5 bg-gold sm:w-7" : "w-1.5 bg-primary-foreground/45 hover:bg-primary-foreground/70 sm:w-2.5"
                   }`}
                   aria-label={`Go to banner ${i + 1}`}
                 />
@@ -310,10 +310,10 @@ export function ShopSearchBar() {
 
   return (
     <section
-      className="sticky z-40 hidden border-b border-border/40 bg-[#f8f3e6] px-4 py-3 md:block sm:px-6"
+      className="sticky z-40 hidden border-b border-border/40 bg-[#eef8cd] px-4 py-3 md:block sm:px-6"
       style={{
         top: "var(--site-header-height, 4.5rem)",
-        backgroundColor: "#f8f3e6",
+        backgroundColor: "#eef8cd",
       }}
     >
       <form
@@ -324,11 +324,11 @@ export function ShopSearchBar() {
         }}
         className="container-custom relative"
       >
-        <div className="flex flex-col gap-2 rounded-2xl border border-border/50 bg-white p-2 shadow-[0_10px_28px_rgba(6,22,16,0.12)] sm:flex-row sm:items-center dark:bg-card">
+        <div className="flex flex-col gap-2 rounded-2xl border border-border/50 bg-[var(--c-lime)] p-2 shadow-[0_10px_28px_rgba(255, 197, 170,0.12)] sm:flex-row sm:items-center dark:bg-card">
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full cursor-pointer rounded-xl bg-[#f4f0e5] px-3 py-2.5 text-xs font-bold outline-none sm:w-44 dark:bg-muted"
+            className="w-full cursor-pointer rounded-xl bg-[#eef8cd] px-3 py-2.5 text-xs font-bold outline-none sm:w-44 dark:bg-muted"
             aria-label="Category"
           >
             <option value="">All categories</option>
@@ -359,7 +359,7 @@ export function ShopSearchBar() {
               onClick={startListening}
               className={`mr-1 rounded-full p-2 transition ${
                 isListening
-                  ? "bg-red-100 text-red-500"
+                  ? "bg-red-100 text-[var(--c-peach)]"
                   : "text-muted-foreground hover:bg-muted hover:text-primary"
               }`}
               aria-label="Voice search"
@@ -378,7 +378,7 @@ export function ShopSearchBar() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 8 }}
-              className="absolute left-4 right-4 top-[calc(100%+8px)] z-30 overflow-hidden rounded-2xl border border-border/60 bg-white shadow-2xl sm:left-6 sm:right-6 dark:bg-card"
+              className="absolute left-4 right-4 top-[calc(100%+8px)] z-30 overflow-hidden rounded-2xl border border-border/60 bg-[var(--c-lime)] shadow-2xl sm:left-6 sm:right-6 dark:bg-card"
             >
               {suggestions.length > 0 ? (
                 <div className="max-h-72 overflow-y-auto p-2">
@@ -475,7 +475,7 @@ export function QuickCategoryRail() {
             <button
               type="button"
               onClick={() => scrollByCard(-1)}
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-white text-primary shadow-sm transition hover:bg-primary hover:text-white md:inline-flex"
+              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-[var(--c-lime)] text-primary shadow-sm transition hover:bg-primary hover:text-primary-foreground md:inline-flex"
               aria-label="Previous categories"
             >
               <ChevronLeft className="h-4 w-4" />
@@ -483,7 +483,7 @@ export function QuickCategoryRail() {
             <button
               type="button"
               onClick={() => scrollByCard(1)}
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-white text-primary shadow-sm transition hover:bg-primary hover:text-white md:inline-flex"
+              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-[var(--c-lime)] text-primary shadow-sm transition hover:bg-primary hover:text-primary-foreground md:inline-flex"
               aria-label="Next categories"
             >
               <ChevronRight className="h-4 w-4" />
@@ -507,8 +507,8 @@ export function QuickCategoryRail() {
                 href={`/products?category=${cat.slug}`}
                 className={`group relative flex flex-col overflow-hidden rounded-2xl border transition active:scale-[0.98] ${
                   highlight
-                    ? "border-gold/50 bg-gradient-to-b from-[#f8f3e6] to-white shadow-[0_8px_22px_rgba(214,176,77,0.16)]"
-                    : "border-border/50 bg-white shadow-sm dark:bg-card"
+                    ? "border-gold/50 bg-gradient-to-b from-[#eef8cd] to-[var(--c-lime)] shadow-[0_8px_22px_rgba(255, 197, 170,0.16)]"
+                    : "border-border/50 bg-[var(--c-lime)] shadow-sm dark:bg-card"
                 }`}
               >
                 <div className="relative aspect-[5/3] overflow-hidden">
@@ -519,7 +519,7 @@ export function QuickCategoryRail() {
                     className="object-cover transition duration-500 group-active:scale-105"
                   />
                   {highlight && (
-                    <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[8px] font-black uppercase tracking-wider text-white">
+                    <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[8px] font-black uppercase tracking-wider text-primary-foreground">
                       Focus
                     </span>
                   )}
@@ -552,8 +552,8 @@ export function QuickCategoryRail() {
                     data-category-slide
                     className={`group relative flex w-[148px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border transition ${
                       highlight
-                        ? "border-gold/50 bg-gradient-to-b from-[#f8f3e6] to-white shadow-[0_10px_30px_rgba(214,176,77,0.18)]"
-                        : "border-border/50 bg-white hover:border-primary/30 hover:shadow-lg dark:bg-card"
+                        ? "border-gold/50 bg-gradient-to-b from-[#eef8cd] to-[var(--c-lime)] shadow-[0_10px_30px_rgba(255, 197, 170,0.18)]"
+                        : "border-border/50 bg-[var(--c-lime)] hover:border-primary/30 hover:shadow-lg dark:bg-card"
                     }`}
                   >
                     <div className="relative h-28 overflow-hidden">
@@ -564,7 +564,7 @@ export function QuickCategoryRail() {
                         className="object-cover transition duration-500 group-hover:scale-110"
                       />
                       {highlight && (
-                        <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">
+                        <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-primary-foreground">
                           Focus
                         </span>
                       )}
@@ -578,8 +578,8 @@ export function QuickCategoryRail() {
               );
             })}
           </div>
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#f8f3e6] to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#f8f3e6] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#eef8cd] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#eef8cd] to-transparent" />
         </div>
       </div>
     </section>
@@ -679,7 +679,7 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
         <button
           type="button"
           onClick={() => scrollByCard(-1)}
-          className="absolute left-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-white/95 text-primary shadow-md backdrop-blur transition hover:bg-primary hover:text-white md:flex md:left-3"
+          className="absolute left-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-primary-foreground/95 text-primary shadow-md backdrop-blur transition hover:bg-primary hover:text-primary-foreground md:flex md:left-3"
           aria-label="Previous products"
         >
           <ChevronLeft className="h-5 w-5" />
@@ -687,7 +687,7 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
         <button
           type="button"
           onClick={() => scrollByCard(1)}
-          className="absolute right-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-white/95 text-primary shadow-md backdrop-blur transition hover:bg-primary hover:text-white md:flex md:right-3"
+          className="absolute right-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-primary-foreground/95 text-primary shadow-md backdrop-blur transition hover:bg-primary hover:text-primary-foreground md:flex md:right-3"
           aria-label="Next products"
         >
           <ChevronRight className="h-5 w-5" />
@@ -727,7 +727,7 @@ export function DermaSpotlightSection() {
   }, []);
 
   return (
-    <div className="bg-gradient-to-b from-[#f8f3e6] via-[#f3f7f0] to-white">
+    <div className="bg-gradient-to-b from-[#eef8cd] via-[#eef8cd] to-[var(--c-lime)]">
       <ProductScroller
         badge="Priority shelf"
         title="Dermatology & skin essentials"
@@ -747,7 +747,7 @@ export function PopularShopSection() {
   }, []);
 
   return (
-    <div className="bg-white dark:bg-background">
+    <div className="bg-[var(--c-lime)] dark:bg-background">
       <ProductScroller
         badge="Bestsellers"
         title="People are shopping these"
@@ -768,7 +768,7 @@ export function ShopTrustStrip() {
   ];
 
   return (
-    <section className="border-y border-border/40 bg-[#f7faf8] py-5 dark:bg-muted/20">
+    <section className="border-y border-border/40 bg-[#eef8cd] py-5 dark:bg-muted/20">
       <div className="container-custom grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
         {items.map((item, i) => (
           <FadeIn key={item.title} delay={i * 0.05}>
@@ -791,16 +791,16 @@ export function ShopTrustStrip() {
 export function ShopCTASection() {
   return (
     <section className="section-padding pt-2">
-      <div className="container-custom overflow-hidden rounded-[1.75rem] bg-[#0b6a46] px-5 py-7 sm:px-8 sm:py-9">
+      <div className="container-custom overflow-hidden rounded-[1.75rem] bg-[#ffc5aa] px-5 py-7 sm:px-8 sm:py-9">
         <div className="relative grid items-center gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="relative z-10">
             <p className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-gold">
               Keep shopping
             </p>
-            <h2 className="font-[family-name:var(--font-heading)] text-3xl font-bold text-white md:text-4xl">
+            <h2 className="font-[family-name:var(--font-heading)] text-3xl font-bold text-primary-foreground md:text-4xl">
               Your cart starts with better skin care
             </h2>
-            <p className="mt-3 max-w-lg text-sm leading-relaxed text-white/75 md:text-base">
+            <p className="mt-3 max-w-lg text-sm leading-relaxed text-primary-foreground/75 md:text-base">
               Explore the full HIMU catalog — dermatology, wellness, and clinical
               essentials with smooth checkout.
             </p>
@@ -814,7 +814,7 @@ export function ShopCTASection() {
                 <Button
                   size="lg"
                   variant="ghost"
-                  className="border border-white/25 text-white hover:bg-white hover:text-[#0b6a46]"
+                  className="border border-primary-foreground/25 text-primary-foreground hover:bg-[var(--c-lime)] hover:text-[#ffc5aa]"
                 >
                   View all products
                 </Button>
@@ -828,7 +828,7 @@ export function ShopCTASection() {
               fill
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#0b6a46]/40" />
+            <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#ffc5aa]/40" />
           </div>
         </div>
       </div>

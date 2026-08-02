@@ -134,8 +134,8 @@ export default function ManufacturingPage() {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent flex items-end p-4">
-                    <h3 className="text-white font-semibold text-sm">
+                  <div className="absolute inset-0 bg-linear-to-t from-[var(--c-peach)]/60 to-transparent flex items-end p-4">
+                    <h3 className="text-primary-foreground font-semibold text-sm">
                       {img.title}
                     </h3>
                   </div>

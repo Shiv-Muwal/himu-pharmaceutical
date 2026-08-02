@@ -178,8 +178,8 @@ export default function AboutPage() {
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 flex items-end bg-linear-to-t from-black/60 to-transparent p-5">
-                    <h3 className="font-bold text-white">{img.title}</h3>
+                  <div className="absolute inset-0 flex items-end bg-linear-to-t from-[var(--c-peach)]/60 to-transparent p-5">
+                    <h3 className="font-bold text-primary-foreground">{img.title}</h3>
                   </div>
                 </div>
               </FadeIn>

@@ -117,10 +117,10 @@ export function PageLoader() {
       initial={{ opacity: 1 }}
       animate={{ opacity: leaving ? 0 : 1 }}
       transition={{ duration: 0.45 }}
-      className="fixed inset-0 z-[120] flex items-center justify-center overflow-hidden bg-[#f8f3e6]"
+      className="fixed inset-0 z-[120] flex items-center justify-center overflow-hidden bg-[#eef8cd]"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgba(11,106,70,0.12),transparent_45%),radial-gradient(ellipse_at_75%_80%,rgba(214,176,77,0.18),transparent_50%)]" />
-      <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(rgba(11,106,70,0.06)_1px,transparent_1px)] [background-size:22px_22px]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgba(255, 197, 170,0.12),transparent_45%),radial-gradient(ellipse_at_75%_80%,rgba(255, 197, 170,0.18),transparent_50%)]" />
+      <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(rgba(255, 197, 170,0.06)_1px,transparent_1px)] [background-size:22px_22px]" />
 
       <motion.div
         className="pointer-events-none absolute h-56 w-56 rounded-full border border-primary/15 sm:h-72 sm:w-72"

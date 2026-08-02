@@ -227,7 +227,7 @@ export function ProductCatalog({
   return (
     <div>
       <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
-        <aside className="sticky top-24 hidden h-fit rounded-2xl border border-border/40 bg-white p-4 shadow-sm lg:block dark:bg-card">
+        <aside className="sticky top-24 hidden h-fit rounded-2xl border border-border/40 bg-[var(--c-lime)] p-4 shadow-sm lg:block dark:bg-card">
           {filterPanel}
         </aside>
 

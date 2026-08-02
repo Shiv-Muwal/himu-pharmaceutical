@@ -56,7 +56,7 @@ export function AdminLogin({
   };
 
   return (
-    <div className="relative min-h-[100dvh] overflow-x-hidden overflow-y-auto bg-[#1e2422] text-white">
+    <div className="relative min-h-[100dvh] overflow-x-hidden overflow-y-auto bg-[#ffc5aa] text-[var(--c-lime)]">
       <LoginScene3D />
 
       <div
@@ -84,17 +84,17 @@ export function AdminLogin({
                 className="drop-shadow-[0_0_50px_rgba(214, 176, 77,0.35)]"
               />
             </motion.div>
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-[var(--c-lime)]/60">
               Operations suite for catalog, orders & inventory
             </p>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/[0.07] p-7 shadow-2xl backdrop-blur-xl sm:p-8">
+          <div className="rounded-3xl border border-[var(--c-lime)]/10 bg-[var(--c-lime)]/[0.07] p-7 shadow-2xl backdrop-blur-xl sm:p-8">
             {loginError && (
               <motion.div
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mb-5 flex items-center gap-2 rounded-xl border border-red-400/30 bg-red-500/10 p-3.5 text-xs text-red-300"
+                className="mb-5 flex items-center gap-2 rounded-xl border border-[var(--c-peach)]/30 bg-[var(--c-peach)]/25 p-3.5 text-xs text-[var(--c-lime)]"
               >
                 <AlertCircle className="h-4 w-4 shrink-0" />
                 <span>{loginError}</span>
@@ -103,7 +103,7 @@ export function AdminLogin({
 
             <form id="himu-admin-login-form" onSubmit={handleLogin} className="space-y-4">
               <div className="relative">
-                <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
+                <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--c-lime)]/40" />
                 <Input
                   type="email"
                   inputMode="email"
@@ -111,7 +111,7 @@ export function AdminLogin({
                   placeholder="Admin email / ID"
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
-                  className="h-12 border-white/10 bg-white/5 pl-11 text-base text-white placeholder:text-white/35 sm:text-sm"
+                  className="h-12 border-[var(--c-lime)]/10 bg-[var(--c-lime)]/5 pl-11 text-base text-[var(--c-lime)] placeholder:text-[var(--c-lime)]/35 sm:text-sm"
                   autoComplete="username"
                   autoCapitalize="none"
                   autoCorrect="off"
@@ -119,21 +119,21 @@ export function AdminLogin({
                 />
               </div>
               <div className="relative">
-                <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
+                <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--c-lime)]/40" />
                 <Input
                   type={showPassword ? "text" : "password"}
                   enterKeyHint="go"
                   placeholder="Password"
                   value={passwordInput}
                   onChange={(e) => setPasswordInput(e.target.value)}
-                  className="h-12 border-white/10 bg-white/5 pl-11 pr-12 text-base text-white placeholder:text-white/35 sm:text-sm"
+                  className="h-12 border-[var(--c-lime)]/10 bg-[var(--c-lime)]/5 pl-11 pr-12 text-base text-[var(--c-lime)] placeholder:text-[var(--c-lime)]/35 sm:text-sm"
                   autoComplete="current-password"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center text-white/40 hover:text-white"
+                  className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center text-[var(--c-lime)]/40 hover:text-[var(--c-lime)]"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -141,7 +141,7 @@ export function AdminLogin({
               <Button
                 type="submit"
                 disabled={loginLoading}
-                className="h-12 w-full touch-manipulation bg-primary text-base text-white shadow-none hover:bg-primary-hover sm:text-sm"
+                className="h-12 w-full touch-manipulation bg-primary text-base text-[var(--c-lime)] shadow-none hover:bg-primary-hover sm:text-sm"
               >
                 {loginLoading ? "Authenticating..." : "Enter Dashboard"}
               </Button>
@@ -155,43 +155,43 @@ export function AdminLogin({
                 e.preventDefault();
                 handleDemoLogin();
               }}
-              className="mt-3 h-11 w-full touch-manipulation gap-2 border-emerald-300/30 bg-emerald-500/10 text-emerald-100 hover:bg-emerald-500/20 hover:text-white"
+              className="mt-3 h-11 w-full touch-manipulation gap-2 border-[var(--c-mint)]/40 bg-[var(--c-mint)]/25 text-[var(--c-lime)] hover:bg-[var(--c-mint)]/35 hover:text-[var(--c-lime)]"
             >
               <LayoutDashboard className="h-4 w-4" />
               Open admin panel (demo login)
             </Button>
 
-            <div className="mt-5 rounded-2xl border border-white/10 bg-black/25 p-4">
+            <div className="mt-5 rounded-2xl border border-[var(--c-lime)]/10 bg-[var(--c-mint)]/25 p-4">
               <p className="mb-3 text-[10px] font-black uppercase tracking-[0.18em] text-gold">
                 Dummy credentials
               </p>
               <div className="space-y-2 text-xs">
-                <div className="flex items-center justify-between gap-2 rounded-xl bg-white/5 px-3 py-2">
+                <div className="flex items-center justify-between gap-2 rounded-xl bg-[var(--c-lime)]/5 px-3 py-2">
                   <div>
-                    <p className="text-[10px] text-white/45">ID / Email</p>
-                    <p className="font-semibold text-white/90">{HINT_EMAIL}</p>
+                    <p className="text-[10px] text-[var(--c-lime)]/45">ID / Email</p>
+                    <p className="font-semibold text-[var(--c-lime)]/90">{HINT_EMAIL}</p>
                   </div>
                   <button
                     type="button"
                     onClick={() => copyText("email", HINT_EMAIL)}
-                    className="rounded-lg p-2 text-white/50 hover:bg-white/10 hover:text-white"
+                    className="rounded-lg p-2 text-[var(--c-lime)]/50 hover:bg-[var(--c-lime)]/10 hover:text-[var(--c-lime)]"
                     aria-label="Copy email"
                   >
-                    {copied === "email" ? <Check className="h-3.5 w-3.5 text-emerald-300" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied === "email" ? <Check className="h-3.5 w-3.5 text-[var(--c-mint)]" /> : <Copy className="h-3.5 w-3.5" />}
                   </button>
                 </div>
-                <div className="flex items-center justify-between gap-2 rounded-xl bg-white/5 px-3 py-2">
+                <div className="flex items-center justify-between gap-2 rounded-xl bg-[var(--c-lime)]/5 px-3 py-2">
                   <div>
-                    <p className="text-[10px] text-white/45">Password</p>
-                    <p className="font-semibold text-white/90">{HINT_PASSWORD}</p>
+                    <p className="text-[10px] text-[var(--c-lime)]/45">Password</p>
+                    <p className="font-semibold text-[var(--c-lime)]/90">{HINT_PASSWORD}</p>
                   </div>
                   <button
                     type="button"
                     onClick={() => copyText("password", HINT_PASSWORD)}
-                    className="rounded-lg p-2 text-white/50 hover:bg-white/10 hover:text-white"
+                    className="rounded-lg p-2 text-[var(--c-lime)]/50 hover:bg-[var(--c-lime)]/10 hover:text-[var(--c-lime)]"
                     aria-label="Copy password"
                   >
-                    {copied === "password" ? <Check className="h-3.5 w-3.5 text-emerald-300" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied === "password" ? <Check className="h-3.5 w-3.5 text-[var(--c-mint)]" /> : <Copy className="h-3.5 w-3.5" />}
                   </button>
                 </div>
               </div>
@@ -204,8 +204,8 @@ export function AdminLogin({
               </button>
             </div>
 
-            <div className="mt-5 flex items-center justify-center gap-2 text-[11px] text-white/40">
-              <Sparkles className="h-3.5 w-3.5 text-[#d6b04d]" />
+            <div className="mt-5 flex items-center justify-center gap-2 text-[11px] text-[var(--c-lime)]/40">
+              <Sparkles className="h-3.5 w-3.5 text-[#ffc5aa]" />
               Encrypted session · Admin only
             </div>
           </div>
@@ -213,7 +213,7 @@ export function AdminLogin({
           <div className="mt-6 text-center">
             <a
               href={storefrontUrl}
-              className="text-xs font-semibold text-emerald-300/80 hover:text-emerald-200"
+              className="text-xs font-semibold text-[var(--c-mint)] hover:text-[var(--c-lime)]"
             >
               ← Back to storefront
             </a>

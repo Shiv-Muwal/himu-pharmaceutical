@@ -8,20 +8,20 @@ export function OrderSuccessTick({ orderId }) {
   return (
     <div className="relative mx-auto mb-5 flex h-40 w-40 items-center justify-center sm:h-44 sm:w-44">
       <motion.span
-        className="absolute inset-0 rounded-full bg-[#00c853]/25"
+        className="absolute inset-0 rounded-full bg-[#bbf1d2]/25"
         initial={{ scale: 0.6, opacity: 0.8 }}
         animate={{ scale: [0.85, 1.45], opacity: [0.55, 0] }}
         transition={{ duration: 1.35, repeat: Infinity, ease: "easeOut" }}
       />
       <motion.span
-        className="absolute inset-3 rounded-full bg-[#00c853]/18"
+        className="absolute inset-3 rounded-full bg-[#bbf1d2]/18"
         initial={{ scale: 0.7, opacity: 0.6 }}
         animate={{ scale: [0.9, 1.3], opacity: [0.4, 0] }}
         transition={{ duration: 1.35, delay: 0.22, repeat: Infinity, ease: "easeOut" }}
       />
 
       <motion.div
-        className="relative flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-[#00e676] via-[#00c853] to-[#00a844] shadow-[0_16px_48px_rgba(0,200,83,0.5)] sm:h-36 sm:w-36"
+        className="relative flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-[#bbf1d2] via-[#bbf1d2] to-[#ffc5aa] shadow-[0_16px_48px_rgba(255,197,170,0.45)] sm:h-36 sm:w-36"
         initial={{ scale: 0, rotate: -24 }}
         animate={{ scale: 1, rotate: 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 14, delay: 0.05 }}
@@ -30,7 +30,7 @@ export function OrderSuccessTick({ orderId }) {
           <motion.path
             d="M14 27 L22 35 L38 17"
             fill="none"
-            stroke="white"
+            stroke="#EEF8CD"
             strokeWidth="4.5"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -44,7 +44,7 @@ export function OrderSuccessTick({ orderId }) {
       {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
         <motion.span
           key={i}
-          className="absolute h-1.5 w-1.5 rounded-full bg-[#d6b04d]"
+          className="absolute h-1.5 w-1.5 rounded-full bg-[#ffc5aa]"
           style={{
             left: `${50 + Math.cos((i / 8) * Math.PI * 2) * 48}%`,
             top: `${50 + Math.sin((i / 8) * Math.PI * 2) * 48}%`,
@@ -90,7 +90,7 @@ export function OrderSuccessView({
     <div
       className={
         fullscreen
-          ? "fixed inset-0 z-[80] overflow-y-auto bg-gradient-to-b from-[#eef8f1] via-[#f8fbf8] to-[#f8f3e6]"
+          ? "fixed inset-0 z-[80] overflow-y-auto bg-gradient-to-b from-[#bbf1d2] via-[#eef8cd] to-[#eef8cd]"
           : "col-span-12 max-h-[92vh] overflow-y-auto p-6 md:p-10"
       }
     >
@@ -106,7 +106,7 @@ export function OrderSuccessView({
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55 }}
-            className="font-[family-name:var(--font-heading)] text-3xl font-black text-[#1f3b2c]"
+            className="font-[family-name:var(--font-heading)] text-3xl font-black text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]"
           >
             Order Placed!
           </motion.h2>
@@ -114,7 +114,7 @@ export function OrderSuccessView({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
-            className="mt-2 text-sm text-[#6f8679]"
+            className="mt-2 text-sm text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]"
           >
             Thank you · Your HIMU order is confirmed
           </motion.p>
@@ -122,7 +122,7 @@ export function OrderSuccessView({
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.8 }}
-            className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#e7f3ec] px-4 py-1.5 text-xs font-bold text-[#0b6a46]"
+            className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#bbf1d2] px-4 py-1.5 text-xs font-bold text-[#ffc5aa]"
           >
             Order ID · {orderId}
           </motion.p>
@@ -134,7 +134,7 @@ export function OrderSuccessView({
           transition={{ delay: 0.85 }}
           className="mb-4 space-y-3"
         >
-          <div className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-white p-4 shadow-sm">
+          <div className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-[var(--c-lime)] p-4 shadow-sm">
             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <Truck className="h-5 w-5" />
             </div>
@@ -142,7 +142,7 @@ export function OrderSuccessView({
               <p className="text-[10px] font-black uppercase tracking-[0.16em] text-primary">
                 Expected delivery
               </p>
-              <p className="mt-0.5 text-base font-bold text-[#1f3b2c]">
+              <p className="mt-0.5 text-base font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
                 {expectedDelivery || "Within 5–7 days"}
               </p>
               <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
@@ -152,17 +152,17 @@ export function OrderSuccessView({
             </div>
           </div>
 
-          <div className="rounded-2xl border border-gold/40 bg-gradient-to-r from-[#fff8e8] to-white p-4 shadow-sm">
+          <div className="rounded-2xl border border-gold/40 bg-gradient-to-r from-[#ffc5aa] to-[var(--c-lime)] p-4 shadow-sm">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold/20 text-[#8a7020]">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold/20 text-[#ffc5aa]">
                   <TicketPercent className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#8a7020]">
+                  <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#ffc5aa]">
                     Order coupon
                   </p>
-                  <p className="mt-0.5 font-[family-name:var(--font-heading)] text-lg font-black tracking-wider text-[#1f3b2c]">
+                  <p className="mt-0.5 font-[family-name:var(--font-heading)] text-lg font-black tracking-wider text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
                     {couponCode || "HIMUCARE"}
                   </p>
                   <p className="text-[11px] text-muted-foreground">
@@ -173,7 +173,7 @@ export function OrderSuccessView({
               <button
                 type="button"
                 onClick={copyCoupon}
-                className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-gold/40 bg-white px-3 text-xs font-bold text-[#8a7020]"
+                className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-gold/40 bg-[var(--c-lime)] px-3 text-xs font-bold text-[#ffc5aa]"
               >
                 <Copy className="h-3.5 w-3.5" />
                 {copied ? "Copied" : "Copy"}
@@ -186,53 +186,53 @@ export function OrderSuccessView({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.95 }}
-          className="space-y-5 rounded-3xl border border-[#dce8e0] bg-white/95 p-5 shadow-sm"
+          className="space-y-5 rounded-3xl border border-[#bbf1d2] bg-primary-foreground/95 p-5 shadow-sm"
         >
-          <div className="flex items-start justify-between border-b border-[#e4eee7] pb-3">
+          <div className="flex items-start justify-between border-b border-[#bbf1d2] pb-3">
             <div>
-              <h1 className="font-[family-name:var(--font-heading)] text-lg font-extrabold text-[#3d7a5a]">
+              <h1 className="font-[family-name:var(--font-heading)] text-lg font-extrabold text-[#ffc5aa]">
                 {COMPANY.name}
               </h1>
-              <p className="mt-1 text-[10px] text-[#7a9586]">Date: {orderDate}</p>
+              <p className="mt-1 text-[10px] text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">Date: {orderDate}</p>
             </div>
-            <span className="rounded-full bg-[#e7f3ec] px-3 py-1 text-[10px] font-bold uppercase text-[#3d7a5a]">
+            <span className="rounded-full bg-[#bbf1d2] px-3 py-1 text-[10px] font-bold uppercase text-[#ffc5aa]">
               Confirmed
             </span>
           </div>
 
           <div className="grid gap-3 text-xs sm:grid-cols-2">
             <div>
-              <h4 className="mb-1 text-[9px] font-bold uppercase tracking-wider text-[#7a9586]">
+              <h4 className="mb-1 text-[9px] font-bold uppercase tracking-wider text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
                 Deliver to
               </h4>
-              <p className="font-bold text-[#1f3b2c]">{formData.name}</p>
-              <p className="text-[#6f8679]">{formData.phone}</p>
-              <p className="text-[#6f8679]">
+              <p className="font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">{formData.name}</p>
+              <p className="text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]">{formData.phone}</p>
+              <p className="text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]">
                 {formData.address}, {formData.city} - {formData.pincode}
               </p>
             </div>
             <div>
-              <h4 className="mb-1 text-[9px] font-bold uppercase tracking-wider text-[#7a9586]">
+              <h4 className="mb-1 text-[9px] font-bold uppercase tracking-wider text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
                 Payment
               </h4>
-              <p className="capitalize text-[#1f3b2c]">
+              <p className="capitalize text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
                 {formData.paymentMethod === "cod" ? "Cash on Delivery" : "Card Payment"}
               </p>
-              <p className="mt-1 font-bold text-[#3d7a5a]">₹{summaryTotal}</p>
+              <p className="mt-1 font-bold text-[#ffc5aa]">₹{summaryTotal}</p>
             </div>
           </div>
 
-          <div className="divide-y divide-[#eef4f0] rounded-2xl border border-[#e4eee7] text-xs">
+          <div className="divide-y divide-[#bbf1d2] rounded-2xl border border-[#bbf1d2] text-xs">
             {summaryItems.map((item) => (
               <div
                 key={`${item.product.id}-${item.selectedVariant}`}
                 className="flex items-center justify-between gap-3 p-3"
               >
                 <div className="min-w-0">
-                  <p className="truncate font-bold text-[#1f3b2c]">{item.product.name}</p>
-                  <p className="text-[10px] text-[#7a9586]">Qty {item.quantity}</p>
+                  <p className="truncate font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">{item.product.name}</p>
+                  <p className="text-[10px] text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">Qty {item.quantity}</p>
                 </div>
-                <span className="shrink-0 font-bold text-[#3d7a5a]">
+                <span className="shrink-0 font-bold text-[#ffc5aa]">
                   ₹{item.product.price * item.quantity}
                 </span>
               </div>
@@ -240,17 +240,17 @@ export function OrderSuccessView({
           </div>
 
           <div className="space-y-1.5 text-xs">
-            <div className="flex justify-between text-[#6f8679]">
+            <div className="flex justify-between text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]">
               <span>Subtotal</span>
               <span>₹{summaryOriginal}</span>
             </div>
             {summarySavings > 0 && (
-              <div className="flex justify-between font-semibold text-[#5f9877]">
+              <div className="flex justify-between font-semibold text-[#bbf1d2]">
                 <span>Savings</span>
                 <span>- ₹{summarySavings}</span>
               </div>
             )}
-            <div className="flex items-end justify-between border-t border-[#e4eee7] pt-2 text-sm font-bold text-[#3d7a5a]">
+            <div className="flex items-end justify-between border-t border-[#bbf1d2] pt-2 text-sm font-bold text-[#ffc5aa]">
               <span>Total paid</span>
               <span className="font-[family-name:var(--font-heading)] text-xl font-black">
                 ₹{summaryTotal}
@@ -262,14 +262,14 @@ export function OrderSuccessView({
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
           <Button
             onClick={onContinue}
-            className="h-12 rounded-2xl bg-primary px-8 text-white hover:bg-primary/95"
+            className="h-12 rounded-2xl bg-primary px-8 text-primary-foreground hover:bg-primary/95"
           >
             Continue Shopping
           </Button>
           <Button
             variant="outline"
             onClick={() => window.print()}
-            className="h-12 gap-2 rounded-2xl border-[#c9ddd1] text-[#3d7a5a]"
+            className="h-12 gap-2 rounded-2xl border-[#bbf1d2] text-[#ffc5aa]"
           >
             <Printer className="h-4 w-4" /> Print Invoice
           </Button>

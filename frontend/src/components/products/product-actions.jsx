@@ -93,7 +93,7 @@ export function ProductActions({ product }) {
           )}
 
           <div className="flex items-center gap-2.5">
-            <div className="flex h-11 w-[7.5rem] items-center justify-between rounded-xl border border-border/40 bg-[#f8f3e6] px-2">
+            <div className="flex h-11 w-[7.5rem] items-center justify-between rounded-xl border border-border/40 bg-[#eef8cd] px-2">
               <button
                 type="button"
                 onClick={() => quantity > 1 && setQuantity(quantity - 1)}

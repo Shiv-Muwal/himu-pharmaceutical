@@ -70,7 +70,7 @@ export function SettingsPanel({
         </div>
         <CardContent className="p-6">
           {pwdError && (
-            <div className="mb-4 flex items-center gap-1.5 rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-xs text-red-500">
+            <div className="mb-4 flex items-center gap-1.5 rounded-xl border border-[var(--c-peach)]/30 bg-[var(--c-peach)]/25 p-3 text-xs text-[var(--c-peach)]">
               <AlertCircle className="h-4 w-4" />
               <span>{pwdError}</span>
             </div>

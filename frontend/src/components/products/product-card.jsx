@@ -53,7 +53,7 @@ export function ProductCard({ product, compact = false }) {
           </div>
           {!isAvailable && (
             <div className={cn("absolute z-10", compact ? "right-2 top-2" : "right-3 top-3")}>
-              <Badge className="rounded-full border-0 bg-gradient-to-r from-secondary to-amber-600 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-[#1a2e1f] animate-pulse shadow-sm hover:from-secondary hover:to-amber-600">
+              <Badge className="rounded-full border-0 bg-gradient-to-r from-secondary to-[var(--c-peach)] px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-[#ffc5aa] animate-pulse shadow-sm hover:from-secondary hover:to-[var(--c-peach)]">
                 Soon
               </Badge>
             </div>
@@ -96,7 +96,7 @@ export function ProductCard({ product, compact = false }) {
           </p>
           {product.rating && !compact && (
             <div className="mb-2 flex items-center gap-1">
-              <div className="flex text-amber-400">
+              <div className="flex text-[var(--c-peach)]">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
                     key={i}

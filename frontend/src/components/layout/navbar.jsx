@@ -136,7 +136,7 @@ export function Navbar() {
     <>
       <header
         ref={headerRef}
-        className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-[#f8f3e6]/95 py-2.5 shadow-lg shadow-black/5 backdrop-blur-md transition-all duration-500 sm:py-3"
+        className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-[#eef8cd]/95 py-2.5 shadow-lg shadow-[var(--c-peach)]/5 backdrop-blur-md transition-all duration-500 sm:py-3"
       >
         <nav
           className="container-custom flex items-center justify-between gap-2 xl:gap-4"
@@ -187,13 +187,13 @@ export function Navbar() {
                           <div className="col-span-4 bg-primary text-primary-foreground p-5 rounded-2xl relative overflow-hidden flex flex-col justify-between shadow-lg shadow-primary/20">
                             <div className="absolute inset-0 opacity-10 molecular-bg" />
                             <div className="relative z-10">
-                              <span className="text-[9px] tracking-widest uppercase bg-white/20 text-white px-2.5 py-1 rounded-full font-bold">
+                              <span className="text-[9px] tracking-widest uppercase bg-primary-foreground/20 text-primary-foreground px-2.5 py-1 rounded-full font-bold">
                                 Featured Portfolio
                               </span>
                               <h4 className="text-lg font-bold mt-4 font-[family-name:var(--font-heading)] leading-snug">
                                 Quality Assured Medicines
                               </h4>
-                              <p className="text-[11px] text-white/80 mt-2 leading-relaxed">
+                              <p className="text-[11px] text-primary-foreground/80 mt-2 leading-relaxed">
                                 Over 500 WHO-GMP and ISO certified formulations
                                 designed for global health.
                               </p>
@@ -222,7 +222,7 @@ export function Navbar() {
                                     onClick={() => setProductsOpen(false)}
                                     className="flex items-center gap-2.5 p-1.5 rounded-xl hover:bg-primary/5 hover:translate-x-1 transition-all duration-200 group text-left"
                                   >
-                                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
+                                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
                                       <Icon className="h-4 w-4" />
                                     </div>
                                     <div>
@@ -250,7 +250,7 @@ export function Navbar() {
                                     onClick={() => setProductsOpen(false)}
                                     className="flex items-center gap-2.5 p-1.5 rounded-xl hover:bg-primary/5 hover:translate-x-1 transition-all duration-200 group text-left"
                                   >
-                                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
+                                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
                                       <Icon className="h-4 w-4" />
                                     </div>
                                     <div>
@@ -300,7 +300,7 @@ export function Navbar() {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 10 }}
-                          className="absolute left-0 mt-3 w-64 bg-[#f8f3e6] border border-border/60 rounded-2xl shadow-2xl p-2 grid gap-1 z-50"
+                          className="absolute left-0 mt-3 w-64 bg-[#eef8cd] border border-border/60 rounded-2xl shadow-2xl p-2 grid gap-1 z-50"
                         >
                           {aboutChildren.map((child) => {
                             const Icon = child.icon;
@@ -311,7 +311,7 @@ export function Navbar() {
                                 onClick={() => setAboutOpen(false)}
                                 className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-primary/10 transition-all duration-200 group text-left"
                               >
-                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
+                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
                                   <Icon className="h-4 w-4" />
                                 </div>
                                 <div>
@@ -371,7 +371,7 @@ export function Navbar() {
             >
               <ShoppingBag className="h-5 w-5" />
               {mounted && cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 h-5 w-5 rounded-full bg-primary text-primary-foreground text-[9px] font-black flex items-center justify-center border-2 border-[#f8f3e6] dark:border-[#0a1410] animate-bounce">
+                <span className="absolute -top-0.5 -right-0.5 h-5 w-5 rounded-full bg-primary text-primary-foreground text-[9px] font-black flex items-center justify-center border-2 border-[#eef8cd] dark:border-[#0a1410] animate-bounce">
                   {cartCount}
                 </span>
               )}
@@ -396,7 +396,7 @@ export function Navbar() {
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
-                      className="absolute right-0 mt-2 w-48 overflow-hidden rounded-2xl border border-border/60 bg-[#f8f3e6] p-2 shadow-xl"
+                      className="absolute right-0 mt-2 w-48 overflow-hidden rounded-2xl border border-border/60 bg-[#eef8cd] p-2 shadow-xl"
                     >
                       <p className="truncate px-3 py-2 text-[11px] text-muted-foreground">
                         {user?.email}
@@ -404,7 +404,7 @@ export function Navbar() {
                       <button
                         type="button"
                         onClick={logout}
-                        className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-bold text-red-600 hover:bg-red-500/10"
+                        className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-bold text-[var(--c-peach)] hover:bg-red-500/10"
                       >
                         <LogOut className="h-3.5 w-3.5" />
                         Sign out
@@ -491,7 +491,7 @@ export function Navbar() {
                                 {product.composition} • {product.strength}
                               </p>
                             </div>
-                            <span className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full group-hover:bg-primary group-hover:text-white transition-colors">
+                            <span className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                               {product.category}
                             </span>
                           </Link>
@@ -529,7 +529,7 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute right-0 top-0 h-full w-80 max-w-full overflow-y-auto border-l border-border/40 bg-[#f8f3e6] p-6 pt-20 shadow-2xl"
+              className="absolute right-0 top-0 h-full w-80 max-w-full overflow-y-auto border-l border-border/40 bg-[#eef8cd] p-6 pt-20 shadow-2xl"
               style={{
                 paddingBottom:
                   "calc(var(--mobile-nav-offset, 5.5rem) + 1.5rem)",
@@ -546,7 +546,7 @@ export function Navbar() {
                         logout();
                         closeMobileMenu();
                       }}
-                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-red-600 hover:bg-red-500/10"
+                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-[var(--c-peach)] hover:bg-red-500/10"
                     >
                       <LogOut className="h-4 w-4" />
                       Sign out

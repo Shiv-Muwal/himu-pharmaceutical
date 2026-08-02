@@ -110,7 +110,7 @@ export function ProductDetailClient({
   if (notFound) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 py-16 text-center">
-        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-100 text-red-500">
+        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-100 text-[var(--c-peach)]">
           <X className="h-7 w-7" />
         </div>
         <h1 className="mb-2 font-[family-name:var(--font-heading)] text-2xl font-bold">
@@ -134,12 +134,12 @@ export function ProductDetailClient({
       : 0;
 
   return (
-    <div className="bg-[#f8f3e6] pb-4 md:bg-transparent md:pb-10">
+    <div className="bg-[#eef8cd] pb-4 md:bg-transparent md:pb-10">
       {/* Gallery — edge-to-edge on mobile */}
-      <section className="bg-white md:bg-transparent">
+      <section className="bg-[var(--c-lime)] md:bg-transparent">
         <div className="md:container-custom md:pt-4">
           <div className="grid gap-0 lg:grid-cols-2 lg:gap-10 lg:pt-2">
-            <div className="bg-white">
+            <div className="bg-[var(--c-lime)]">
               <div className="relative aspect-square w-full overflow-hidden bg-[#f3f1ea] md:rounded-2xl md:shadow-lg">
                 <div
                   ref={scrollerRef}
@@ -163,7 +163,7 @@ export function ProductDetailClient({
                 </div>
 
                 {offPercent > 0 && (
-                  <span className="pointer-events-none absolute left-3 top-3 z-10 rounded-md bg-[#cc0c39] px-2 py-1 text-[11px] font-black text-white">
+                  <span className="pointer-events-none absolute left-3 top-3 z-10 rounded-md bg-[#cc0c39] px-2 py-1 text-[11px] font-black text-primary-foreground">
                     -{offPercent}%
                   </span>
                 )}
@@ -175,7 +175,7 @@ export function ProductDetailClient({
                         key={i}
                         className={cn(
                           "h-1.5 rounded-full transition-all",
-                          i === activeIndex ? "w-4 bg-white" : "w-1.5 bg-white/50",
+                          i === activeIndex ? "w-4 bg-[var(--c-lime)]" : "w-1.5 bg-primary-foreground/50",
                         )}
                       />
                     ))}
@@ -219,7 +219,7 @@ export function ProductDetailClient({
 
               {product.rating && (
                 <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1 rounded-md bg-[#0b6a46] px-2 py-0.5 text-xs font-bold text-white">
+                  <span className="inline-flex items-center gap-1 rounded-md bg-[#ffc5aa] px-2 py-0.5 text-xs font-bold text-primary-foreground">
                     {product.rating}
                     <Star className="h-3 w-3 fill-current" />
                   </span>
@@ -251,7 +251,7 @@ export function ProductDetailClient({
                 )}
               </div>
 
-              <div className="rounded-2xl border border-border/40 bg-white p-3 shadow-sm md:p-4">
+              <div className="rounded-2xl border border-border/40 bg-[var(--c-lime)] p-3 shadow-sm md:p-4">
                 <ProductActions product={product} />
               </div>
             </div>
@@ -260,7 +260,7 @@ export function ProductDetailClient({
       </section>
 
       {/* Essential info — accordion only */}
-      <section className="mt-2 bg-white px-4 py-4 md:mt-8 md:bg-transparent md:px-0">
+      <section className="mt-2 bg-[var(--c-lime)] px-4 py-4 md:mt-8 md:bg-transparent md:px-0">
         <div className="container-custom max-w-3xl px-0 md:px-4">
           <h2 className="mb-3 font-[family-name:var(--font-heading)] text-lg font-bold md:text-xl">
             Product information
@@ -292,14 +292,14 @@ export function ProductDetailClient({
         </div>
       </section>
 
-      <section className="mt-2 bg-white px-4 py-4 md:mt-6 md:bg-transparent md:px-0">
+      <section className="mt-2 bg-[var(--c-lime)] px-4 py-4 md:mt-6 md:bg-transparent md:px-0">
         <div className="container-custom px-0 md:px-4">
           <ProductReviews product={product} variant="detail" />
         </div>
       </section>
 
       {related.length > 0 && (
-        <section className="mt-2 bg-white px-4 py-5 md:mt-8 md:bg-transparent md:px-0">
+        <section className="mt-2 bg-[var(--c-lime)] px-4 py-5 md:mt-8 md:bg-transparent md:px-0">
           <div className="container-custom px-0 md:px-4">
             <div className="mb-3 flex items-center justify-between gap-3">
               <h2 className="font-[family-name:var(--font-heading)] text-lg font-bold md:text-xl">

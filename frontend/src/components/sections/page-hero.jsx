@@ -27,12 +27,12 @@ export function PageHero({
             className={cn(
               "absolute inset-0",
               compact
-                ? "bg-gradient-to-r from-[#061610]/88 via-[#0b6a46]/55 to-[#0b6a46]/15"
+                ? "bg-gradient-to-r from-[#ffc5aa]/88 via-[#ffc5aa]/55 to-[#ffc5aa]/15"
                 : "gradient-hero",
             )}
           />
           {compact && (
-            <div className="absolute inset-0 bg-gradient-to-t from-[#061610]/55 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#ffc5aa]/55 via-transparent to-transparent" />
           )}
         </>
       ) : (
@@ -54,7 +54,7 @@ export function PageHero({
         {badge && (
           <span
             className={cn(
-              "mb-2 inline-block rounded-full bg-white/15 font-semibold uppercase tracking-wider text-white backdrop-blur-sm sm:mb-3",
+              "mb-2 inline-block rounded-full bg-primary-foreground/15 font-semibold uppercase tracking-wider text-primary-foreground backdrop-blur-sm sm:mb-3",
               compact ? "px-2.5 py-1 text-[9px]" : "mb-4 px-4 py-1.5 text-xs",
             )}
           >
@@ -63,7 +63,7 @@ export function PageHero({
         )}
         <h1
           className={cn(
-            "max-w-3xl font-bold text-white font-[family-name:var(--font-heading)]",
+            "max-w-3xl font-bold text-primary-foreground font-[family-name:var(--font-heading)]",
             compact
               ? "text-xl leading-tight sm:text-2xl md:text-3xl"
               : "mb-4 text-4xl md:text-5xl lg:text-6xl",
@@ -74,7 +74,7 @@ export function PageHero({
         {description && (
           <p
             className={cn(
-              "max-w-2xl leading-relaxed text-white/80",
+              "max-w-2xl leading-relaxed text-primary-foreground/80",
               compact
                 ? "mt-1.5 text-xs sm:text-sm md:max-w-lg"
                 : "text-lg md:text-xl",

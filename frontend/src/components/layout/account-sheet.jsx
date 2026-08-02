@@ -40,7 +40,7 @@ export function AccountSheet({ open, onClose }) {
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", stiffness: 320, damping: 30 }}
-            className="absolute inset-x-0 bottom-0 rounded-t-3xl border border-border/40 bg-[#f8f3e6] shadow-2xl"
+            className="absolute inset-x-0 bottom-0 rounded-t-3xl border border-border/40 bg-[#eef8cd] shadow-2xl"
             style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
           >
             <div className="mx-auto mt-3 h-1.5 w-12 rounded-full bg-border" />
@@ -56,7 +56,7 @@ export function AccountSheet({ open, onClose }) {
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-xl p-2 text-muted-foreground hover:bg-white"
+                className="rounded-xl p-2 text-muted-foreground hover:bg-[var(--c-lime)]"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -70,7 +70,7 @@ export function AccountSheet({ open, onClose }) {
                     key={opt.id}
                     type="button"
                     onClick={() => go(opt.tab)}
-                    className="flex w-full items-center gap-3 rounded-2xl border border-border/50 bg-white px-4 py-3.5 text-left shadow-sm transition active:scale-[0.99]"
+                    className="flex w-full items-center gap-3 rounded-2xl border border-border/50 bg-[var(--c-lime)] px-4 py-3.5 text-left shadow-sm transition active:scale-[0.99]"
                   >
                     <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                       <Icon className="h-5 w-5" />
@@ -90,7 +90,7 @@ export function AccountSheet({ open, onClose }) {
                   }}
                   className="flex w-full items-center gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3.5 text-left"
                 >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-100 text-red-600">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-100 text-[var(--c-peach)]">
                     <LogOut className="h-5 w-5" />
                   </span>
                   <span className="text-sm font-bold text-red-700">Logout</span>
@@ -102,9 +102,9 @@ export function AccountSheet({ open, onClose }) {
                     onClose();
                     openLogin();
                   }}
-                  className="flex w-full items-center gap-3 rounded-2xl bg-primary px-4 py-3.5 text-left text-white"
+                  className="flex w-full items-center gap-3 rounded-2xl bg-primary px-4 py-3.5 text-left text-primary-foreground"
                 >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-foreground/15">
                     <LogIn className="h-5 w-5" />
                   </span>
                   <span className="text-sm font-bold">Login / Signup</span>

@@ -257,22 +257,22 @@ export function CheckoutModal() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={closeCheckout}
-          className="fixed inset-0 bg-[#1a2e1f]/30 backdrop-blur-[6px]"
+          className="fixed inset-0 bg-[#ffc5aa]/30 backdrop-blur-[6px]"
         />
 
         <motion.div
           initial={{ opacity: 0, scale: 0.96, y: 18 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 18 }}
-          className="relative z-10 grid max-h-[92vh] w-full max-w-5xl overflow-hidden rounded-[32px] border border-[#dce8e0] bg-gradient-to-br from-[#f8fbf8] via-[#fbf9f3] to-[#f3f7f2] shadow-[0_30px_80px_rgba(26,46,31,0.18)] md:grid-cols-12"
+          className="relative z-10 grid max-h-[92vh] w-full max-w-5xl overflow-hidden rounded-[32px] border border-[#bbf1d2] bg-gradient-to-br from-[#eef8cd] via-[#eef8cd] to-[#eef8cd] shadow-[0_30px_80px_rgba(255, 197, 170,0.18)] md:grid-cols-12"
         >
-          <div className="pointer-events-none absolute -right-10 top-0 h-40 w-40 rounded-full bg-[#cfe8d6]/45 blur-3xl" />
-          <div className="pointer-events-none absolute -left-8 bottom-10 h-32 w-32 rounded-full bg-[#efe3b8]/35 blur-3xl" />
+          <div className="pointer-events-none absolute -right-10 top-0 h-40 w-40 rounded-full bg-[#bbf1d2]/45 blur-3xl" />
+          <div className="pointer-events-none absolute -left-8 bottom-10 h-32 w-32 rounded-full bg-[#ffc5aa]/35 blur-3xl" />
 
           <button
             type="button"
             onClick={closeCheckout}
-            className="absolute right-4 top-4 z-20 rounded-xl bg-white/80 p-2 text-[#6b8576] shadow-sm transition hover:bg-[#eef4f0] hover:text-[#1f3b2c]"
+            className="absolute right-4 top-4 z-20 rounded-xl bg-primary-foreground/80 p-2 text-[#ffc5aa] shadow-sm transition hover:bg-[#bbf1d2] hover:text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]"
           >
             <X className="h-5 w-5" />
           </button>
@@ -280,14 +280,14 @@ export function CheckoutModal() {
           <>
               <div className="col-span-12 max-h-[92vh] overflow-y-auto p-6 md:col-span-7 md:p-8">
                 <div className="mb-6 flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#e7f3ec] text-[#3d7a5a]">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#bbf1d2] text-[#ffc5aa]">
                     <ShieldCheck className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#7a9586]">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
                       {isDirectCheckout ? "Express Checkout" : "Secure Checkout"}
                     </p>
-                    <h2 className="font-[family-name:var(--font-heading)] text-2xl font-black text-[#1f3b2c]">
+                    <h2 className="font-[family-name:var(--font-heading)] text-2xl font-black text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
                       Place Your Order
                     </h2>
                   </div>
@@ -295,7 +295,7 @@ export function CheckoutModal() {
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {!isAuthenticated && (
-                    <div className="rounded-2xl border border-amber-200/80 bg-amber-50/90 px-4 py-3 text-xs text-amber-900">
+                    <div className="rounded-2xl border border-[var(--c-peach)]/80 bg-[var(--c-peach)]/40 px-4 py-3 text-xs text-foreground">
                       Tip:{" "}
                       <button
                         type="button"
@@ -307,8 +307,8 @@ export function CheckoutModal() {
                       with demo customer to autofill checkout details.
                     </div>
                   )}
-                  <div className="rounded-3xl border border-white/80 bg-white/80 p-4 shadow-[0_8px_30px_rgba(61,122,90,0.05)]">
-                    <p className="mb-3 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-[#7a9586]">
+                  <div className="rounded-3xl border border-primary-foreground/80 bg-primary-foreground/80 p-4 shadow-[0_8px_30px_rgba(61,122,90,0.05)]">
+                    <p className="mb-3 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
                       <User className="h-3.5 w-3.5" /> Contact details
                     </p>
                     <div className="space-y-3">
@@ -318,46 +318,46 @@ export function CheckoutModal() {
                           placeholder="Full name *"
                           value={formData.name}
                           onChange={handleInputChange}
-                          className={`h-11 rounded-xl border-[#dce8e0] bg-[#f8fbf8] ${errors.name ? "border-red-400" : ""}`}
+                          className={`h-11 rounded-xl border-[#bbf1d2] bg-[#eef8cd] ${errors.name ? "border-[var(--c-peach)]" : ""}`}
                         />
                         {errors.name && (
-                          <p className="mt-1 text-[10px] text-red-500">{errors.name}</p>
+                          <p className="mt-1 text-[10px] text-[var(--c-peach)]">{errors.name}</p>
                         )}
                       </div>
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <div className="relative">
-                          <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8aa394]" />
+                          <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#ffc5aa]" />
                           <Input
                             name="phone"
                             placeholder="Phone *"
                             value={formData.phone}
                             onChange={handleInputChange}
-                            className={`h-11 rounded-xl border-[#dce8e0] bg-[#f8fbf8] pl-10 ${errors.phone ? "border-red-400" : ""}`}
+                            className={`h-11 rounded-xl border-[#bbf1d2] bg-[#eef8cd] pl-10 ${errors.phone ? "border-[var(--c-peach)]" : ""}`}
                           />
                           {errors.phone && (
-                            <p className="mt-1 text-[10px] text-red-500">{errors.phone}</p>
+                            <p className="mt-1 text-[10px] text-[var(--c-peach)]">{errors.phone}</p>
                           )}
                         </div>
                         <div className="relative">
-                          <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8aa394]" />
+                          <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#ffc5aa]" />
                           <Input
                             name="email"
                             type="email"
                             placeholder="Email *"
                             value={formData.email}
                             onChange={handleInputChange}
-                            className={`h-11 rounded-xl border-[#dce8e0] bg-[#f8fbf8] pl-10 ${errors.email ? "border-red-400" : ""}`}
+                            className={`h-11 rounded-xl border-[#bbf1d2] bg-[#eef8cd] pl-10 ${errors.email ? "border-[var(--c-peach)]" : ""}`}
                           />
                           {errors.email && (
-                            <p className="mt-1 text-[10px] text-red-500">{errors.email}</p>
+                            <p className="mt-1 text-[10px] text-[var(--c-peach)]">{errors.email}</p>
                           )}
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="rounded-3xl border border-white/80 bg-white/80 p-4 shadow-[0_8px_30px_rgba(61,122,90,0.05)]">
-                    <p className="mb-3 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-[#7a9586]">
+                  <div className="rounded-3xl border border-primary-foreground/80 bg-primary-foreground/80 p-4 shadow-[0_8px_30px_rgba(61,122,90,0.05)]">
+                    <p className="mb-3 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
                       <MapPin className="h-3.5 w-3.5" /> Delivery address
                     </p>
                     <div className="space-y-3">
@@ -367,10 +367,10 @@ export function CheckoutModal() {
                         value={formData.address}
                         onChange={handleInputChange}
                         rows={2}
-                        className={`rounded-xl border-[#dce8e0] bg-[#f8fbf8] ${errors.address ? "border-red-400" : ""}`}
+                        className={`rounded-xl border-[#bbf1d2] bg-[#eef8cd] ${errors.address ? "border-[var(--c-peach)]" : ""}`}
                       />
                       {errors.address && (
-                        <p className="text-[10px] text-red-500">{errors.address}</p>
+                        <p className="text-[10px] text-[var(--c-peach)]">{errors.address}</p>
                       )}
                       <div className="grid grid-cols-2 gap-3">
                         <div>
@@ -379,10 +379,10 @@ export function CheckoutModal() {
                             placeholder="City *"
                             value={formData.city}
                             onChange={handleInputChange}
-                            className={`h-11 rounded-xl border-[#dce8e0] bg-[#f8fbf8] ${errors.city ? "border-red-400" : ""}`}
+                            className={`h-11 rounded-xl border-[#bbf1d2] bg-[#eef8cd] ${errors.city ? "border-[var(--c-peach)]" : ""}`}
                           />
                           {errors.city && (
-                            <p className="mt-1 text-[10px] text-red-500">{errors.city}</p>
+                            <p className="mt-1 text-[10px] text-[var(--c-peach)]">{errors.city}</p>
                           )}
                         </div>
                         <div>
@@ -391,18 +391,18 @@ export function CheckoutModal() {
                             placeholder="Pincode *"
                             value={formData.pincode}
                             onChange={handleInputChange}
-                            className={`h-11 rounded-xl border-[#dce8e0] bg-[#f8fbf8] ${errors.pincode ? "border-red-400" : ""}`}
+                            className={`h-11 rounded-xl border-[#bbf1d2] bg-[#eef8cd] ${errors.pincode ? "border-[var(--c-peach)]" : ""}`}
                           />
                           {errors.pincode && (
-                            <p className="mt-1 text-[10px] text-red-500">{errors.pincode}</p>
+                            <p className="mt-1 text-[10px] text-[var(--c-peach)]">{errors.pincode}</p>
                           )}
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="rounded-3xl border border-white/80 bg-white/80 p-4 shadow-[0_8px_30px_rgba(61,122,90,0.05)]">
-                    <p className="mb-3 text-xs font-bold uppercase tracking-wide text-[#7a9586]">
+                  <div className="rounded-3xl border border-primary-foreground/80 bg-primary-foreground/80 p-4 shadow-[0_8px_30px_rgba(61,122,90,0.05)]">
+                    <p className="mb-3 text-xs font-bold uppercase tracking-wide text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
                       Payment method
                     </p>
                     <div className="grid grid-cols-2 gap-3">
@@ -421,15 +421,15 @@ export function CheckoutModal() {
                             }
                             className={`rounded-2xl border p-3.5 text-left transition ${
                               active
-                                ? "border-[#6fa987] bg-[#e7f3ec] shadow-sm"
-                                : "border-[#e4eee7] bg-[#f8fbf8] hover:bg-white"
+                                ? "border-[#bbf1d2] bg-[#bbf1d2] shadow-sm"
+                                : "border-[#bbf1d2] bg-[#eef8cd] hover:bg-[var(--c-lime)]"
                             }`}
                           >
                             <Icon
-                              className={`mb-2 h-5 w-5 ${active ? "text-[#3d7a5a]" : "text-[#8aa394]"}`}
+                              className={`mb-2 h-5 w-5 ${active ? "text-[#ffc5aa]" : "text-[#ffc5aa]"}`}
                             />
-                            <p className="text-xs font-bold text-[#1f3b2c]">{pm.label}</p>
-                            <p className="mt-0.5 text-[10px] text-[#7a9586]">{pm.hint}</p>
+                            <p className="text-xs font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">{pm.label}</p>
+                            <p className="mt-0.5 text-[10px] text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">{pm.hint}</p>
                           </button>
                         );
                       })}
@@ -439,9 +439,9 @@ export function CheckoutModal() {
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
-                        className="mt-3 space-y-3 overflow-hidden rounded-2xl border border-[#dce8e0] bg-[#f4f9f5] p-3"
+                        className="mt-3 space-y-3 overflow-hidden rounded-2xl border border-[#bbf1d2] bg-[#eef8cd] p-3"
                       >
-                        <p className="text-[10px] font-medium text-[#5f9877]">
+                        <p className="text-[10px] font-medium text-[#bbf1d2]">
                           Demo mode — use any 16-digit dummy card.
                         </p>
                         <Input
@@ -453,7 +453,7 @@ export function CheckoutModal() {
                             val = val.slice(0, 16).replace(/(.{4})/g, "$1 ").trim();
                             setFormData((prev) => ({ ...prev, cardNumber: val }));
                           }}
-                          className="h-11 rounded-xl border-[#dce8e0] bg-white"
+                          className="h-11 rounded-xl border-[#bbf1d2] bg-[var(--c-lime)]"
                         />
                         <div className="grid grid-cols-2 gap-3">
                           <Input
@@ -468,7 +468,7 @@ export function CheckoutModal() {
                                 cardExpiry: val.slice(0, 5),
                               }));
                             }}
-                            className="h-11 rounded-xl border-[#dce8e0] bg-white"
+                            className="h-11 rounded-xl border-[#bbf1d2] bg-[var(--c-lime)]"
                           />
                           <Input
                             name="cardCvv"
@@ -482,7 +482,7 @@ export function CheckoutModal() {
                                 cardCvv: val.slice(0, 3),
                               }));
                             }}
-                            className="h-11 rounded-xl border-[#dce8e0] bg-white"
+                            className="h-11 rounded-xl border-[#bbf1d2] bg-[var(--c-lime)]"
                           />
                         </div>
                       </motion.div>
@@ -490,7 +490,7 @@ export function CheckoutModal() {
                   </div>
 
                   {errors.submit && (
-                    <p className="text-sm text-red-600" role="alert">
+                    <p className="text-sm text-[var(--c-peach)]" role="alert">
                       {errors.submit}
                     </p>
                   )}
@@ -498,17 +498,17 @@ export function CheckoutModal() {
                   <Button
                     type="submit"
                     disabled={isSubmitting || !checkoutItems.length}
-                    className="h-12 w-full rounded-2xl bg-gradient-to-r from-[#6fa987] to-[#5f9877] text-sm font-bold text-white shadow-[0_10px_24px_rgba(111,169,135,0.35)] hover:brightness-105"
+                    className="h-12 w-full rounded-2xl bg-gradient-to-r from-[var(--c-peach)] via-[var(--c-mint)] to-[var(--c-peach)] text-sm font-bold text-foreground shadow-[0_10px_24px_rgba(255,197,170,0.35)] hover:brightness-105"
                   >
                     {isSubmitting ? "Placing order..." : `Confirm Order · ₹${checkoutTotal}`}
                   </Button>
                 </form>
               </div>
 
-              <div className="col-span-12 flex max-h-[92vh] flex-col border-t border-[#dce8e0] bg-white/70 p-6 backdrop-blur md:col-span-5 md:border-l md:border-t-0 md:p-8">
+              <div className="col-span-12 flex max-h-[92vh] flex-col border-t border-[#bbf1d2] bg-primary-foreground/70 p-6 backdrop-blur md:col-span-5 md:border-l md:border-t-0 md:p-8">
                 <div className="mb-4 flex items-center gap-2">
-                  <Leaf className="h-4 w-4 text-[#6fa987]" />
-                  <h3 className="font-[family-name:var(--font-heading)] text-lg font-bold text-[#1f3b2c]">
+                  <Leaf className="h-4 w-4 text-[#bbf1d2]" />
+                  <h3 className="font-[family-name:var(--font-heading)] text-lg font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
                     Order Summary
                   </h3>
                 </div>
@@ -517,9 +517,9 @@ export function CheckoutModal() {
                   {checkoutItems.map((item) => (
                     <div
                       key={`${item.product.id}-${item.selectedVariant}`}
-                      className="flex gap-3 rounded-2xl border border-[#e4eee7] bg-[#f8fbf8] p-3"
+                      className="flex gap-3 rounded-2xl border border-[#bbf1d2] bg-[#eef8cd] p-3"
                     >
-                      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-[#eef4f0]">
+                      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-[#bbf1d2]">
                         <Image
                           src={item.product.image}
                           alt={item.product.name}
@@ -528,38 +528,38 @@ export function CheckoutModal() {
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-xs font-bold text-[#1f3b2c]">
+                        <p className="truncate text-xs font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
                           {item.product.name}
                         </p>
-                        <p className="mt-0.5 text-[10px] text-[#7a9586]">
+                        <p className="mt-0.5 text-[10px] text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
                           Qty {item.quantity} · {item.selectedVariant}
                         </p>
                       </div>
-                      <span className="shrink-0 text-xs font-black text-[#3d7a5a]">
+                      <span className="shrink-0 text-xs font-black text-[#ffc5aa]">
                         ₹{item.product.price * item.quantity}
                       </span>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-5 space-y-2 rounded-3xl border border-[#e4eee7] bg-gradient-to-br from-[#f4f9f5] to-[#faf7ee] p-4 text-sm">
-                  <div className="flex justify-between text-[#6f8679]">
+                <div className="mt-5 space-y-2 rounded-3xl border border-[#bbf1d2] bg-gradient-to-br from-[#eef8cd] to-[#eef8cd] p-4 text-sm">
+                  <div className="flex justify-between text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]">
                     <span>Items Total</span>
                     <span>₹{checkoutTotalOriginal}</span>
                   </div>
                   {checkoutSavings > 0 && (
-                    <div className="flex justify-between font-semibold text-[#5f9877]">
+                    <div className="flex justify-between font-semibold text-[#bbf1d2]">
                       <span>Savings</span>
                       <span>- ₹{checkoutSavings}</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-[#6f8679]">
+                  <div className="flex justify-between text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]">
                     <span>Shipping</span>
-                    <span className="font-semibold text-[#5f9877]">FREE</span>
+                    <span className="font-semibold text-[#bbf1d2]">FREE</span>
                   </div>
-                  <div className="flex items-end justify-between border-t border-[#e4eee7] pt-3">
-                    <span className="font-bold text-[#1f3b2c]">Amount Payable</span>
-                    <span className="font-[family-name:var(--font-heading)] text-2xl font-black text-[#3d7a5a]">
+                  <div className="flex items-end justify-between border-t border-[#bbf1d2] pt-3">
+                    <span className="font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">Amount Payable</span>
+                    <span className="font-[family-name:var(--font-heading)] text-2xl font-black text-[#ffc5aa]">
                       ₹{checkoutTotal}
                     </span>
                   </div>

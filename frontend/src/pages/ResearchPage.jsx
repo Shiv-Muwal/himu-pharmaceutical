@@ -102,10 +102,10 @@ export default function ResearchPage() {
           {researchStats.map((stat, i) => (
             <FadeIn delay={i * 0.1}>
               <div className="text-center">
-                <p className="text-3xl md:text-4xl font-bold text-white">
+                <p className="text-3xl md:text-4xl font-bold text-primary-foreground">
                   <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                 </p>
-                <p className="text-white/70 text-sm mt-1">{stat.label}</p>
+                <p className="text-primary-foreground/70 text-sm mt-1">{stat.label}</p>
               </div>
             </FadeIn>
           ))}
@@ -121,7 +121,7 @@ export default function ResearchPage() {
             {workflow.map((step, i) => (
               <FadeIn delay={i * 0.1}>
                 <Card className="p-6 text-center h-full relative">
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm font-bold">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">
                     {i + 1}
                   </div>
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary mx-auto mb-4 mt-2">

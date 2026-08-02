@@ -1,60 +1,65 @@
 @import "tailwindcss";
 
 /*
-  Brand palette (Aug 2026 trial) — say "revert" to restore previous.
-  Previous: bg #fff8e7 | primary #0b5d3b | gold #d4af37 | footer used primary
+  Palette locked to 3 colors only:
+  Mint #BBF1D2 · Lime #EEF8CD · Peach #FFC5AA
 */
 :root {
   --font-poppins: "Poppins", system-ui, sans-serif;
   --font-plus-jakarta: "Plus Jakarta Sans", system-ui, sans-serif;
   --site-header-height: 4.5rem;
-  /* Fixed bottom app bar + home-indicator clearance */
   --mobile-nav-height: 4.75rem;
   --mobile-nav-offset: calc(var(--mobile-nav-height) + env(safe-area-inset-bottom, 0px));
-  --background: #f8f3e6;
-  --foreground: #1a2e1f;
-  --card: rgba(255, 252, 240, 0.92);
-  --card-foreground: #1a2e1f;
-  --primary: #0b6a46;
-  --primary-hover: #0f8157;
-  --primary-foreground: #ffffff;
-  --secondary: #d6b04d;
-  --secondary-foreground: #1a2e1f;
-  --muted: #efe8d8;
-  --muted-foreground: #5a6b5e;
-  --accent: #e7f3ec;
-  --accent-foreground: #0b6a46;
-  --border: rgba(11, 106, 70, 0.15);
-  --ring: #0b6a46;
-  --gold: #d6b04d;
-  --emerald: #0f8157;
-  --cream: #f8f3e6;
-  --footer: #0b6a46;
-  --footer-foreground: #f5f5f5;
-  --footer-muted: rgba(245, 245, 245, 0.78);
-  --olive: #6b7c3a;
-  --glass: rgba(248, 243, 230, 0.88);
-  --glass-border: rgba(11, 106, 70, 0.15);
+
+  --c-mint: #bbf1d2;
+  --c-lime: #eef8cd;
+  --c-peach: #ffc5aa;
+
+  --background: var(--c-lime);
+  /* Readable ink derived from peach (same hue family) */
+  --foreground: color-mix(in srgb, var(--c-peach) 42%, #3a2418 58%);
+  --card: color-mix(in srgb, var(--c-lime) 78%, var(--c-mint) 22%);
+  --card-foreground: var(--foreground);
+  --primary: var(--c-peach);
+  --primary-hover: color-mix(in srgb, var(--c-peach) 72%, var(--c-mint) 28%);
+  --primary-foreground: var(--c-lime);
+  --secondary: var(--c-mint);
+  --secondary-foreground: color-mix(in srgb, var(--c-peach) 55%, #3a2418 45%);
+  --muted: color-mix(in srgb, var(--c-lime) 55%, var(--c-mint) 45%);
+  --muted-foreground: color-mix(in srgb, var(--c-peach) 50%, #5a3d2e 50%);
+  --accent: var(--c-mint);
+  --accent-foreground: color-mix(in srgb, var(--c-peach) 48%, #3a2418 52%);
+  --border: color-mix(in srgb, var(--c-mint) 55%, var(--c-peach) 45%);
+  --ring: var(--c-peach);
+  --gold: var(--c-peach);
+  --emerald: var(--c-mint);
+  --cream: var(--c-lime);
+  --footer: var(--c-mint);
+  --footer-foreground: var(--c-lime);
+  --footer-muted: color-mix(in srgb, var(--c-lime) 70%, var(--c-peach) 30%);
+  --olive: color-mix(in srgb, var(--c-mint) 60%, var(--c-peach) 40%);
+  --glass: color-mix(in srgb, var(--c-lime) 88%, transparent);
+  --glass-border: color-mix(in srgb, var(--c-mint) 50%, var(--c-peach) 50%);
 }
 
 .dark {
-  --background: #0a1410;
-  --foreground: #e8f0ea;
-  --card: rgba(20, 35, 28, 0.85);
-  --card-foreground: #e8f0ea;
-  --primary: #0f8157;
-  --primary-hover: #129a68;
-  --primary-foreground: #0a1410;
-  --secondary: #d6b04d;
-  --secondary-foreground: #0a1410;
-  --muted: #1a2e22;
-  --muted-foreground: #94a89a;
-  --accent: #1a3d2e;
-  --accent-foreground: #0f8157;
-  --border: rgba(15, 129, 87, 0.15);
-  --ring: #0f8157;
-  --glass: rgba(20, 35, 28, 0.7);
-  --glass-border: rgba(15, 129, 87, 0.2);
+  --background: color-mix(in srgb, var(--c-peach) 35%, #2a1c14 65%);
+  --foreground: var(--c-lime);
+  --card: color-mix(in srgb, var(--c-mint) 25%, #2a1c14 75%);
+  --card-foreground: var(--c-lime);
+  --primary: var(--c-peach);
+  --primary-hover: color-mix(in srgb, var(--c-peach) 80%, var(--c-mint) 20%);
+  --primary-foreground: var(--c-lime);
+  --secondary: var(--c-mint);
+  --secondary-foreground: var(--c-lime);
+  --muted: color-mix(in srgb, var(--c-mint) 20%, #2a1c14 80%);
+  --muted-foreground: color-mix(in srgb, var(--c-lime) 65%, var(--c-peach) 35%);
+  --accent: var(--c-mint);
+  --accent-foreground: var(--c-lime);
+  --border: color-mix(in srgb, var(--c-mint) 40%, var(--c-peach) 30%);
+  --ring: var(--c-peach);
+  --glass: color-mix(in srgb, var(--c-mint) 18%, transparent);
+  --glass-border: color-mix(in srgb, var(--c-peach) 35%, transparent);
 }
 
 @theme inline {
@@ -148,30 +153,33 @@ body {
 }
 
 .gradient-primary {
-  background: linear-gradient(135deg, #0b6a46 0%, #0f8157 50%, #d6b04d 100%);
+  background: linear-gradient(135deg, var(--c-mint) 0%, var(--c-lime) 48%, var(--c-peach) 100%);
 }
 
 .gradient-hero {
-  background: linear-gradient(105deg,
-      rgba(6, 32, 22, 0.96) 0%,
-      rgba(11, 106, 70, 0.88) 38%,
-      rgba(11, 106, 70, 0.45) 62%,
-      rgba(11, 106, 70, 0.18) 100%);
+  background: linear-gradient(
+    105deg,
+    color-mix(in srgb, var(--c-peach) 88%, #3a2418 12%) 0%,
+    color-mix(in srgb, var(--c-mint) 75%, var(--c-peach) 25%) 42%,
+    color-mix(in srgb, var(--c-lime) 55%, transparent) 100%
+  );
 }
 
 .gradient-hero-mobile {
-  background: linear-gradient(180deg,
-      rgba(6, 32, 22, 0.92) 0%,
-      rgba(11, 106, 70, 0.78) 45%,
-      rgba(11, 106, 70, 0.55) 100%);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--c-peach) 80%, #3a2418 20%) 0%,
+    color-mix(in srgb, var(--c-mint) 70%, var(--c-peach) 30%) 55%,
+    color-mix(in srgb, var(--c-lime) 50%, transparent) 100%
+  );
 }
 
 .gradient-cream {
-  background: linear-gradient(180deg, #f8f3e6 0%, #f3ecda 100%);
+  background: linear-gradient(180deg, var(--c-lime) 0%, var(--c-mint) 100%);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #0b6a46, #d6b04d);
+  background: linear-gradient(135deg, var(--c-peach), var(--c-mint));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -179,9 +187,9 @@ body {
 
 .molecular-bg {
   background-image:
-    radial-gradient(circle at 20% 50%, rgba(11, 106, 70, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(214, 176, 77, 0.06) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(15, 129, 87, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 20% 50%, color-mix(in srgb, var(--c-mint) 35%, transparent) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--c-peach) 30%, transparent) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, color-mix(in srgb, var(--c-lime) 40%, transparent) 0%, transparent 50%);
 }
 
 .section-padding {
@@ -218,7 +226,7 @@ body {
 }
 
 ::selection {
-  background: rgba(11, 106, 70, 0.2);
+  background: rgba(255, 197, 170, 0.2);
   color: var(--foreground);
 }
 

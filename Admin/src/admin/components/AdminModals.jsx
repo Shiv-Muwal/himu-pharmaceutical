@@ -18,8 +18,8 @@ export function ProductModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4">
-      <button type="button" className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <Card className="relative z-10 flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border border-border/40 bg-[#f8f3e6] text-xs shadow-2xl">
+      <button type="button" className="fixed inset-0 bg-[var(--c-peach)]/55 backdrop-blur-sm" onClick={onClose} />
+      <Card className="relative z-10 flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border border-border/40 bg-[#eef8cd] text-xs shadow-2xl">
         <div className="flex items-center justify-between border-b border-border/30 p-6">
           <h3 className="font-[family-name:var(--font-heading)] text-lg font-bold">
             {editingProduct ? "Modify Product Details" : "Add New Product"}
@@ -37,9 +37,9 @@ export function ProductModal({
               <Input
                 value={productForm.name}
                 onChange={(e) => setProductForm((p) => ({ ...p, name: e.target.value }))}
-                className={formErrors.name ? "border-red-500" : ""}
+                className={formErrors.name ? "border-[var(--c-peach)]" : ""}
               />
-              {formErrors.name && <p className="mt-1 text-[10px] text-red-500">{formErrors.name}</p>}
+              {formErrors.name && <p className="mt-1 text-[10px] text-[var(--c-peach)]">{formErrors.name}</p>}
             </div>
             <div>
               <label className="mb-1 block text-xs font-semibold text-muted-foreground">
@@ -66,7 +66,7 @@ export function ProductModal({
               <Input
                 value={productForm.composition}
                 onChange={(e) => setProductForm((p) => ({ ...p, composition: e.target.value }))}
-                className={formErrors.composition ? "border-red-500" : ""}
+                className={formErrors.composition ? "border-[var(--c-peach)]" : ""}
               />
             </div>
             <div>
@@ -76,7 +76,7 @@ export function ProductModal({
               <Input
                 value={productForm.strength}
                 onChange={(e) => setProductForm((p) => ({ ...p, strength: e.target.value }))}
-                className={formErrors.strength ? "border-red-500" : ""}
+                className={formErrors.strength ? "border-[var(--c-peach)]" : ""}
               />
             </div>
           </div>
@@ -157,10 +157,10 @@ export function ProductModal({
               onChange={(e) =>
                 setProductForm((p) => ({ ...p, shortDescription: e.target.value }))
               }
-              className={formErrors.shortDescription ? "border-red-500" : ""}
+              className={formErrors.shortDescription ? "border-[var(--c-peach)]" : ""}
             />
             {formErrors.submit && (
-              <p className="mt-2 text-xs text-red-500" role="alert">
+              <p className="mt-2 text-xs text-[var(--c-peach)]" role="alert">
                 {formErrors.submit}
               </p>
             )}
@@ -212,8 +212,8 @@ export function OrderDetailModal({ order, onClose, handleUpdateStatus }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4">
-      <button type="button" className="fixed inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <Card className="relative z-10 flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-3xl border border-border/40 bg-[#f8f3e6] text-xs shadow-2xl">
+      <button type="button" className="fixed inset-0 bg-[var(--c-peach)]/55 backdrop-blur-sm" onClick={onClose} />
+      <Card className="relative z-10 flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-3xl border border-border/40 bg-[#eef8cd] text-xs shadow-2xl">
         <div className="flex items-center justify-between border-b border-border/30 p-5">
           <h3 className="font-[family-name:var(--font-heading)] text-base font-bold">
             Order: {order.id}

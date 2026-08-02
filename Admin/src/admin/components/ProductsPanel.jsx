@@ -98,7 +98,7 @@ export function ProductsPanel({
                           className={cn(
                             "rounded-full px-2 py-0.5 text-[10px] font-black",
                             Number(prod.stock) <= LOW_STOCK_THRESHOLD
-                              ? "bg-red-500/10 text-red-500"
+                              ? "bg-[var(--c-peach)]/25 text-[var(--c-peach)]"
                               : "bg-emerald/10 text-emerald",
                           )}
                         >
@@ -118,14 +118,14 @@ export function ProductsPanel({
                           <button
                             type="button"
                             onClick={() => handleOpenEditModal(prod)}
-                            className="rounded-lg bg-primary/10 p-1.5 text-primary hover:bg-primary hover:text-white"
+                            className="rounded-lg bg-primary/10 p-1.5 text-primary hover:bg-primary hover:text-[var(--c-lime)]"
                           >
                             <Edit className="h-3.5 w-3.5" />
                           </button>
                           <button
                             type="button"
                             onClick={() => handleDeleteProduct(prod.id)}
-                            className="rounded-lg bg-red-500/10 p-1.5 text-red-500 hover:bg-red-500 hover:text-white"
+                            className="rounded-lg bg-[var(--c-peach)]/25 p-1.5 text-[var(--c-peach)] hover:bg-[var(--c-peach)] hover:text-[var(--c-lime)]"
                           >
                             <Trash2 className="h-3.5 w-3.5" />
                           </button>
@@ -149,16 +149,16 @@ export function InventoryPanel({ lowStockProducts, products, handleUpdateStock, 
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-3">
-        <Card className="rounded-3xl border border-border/30 bg-white shadow-sm">
+        <Card className="rounded-3xl border border-border/30 bg-[var(--c-lime)] shadow-sm">
           <CardContent className="p-5">
             <p className="text-[10px] font-black uppercase text-muted-foreground">SKU Count</p>
             <p className="mt-2 text-2xl font-black">{products.length}</p>
           </CardContent>
         </Card>
-        <Card className="rounded-3xl border border-red-500/20 bg-red-500/5 shadow-sm">
+        <Card className="rounded-3xl border border-[var(--c-peach)]/30 bg-[var(--c-peach)]/15 shadow-sm">
           <CardContent className="p-5">
-            <p className="text-[10px] font-black uppercase text-red-500">Low Stock</p>
-            <p className="mt-2 text-2xl font-black text-red-600">{lowStockProducts.length}</p>
+            <p className="text-[10px] font-black uppercase text-[var(--c-peach)]">Low Stock</p>
+            <p className="mt-2 text-2xl font-black text-[var(--c-peach)]">{lowStockProducts.length}</p>
           </CardContent>
         </Card>
         <Card className="rounded-3xl border border-emerald/20 bg-emerald/5 shadow-sm">
@@ -193,7 +193,7 @@ export function InventoryPanel({ lowStockProducts, products, handleUpdateStock, 
                       className={cn(
                         "rounded-full px-2 py-0.5 text-[10px] font-black",
                         Number(prod.stock) <= LOW_STOCK_THRESHOLD
-                          ? "bg-red-500/10 text-red-500"
+                          ? "bg-[var(--c-peach)]/25 text-[var(--c-peach)]"
                           : "bg-emerald/10 text-emerald",
                       )}
                     >

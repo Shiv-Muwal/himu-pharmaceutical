@@ -84,14 +84,14 @@ export default function SignupPage() {
   return (
     <div className="relative min-h-screen overflow-hidden pt-28 pb-16">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(11, 106, 70,0.12),transparent_40%),radial-gradient(circle_at_85%_10%,rgba(214, 176, 77,0.16),transparent_35%),linear-gradient(180deg,#f8f3e6_0%,#f3f7f0_55%,#e8f0ea_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(255, 197, 170,0.12),transparent_40%),radial-gradient(circle_at_85%_10%,rgba(255, 197, 170,0.16),transparent_35%),linear-gradient(180deg,#eef8cd_0%,#eef8cd_55%,#e8f0ea_100%)]" />
         <motion.div
           className="absolute left-[8%] top-[22%] h-40 w-40 rounded-full border border-primary/15"
           animate={{ rotate: 360 }}
           transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
         />
         <motion.div
-          className="absolute bottom-[18%] right-[12%] h-28 w-28 rounded-full bg-[#d6b04d]/15 blur-xl"
+          className="absolute bottom-[18%] right-[12%] h-28 w-28 rounded-full bg-[#ffc5aa]/15 blur-xl"
           animate={{ scale: [1, 1.25, 1], opacity: [0.5, 0.85, 0.5] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         />
@@ -124,7 +124,7 @@ export default function SignupPage() {
                   initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.25 + i * 0.1 }}
-                  className="flex items-center gap-3 rounded-2xl border border-primary/10 bg-white/60 px-4 py-3 backdrop-blur"
+                  className="flex items-center gap-3 rounded-2xl border border-primary/10 bg-primary-foreground/60 px-4 py-3 backdrop-blur"
                 >
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <Icon className="h-5 w-5" />
@@ -140,10 +140,10 @@ export default function SignupPage() {
           initial={{ opacity: 0, y: 24, scale: 0.97 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="relative overflow-hidden rounded-[32px] border border-primary/10 bg-white/80 p-7 shadow-[0_25px_60px_rgba(11, 106, 70,0.12)] backdrop-blur-xl sm:p-9"
+          className="relative overflow-hidden rounded-[32px] border border-primary/10 bg-primary-foreground/80 p-7 shadow-[0_25px_60px_rgba(255, 197, 170,0.12)] backdrop-blur-xl sm:p-9"
         >
           <motion.div
-            className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-gradient-to-br from-primary/20 to-[#d6b04d]/20"
+            className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-gradient-to-br from-primary/20 to-[#ffc5aa]/20"
             animate={{ rotate: [0, 40, 0] }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           />
@@ -166,7 +166,7 @@ export default function SignupPage() {
               <motion.div
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-xs text-red-600"
+                className="flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-xs text-[var(--c-peach)]"
               >
                 <AlertCircle className="h-4 w-4 shrink-0" />
                 {error}

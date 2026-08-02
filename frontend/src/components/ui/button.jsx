@@ -8,13 +8,13 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-[0_4px_0_0_#053222] hover:bg-primary-hover hover:shadow-[0_5px_0_0_#053222] hover:-translate-y-[1px] active:translate-y-[3px] active:shadow-[0_1px_0_0_#053222] transition-all duration-150 ease-out cursor-pointer",
+          "bg-primary text-primary-foreground shadow-[0_4px_0_0_color-mix(in_srgb,var(--c-peach)_55%,#3a2418_45%)] hover:bg-primary-hover hover:shadow-[0_5px_0_0_color-mix(in_srgb,var(--c-peach)_55%,#3a2418_45%)] hover:-translate-y-[1px] active:translate-y-[3px] active:shadow-[0_1px_0_0_color-mix(in_srgb,var(--c-peach)_55%,#3a2418_45%)] transition-all duration-150 ease-out cursor-pointer",
         secondary:
           "bg-secondary text-secondary-foreground shadow-md hover:bg-secondary/90 hover:-translate-y-0.5",
         outline:
           "border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-primary-foreground",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        glass: "glass text-foreground hover:bg-white/90 dark:hover:bg-white/10",
+        glass: "glass text-foreground hover:bg-primary-foreground/90 dark:hover:bg-primary-foreground/10",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

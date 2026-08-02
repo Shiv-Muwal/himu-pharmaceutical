@@ -114,7 +114,7 @@ export function BlogsPanel({
                 value={blogForm.content}
                 onChange={(e) => setBlogForm((p) => ({ ...p, content: e.target.value }))}
                 rows={6}
-                className="w-full rounded-xl border border-border/40 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+                className="w-full rounded-xl border border-border/40 bg-[var(--c-lime)] px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30"
                 placeholder="Full article body…"
                 required
               />
@@ -160,7 +160,7 @@ export function BlogsPanel({
                   type="button"
                   size="sm"
                   variant="outline"
-                  className="text-red-600"
+                  className="text-[var(--c-peach)]"
                   onClick={() => handleDeleteBlog(blog)}
                 >
                   <Trash2 className="h-3.5 w-3.5" />

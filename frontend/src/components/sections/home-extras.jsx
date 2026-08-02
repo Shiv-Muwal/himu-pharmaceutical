@@ -12,10 +12,10 @@ export function TrustedBrandsSection() {
   const loop = [...trustedBrands, ...trustedBrands];
 
   return (
-    <section className="relative overflow-hidden border-y border-primary/10 bg-[#0b6a46] py-10 text-white">
+    <section className="relative overflow-hidden border-y border-primary/10 bg-[#ffc5aa] py-10 text-primary-foreground">
       <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:repeating-linear-gradient(135deg,rgba(255,255,255,0.08)_0_2px,transparent_2px_18px)]" />
       <div className="pointer-events-none absolute -left-16 top-0 h-40 w-40 rounded-full bg-gold/30 blur-3xl" />
-      <div className="pointer-events-none absolute -right-10 bottom-0 h-48 w-48 rounded-full bg-white/10 blur-3xl" />
+      <div className="pointer-events-none absolute -right-10 bottom-0 h-48 w-48 rounded-full bg-primary-foreground/10 blur-3xl" />
 
       <div className="container-custom relative mb-7 text-center">
         <p className="mb-2 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.22em] text-gold">
@@ -24,28 +24,28 @@ export function TrustedBrandsSection() {
         <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold md:text-3xl">
           Chosen by hospitals & care networks
         </h2>
-        <p className="mx-auto mt-2 max-w-xl text-sm text-white/70">
+        <p className="mx-auto mt-2 max-w-xl text-sm text-primary-foreground/70">
           HIMU formulations move through leading clinical partners across India.
         </p>
       </div>
 
       <div className="relative">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#0b6a46] to-transparent sm:w-24" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#0b6a46] to-transparent sm:w-24" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#ffc5aa] to-transparent sm:w-24" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#ffc5aa] to-transparent sm:w-24" />
         <div className="animate-marquee-slow flex w-max gap-4 px-4">
           {loop.map((brand, index) => (
             <div
               key={`${brand.id}-${index}`}
-              className="group flex min-w-[180px] items-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-white/15 sm:min-w-[210px]"
+              className="group flex min-w-[180px] items-center gap-3 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/10 px-4 py-3 backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-primary-foreground/15 sm:min-w-[210px]"
             >
               <div
-                className="flex h-11 w-11 items-center justify-center rounded-xl text-xs font-black tracking-wide text-white shadow-inner"
+                className="flex h-11 w-11 items-center justify-center rounded-xl text-xs font-black tracking-wide text-primary-foreground shadow-inner"
                 style={{ background: brand.accent }}
               >
                 {brand.mark}
               </div>
               <div>
-                <p className="text-sm font-bold text-white">{brand.name}</p>
+                <p className="text-sm font-bold text-primary-foreground">{brand.name}</p>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gold/90">
                   Partner network
                 </p>
@@ -87,7 +87,7 @@ export function ShopWithBrandsSection() {
             <FadeIn key={brand.id} delay={i * 0.05}>
               <Link
                 href={brand.href}
-                className="group relative block h-full overflow-hidden rounded-2xl border border-border/50 bg-white p-3 shadow-[0_10px_30px_rgba(11,106,70,0.06)] transition active:scale-[0.98] hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_18px_40px_rgba(11,106,70,0.12)] sm:rounded-[1.5rem] sm:p-5 dark:bg-card"
+                className="group relative block h-full overflow-hidden rounded-2xl border border-border/50 bg-[var(--c-lime)] p-3 shadow-[0_10px_30px_rgba(255, 197, 170,0.06)] transition active:scale-[0.98] hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_18px_40px_rgba(255, 197, 170,0.12)] sm:rounded-[1.5rem] sm:p-5 dark:bg-card"
               >
                 <div
                   className="absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-20 blur-2xl transition group-hover:opacity-40 sm:h-28 sm:w-28"
@@ -95,12 +95,12 @@ export function ShopWithBrandsSection() {
                 />
                 <div className="relative flex items-start justify-between gap-2">
                   <div
-                    className="flex h-11 w-11 items-center justify-center rounded-xl text-[11px] font-black text-white shadow-lg sm:h-14 sm:w-14 sm:rounded-2xl sm:text-sm"
+                    className="flex h-11 w-11 items-center justify-center rounded-xl text-[11px] font-black text-primary-foreground shadow-lg sm:h-14 sm:w-14 sm:rounded-2xl sm:text-sm"
                     style={{ background: brand.accent }}
                   >
                     {brand.mark}
                   </div>
-                  <span className="rounded-full bg-[#f8f3e6] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-primary sm:px-2.5 sm:py-1 sm:text-[10px]">
+                  <span className="rounded-full bg-[#eef8cd] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-primary sm:px-2.5 sm:py-1 sm:text-[10px]">
                     Shop
                   </span>
                 </div>
@@ -148,7 +148,7 @@ export function HomeBlogsSection() {
   if (!featured) return null;
 
   return (
-    <section className="section-padding bg-gradient-to-b from-[#f8f3e6] via-white to-[#f8f3e6] pb-4 md:pb-[var(--section-padding,3rem)]">
+    <section className="section-padding bg-gradient-to-b from-[#eef8cd] via-white to-[#eef8cd] pb-4 md:pb-[var(--section-padding,3rem)]">
       <div className="container-custom">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
@@ -173,7 +173,7 @@ export function HomeBlogsSection() {
           <FadeIn>
             <Link
               href={`/news/${featured.slug}`}
-              className="group relative block overflow-hidden rounded-[1.75rem] border border-border/40 bg-[#0b6a46] text-white shadow-xl"
+              className="group relative block overflow-hidden rounded-[1.75rem] border border-border/40 bg-[#ffc5aa] text-primary-foreground shadow-xl"
             >
               <div className="relative min-h-[280px] sm:min-h-[340px]">
                 {featured.image ? (
@@ -184,7 +184,7 @@ export function HomeBlogsSection() {
                     className="object-cover opacity-70 transition duration-700 group-hover:scale-105"
                   />
                 ) : null}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#062819] via-[#0b6a46]/55 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#ffc5aa] via-[#ffc5aa]/55 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
                   <span className="mb-3 inline-flex rounded-full bg-gold/20 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-gold">
                     {featured.category || "Healthcare"}
@@ -192,10 +192,10 @@ export function HomeBlogsSection() {
                   <h3 className="max-w-xl font-[family-name:var(--font-heading)] text-2xl font-bold leading-tight sm:text-3xl">
                     {featured.title}
                   </h3>
-                  <p className="mt-2 max-w-lg text-sm text-white/75 line-clamp-2">
+                  <p className="mt-2 max-w-lg text-sm text-primary-foreground/75 line-clamp-2">
                     {featured.excerpt}
                   </p>
-                  <p className="mt-4 text-xs font-semibold text-white/60">
+                  <p className="mt-4 text-xs font-semibold text-primary-foreground/60">
                     {featured.author} · {featured.readTime || "3 min read"}
                   </p>
                 </div>
@@ -208,7 +208,7 @@ export function HomeBlogsSection() {
               <FadeIn key={post.id || post.slug} delay={0.08 * (i + 1)}>
                 <Link
                   href={`/news/${post.slug}`}
-                  className="group flex h-full overflow-hidden rounded-[1.5rem] border border-border/50 bg-white shadow-sm transition hover:border-primary/30 hover:shadow-lg dark:bg-card"
+                  className="group flex h-full overflow-hidden rounded-[1.5rem] border border-border/50 bg-[var(--c-lime)] shadow-sm transition hover:border-primary/30 hover:shadow-lg dark:bg-card"
                 >
                   <div className="relative w-[38%] min-w-[110px] overflow-hidden">
                     {post.image ? (

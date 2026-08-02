@@ -129,8 +129,8 @@ export function OrdersPanel({
                               : order.status === "Shipped"
                                 ? "border-primary/45 bg-primary/5 text-primary"
                                 : order.status === "Cancelled"
-                                  ? "border-red-500/40 bg-red-500/5 text-red-500"
-                                  : "border-amber-500/40 bg-amber-50/5 text-amber-500",
+                                  ? "border-[var(--c-peach)]/50 bg-[var(--c-peach)]/15 text-[var(--c-peach)]"
+                                  : "border-[var(--c-peach)]/40 bg-[var(--c-lime)]/40 text-[var(--c-peach)]",
                           )}
                         >
                           {ORDER_STATUSES.map((s) => (
@@ -144,7 +144,7 @@ export function OrdersPanel({
                         <button
                           type="button"
                           onClick={() => setSelectedOrder(order)}
-                          className="rounded-lg bg-primary/10 p-1.5 text-primary hover:bg-primary hover:text-white"
+                          className="rounded-lg bg-primary/10 p-1.5 text-primary hover:bg-primary hover:text-[var(--c-lime)]"
                         >
                           <Eye className="h-3.5 w-3.5" />
                         </button>

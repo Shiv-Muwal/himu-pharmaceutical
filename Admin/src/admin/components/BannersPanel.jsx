@@ -146,7 +146,7 @@ export function BannersPanel({
                     Accepts .webp only · max 5MB
                   </span>
                   {bannerForm.image && (
-                    <span className="mt-1 max-w-full truncate rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-primary dark:bg-card">
+                    <span className="mt-1 max-w-full truncate rounded-full bg-[var(--c-lime)] px-3 py-1 text-[10px] font-semibold text-primary dark:bg-card">
                       {bannerForm.image}
                     </span>
                   )}
@@ -166,7 +166,7 @@ export function BannersPanel({
                 </div>
               </div>
               {uploadError && (
-                <p className="mt-2 text-xs font-semibold text-red-600">{uploadError}</p>
+                <p className="mt-2 text-xs font-semibold text-[var(--c-peach)]">{uploadError}</p>
               )}
               {!bannerForm.image && (
                 <p className="mt-2 text-[11px] text-muted-foreground">
@@ -249,8 +249,8 @@ export function BannersPanel({
               <span
                 className={`absolute left-3 top-3 rounded-full px-2 py-0.5 text-[10px] font-black uppercase ${
                   banner.active !== false
-                    ? "bg-emerald/90 text-white"
-                    : "bg-black/60 text-white"
+                    ? "bg-emerald/90 text-[var(--c-lime)]"
+                    : "bg-[var(--c-peach)]/55 text-[var(--c-lime)]"
                 }`}
               >
                 {banner.active !== false ? "Active" : "Hidden"}

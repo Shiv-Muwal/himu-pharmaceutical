@@ -55,7 +55,7 @@ export default function AccountPage() {
           </h1>
         </div>
 
-        <div className="mb-6 grid grid-cols-3 gap-2 rounded-2xl border border-border/50 bg-white p-1.5 dark:bg-card">
+        <div className="mb-6 grid grid-cols-3 gap-2 rounded-2xl border border-border/50 bg-[var(--c-lime)] p-1.5 dark:bg-card">
           {TABS.map((item) => {
             const Icon = item.icon;
             const active = tab === item.id;
@@ -66,7 +66,7 @@ export default function AccountPage() {
                 onClick={() => setParams({ tab: item.id })}
                 className={cn(
                   "flex flex-col items-center gap-1 rounded-xl px-2 py-2.5 text-[11px] font-bold transition sm:flex-row sm:justify-center sm:text-sm",
-                  active ? "bg-primary text-white shadow-md" : "text-muted-foreground",
+                  active ? "bg-primary text-primary-foreground shadow-md" : "text-muted-foreground",
                 )}
               >
                 <Icon className="h-4 w-4" />
@@ -77,7 +77,7 @@ export default function AccountPage() {
         </div>
 
         {tab === "profile" && (
-          <div className="space-y-4 rounded-3xl border border-border/50 bg-white p-5 shadow-sm dark:bg-card">
+          <div className="space-y-4 rounded-3xl border border-border/50 bg-[var(--c-lime)] p-5 shadow-sm dark:bg-card">
             {!isAuthenticated ? (
               <div className="py-8 text-center">
                 <p className="text-sm text-muted-foreground">
@@ -99,13 +99,13 @@ export default function AccountPage() {
                   </div>
                 </div>
                 <div className="grid gap-3 text-sm sm:grid-cols-2">
-                  <div className="rounded-2xl bg-[#f8f3e6] p-3">
+                  <div className="rounded-2xl bg-[#eef8cd] p-3">
                     <p className="text-[10px] font-bold uppercase tracking-wider text-primary">
                       Phone
                     </p>
                     <p className="mt-1 font-semibold">{user.phone || "Not added"}</p>
                   </div>
-                  <div className="rounded-2xl bg-[#f8f3e6] p-3">
+                  <div className="rounded-2xl bg-[#eef8cd] p-3">
                     <p className="text-[10px] font-bold uppercase tracking-wider text-primary">
                       Orders
                     </p>
@@ -131,7 +131,7 @@ export default function AccountPage() {
         {(tab === "orders" || tab === "history") && (
           <div className="space-y-3">
             {!list.length ? (
-              <div className="rounded-3xl border border-dashed border-border/60 bg-white py-14 text-center dark:bg-card">
+              <div className="rounded-3xl border border-dashed border-border/60 bg-[var(--c-lime)] py-14 text-center dark:bg-card">
                 <Package className="mx-auto mb-3 h-10 w-10 text-muted-foreground/50" />
                 <p className="font-semibold text-foreground">
                   {tab === "orders" ? "No active orders" : "No order history yet"}
@@ -147,7 +147,7 @@ export default function AccountPage() {
               list.map((order) => (
                 <div
                   key={order.id}
-                  className="rounded-3xl border border-border/50 bg-white p-4 shadow-sm dark:bg-card"
+                  className="rounded-3xl border border-border/50 bg-[var(--c-lime)] p-4 shadow-sm dark:bg-card"
                 >
                   <div className="mb-3 flex items-start justify-between gap-3">
                     <div>
@@ -168,7 +168,7 @@ export default function AccountPage() {
                   </div>
 
                   <div className="grid gap-2 sm:grid-cols-2">
-                    <div className="flex items-center gap-2 rounded-xl bg-[#f3f7f0] px-3 py-2 text-xs">
+                    <div className="flex items-center gap-2 rounded-xl bg-[#eef8cd] px-3 py-2 text-xs">
                       <Truck className="h-4 w-4 text-primary" />
                       <div>
                         <p className="font-bold text-primary">Expected</p>
@@ -177,10 +177,10 @@ export default function AccountPage() {
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 rounded-xl bg-[#fff8e8] px-3 py-2 text-xs">
-                      <TicketPercent className="h-4 w-4 text-[#8a7020]" />
+                    <div className="flex items-center gap-2 rounded-xl bg-[#ffc5aa] px-3 py-2 text-xs">
+                      <TicketPercent className="h-4 w-4 text-[#ffc5aa]" />
                       <div>
-                        <p className="font-bold text-[#8a7020]">Coupon</p>
+                        <p className="font-bold text-[#ffc5aa]">Coupon</p>
                         <p className="font-black tracking-wide text-foreground">
                           {order.couponCode || "—"}
                         </p>

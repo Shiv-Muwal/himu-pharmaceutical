@@ -70,7 +70,7 @@ export default function AdminPage() {
   const meta = TAB_META[dash.activeTab];
 
   return (
-    <div className="flex min-h-screen bg-[radial-gradient(ellipse_at_top,_#f3f7f0_0%,_#f7f5ef_45%,_#efe8d8_100%)] text-foreground">
+    <div className="flex min-h-screen bg-[radial-gradient(ellipse_at_top,_#eef8cd_0%,_#eef8cd_45%,_#ffc5aa_100%)] text-foreground">
       <AdminSidebar
         activeTab={dash.activeTab}
         setActiveTab={dash.setActiveTab}

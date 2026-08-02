@@ -53,11 +53,11 @@ export function ContactForm() {
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <Input placeholder="Full Name *" {...register("name")} />
-          {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
+          {errors.name && <p className="text-[var(--c-peach)] text-xs mt-1">{errors.name.message}</p>}
         </div>
         <div>
           <Input type="email" placeholder="Email Address *" {...register("email")} />
-          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+          {errors.email && <p className="text-[var(--c-peach)] text-xs mt-1">{errors.email.message}</p>}
         </div>
       </div>
       <div className="grid sm:grid-cols-2 gap-4">
@@ -76,15 +76,15 @@ export function ContactForm() {
         </select>
       </div>
       {errors.department && (
-        <p className="text-red-500 text-xs">{errors.department.message}</p>
+        <p className="text-[var(--c-peach)] text-xs">{errors.department.message}</p>
       )}
       <div>
         <Input placeholder="Subject *" {...register("subject")} />
-        {errors.subject && <p className="text-red-500 text-xs mt-1">{errors.subject.message}</p>}
+        {errors.subject && <p className="text-[var(--c-peach)] text-xs mt-1">{errors.subject.message}</p>}
       </div>
       <div>
         <Textarea placeholder="Your Message *" rows={5} {...register("message")} />
-        {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message.message}</p>}
+        {errors.message && <p className="text-[var(--c-peach)] text-xs mt-1">{errors.message.message}</p>}
       </div>
       <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
         {isSubmitting ? "Sending..." : "Send Message"}
@@ -138,16 +138,16 @@ export function CareerApplicationForm({ positions }) {
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <Input placeholder="Full Name *" {...register("name")} />
-          {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
+          {errors.name && <p className="text-[var(--c-peach)] text-xs mt-1">{errors.name.message}</p>}
         </div>
         <div>
           <Input type="email" placeholder="Email *" {...register("email")} />
-          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+          {errors.email && <p className="text-[var(--c-peach)] text-xs mt-1">{errors.email.message}</p>}
         </div>
       </div>
       <div>
         <Input placeholder="Phone *" {...register("phone")} />
-        {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
+        {errors.phone && <p className="text-[var(--c-peach)] text-xs mt-1">{errors.phone.message}</p>}
       </div>
       <select
         {...register("position")}
