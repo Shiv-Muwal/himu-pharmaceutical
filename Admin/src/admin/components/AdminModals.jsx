@@ -39,7 +39,7 @@ export function ProductModal({
                 onChange={(e) => setProductForm((p) => ({ ...p, name: e.target.value }))}
                 className={formErrors.name ? "border-[var(--c-peach)]" : ""}
               />
-              {formErrors.name && <p className="mt-1 text-[10px] text-[var(--c-peach)]">{formErrors.name}</p>}
+              {formErrors.name && <p className="mt-1 text-[10px] text-ink-accent">{formErrors.name}</p>}
             </div>
             <div>
               <label className="mb-1 block text-xs font-semibold text-muted-foreground">
@@ -160,7 +160,7 @@ export function ProductModal({
               className={formErrors.shortDescription ? "border-[var(--c-peach)]" : ""}
             />
             {formErrors.submit && (
-              <p className="mt-2 text-xs text-[var(--c-peach)]" role="alert">
+              <p className="mt-2 text-xs text-ink-accent" role="alert">
                 {formErrors.submit}
               </p>
             )}
@@ -243,7 +243,7 @@ export function OrderDetailModal({ order, onClose, handleUpdateStatus }) {
             </div>
           </div>
           <div className="space-y-2 rounded-2xl border border-border/10 bg-muted/40 p-4">
-            <h4 className="mb-2 text-[9px] font-bold uppercase tracking-wider text-primary">
+            <h4 className="mb-2 text-[9px] font-bold uppercase tracking-wider text-ink-accent">
               Customer
             </h4>
             <p className="font-bold">{order.customer.name}</p>
@@ -254,7 +254,7 @@ export function OrderDetailModal({ order, onClose, handleUpdateStatus }) {
             </p>
           </div>
           <div>
-            <h4 className="mb-2 text-[9px] font-bold uppercase tracking-wider text-primary">
+            <h4 className="mb-2 text-[9px] font-bold uppercase tracking-wider text-ink-accent">
               Items
             </h4>
             <div className="divide-y divide-border/20 overflow-hidden rounded-2xl border border-border/30">
@@ -266,7 +266,7 @@ export function OrderDetailModal({ order, onClose, handleUpdateStatus }) {
                       {item.selectedVariant} · Qty: {item.quantity}
                     </p>
                   </div>
-                  <span className="font-bold text-primary">₹{item.price * item.quantity}</span>
+                  <span className="font-bold text-ink-accent">₹{item.price * item.quantity}</span>
                 </div>
               ))}
             </div>
@@ -278,7 +278,7 @@ export function OrderDetailModal({ order, onClose, handleUpdateStatus }) {
             </div>
             <div className="text-right">
               <p className="text-[10px] font-semibold uppercase text-muted-foreground">Total</p>
-              <p className="font-[family-name:var(--font-heading)] text-lg font-black text-primary">
+              <p className="font-[family-name:var(--font-heading)] text-lg font-black text-ink-accent">
                 ₹{order.total}
               </p>
             </div>

@@ -188,7 +188,7 @@ export function BannerCarousel() {
                 <Button
                   size="lg"
                   variant="ghost"
-                  className="h-10 border border-primary-foreground/30 bg-primary-foreground/5 px-4 text-sm text-primary-foreground hover:bg-[var(--c-lime)] hover:text-[#ffc5aa] sm:h-11"
+                  className="h-10 border border-primary-foreground/30 bg-primary-foreground/5 px-4 text-sm text-primary-foreground hover:bg-[var(--c-lime)] hover:text-ink-accent sm:h-11"
                 >
                   Dermatology picks
                 </Button>
@@ -202,7 +202,7 @@ export function BannerCarousel() {
             <button
               type="button"
               onClick={() => go(-1)}
-              className="absolute left-5 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-primary-foreground/30 bg-black/45 text-primary-foreground backdrop-blur transition hover:bg-black/65 active:scale-95 md:flex"
+              className="absolute left-5 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-primary-foreground/30 bg-ink/45 text-primary-foreground backdrop-blur transition hover:bg-ink/65 active:scale-95 md:flex"
               aria-label="Previous banner"
             >
               <ChevronLeft className="h-5 w-5" />
@@ -210,7 +210,7 @@ export function BannerCarousel() {
             <button
               type="button"
               onClick={() => go(1)}
-              className="absolute right-5 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-primary-foreground/30 bg-black/45 text-primary-foreground backdrop-blur transition hover:bg-black/65 active:scale-95 md:flex"
+              className="absolute right-5 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-primary-foreground/30 bg-ink/45 text-primary-foreground backdrop-blur transition hover:bg-ink/65 active:scale-95 md:flex"
               aria-label="Next banner"
             >
               <ChevronRight className="h-5 w-5" />
@@ -350,7 +350,7 @@ export function ShopSearchBar() {
               onFocus={() => setShowSuggestions(true)}
               placeholder={placeholderText}
               className={`w-full border-0 bg-transparent px-2 py-2.5 text-sm font-medium outline-none placeholder:text-muted-foreground ${
-                isListening ? "animate-pulse text-primary" : ""
+                isListening ? "animate-pulse text-ink-accent" : ""
               }`}
               autoComplete="off"
             />
@@ -359,8 +359,8 @@ export function ShopSearchBar() {
               onClick={startListening}
               className={`mr-1 rounded-full p-2 transition ${
                 isListening
-                  ? "bg-red-100 text-[var(--c-peach)]"
-                  : "text-muted-foreground hover:bg-muted hover:text-primary"
+                  ? "bg-red-100 text-ink-accent"
+                  : "text-muted-foreground hover:bg-muted hover:text-ink-accent"
               }`}
               aria-label="Voice search"
             >
@@ -395,7 +395,7 @@ export function ShopSearchBar() {
                           {product.composition} · {product.strength}
                         </p>
                       </div>
-                      <span className="shrink-0 rounded-full bg-primary/10 px-2 py-1 text-[10px] font-bold text-primary">
+                      <span className="shrink-0 rounded-full bg-primary/10 px-2 py-1 text-[10px] font-bold text-ink-accent">
                         {product.category}
                       </span>
                     </button>
@@ -464,7 +464,7 @@ export function QuickCategoryRail() {
       <div className="container-custom">
         <div className="mb-4 flex items-end justify-between gap-3">
           <div>
-            <p className="mb-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
+            <p className="mb-1 text-[10px] font-black uppercase tracking-[0.18em] text-ink-accent">
               Shop by category
             </p>
             <h2 className="font-[family-name:var(--font-heading)] text-xl font-bold text-foreground sm:text-2xl md:text-3xl">
@@ -475,7 +475,7 @@ export function QuickCategoryRail() {
             <button
               type="button"
               onClick={() => scrollByCard(-1)}
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-[var(--c-lime)] text-primary shadow-sm transition hover:bg-primary hover:text-primary-foreground md:inline-flex"
+              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-[var(--c-lime)] text-ink-accent shadow-sm transition hover:bg-primary hover:text-primary-foreground md:inline-flex"
               aria-label="Previous categories"
             >
               <ChevronLeft className="h-4 w-4" />
@@ -483,14 +483,14 @@ export function QuickCategoryRail() {
             <button
               type="button"
               onClick={() => scrollByCard(1)}
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-[var(--c-lime)] text-primary shadow-sm transition hover:bg-primary hover:text-primary-foreground md:inline-flex"
+              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-[var(--c-lime)] text-ink-accent shadow-sm transition hover:bg-primary hover:text-primary-foreground md:inline-flex"
               aria-label="Next categories"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
             <Link
               href="/products"
-              className="text-xs font-semibold text-primary hover:underline sm:text-sm sm:inline-flex sm:items-center sm:gap-1"
+              className="text-xs font-semibold text-ink-accent hover:underline sm:text-sm sm:inline-flex sm:items-center sm:gap-1"
             >
               All <ArrowRight className="ml-0.5 inline h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </Link>
@@ -526,7 +526,7 @@ export function QuickCategoryRail() {
                 </div>
                 <div className="px-2.5 py-2.5">
                   <p className="truncate text-[13px] font-bold text-foreground">{cat.name}</p>
-                  <p className="mt-0.5 text-[10px] font-semibold text-primary">Shop now →</p>
+                  <p className="mt-0.5 text-[10px] font-semibold text-ink-accent">Shop now →</p>
                 </div>
               </Link>
             );
@@ -571,7 +571,7 @@ export function QuickCategoryRail() {
                     </div>
                     <div className="p-3">
                       <p className="text-sm font-bold text-foreground">{cat.name}</p>
-                      <p className="mt-0.5 text-[10px] font-semibold text-primary">Shop now →</p>
+                      <p className="mt-0.5 text-[10px] font-semibold text-ink-accent">Shop now →</p>
                     </div>
                   </Link>
                 </FadeIn>
@@ -653,7 +653,7 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
     <section className="relative overflow-x-clip py-5 sm:py-8">
       <div className="container-custom mb-3 flex flex-col gap-2.5 sm:mb-5 sm:gap-3 md:flex-row md:items-end md:justify-between">
         <div className="max-w-xl">
-          <div className="mb-1.5 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
+          <div className="mb-1.5 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-ink-accent">
             <ShoppingBag className="h-3.5 w-3.5" />
             {badge}
           </div>
@@ -679,7 +679,7 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
         <button
           type="button"
           onClick={() => scrollByCard(-1)}
-          className="absolute left-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-primary-foreground/95 text-primary shadow-md backdrop-blur transition hover:bg-primary hover:text-primary-foreground md:flex md:left-3"
+          className="absolute left-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-primary-foreground/95 text-ink-accent shadow-md backdrop-blur transition hover:bg-primary hover:text-primary-foreground md:flex md:left-3"
           aria-label="Previous products"
         >
           <ChevronLeft className="h-5 w-5" />
@@ -687,7 +687,7 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
         <button
           type="button"
           onClick={() => scrollByCard(1)}
-          className="absolute right-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-primary-foreground/95 text-primary shadow-md backdrop-blur transition hover:bg-primary hover:text-primary-foreground md:flex md:right-3"
+          className="absolute right-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-primary-foreground/95 text-ink-accent shadow-md backdrop-blur transition hover:bg-primary hover:text-primary-foreground md:flex md:right-3"
           aria-label="Next products"
         >
           <ChevronRight className="h-5 w-5" />
@@ -773,7 +773,7 @@ export function ShopTrustStrip() {
         {items.map((item, i) => (
           <FadeIn key={item.title} delay={i * 0.05}>
             <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-primary/10 text-primary">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-primary/10 text-ink-accent">
                 <item.icon className="h-5 w-5" />
               </div>
               <div>
@@ -814,7 +814,7 @@ export function ShopCTASection() {
                 <Button
                   size="lg"
                   variant="ghost"
-                  className="border border-primary-foreground/25 text-primary-foreground hover:bg-[var(--c-lime)] hover:text-[#ffc5aa]"
+                  className="border border-primary-foreground/25 text-primary-foreground hover:bg-[var(--c-lime)] hover:text-ink-accent"
                 >
                   View all products
                 </Button>

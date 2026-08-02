@@ -83,7 +83,7 @@ export default function AboutPage() {
           ].map((item, i) => (
             <FadeIn key={item.title} delay={i * 0.1}>
               <Card className="h-full p-8 text-center">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-ink-accent">
                   <item.icon className="h-7 w-7" />
                 </div>
                 <h3 className="mb-3 text-xl font-bold">{item.title}</h3>
@@ -103,7 +103,7 @@ export default function AboutPage() {
             {coreValues.map((v, i) => (
               <FadeIn key={v.title} delay={i * 0.08}>
                 <Card className="p-6 transition-shadow hover:shadow-lg">
-                  <h3 className="mb-2 text-lg font-bold text-primary">
+                  <h3 className="mb-2 text-lg font-bold text-ink-accent">
                     {v.title}
                   </h3>
                   <p className="text-sm text-muted-foreground">
@@ -133,7 +133,7 @@ export default function AboutPage() {
                   </div>
                   <div className="p-5">
                     <h3 className="text-lg font-bold">{member.name}</h3>
-                    <p className="mb-2 text-sm font-medium text-primary">
+                    <p className="mb-2 text-sm font-medium text-ink-accent">
                       {member.role}
                     </p>
                     <p className="text-sm text-muted-foreground">{member.bio}</p>

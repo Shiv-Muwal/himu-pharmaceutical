@@ -68,7 +68,7 @@ export function BlogListing() {
                       {post.readTime}
                     </span>
                   </div>
-                  <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                  <h3 className="font-bold text-lg mb-2 group-hover:text-ink-accent transition-colors line-clamp-2">
                     {post.title}
                   </h3>
                   <p className="text-sm text-muted-foreground line-clamp-2 mb-3">

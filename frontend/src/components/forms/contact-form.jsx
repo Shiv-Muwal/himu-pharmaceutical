@@ -39,7 +39,7 @@ export function ContactForm() {
   if (submitted) {
     return (
       <div className="text-center py-12">
-        <CheckCircle className="h-16 w-16 text-primary mx-auto mb-4" />
+        <CheckCircle className="h-16 w-16 text-ink-accent mx-auto mb-4" />
         <h3 className="text-xl font-bold mb-2">Message Sent Successfully</h3>
         <p className="text-muted-foreground">
           Thank you for contacting HIMU Pharmacy. We will respond within 24-48 hours.
@@ -53,11 +53,11 @@ export function ContactForm() {
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <Input placeholder="Full Name *" {...register("name")} />
-          {errors.name && <p className="text-[var(--c-peach)] text-xs mt-1">{errors.name.message}</p>}
+          {errors.name && <p className="text-ink-accent text-xs mt-1">{errors.name.message}</p>}
         </div>
         <div>
           <Input type="email" placeholder="Email Address *" {...register("email")} />
-          {errors.email && <p className="text-[var(--c-peach)] text-xs mt-1">{errors.email.message}</p>}
+          {errors.email && <p className="text-ink-accent text-xs mt-1">{errors.email.message}</p>}
         </div>
       </div>
       <div className="grid sm:grid-cols-2 gap-4">
@@ -76,15 +76,15 @@ export function ContactForm() {
         </select>
       </div>
       {errors.department && (
-        <p className="text-[var(--c-peach)] text-xs">{errors.department.message}</p>
+        <p className="text-ink-accent text-xs">{errors.department.message}</p>
       )}
       <div>
         <Input placeholder="Subject *" {...register("subject")} />
-        {errors.subject && <p className="text-[var(--c-peach)] text-xs mt-1">{errors.subject.message}</p>}
+        {errors.subject && <p className="text-ink-accent text-xs mt-1">{errors.subject.message}</p>}
       </div>
       <div>
         <Textarea placeholder="Your Message *" rows={5} {...register("message")} />
-        {errors.message && <p className="text-[var(--c-peach)] text-xs mt-1">{errors.message.message}</p>}
+        {errors.message && <p className="text-ink-accent text-xs mt-1">{errors.message.message}</p>}
       </div>
       <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
         {isSubmitting ? "Sending..." : "Send Message"}
@@ -124,7 +124,7 @@ export function CareerApplicationForm({ positions }) {
   if (submitted) {
     return (
       <div className="text-center py-8">
-        <CheckCircle className="h-12 w-12 text-primary mx-auto mb-3" />
+        <CheckCircle className="h-12 w-12 text-ink-accent mx-auto mb-3" />
         <h3 className="font-bold mb-1">Application Submitted</h3>
         <p className="text-sm text-muted-foreground">
           Our HR team will review your application and contact you shortly.
@@ -138,16 +138,16 @@ export function CareerApplicationForm({ positions }) {
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <Input placeholder="Full Name *" {...register("name")} />
-          {errors.name && <p className="text-[var(--c-peach)] text-xs mt-1">{errors.name.message}</p>}
+          {errors.name && <p className="text-ink-accent text-xs mt-1">{errors.name.message}</p>}
         </div>
         <div>
           <Input type="email" placeholder="Email *" {...register("email")} />
-          {errors.email && <p className="text-[var(--c-peach)] text-xs mt-1">{errors.email.message}</p>}
+          {errors.email && <p className="text-ink-accent text-xs mt-1">{errors.email.message}</p>}
         </div>
       </div>
       <div>
         <Input placeholder="Phone *" {...register("phone")} />
-        {errors.phone && <p className="text-[var(--c-peach)] text-xs mt-1">{errors.phone.message}</p>}
+        {errors.phone && <p className="text-ink-accent text-xs mt-1">{errors.phone.message}</p>}
       </div>
       <select
         {...register("position")}

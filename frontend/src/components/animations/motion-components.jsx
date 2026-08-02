@@ -57,7 +57,7 @@ function Badge({ children, className }) {
   return (
     <span
       className={cn(
-        "inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-primary/10 text-primary uppercase tracking-wider",
+        "inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-primary/10 text-ink-accent uppercase tracking-wider",
         className
       )}
     >

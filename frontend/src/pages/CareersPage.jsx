@@ -53,7 +53,7 @@ export default function CareersPage() {
             {benefits.map((b, i) => (
               <FadeIn delay={i * 0.08}>
                 <Card className="p-6 text-center h-full">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary mx-auto mb-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-ink-accent mx-auto mb-4">
                     <b.icon className="h-6 w-6" />
                   </div>
                   <h3 className="font-bold mb-2">{b.title}</h3>

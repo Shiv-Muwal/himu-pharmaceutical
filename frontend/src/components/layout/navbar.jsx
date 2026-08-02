@@ -163,8 +163,8 @@ export function Navbar() {
                         "flex items-center gap-0.5 px-1.5 xl:px-3.5 py-2 rounded-lg text-xs xl:text-sm font-medium transition-colors whitespace-nowrap",
                         pathname.startsWith("/products") ||
                           pathname.startsWith("/categories")
-                          ? "text-primary"
-                          : "text-foreground hover:text-primary",
+                          ? "text-ink-accent"
+                          : "text-foreground hover:text-ink-accent",
                       )}
                     >
                       {link.name}
@@ -209,7 +209,7 @@ export function Navbar() {
                           </div>
                           {/* Column 2: Clinical Categories */}
                           <div className="col-span-4 flex flex-col gap-3">
-                            <h5 className="font-bold text-[10px] text-primary uppercase tracking-wider pl-1.5">
+                            <h5 className="font-bold text-[10px] text-ink-accent uppercase tracking-wider pl-1.5">
                               Clinical Divisions
                             </h5>
                             <div className="grid gap-0.5">
@@ -222,11 +222,11 @@ export function Navbar() {
                                     onClick={() => setProductsOpen(false)}
                                     className="flex items-center gap-2.5 p-1.5 rounded-xl hover:bg-primary/5 hover:translate-x-1 transition-all duration-200 group text-left"
                                   >
-                                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
+                                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-ink-accent group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
                                       <Icon className="h-4 w-4" />
                                     </div>
                                     <div>
-                                      <p className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors">
+                                      <p className="text-xs font-semibold text-foreground group-hover:text-ink-accent transition-colors">
                                         {item.name}
                                       </p>
                                     </div>
@@ -237,7 +237,7 @@ export function Navbar() {
                           </div>
                           {/* Column 3: Wellness & Care Categories */}
                           <div className="col-span-4 flex flex-col gap-3">
-                            <h5 className="font-bold text-[10px] text-primary uppercase tracking-wider pl-1.5">
+                            <h5 className="font-bold text-[10px] text-ink-accent uppercase tracking-wider pl-1.5">
                               Wellness & Care
                             </h5>
                             <div className="grid gap-0.5">
@@ -250,11 +250,11 @@ export function Navbar() {
                                     onClick={() => setProductsOpen(false)}
                                     className="flex items-center gap-2.5 p-1.5 rounded-xl hover:bg-primary/5 hover:translate-x-1 transition-all duration-200 group text-left"
                                   >
-                                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
+                                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-ink-accent group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
                                       <Icon className="h-4 w-4" />
                                     </div>
                                     <div>
-                                      <p className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors">
+                                      <p className="text-xs font-semibold text-foreground group-hover:text-ink-accent transition-colors">
                                         {item.name}
                                       </p>
                                     </div>
@@ -282,8 +282,8 @@ export function Navbar() {
                           pathname.startsWith("/quality") ||
                           pathname.startsWith("/news") ||
                           pathname.startsWith("/careers")
-                          ? "text-primary"
-                          : "text-foreground hover:text-primary",
+                          ? "text-ink-accent"
+                          : "text-foreground hover:text-ink-accent",
                       )}
                     >
                       {link.name}
@@ -311,11 +311,11 @@ export function Navbar() {
                                 onClick={() => setAboutOpen(false)}
                                 className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-primary/10 transition-all duration-200 group text-left"
                               >
-                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
+                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-ink-accent group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
                                   <Icon className="h-4 w-4" />
                                 </div>
                                 <div>
-                                  <p className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
+                                  <p className="text-xs font-semibold text-foreground group-hover:text-ink-accent transition-colors whitespace-nowrap">
                                     {child.name}
                                   </p>
                                 </div>
@@ -334,8 +334,8 @@ export function Navbar() {
                   className={cn(
                     "px-1.5 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition-colors whitespace-nowrap",
                     pathname === link.href
-                      ? "text-primary"
-                      : "text-foreground hover:text-primary",
+                      ? "text-ink-accent"
+                      : "text-foreground hover:text-ink-accent",
                   )}
                 >
                   {link.name}
@@ -345,7 +345,7 @@ export function Navbar() {
           </div>
           <div className="flex items-center gap-2">
             <div
-              className="flex max-w-[110px] items-center gap-1 rounded-xl border border-primary/15 bg-primary/5 px-2 py-1.5 text-primary sm:max-w-[140px] sm:gap-1.5 sm:px-2.5 xl:max-w-[180px]"
+              className="flex max-w-[110px] items-center gap-1 rounded-xl border border-primary/15 bg-primary/5 px-2 py-1.5 text-ink-accent sm:max-w-[140px] sm:gap-1.5 sm:px-2.5 xl:max-w-[180px]"
               title={location?.label || "Detecting your location"}
             >
               <MapPin className="h-3.5 w-3.5 shrink-0" />
@@ -385,7 +385,7 @@ export function Navbar() {
               >
                 <button
                   type="button"
-                  className="flex items-center gap-2 rounded-xl border border-primary/15 bg-primary/5 px-3 py-1.5 text-xs font-bold text-primary transition hover:bg-primary/10"
+                  className="flex items-center gap-2 rounded-xl border border-primary/15 bg-primary/5 px-3 py-1.5 text-xs font-bold text-ink-accent transition hover:bg-primary/10"
                 >
                   <User className="h-4 w-4" />
                   <span className="max-w-[90px] truncate">{user?.name?.split(" ")[0]}</span>
@@ -404,7 +404,7 @@ export function Navbar() {
                       <button
                         type="button"
                         onClick={logout}
-                        className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-bold text-[var(--c-peach)] hover:bg-red-500/10"
+                        className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-bold text-ink-accent hover:bg-red-500/10"
                       >
                         <LogOut className="h-3.5 w-3.5" />
                         Sign out
@@ -484,14 +484,14 @@ export function Navbar() {
                             className="flex items-center justify-between p-3 rounded-xl hover:bg-primary/10 transition-colors group"
                           >
                             <div className="text-left">
-                              <p className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm">
+                              <p className="font-semibold text-foreground group-hover:text-ink-accent transition-colors text-sm">
                                 {product.name}
                               </p>
                               <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
                                 {product.composition} • {product.strength}
                               </p>
                             </div>
-                            <span className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                            <span className="text-xs font-medium text-ink-accent bg-primary/10 px-2.5 py-1 rounded-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                               {product.category}
                             </span>
                           </Link>
@@ -520,7 +520,7 @@ export function Navbar() {
           >
             <button
               type="button"
-              className="absolute inset-0 bg-black/40"
+              className="absolute inset-0 bg-ink/40"
               aria-label="Close menu"
               onClick={closeMobileMenu}
             />
@@ -546,7 +546,7 @@ export function Navbar() {
                         logout();
                         closeMobileMenu();
                       }}
-                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-[var(--c-peach)] hover:bg-red-500/10"
+                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-ink-accent hover:bg-red-500/10"
                     >
                       <LogOut className="h-4 w-4" />
                       Sign out
@@ -568,7 +568,7 @@ export function Navbar() {
                     <Link
                       href="/signup"
                       onClick={closeMobileMenu}
-                      className="flex w-full items-center gap-2 rounded-xl border border-primary/30 px-4 py-3 text-sm font-bold text-primary"
+                      className="flex w-full items-center gap-2 rounded-xl border border-primary/30 px-4 py-3 text-sm font-bold text-ink-accent"
                     >
                       <UserPlus className="h-4 w-4" />
                       Signup
@@ -582,7 +582,7 @@ export function Navbar() {
                     <Link
                       href={link.href}
                       onClick={closeMobileMenu}
-                      className="block rounded-xl px-4 py-3 text-base font-medium transition-colors hover:bg-primary/10 hover:text-primary"
+                      className="block rounded-xl px-4 py-3 text-base font-medium transition-colors hover:bg-primary/10 hover:text-ink-accent"
                     >
                       {link.name}
                     </Link>
@@ -593,7 +593,7 @@ export function Navbar() {
                             key={child.name}
                             href={child.href}
                             onClick={closeMobileMenu}
-                            className="block rounded-lg px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-primary"
+                            className="block rounded-lg px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-ink-accent"
                           >
                             {child.name}
                           </Link>
@@ -605,7 +605,7 @@ export function Navbar() {
                 <Link
                   href="/faq"
                   onClick={closeMobileMenu}
-                  className="block rounded-xl px-4 py-3 text-base font-medium transition-colors hover:bg-primary/10 hover:text-primary"
+                  className="block rounded-xl px-4 py-3 text-base font-medium transition-colors hover:bg-primary/10 hover:text-ink-accent"
                 >
                   FAQ
                 </Link>

@@ -14,7 +14,7 @@ export function InteractiveTimeline({ events }) {
               <div
                 className={`md:w-1/2 pl-12 md:pl-0 ${i % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12"}`}
               >
-                <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-bold mb-2">
+                <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-ink-accent text-sm font-bold mb-2">
                   {event.year}
                 </span>
                 <h3 className="font-bold text-lg mb-1">{event.title}</h3>

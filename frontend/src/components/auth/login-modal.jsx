@@ -113,7 +113,7 @@ export function LoginModal() {
                   <BrandLogo className="h-full w-full" priority />
                 </div>
                 <div className="min-w-0 pt-0.5">
-                  <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-primary-foreground/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#f5e6b8]">
+                  <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-primary-foreground/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-ink-accent">
                     <Sparkles className="h-3 w-3" />
                     Welcome back
                   </div>
@@ -138,7 +138,7 @@ export function LoginModal() {
                 <motion.div
                   initial={{ opacity: 0, y: -6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-xs text-[var(--c-peach)]"
+                  className="flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-xs text-ink-accent"
                 >
                   <AlertCircle className="h-4 w-4 shrink-0" />
                   {error}
@@ -198,14 +198,14 @@ export function LoginModal() {
                 variant="outline"
                 disabled={loading}
                 onClick={handleDemoLogin}
-                className="h-11 w-full touch-manipulation gap-2 border-primary/25 bg-primary/5 text-primary hover:bg-primary/10"
+                className="h-11 w-full touch-manipulation gap-2 border-primary/25 bg-primary/5 text-ink-accent hover:bg-primary/10"
               >
                 <UserRound className="h-4 w-4" />
                 {loading ? "Signing in..." : "Demo customer login"}
               </Button>
 
               <div className="rounded-2xl border border-border/50 bg-muted/40 px-3 py-2.5 text-[11px] text-muted-foreground">
-                <p className="mb-1 font-bold uppercase tracking-wide text-primary/80">
+                <p className="mb-1 font-bold uppercase tracking-wide text-ink-accent/80">
                   Dummy customer ID
                 </p>
                 <p>
@@ -223,7 +223,7 @@ export function LoginModal() {
                 <Link
                   to="/signup"
                   onClick={handleClose}
-                  className="inline-flex items-center gap-1 font-bold text-primary hover:underline"
+                  className="inline-flex items-center gap-1 font-bold text-ink-accent hover:underline"
                 >
                   Create account <ArrowRight className="h-3 w-3" />
                 </Link>

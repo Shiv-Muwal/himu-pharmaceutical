@@ -104,7 +104,7 @@ export default function SignupPage() {
           transition={{ duration: 0.6 }}
           className="hidden lg:block"
         >
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.25em] text-primary/70">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.25em] text-ink-accent/70">
             HIMU Pharmacy
           </p>
           <h1 className="font-[family-name:var(--font-heading)] text-4xl font-black leading-tight text-foreground xl:text-5xl">
@@ -126,7 +126,7 @@ export default function SignupPage() {
                   transition={{ delay: 0.25 + i * 0.1 }}
                   className="flex items-center gap-3 rounded-2xl border border-primary/10 bg-primary-foreground/60 px-4 py-3 backdrop-blur"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-ink-accent">
                     <Icon className="h-5 w-5" />
                   </div>
                   <span className="text-sm font-semibold text-foreground">{item.text}</span>
@@ -149,7 +149,7 @@ export default function SignupPage() {
           />
 
           <div className="relative mb-7">
-            <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary">
+            <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-ink-accent">
               <CheckCircle2 className="h-3 w-3" />
               Free account
             </div>
@@ -166,7 +166,7 @@ export default function SignupPage() {
               <motion.div
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-xs text-[var(--c-peach)]"
+                className="flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-xs text-ink-accent"
               >
                 <AlertCircle className="h-4 w-4 shrink-0" />
                 {error}
@@ -283,12 +283,12 @@ export default function SignupPage() {
                 openLogin();
                 navigate("/");
               }}
-              className="font-bold text-primary hover:underline"
+              className="font-bold text-ink-accent hover:underline"
             >
               Sign in
             </button>
             {" · "}
-            <Link to="/" className="font-semibold text-foreground/70 hover:text-primary">
+            <Link to="/" className="font-semibold text-foreground/70 hover:text-ink-accent">
               Back home
             </Link>
           </p>

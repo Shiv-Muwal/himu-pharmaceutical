@@ -39,7 +39,7 @@ export function MobileAppNav() {
                   <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/25">
                     <Icon className="h-4 w-4" />
                     {cartCount > 0 && (
-                      <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold px-1 text-[9px] font-black text-[#ffc5aa]">
+                      <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold px-1 text-[9px] font-black text-ink-accent">
                         {cartCount > 9 ? "9+" : cartCount}
                       </span>
                     )}
@@ -57,7 +57,7 @@ export function MobileAppNav() {
                   onClick={() => setAccountOpen(true)}
                   className={cn(
                     "flex flex-col items-center gap-0.5 rounded-xl px-1 py-2 text-[10px] font-semibold",
-                    accountOpen ? "text-primary" : "text-muted-foreground",
+                    accountOpen ? "text-ink-accent" : "text-muted-foreground",
                   )}
                 >
                   <Icon className="h-5 w-5" />
@@ -74,7 +74,7 @@ export function MobileAppNav() {
                 className={({ isActive }) =>
                   cn(
                     "flex flex-col items-center gap-0.5 rounded-xl px-1 py-2 text-[10px] font-semibold transition",
-                    isActive ? "text-primary" : "text-muted-foreground",
+                    isActive ? "text-ink-accent" : "text-muted-foreground",
                   )
                 }
               >

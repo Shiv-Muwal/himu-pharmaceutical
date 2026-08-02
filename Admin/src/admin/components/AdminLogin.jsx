@@ -56,7 +56,7 @@ export function AdminLogin({
   };
 
   return (
-    <div className="relative min-h-[100dvh] overflow-x-hidden overflow-y-auto bg-[#ffc5aa] text-[var(--c-lime)]">
+    <div className="relative min-h-[100dvh] overflow-x-hidden overflow-y-auto bg-[#ffc5aa] text-foreground">
       <LoginScene3D />
 
       <div
@@ -84,7 +84,7 @@ export function AdminLogin({
                 className="drop-shadow-[0_0_50px_rgba(214, 176, 77,0.35)]"
               />
             </motion.div>
-            <p className="text-sm text-[var(--c-lime)]/60">
+            <p className="text-sm text-foreground/60">
               Operations suite for catalog, orders & inventory
             </p>
           </div>
@@ -94,7 +94,7 @@ export function AdminLogin({
               <motion.div
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mb-5 flex items-center gap-2 rounded-xl border border-[var(--c-peach)]/30 bg-[var(--c-peach)]/25 p-3.5 text-xs text-[var(--c-lime)]"
+                className="mb-5 flex items-center gap-2 rounded-xl border border-[var(--c-peach)]/30 bg-[var(--c-peach)]/25 p-3.5 text-xs text-foreground"
               >
                 <AlertCircle className="h-4 w-4 shrink-0" />
                 <span>{loginError}</span>
@@ -103,7 +103,7 @@ export function AdminLogin({
 
             <form id="himu-admin-login-form" onSubmit={handleLogin} className="space-y-4">
               <div className="relative">
-                <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--c-lime)]/40" />
+                <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/40" />
                 <Input
                   type="email"
                   inputMode="email"
@@ -111,7 +111,7 @@ export function AdminLogin({
                   placeholder="Admin email / ID"
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
-                  className="h-12 border-[var(--c-lime)]/10 bg-[var(--c-lime)]/5 pl-11 text-base text-[var(--c-lime)] placeholder:text-[var(--c-lime)]/35 sm:text-sm"
+                  className="h-12 border-[var(--c-lime)]/10 bg-[var(--c-lime)]/5 pl-11 text-base text-foreground placeholder:text-foreground/35 sm:text-sm"
                   autoComplete="username"
                   autoCapitalize="none"
                   autoCorrect="off"
@@ -119,21 +119,21 @@ export function AdminLogin({
                 />
               </div>
               <div className="relative">
-                <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--c-lime)]/40" />
+                <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/40" />
                 <Input
                   type={showPassword ? "text" : "password"}
                   enterKeyHint="go"
                   placeholder="Password"
                   value={passwordInput}
                   onChange={(e) => setPasswordInput(e.target.value)}
-                  className="h-12 border-[var(--c-lime)]/10 bg-[var(--c-lime)]/5 pl-11 pr-12 text-base text-[var(--c-lime)] placeholder:text-[var(--c-lime)]/35 sm:text-sm"
+                  className="h-12 border-[var(--c-lime)]/10 bg-[var(--c-lime)]/5 pl-11 pr-12 text-base text-foreground placeholder:text-foreground/35 sm:text-sm"
                   autoComplete="current-password"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center text-[var(--c-lime)]/40 hover:text-[var(--c-lime)]"
+                  className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center text-foreground/40 hover:text-foreground"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -141,7 +141,7 @@ export function AdminLogin({
               <Button
                 type="submit"
                 disabled={loginLoading}
-                className="h-12 w-full touch-manipulation bg-primary text-base text-[var(--c-lime)] shadow-none hover:bg-primary-hover sm:text-sm"
+                className="h-12 w-full touch-manipulation bg-primary text-base text-foreground shadow-none hover:bg-primary-hover sm:text-sm"
               >
                 {loginLoading ? "Authenticating..." : "Enter Dashboard"}
               </Button>
@@ -155,7 +155,7 @@ export function AdminLogin({
                 e.preventDefault();
                 handleDemoLogin();
               }}
-              className="mt-3 h-11 w-full touch-manipulation gap-2 border-[var(--c-mint)]/40 bg-[var(--c-mint)]/25 text-[var(--c-lime)] hover:bg-[var(--c-mint)]/35 hover:text-[var(--c-lime)]"
+              className="mt-3 h-11 w-full touch-manipulation gap-2 border-[var(--c-mint)]/40 bg-[var(--c-mint)]/25 text-foreground hover:bg-[var(--c-mint)]/35 hover:text-foreground"
             >
               <LayoutDashboard className="h-4 w-4" />
               Open admin panel (demo login)
@@ -168,13 +168,13 @@ export function AdminLogin({
               <div className="space-y-2 text-xs">
                 <div className="flex items-center justify-between gap-2 rounded-xl bg-[var(--c-lime)]/5 px-3 py-2">
                   <div>
-                    <p className="text-[10px] text-[var(--c-lime)]/45">ID / Email</p>
-                    <p className="font-semibold text-[var(--c-lime)]/90">{HINT_EMAIL}</p>
+                    <p className="text-[10px] text-foreground/45">ID / Email</p>
+                    <p className="font-semibold text-foreground/90">{HINT_EMAIL}</p>
                   </div>
                   <button
                     type="button"
                     onClick={() => copyText("email", HINT_EMAIL)}
-                    className="rounded-lg p-2 text-[var(--c-lime)]/50 hover:bg-[var(--c-lime)]/10 hover:text-[var(--c-lime)]"
+                    className="rounded-lg p-2 text-foreground/50 hover:bg-[var(--c-lime)]/10 hover:text-foreground"
                     aria-label="Copy email"
                   >
                     {copied === "email" ? <Check className="h-3.5 w-3.5 text-[var(--c-mint)]" /> : <Copy className="h-3.5 w-3.5" />}
@@ -182,13 +182,13 @@ export function AdminLogin({
                 </div>
                 <div className="flex items-center justify-between gap-2 rounded-xl bg-[var(--c-lime)]/5 px-3 py-2">
                   <div>
-                    <p className="text-[10px] text-[var(--c-lime)]/45">Password</p>
-                    <p className="font-semibold text-[var(--c-lime)]/90">{HINT_PASSWORD}</p>
+                    <p className="text-[10px] text-foreground/45">Password</p>
+                    <p className="font-semibold text-foreground/90">{HINT_PASSWORD}</p>
                   </div>
                   <button
                     type="button"
                     onClick={() => copyText("password", HINT_PASSWORD)}
-                    className="rounded-lg p-2 text-[var(--c-lime)]/50 hover:bg-[var(--c-lime)]/10 hover:text-[var(--c-lime)]"
+                    className="rounded-lg p-2 text-foreground/50 hover:bg-[var(--c-lime)]/10 hover:text-foreground"
                     aria-label="Copy password"
                   >
                     {copied === "password" ? <Check className="h-3.5 w-3.5 text-[var(--c-mint)]" /> : <Copy className="h-3.5 w-3.5" />}
@@ -204,8 +204,8 @@ export function AdminLogin({
               </button>
             </div>
 
-            <div className="mt-5 flex items-center justify-center gap-2 text-[11px] text-[var(--c-lime)]/40">
-              <Sparkles className="h-3.5 w-3.5 text-[#ffc5aa]" />
+            <div className="mt-5 flex items-center justify-center gap-2 text-[11px] text-foreground/40">
+              <Sparkles className="h-3.5 w-3.5 text-ink-accent" />
               Encrypted session · Admin only
             </div>
           </div>
@@ -213,7 +213,7 @@ export function AdminLogin({
           <div className="mt-6 text-center">
             <a
               href={storefrontUrl}
-              className="text-xs font-semibold text-[var(--c-mint)] hover:text-[var(--c-lime)]"
+              className="text-xs font-semibold text-[var(--c-mint)] hover:text-foreground"
             >
               ← Back to storefront
             </a>

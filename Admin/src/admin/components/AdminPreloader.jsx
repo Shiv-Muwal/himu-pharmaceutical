@@ -36,7 +36,7 @@ export function AdminPreloader() {
         >
           <BrandLogo className="h-full w-full" priority />
         </motion.div>
-        <p className="font-[family-name:var(--font-heading)] text-lg font-black text-primary">
+        <p className="font-[family-name:var(--font-heading)] text-lg font-black text-ink-accent">
           HIMU Control
         </p>
         <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.28em] text-gold">

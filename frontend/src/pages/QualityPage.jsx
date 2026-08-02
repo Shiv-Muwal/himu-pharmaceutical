@@ -82,7 +82,7 @@ export default function QualityPage() {
             {standards.map((s, i) => (
               <FadeIn delay={i * 0.1}>
                 <Card className="p-6 text-center h-full hover:shadow-lg transition-shadow">
-                  <Award className="h-10 w-10 text-primary mx-auto mb-3" />
+                  <Award className="h-10 w-10 text-ink-accent mx-auto mb-3" />
                   <h3 className="font-bold text-lg mb-2">{s.name}</h3>
                   <p className="text-sm text-muted-foreground">
                     {s.description}
@@ -100,10 +100,10 @@ export default function QualityPage() {
             {qaWorkflow.map((item, i) => (
               <FadeIn delay={i * 0.08}>
                 <Card className="p-6 relative overflow-hidden">
-                  <span className="absolute top-4 right-4 text-4xl font-bold text-primary/10">
+                  <span className="absolute top-4 right-4 text-4xl font-bold text-ink-accent/10">
                     {item.step}
                   </span>
-                  <CheckCircle className="h-8 w-8 text-primary mb-3" />
+                  <CheckCircle className="h-8 w-8 text-ink-accent mb-3" />
                   <h3 className="font-bold mb-2">{item.title}</h3>
                   <p className="text-sm text-muted-foreground">
                     {item.description}
@@ -118,7 +118,7 @@ export default function QualityPage() {
         <div className="container-custom">
           <FadeIn>
             <Card className="p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
-              <Shield className="h-20 w-20 text-primary shrink-0" />
+              <Shield className="h-20 w-20 text-ink-accent shrink-0" />
               <div>
                 <h2 className="font-bold text-2xl mb-4">
                   Our Quality Commitment

@@ -272,7 +272,7 @@ export function CheckoutModal() {
           <button
             type="button"
             onClick={closeCheckout}
-            className="absolute right-4 top-4 z-20 rounded-xl bg-primary-foreground/80 p-2 text-[#ffc5aa] shadow-sm transition hover:bg-[#bbf1d2] hover:text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]"
+            className="absolute right-4 top-4 z-20 rounded-xl bg-primary-foreground/80 p-2 text-ink-accent shadow-sm transition hover:bg-[#bbf1d2] hover:text-foreground"
           >
             <X className="h-5 w-5" />
           </button>
@@ -280,14 +280,14 @@ export function CheckoutModal() {
           <>
               <div className="col-span-12 max-h-[92vh] overflow-y-auto p-6 md:col-span-7 md:p-8">
                 <div className="mb-6 flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#bbf1d2] text-[#ffc5aa]">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#bbf1d2] text-ink-accent">
                     <ShieldCheck className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
                       {isDirectCheckout ? "Express Checkout" : "Secure Checkout"}
                     </p>
-                    <h2 className="font-[family-name:var(--font-heading)] text-2xl font-black text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
+                    <h2 className="font-[family-name:var(--font-heading)] text-2xl font-black text-foreground">
                       Place Your Order
                     </h2>
                   </div>
@@ -300,7 +300,7 @@ export function CheckoutModal() {
                       <button
                         type="button"
                         onClick={openLogin}
-                        className="font-bold text-primary underline"
+                        className="font-bold text-ink-accent underline"
                       >
                         Sign in
                       </button>{" "}
@@ -308,7 +308,7 @@ export function CheckoutModal() {
                     </div>
                   )}
                   <div className="rounded-3xl border border-primary-foreground/80 bg-primary-foreground/80 p-4 shadow-[0_8px_30px_rgba(61,122,90,0.05)]">
-                    <p className="mb-3 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
+                    <p className="mb-3 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-muted-foreground">
                       <User className="h-3.5 w-3.5" /> Contact details
                     </p>
                     <div className="space-y-3">
@@ -321,12 +321,12 @@ export function CheckoutModal() {
                           className={`h-11 rounded-xl border-[#bbf1d2] bg-[#eef8cd] ${errors.name ? "border-[var(--c-peach)]" : ""}`}
                         />
                         {errors.name && (
-                          <p className="mt-1 text-[10px] text-[var(--c-peach)]">{errors.name}</p>
+                          <p className="mt-1 text-[10px] text-ink-accent">{errors.name}</p>
                         )}
                       </div>
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <div className="relative">
-                          <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#ffc5aa]" />
+                          <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-accent" />
                           <Input
                             name="phone"
                             placeholder="Phone *"
@@ -335,11 +335,11 @@ export function CheckoutModal() {
                             className={`h-11 rounded-xl border-[#bbf1d2] bg-[#eef8cd] pl-10 ${errors.phone ? "border-[var(--c-peach)]" : ""}`}
                           />
                           {errors.phone && (
-                            <p className="mt-1 text-[10px] text-[var(--c-peach)]">{errors.phone}</p>
+                            <p className="mt-1 text-[10px] text-ink-accent">{errors.phone}</p>
                           )}
                         </div>
                         <div className="relative">
-                          <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#ffc5aa]" />
+                          <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-accent" />
                           <Input
                             name="email"
                             type="email"
@@ -349,7 +349,7 @@ export function CheckoutModal() {
                             className={`h-11 rounded-xl border-[#bbf1d2] bg-[#eef8cd] pl-10 ${errors.email ? "border-[var(--c-peach)]" : ""}`}
                           />
                           {errors.email && (
-                            <p className="mt-1 text-[10px] text-[var(--c-peach)]">{errors.email}</p>
+                            <p className="mt-1 text-[10px] text-ink-accent">{errors.email}</p>
                           )}
                         </div>
                       </div>
@@ -357,7 +357,7 @@ export function CheckoutModal() {
                   </div>
 
                   <div className="rounded-3xl border border-primary-foreground/80 bg-primary-foreground/80 p-4 shadow-[0_8px_30px_rgba(61,122,90,0.05)]">
-                    <p className="mb-3 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
+                    <p className="mb-3 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-muted-foreground">
                       <MapPin className="h-3.5 w-3.5" /> Delivery address
                     </p>
                     <div className="space-y-3">
@@ -370,7 +370,7 @@ export function CheckoutModal() {
                         className={`rounded-xl border-[#bbf1d2] bg-[#eef8cd] ${errors.address ? "border-[var(--c-peach)]" : ""}`}
                       />
                       {errors.address && (
-                        <p className="text-[10px] text-[var(--c-peach)]">{errors.address}</p>
+                        <p className="text-[10px] text-ink-accent">{errors.address}</p>
                       )}
                       <div className="grid grid-cols-2 gap-3">
                         <div>
@@ -382,7 +382,7 @@ export function CheckoutModal() {
                             className={`h-11 rounded-xl border-[#bbf1d2] bg-[#eef8cd] ${errors.city ? "border-[var(--c-peach)]" : ""}`}
                           />
                           {errors.city && (
-                            <p className="mt-1 text-[10px] text-[var(--c-peach)]">{errors.city}</p>
+                            <p className="mt-1 text-[10px] text-ink-accent">{errors.city}</p>
                           )}
                         </div>
                         <div>
@@ -394,7 +394,7 @@ export function CheckoutModal() {
                             className={`h-11 rounded-xl border-[#bbf1d2] bg-[#eef8cd] ${errors.pincode ? "border-[var(--c-peach)]" : ""}`}
                           />
                           {errors.pincode && (
-                            <p className="mt-1 text-[10px] text-[var(--c-peach)]">{errors.pincode}</p>
+                            <p className="mt-1 text-[10px] text-ink-accent">{errors.pincode}</p>
                           )}
                         </div>
                       </div>
@@ -402,7 +402,7 @@ export function CheckoutModal() {
                   </div>
 
                   <div className="rounded-3xl border border-primary-foreground/80 bg-primary-foreground/80 p-4 shadow-[0_8px_30px_rgba(61,122,90,0.05)]">
-                    <p className="mb-3 text-xs font-bold uppercase tracking-wide text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
+                    <p className="mb-3 text-xs font-bold uppercase tracking-wide text-muted-foreground">
                       Payment method
                     </p>
                     <div className="grid grid-cols-2 gap-3">
@@ -426,10 +426,10 @@ export function CheckoutModal() {
                             }`}
                           >
                             <Icon
-                              className={`mb-2 h-5 w-5 ${active ? "text-[#ffc5aa]" : "text-[#ffc5aa]"}`}
+                              className={`mb-2 h-5 w-5 ${active ? "text-ink-accent" : "text-ink-accent"}`}
                             />
-                            <p className="text-xs font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">{pm.label}</p>
-                            <p className="mt-0.5 text-[10px] text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">{pm.hint}</p>
+                            <p className="text-xs font-bold text-foreground">{pm.label}</p>
+                            <p className="mt-0.5 text-[10px] text-muted-foreground">{pm.hint}</p>
                           </button>
                         );
                       })}
@@ -441,7 +441,7 @@ export function CheckoutModal() {
                         animate={{ opacity: 1, height: "auto" }}
                         className="mt-3 space-y-3 overflow-hidden rounded-2xl border border-[#bbf1d2] bg-[#eef8cd] p-3"
                       >
-                        <p className="text-[10px] font-medium text-[#bbf1d2]">
+                        <p className="text-[10px] font-medium text-ink-mint">
                           Demo mode — use any 16-digit dummy card.
                         </p>
                         <Input
@@ -490,7 +490,7 @@ export function CheckoutModal() {
                   </div>
 
                   {errors.submit && (
-                    <p className="text-sm text-[var(--c-peach)]" role="alert">
+                    <p className="text-sm text-ink-accent" role="alert">
                       {errors.submit}
                     </p>
                   )}
@@ -507,8 +507,8 @@ export function CheckoutModal() {
 
               <div className="col-span-12 flex max-h-[92vh] flex-col border-t border-[#bbf1d2] bg-primary-foreground/70 p-6 backdrop-blur md:col-span-5 md:border-l md:border-t-0 md:p-8">
                 <div className="mb-4 flex items-center gap-2">
-                  <Leaf className="h-4 w-4 text-[#bbf1d2]" />
-                  <h3 className="font-[family-name:var(--font-heading)] text-lg font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
+                  <Leaf className="h-4 w-4 text-ink-mint" />
+                  <h3 className="font-[family-name:var(--font-heading)] text-lg font-bold text-foreground">
                     Order Summary
                   </h3>
                 </div>
@@ -528,14 +528,14 @@ export function CheckoutModal() {
                         />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-xs font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
+                        <p className="truncate text-xs font-bold text-foreground">
                           {item.product.name}
                         </p>
-                        <p className="mt-0.5 text-[10px] text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
+                        <p className="mt-0.5 text-[10px] text-muted-foreground">
                           Qty {item.quantity} · {item.selectedVariant}
                         </p>
                       </div>
-                      <span className="shrink-0 text-xs font-black text-[#ffc5aa]">
+                      <span className="shrink-0 text-xs font-black text-ink-accent">
                         ₹{item.product.price * item.quantity}
                       </span>
                     </div>
@@ -543,23 +543,23 @@ export function CheckoutModal() {
                 </div>
 
                 <div className="mt-5 space-y-2 rounded-3xl border border-[#bbf1d2] bg-gradient-to-br from-[#eef8cd] to-[#eef8cd] p-4 text-sm">
-                  <div className="flex justify-between text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]">
+                  <div className="flex justify-between text-muted-foreground">
                     <span>Items Total</span>
                     <span>₹{checkoutTotalOriginal}</span>
                   </div>
                   {checkoutSavings > 0 && (
-                    <div className="flex justify-between font-semibold text-[#bbf1d2]">
+                    <div className="flex justify-between font-semibold text-ink-mint">
                       <span>Savings</span>
                       <span>- ₹{checkoutSavings}</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]">
+                  <div className="flex justify-between text-muted-foreground">
                     <span>Shipping</span>
-                    <span className="font-semibold text-[#bbf1d2]">FREE</span>
+                    <span className="font-semibold text-ink-mint">FREE</span>
                   </div>
                   <div className="flex items-end justify-between border-t border-[#bbf1d2] pt-3">
-                    <span className="font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">Amount Payable</span>
-                    <span className="font-[family-name:var(--font-heading)] text-2xl font-black text-[#ffc5aa]">
+                    <span className="font-bold text-foreground">Amount Payable</span>
+                    <span className="font-[family-name:var(--font-heading)] text-2xl font-black text-ink-accent">
                       ₹{checkoutTotal}
                     </span>
                   </div>

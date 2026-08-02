@@ -30,7 +30,7 @@ export function OrderSuccessTick({ orderId }) {
           <motion.path
             d="M14 27 L22 35 L38 17"
             fill="none"
-            stroke="#EEF8CD"
+            stroke="#3a2418"
             strokeWidth="4.5"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -106,7 +106,7 @@ export function OrderSuccessView({
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55 }}
-            className="font-[family-name:var(--font-heading)] text-3xl font-black text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]"
+            className="font-[family-name:var(--font-heading)] text-3xl font-black text-foreground"
           >
             Order Placed!
           </motion.h2>
@@ -114,7 +114,7 @@ export function OrderSuccessView({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
-            className="mt-2 text-sm text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]"
+            className="mt-2 text-sm text-muted-foreground"
           >
             Thank you · Your HIMU order is confirmed
           </motion.p>
@@ -122,7 +122,7 @@ export function OrderSuccessView({
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.8 }}
-            className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#bbf1d2] px-4 py-1.5 text-xs font-bold text-[#ffc5aa]"
+            className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#bbf1d2] px-4 py-1.5 text-xs font-bold text-ink-accent"
           >
             Order ID · {orderId}
           </motion.p>
@@ -135,14 +135,14 @@ export function OrderSuccessView({
           className="mb-4 space-y-3"
         >
           <div className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-[var(--c-lime)] p-4 shadow-sm">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-ink-accent">
               <Truck className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-[10px] font-black uppercase tracking-[0.16em] text-primary">
+              <p className="text-[10px] font-black uppercase tracking-[0.16em] text-ink-accent">
                 Expected delivery
               </p>
-              <p className="mt-0.5 text-base font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
+              <p className="mt-0.5 text-base font-bold text-foreground">
                 {expectedDelivery || "Within 5–7 days"}
               </p>
               <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
@@ -155,14 +155,14 @@ export function OrderSuccessView({
           <div className="rounded-2xl border border-gold/40 bg-gradient-to-r from-[#ffc5aa] to-[var(--c-lime)] p-4 shadow-sm">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold/20 text-[#ffc5aa]">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold/20 text-ink-accent">
                   <TicketPercent className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#ffc5aa]">
+                  <p className="text-[10px] font-black uppercase tracking-[0.16em] text-ink-accent">
                     Order coupon
                   </p>
-                  <p className="mt-0.5 font-[family-name:var(--font-heading)] text-lg font-black tracking-wider text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
+                  <p className="mt-0.5 font-[family-name:var(--font-heading)] text-lg font-black tracking-wider text-foreground">
                     {couponCode || "HIMUCARE"}
                   </p>
                   <p className="text-[11px] text-muted-foreground">
@@ -173,7 +173,7 @@ export function OrderSuccessView({
               <button
                 type="button"
                 onClick={copyCoupon}
-                className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-gold/40 bg-[var(--c-lime)] px-3 text-xs font-bold text-[#ffc5aa]"
+                className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-gold/40 bg-[var(--c-lime)] px-3 text-xs font-bold text-ink-accent"
               >
                 <Copy className="h-3.5 w-3.5" />
                 {copied ? "Copied" : "Copy"}
@@ -190,35 +190,35 @@ export function OrderSuccessView({
         >
           <div className="flex items-start justify-between border-b border-[#bbf1d2] pb-3">
             <div>
-              <h1 className="font-[family-name:var(--font-heading)] text-lg font-extrabold text-[#ffc5aa]">
+              <h1 className="font-[family-name:var(--font-heading)] text-lg font-extrabold text-ink-accent">
                 {COMPANY.name}
               </h1>
-              <p className="mt-1 text-[10px] text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">Date: {orderDate}</p>
+              <p className="mt-1 text-[10px] text-muted-foreground">Date: {orderDate}</p>
             </div>
-            <span className="rounded-full bg-[#bbf1d2] px-3 py-1 text-[10px] font-bold uppercase text-[#ffc5aa]">
+            <span className="rounded-full bg-[#bbf1d2] px-3 py-1 text-[10px] font-bold uppercase text-ink-accent">
               Confirmed
             </span>
           </div>
 
           <div className="grid gap-3 text-xs sm:grid-cols-2">
             <div>
-              <h4 className="mb-1 text-[9px] font-bold uppercase tracking-wider text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
+              <h4 className="mb-1 text-[9px] font-bold uppercase tracking-wider text-muted-foreground">
                 Deliver to
               </h4>
-              <p className="font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">{formData.name}</p>
-              <p className="text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]">{formData.phone}</p>
-              <p className="text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]">
+              <p className="font-bold text-foreground">{formData.name}</p>
+              <p className="text-muted-foreground">{formData.phone}</p>
+              <p className="text-muted-foreground">
                 {formData.address}, {formData.city} - {formData.pincode}
               </p>
             </div>
             <div>
-              <h4 className="mb-1 text-[9px] font-bold uppercase tracking-wider text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
+              <h4 className="mb-1 text-[9px] font-bold uppercase tracking-wider text-muted-foreground">
                 Payment
               </h4>
-              <p className="capitalize text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
+              <p className="capitalize text-foreground">
                 {formData.paymentMethod === "cod" ? "Cash on Delivery" : "Card Payment"}
               </p>
-              <p className="mt-1 font-bold text-[#ffc5aa]">₹{summaryTotal}</p>
+              <p className="mt-1 font-bold text-ink-accent">₹{summaryTotal}</p>
             </div>
           </div>
 
@@ -229,10 +229,10 @@ export function OrderSuccessView({
                 className="flex items-center justify-between gap-3 p-3"
               >
                 <div className="min-w-0">
-                  <p className="truncate font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">{item.product.name}</p>
-                  <p className="text-[10px] text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">Qty {item.quantity}</p>
+                  <p className="truncate font-bold text-foreground">{item.product.name}</p>
+                  <p className="text-[10px] text-muted-foreground">Qty {item.quantity}</p>
                 </div>
-                <span className="shrink-0 font-bold text-[#ffc5aa]">
+                <span className="shrink-0 font-bold text-ink-accent">
                   ₹{item.product.price * item.quantity}
                 </span>
               </div>
@@ -240,17 +240,17 @@ export function OrderSuccessView({
           </div>
 
           <div className="space-y-1.5 text-xs">
-            <div className="flex justify-between text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]">
+            <div className="flex justify-between text-muted-foreground">
               <span>Subtotal</span>
               <span>₹{summaryOriginal}</span>
             </div>
             {summarySavings > 0 && (
-              <div className="flex justify-between font-semibold text-[#bbf1d2]">
+              <div className="flex justify-between font-semibold text-ink-mint">
                 <span>Savings</span>
                 <span>- ₹{summarySavings}</span>
               </div>
             )}
-            <div className="flex items-end justify-between border-t border-[#bbf1d2] pt-2 text-sm font-bold text-[#ffc5aa]">
+            <div className="flex items-end justify-between border-t border-[#bbf1d2] pt-2 text-sm font-bold text-ink-accent">
               <span>Total paid</span>
               <span className="font-[family-name:var(--font-heading)] text-xl font-black">
                 ₹{summaryTotal}
@@ -269,7 +269,7 @@ export function OrderSuccessView({
           <Button
             variant="outline"
             onClick={() => window.print()}
-            className="h-12 gap-2 rounded-2xl border-[#bbf1d2] text-[#ffc5aa]"
+            className="h-12 gap-2 rounded-2xl border-[#bbf1d2] text-ink-accent"
           >
             <Printer className="h-4 w-4" /> Print Invoice
           </Button>

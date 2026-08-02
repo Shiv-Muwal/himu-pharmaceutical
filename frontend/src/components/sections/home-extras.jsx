@@ -64,7 +64,7 @@ export function ShopWithBrandsSection() {
       <div className="container-custom">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="mb-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
+            <p className="mb-1 text-[10px] font-black uppercase tracking-[0.18em] text-ink-accent">
               Shop with brands
             </p>
             <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold md:text-3xl">
@@ -76,7 +76,7 @@ export function ShopWithBrandsSection() {
           </div>
           <Link
             href="/products"
-            className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+            className="inline-flex items-center gap-1 text-sm font-semibold text-ink-accent hover:underline"
           >
             Browse catalog <ArrowRight className="h-4 w-4" />
           </Link>
@@ -100,7 +100,7 @@ export function ShopWithBrandsSection() {
                   >
                     {brand.mark}
                   </div>
-                  <span className="rounded-full bg-[#eef8cd] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-primary sm:px-2.5 sm:py-1 sm:text-[10px]">
+                  <span className="rounded-full bg-[#eef8cd] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-ink-accent sm:px-2.5 sm:py-1 sm:text-[10px]">
                     Shop
                   </span>
                 </div>
@@ -110,10 +110,10 @@ export function ShopWithBrandsSection() {
                 <p className="relative mt-1 line-clamp-2 text-[11px] text-muted-foreground sm:text-sm">
                   {brand.tagline}
                 </p>
-                <p className="relative mt-2.5 text-[10px] font-semibold text-primary/80 sm:mt-4 sm:text-xs">
+                <p className="relative mt-2.5 text-[10px] font-semibold text-ink-accent/80 sm:mt-4 sm:text-xs">
                   {brand.productsLabel}
                 </p>
-                <span className="relative mt-2 inline-flex items-center gap-1 text-xs font-bold text-primary sm:mt-3 sm:text-sm">
+                <span className="relative mt-2 inline-flex items-center gap-1 text-xs font-bold text-ink-accent sm:mt-3 sm:text-sm">
                   Open
                   <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1 sm:h-4 sm:w-4" />
                 </span>
@@ -152,7 +152,7 @@ export function HomeBlogsSection() {
       <div className="container-custom">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="mb-1 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
+            <p className="mb-1 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-ink-accent">
               <BookOpen className="h-3.5 w-3.5" /> From the journal
             </p>
             <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold md:text-3xl">
@@ -219,16 +219,16 @@ export function HomeBlogsSection() {
                         className="object-cover transition duration-500 group-hover:scale-110"
                       />
                     ) : (
-                      <div className="flex h-full items-center justify-center bg-primary/10 text-primary">
+                      <div className="flex h-full items-center justify-center bg-primary/10 text-ink-accent">
                         <Quote className="h-6 w-6" />
                       </div>
                     )}
                   </div>
                   <div className="flex flex-1 flex-col justify-center p-4 sm:p-5">
-                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-primary">
+                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-ink-accent">
                       {post.category}
                     </p>
-                    <h3 className="mt-1 line-clamp-2 text-base font-bold leading-snug group-hover:text-primary">
+                    <h3 className="mt-1 line-clamp-2 text-base font-bold leading-snug group-hover:text-ink-accent">
                       {post.title}
                     </h3>
                     <p className="mt-2 line-clamp-2 text-xs text-muted-foreground">

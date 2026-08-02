@@ -44,7 +44,7 @@ export function Footer() {
                       priority
                     />
                   </div>
-                  <p className="pl-1 text-[10px] font-bold uppercase tracking-[0.28em] text-[var(--c-peach)]">
+                  <p className="pl-1 text-[10px] font-bold uppercase tracking-[0.28em] text-ink-accent">
                     Healthcare Innovation
                   </p>
                 </div>
@@ -57,7 +57,7 @@ export function Footer() {
                     <a
                       key={social.name}
                       href={social.href}
-                      className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--c-peach)]/40 bg-[var(--c-lime)]/20 text-xs font-bold uppercase transition-all duration-300 hover:scale-110 hover:border-[var(--c-peach)] hover:bg-[var(--c-peach)]/30 hover:text-[var(--c-peach)]"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--c-peach)]/40 bg-[var(--c-lime)]/20 text-xs font-bold uppercase transition-all duration-300 hover:scale-110 hover:border-[var(--c-peach)] hover:bg-[var(--c-peach)]/30 hover:text-ink-accent"
                       aria-label={social.name}
                     >
                       {social.label}
@@ -68,7 +68,7 @@ export function Footer() {
 
               {/* Quick Links — left column beside categories on mobile */}
               <div>
-                <h4 className="mb-3 text-sm font-bold tracking-wide text-gold sm:text-base">
+                <h4 className="mb-3 text-sm font-bold tracking-wide text-ink-accent sm:text-base">
                   Quick Links
                 </h4>
                 <ul className="space-y-2">
@@ -76,7 +76,7 @@ export function Footer() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="inline-block text-xs text-[var(--footer-foreground)]/80 transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
+                        className="inline-block text-xs text-[var(--footer-foreground)]/80 transition-all duration-300 hover:translate-x-1.5 hover:text-ink-accent sm:text-sm"
                       >
                         {link.name}
                       </Link>
@@ -85,7 +85,7 @@ export function Footer() {
                   <li>
                     <Link
                       href="/faq"
-                      className="inline-block text-xs text-[var(--footer-foreground)]/80 transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
+                      className="inline-block text-xs text-[var(--footer-foreground)]/80 transition-all duration-300 hover:translate-x-1.5 hover:text-ink-accent sm:text-sm"
                     >
                       FAQ
                     </Link>
@@ -93,7 +93,7 @@ export function Footer() {
                   <li>
                     <Link
                       href="/certifications"
-                      className="inline-block text-xs text-[var(--footer-foreground)]/80 transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
+                      className="inline-block text-xs text-[var(--footer-foreground)]/80 transition-all duration-300 hover:translate-x-1.5 hover:text-ink-accent sm:text-sm"
                     >
                       Certifications
                     </Link>
@@ -103,7 +103,7 @@ export function Footer() {
 
               {/* Product Categories — right of Quick Links on mobile */}
               <div>
-                <h4 className="mb-3 text-sm font-bold tracking-wide text-gold sm:text-base">
+                <h4 className="mb-3 text-sm font-bold tracking-wide text-ink-accent sm:text-base">
                   Product Categories
                 </h4>
                 <ul className="space-y-2">
@@ -111,7 +111,7 @@ export function Footer() {
                     <li key={cat.slug}>
                       <Link
                         href={`/categories/${cat.slug}`}
-                        className="inline-block text-xs text-[var(--footer-foreground)]/80 transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
+                        className="inline-block text-xs text-[var(--footer-foreground)]/80 transition-all duration-300 hover:translate-x-1.5 hover:text-ink-accent sm:text-sm"
                       >
                         {cat.name}
                       </Link>
@@ -122,20 +122,20 @@ export function Footer() {
 
               {/* Contact — full width under the two columns on mobile */}
               <div className="col-span-2 lg:col-span-1">
-                <h4 className="mb-3 text-sm font-bold tracking-wide text-gold sm:text-base">
+                <h4 className="mb-3 text-sm font-bold tracking-wide text-ink-accent sm:text-base">
                   Contact Info
                 </h4>
                 <ul className="space-y-3 text-xs text-[var(--footer-foreground)]/80 sm:text-sm">
                   <li className="flex items-start gap-2.5">
-                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-ink-accent" />
                     <span>{COMPANY.address}</span>
                   </li>
                   <li className="flex items-center gap-2.5">
-                    <Phone className="h-4 w-4 shrink-0 text-gold" />
+                    <Phone className="h-4 w-4 shrink-0 text-ink-accent" />
                     <span>{COMPANY.phone}</span>
                   </li>
                   <li className="flex items-center gap-2.5">
-                    <Mail className="h-4 w-4 shrink-0 text-gold" />
+                    <Mail className="h-4 w-4 shrink-0 text-ink-accent" />
                     <span>{COMPANY.email}</span>
                   </li>
                 </ul>
@@ -153,20 +153,20 @@ export function Footer() {
                 <span>CIN: {COMPANY.cinNumber}</span>
               </div>
               <div className="flex flex-wrap items-center gap-4">
-                <Link href="/privacy" className="transition-colors hover:text-gold">
+                <Link href="/privacy" className="transition-colors hover:text-ink-accent">
                   Privacy
                 </Link>
-                <Link href="/terms" className="transition-colors hover:text-gold">
+                <Link href="/terms" className="transition-colors hover:text-ink-accent">
                   Terms & Conditions
                 </Link>
-                <Link href="/disclaimer" className="transition-colors hover:text-gold">
+                <Link href="/disclaimer" className="transition-colors hover:text-ink-accent">
                   Disclaimer
                 </Link>
                 <a
                   href={import.meta.env.VITE_ADMIN_URL || "http://localhost:5174/admin/"}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-semibold text-gold transition hover:bg-gold hover:text-[#ffc5aa]"
+                  className="rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-semibold text-ink-accent transition hover:bg-gold hover:text-foreground"
                 >
                   Open Admin Panel
                 </a>

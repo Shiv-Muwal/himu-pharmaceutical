@@ -3,6 +3,9 @@
 /*
   Palette locked to 3 colors only:
   Mint #BBF1D2 · Lime #EEF8CD · Peach #FFC5AA
+
+  Text uses darkened mixes of these hues (never white)
+  so every page stays readable and consistent.
 */
 :root {
   --font-poppins: "Poppins", system-ui, sans-serif;
@@ -15,28 +18,34 @@
   --c-lime: #eef8cd;
   --c-peach: #ffc5aa;
 
+  /* Readable inks derived from palette (no white) */
+  --ink: color-mix(in srgb, var(--c-peach) 30%, #2a1810 70%);
+  --ink-soft: color-mix(in srgb, var(--c-peach) 38%, #4a3228 62%);
+  --ink-accent: color-mix(in srgb, var(--c-peach) 48%, #3a2418 52%);
+  --ink-mint: color-mix(in srgb, var(--c-mint) 36%, #1a3328 64%);
+
   --background: var(--c-lime);
-  /* Readable ink derived from peach (same hue family) */
-  --foreground: color-mix(in srgb, var(--c-peach) 42%, #3a2418 58%);
+  --foreground: var(--ink);
   --card: color-mix(in srgb, var(--c-lime) 78%, var(--c-mint) 22%);
-  --card-foreground: var(--foreground);
+  --card-foreground: var(--ink);
   --primary: var(--c-peach);
   --primary-hover: color-mix(in srgb, var(--c-peach) 72%, var(--c-mint) 28%);
-  --primary-foreground: var(--c-lime);
+  /* Dark ink on peach/mint fills — never white/lime text */
+  --primary-foreground: var(--ink);
   --secondary: var(--c-mint);
-  --secondary-foreground: color-mix(in srgb, var(--c-peach) 55%, #3a2418 45%);
+  --secondary-foreground: var(--ink);
   --muted: color-mix(in srgb, var(--c-lime) 55%, var(--c-mint) 45%);
-  --muted-foreground: color-mix(in srgb, var(--c-peach) 50%, #5a3d2e 50%);
+  --muted-foreground: var(--ink-soft);
   --accent: var(--c-mint);
-  --accent-foreground: color-mix(in srgb, var(--c-peach) 48%, #3a2418 52%);
+  --accent-foreground: var(--ink);
   --border: color-mix(in srgb, var(--c-mint) 55%, var(--c-peach) 45%);
   --ring: var(--c-peach);
   --gold: var(--c-peach);
   --emerald: var(--c-mint);
   --cream: var(--c-lime);
   --footer: var(--c-mint);
-  --footer-foreground: var(--c-lime);
-  --footer-muted: color-mix(in srgb, var(--c-lime) 70%, var(--c-peach) 30%);
+  --footer-foreground: var(--ink);
+  --footer-muted: var(--ink-soft);
   --olive: color-mix(in srgb, var(--c-mint) 60%, var(--c-peach) 40%);
   --glass: color-mix(in srgb, var(--c-lime) 88%, transparent);
   --glass-border: color-mix(in srgb, var(--c-mint) 50%, var(--c-peach) 50%);
@@ -49,15 +58,16 @@
   --card-foreground: var(--c-lime);
   --primary: var(--c-peach);
   --primary-hover: color-mix(in srgb, var(--c-peach) 80%, var(--c-mint) 20%);
-  --primary-foreground: var(--c-lime);
+  --primary-foreground: var(--ink);
   --secondary: var(--c-mint);
-  --secondary-foreground: var(--c-lime);
+  --secondary-foreground: var(--ink);
   --muted: color-mix(in srgb, var(--c-mint) 20%, #2a1c14 80%);
-  --muted-foreground: color-mix(in srgb, var(--c-lime) 65%, var(--c-peach) 35%);
+  --muted-foreground: color-mix(in srgb, var(--c-lime) 55%, var(--c-peach) 45%);
   --accent: var(--c-mint);
-  --accent-foreground: var(--c-lime);
+  --accent-foreground: var(--ink);
   --border: color-mix(in srgb, var(--c-mint) 40%, var(--c-peach) 30%);
   --ring: var(--c-peach);
+  --footer-foreground: var(--ink);
   --glass: color-mix(in srgb, var(--c-mint) 18%, transparent);
   --glass-border: color-mix(in srgb, var(--c-peach) 35%, transparent);
 }
@@ -87,6 +97,10 @@
   --color-olive: var(--olive);
   --color-glass: var(--glass);
   --color-glass-border: var(--glass-border);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-accent: var(--ink-accent);
+  --color-ink-mint: var(--ink-mint);
   --font-sans: var(--font-poppins);
   --font-heading: var(--font-plus-jakarta);
 }
@@ -110,6 +124,15 @@ body {
   overscroll-behavior-y: none;
 }
 
+/* Accent text: peach hue, always readable on lime/mint */
+.text-brand {
+  color: var(--ink-accent);
+}
+
+.text-brand-mint {
+  color: var(--ink-mint);
+}
+
 /* Installed / standalone web-app feel */
 @media (display-mode: standalone) {
   body {
@@ -124,7 +147,6 @@ body {
     -webkit-user-select: text;
   }
 
-  /* Hide browser-like chrome cues when launched from home screen */
   .pwa-hide-standalone {
     display: none !important;
   }
@@ -136,7 +158,6 @@ body {
   }
 }
 
-/* App-like touch targets on small screens */
 @media (max-width: 767px) {
   button,
   a,
@@ -179,7 +200,7 @@ body {
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, var(--c-peach), var(--c-mint));
+  background: linear-gradient(135deg, var(--ink-accent), var(--ink-mint));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -201,7 +222,7 @@ body {
 }
 
 .prose-custom h2 {
-  @apply text-2xl md:text-3xl font-bold text-primary mb-4 mt-8;
+  @apply text-2xl md:text-3xl font-bold text-ink-accent mb-4 mt-8;
 }
 
 .prose-custom p {
@@ -226,7 +247,7 @@ body {
 }
 
 ::selection {
-  background: rgba(255, 197, 170, 0.2);
+  background: color-mix(in srgb, var(--c-peach) 35%, transparent);
   color: var(--foreground);
 }
 

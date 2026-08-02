@@ -47,7 +47,7 @@ export default function AccountPage() {
     <div className="section-padding">
       <div className="container-custom max-w-3xl">
         <div className="mb-6">
-          <p className="text-[10px] font-black uppercase tracking-[0.18em] text-primary">
+          <p className="text-[10px] font-black uppercase tracking-[0.18em] text-ink-accent">
             My Account
           </p>
           <h1 className="font-[family-name:var(--font-heading)] text-2xl font-bold md:text-3xl">
@@ -90,7 +90,7 @@ export default function AccountPage() {
             ) : (
               <>
                 <div className="flex items-center gap-3">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-lg font-black text-primary">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-lg font-black text-ink-accent">
                     {(user.name || "H").slice(0, 1).toUpperCase()}
                   </div>
                   <div>
@@ -100,13 +100,13 @@ export default function AccountPage() {
                 </div>
                 <div className="grid gap-3 text-sm sm:grid-cols-2">
                   <div className="rounded-2xl bg-[#eef8cd] p-3">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-primary">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-ink-accent">
                       Phone
                     </p>
                     <p className="mt-1 font-semibold">{user.phone || "Not added"}</p>
                   </div>
                   <div className="rounded-2xl bg-[#eef8cd] p-3">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-primary">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-ink-accent">
                       Orders
                     </p>
                     <p className="mt-1 font-semibold">{orders.length} placed</p>
@@ -154,7 +154,7 @@ export default function AccountPage() {
                       <p className="text-sm font-bold text-foreground">Order {order.id}</p>
                       <p className="text-xs text-muted-foreground">{order.date}</p>
                     </div>
-                    <span className="rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase text-primary">
+                    <span className="rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase text-ink-accent">
                       {order.status || "Pending"}
                     </span>
                   </div>
@@ -169,18 +169,18 @@ export default function AccountPage() {
 
                   <div className="grid gap-2 sm:grid-cols-2">
                     <div className="flex items-center gap-2 rounded-xl bg-[#eef8cd] px-3 py-2 text-xs">
-                      <Truck className="h-4 w-4 text-primary" />
+                      <Truck className="h-4 w-4 text-ink-accent" />
                       <div>
-                        <p className="font-bold text-primary">Expected</p>
+                        <p className="font-bold text-ink-accent">Expected</p>
                         <p className="text-foreground">
                           {order.expectedDelivery || "5–7 days"}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 rounded-xl bg-[#ffc5aa] px-3 py-2 text-xs">
-                      <TicketPercent className="h-4 w-4 text-[#ffc5aa]" />
+                      <TicketPercent className="h-4 w-4 text-ink-accent" />
                       <div>
-                        <p className="font-bold text-[#ffc5aa]">Coupon</p>
+                        <p className="font-bold text-ink-accent">Coupon</p>
                         <p className="font-black tracking-wide text-foreground">
                           {order.couponCode || "—"}
                         </p>
@@ -188,7 +188,7 @@ export default function AccountPage() {
                     </div>
                   </div>
 
-                  <p className="mt-3 text-right text-sm font-black text-primary">
+                  <p className="mt-3 text-right text-sm font-black text-ink-accent">
                     ₹{order.total}
                   </p>
                 </div>

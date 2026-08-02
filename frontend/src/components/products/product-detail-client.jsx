@@ -110,7 +110,7 @@ export function ProductDetailClient({
   if (notFound) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 py-16 text-center">
-        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-100 text-[var(--c-peach)]">
+        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-100 text-ink-accent">
           <X className="h-7 w-7" />
         </div>
         <h1 className="mb-2 font-[family-name:var(--font-heading)] text-2xl font-bold">
@@ -163,13 +163,13 @@ export function ProductDetailClient({
                 </div>
 
                 {offPercent > 0 && (
-                  <span className="pointer-events-none absolute left-3 top-3 z-10 rounded-md bg-[#cc0c39] px-2 py-1 text-[11px] font-black text-primary-foreground">
+                  <span className="pointer-events-none absolute left-3 top-3 z-10 rounded-md bg-[var(--c-peach)] px-2 py-1 text-[11px] font-black text-foreground">
                     -{offPercent}%
                   </span>
                 )}
 
                 {gallery.length > 1 && (
-                  <div className="pointer-events-none absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5 rounded-full bg-black/35 px-2 py-1 backdrop-blur-sm">
+                  <div className="pointer-events-none absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5 rounded-full bg-ink/35 px-2 py-1 backdrop-blur-sm">
                     {gallery.map((_, i) => (
                       <span
                         key={i}
@@ -210,7 +210,7 @@ export function ProductDetailClient({
 
             {/* Buy box */}
             <div className="space-y-3 px-4 pb-4 pt-3 md:px-0 md:pt-0">
-              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-primary">
+              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-ink-accent">
                 {product.brand || "HIMU"} · {product.category}
               </p>
               <h1 className="font-[family-name:var(--font-heading)] text-[1.35rem] font-bold leading-snug text-foreground sm:text-2xl md:text-3xl">
@@ -223,7 +223,7 @@ export function ProductDetailClient({
                     {product.rating}
                     <Star className="h-3 w-3 fill-current" />
                   </span>
-                  <span className="text-xs font-semibold text-primary">
+                  <span className="text-xs font-semibold text-ink-accent">
                     {product.reviewCount || 0} ratings
                   </span>
                 </div>
@@ -275,7 +275,7 @@ export function ProductDetailClient({
                   <ul className="space-y-1.5">
                     {section.items.map((item, i) => (
                       <li key={i} className="flex gap-2">
-                        <span className="text-primary">•</span>
+                        <span className="text-ink-accent">•</span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -307,7 +307,7 @@ export function ProductDetailClient({
               </h2>
               <Link
                 href={`/products?category=${product.categorySlug}`}
-                className="text-xs font-bold text-primary"
+                className="text-xs font-bold text-ink-accent"
               >
                 See all
               </Link>

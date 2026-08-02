@@ -83,7 +83,7 @@ export default function ManufacturingPage() {
             {processes.map((p, i) => (
               <FadeIn delay={i * 0.08}>
                 <Card className="p-6 h-full hover:shadow-lg transition-shadow">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary mb-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-ink-accent mb-4">
                     <p.icon className="h-6 w-6" />
                   </div>
                   <h3 className="font-bold text-lg mb-2">{p.title}</h3>

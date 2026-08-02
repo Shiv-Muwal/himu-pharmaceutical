@@ -170,7 +170,7 @@ export function BrandStoryHero() {
               <Button
                 size="lg"
                 variant="ghost"
-                className="w-full border-2 border-gold/80 bg-primary-foreground/5 text-gold backdrop-blur-sm hover:border-gold hover:bg-gold hover:text-[#ffc5aa] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(255, 197, 170,0.35)] sm:w-auto"
+                className="w-full border-2 border-gold/80 bg-primary-foreground/5 text-gold backdrop-blur-sm hover:border-gold hover:bg-gold hover:text-ink-accent hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(255, 197, 170,0.35)] sm:w-auto"
               >
                 <MessageCircle className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
                 Contact Us
@@ -259,7 +259,7 @@ export function OverviewSection() {
           <FadeIn direction="right" className="lg:col-span-7">
             <h2 className="mb-5 max-w-xl font-[family-name:var(--font-heading)] text-3xl font-bold leading-[1.15] text-foreground md:text-4xl lg:text-[2.75rem]">
               Medicines engineered for trust.
-              <span className="mt-2 block text-primary">
+              <span className="mt-2 block text-ink-accent">
                 Care designed for everyday excellence.
               </span>
             </h2>
@@ -291,7 +291,7 @@ export function OverviewSection() {
                     transition={{ duration: 0.45, delay: 0.08 * i }}
                     className="flex gap-3"
                   >
-                    <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center bg-primary/10 text-primary">
+                    <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center bg-primary/10 text-ink-accent">
                       <Icon className="h-4 w-4" />
                     </div>
                     <div>
@@ -362,7 +362,7 @@ export function CategoriesSection() {
                     <p className="text-sm text-muted-foreground line-clamp-2">
                       {cat.description}
                     </p>
-                    <span className="inline-flex items-center gap-1 text-primary text-sm font-semibold mt-3 group-hover:gap-2 transition-all">
+                    <span className="inline-flex items-center gap-1 text-ink-accent text-sm font-semibold mt-3 group-hover:gap-2 transition-all">
                       Explore <ArrowRight className="h-4 w-4" />
                     </span>
                   </CardContent>
@@ -397,7 +397,7 @@ export function WhyChooseSection() {
           {whyChoose.map((item, i) => (
             <FadeIn key={item.title} delay={i * 0.08}>
               <div className="group h-full border border-primary-foreground/10 bg-primary-foreground/[0.06] p-6 backdrop-blur-sm transition hover:border-gold/40 hover:bg-primary-foreground/[0.1]">
-                <div className="mb-4 flex h-11 w-11 items-center justify-center bg-gold/15 text-gold transition group-hover:bg-gold group-hover:text-[#ffc5aa]">
+                <div className="mb-4 flex h-11 w-11 items-center justify-center bg-gold/15 text-gold transition group-hover:bg-gold group-hover:text-ink-accent">
                   <item.icon className="h-5 w-5" />
                 </div>
                 <h3 className="mb-2 font-[family-name:var(--font-heading)] text-lg font-bold text-primary-foreground">
@@ -466,7 +466,7 @@ export function FeaturedProductsSection() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
       <div className="container-custom mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <div className="max-w-xl">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-ink-accent">
             <ShoppingBag className="h-3.5 w-3.5" />
             Best sellers
           </div>
@@ -482,7 +482,7 @@ export function FeaturedProductsSection() {
               <Tag className="h-3 w-3" />
               Deal prices live
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-[11px] font-bold text-primary">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-[11px] font-bold text-ink-accent">
               Add to cart · Buy now
             </span>
           </div>
@@ -491,7 +491,7 @@ export function FeaturedProductsSection() {
           <button
             type="button"
             onClick={() => scrollByCard(-1)}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-[var(--c-lime)] text-primary shadow-sm transition hover:bg-primary hover:text-primary-foreground"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-[var(--c-lime)] text-ink-accent shadow-sm transition hover:bg-primary hover:text-primary-foreground"
             aria-label="Previous products"
           >
             <ChevronLeft className="h-5 w-5" />
@@ -499,7 +499,7 @@ export function FeaturedProductsSection() {
           <button
             type="button"
             onClick={() => scrollByCard(1)}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-[var(--c-lime)] text-primary shadow-sm transition hover:bg-primary hover:text-primary-foreground"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-[var(--c-lime)] text-ink-accent shadow-sm transition hover:bg-primary hover:text-primary-foreground"
             aria-label="Next products"
           >
             <ChevronRight className="h-5 w-5" />
@@ -659,7 +659,7 @@ export function NewsSection() {
                     <Badge variant="outline" className="mb-2">
                       {post.category}
                     </Badge>
-                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                    <h3 className="font-bold mb-2 group-hover:text-ink-accent transition-colors line-clamp-2">
                       {post.title}
                     </h3>
                     <p className="text-sm text-muted-foreground line-clamp-2">
@@ -714,10 +714,10 @@ export function PartnersSection() {
                 key={`${name}-${i}`}
                 className="px-6 py-4 rounded-2xl bg-card border border-primary/10 shadow-md shadow-primary/5 flex items-center gap-3 whitespace-nowrap hover:border-primary hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5 transition-all duration-300 group cursor-pointer"
               >
-                <div className="h-9 w-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                <div className="h-9 w-9 rounded-xl bg-primary/10 text-ink-accent flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                   <Icon className="h-5 w-5" />
                 </div>
-                <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                <span className="text-sm font-semibold text-foreground group-hover:text-ink-accent transition-colors">
                   {name}
                 </span>
               </div>

@@ -24,7 +24,7 @@ export function SettingsPanel({
     <div className="grid gap-6 md:grid-cols-2">
       <Card className="overflow-hidden rounded-3xl border border-border/30 shadow-sm">
         <div className="flex items-center gap-2 border-b border-border/20 p-5">
-          <User className="h-5 w-5 text-primary" />
+          <User className="h-5 w-5 text-ink-accent" />
           <h3 className="text-sm font-bold uppercase tracking-wide">Admin Profile</h3>
         </div>
         <CardContent className="p-6">
@@ -65,12 +65,12 @@ export function SettingsPanel({
 
       <Card className="overflow-hidden rounded-3xl border border-border/30 shadow-sm">
         <div className="flex items-center gap-2 border-b border-border/20 p-5">
-          <KeyRound className="h-5 w-5 text-primary" />
+          <KeyRound className="h-5 w-5 text-ink-accent" />
           <h3 className="text-sm font-bold uppercase tracking-wide">Security Reset</h3>
         </div>
         <CardContent className="p-6">
           {pwdError && (
-            <div className="mb-4 flex items-center gap-1.5 rounded-xl border border-[var(--c-peach)]/30 bg-[var(--c-peach)]/25 p-3 text-xs text-[var(--c-peach)]">
+            <div className="mb-4 flex items-center gap-1.5 rounded-xl border border-[var(--c-peach)]/30 bg-[var(--c-peach)]/25 p-3 text-xs text-ink-accent">
               <AlertCircle className="h-4 w-4" />
               <span>{pwdError}</span>
             </div>

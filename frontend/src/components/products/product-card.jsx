@@ -53,7 +53,7 @@ export function ProductCard({ product, compact = false }) {
           </div>
           {!isAvailable && (
             <div className={cn("absolute z-10", compact ? "right-2 top-2" : "right-3 top-3")}>
-              <Badge className="rounded-full border-0 bg-gradient-to-r from-secondary to-[var(--c-peach)] px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-[#ffc5aa] animate-pulse shadow-sm hover:from-secondary hover:to-[var(--c-peach)]">
+              <Badge className="rounded-full border-0 bg-gradient-to-r from-secondary to-[var(--c-peach)] px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-ink-accent animate-pulse shadow-sm hover:from-secondary hover:to-[var(--c-peach)]">
                 Soon
               </Badge>
             </div>
@@ -70,7 +70,7 @@ export function ProductCard({ product, compact = false }) {
           <Link href={`/products/${product.slug}`} className="block">
             <p
               className={cn(
-                "mb-0.5 font-bold uppercase tracking-wider text-primary/80",
+                "mb-0.5 font-bold uppercase tracking-wider text-ink-accent/80",
                 compact ? "text-[8px] sm:text-[10px]" : "text-[10px]",
               )}
             >
@@ -79,7 +79,7 @@ export function ProductCard({ product, compact = false }) {
             </p>
             <h3
               className={cn(
-                "mb-1 font-bold transition-colors line-clamp-2 group-hover:text-primary sm:line-clamp-1",
+                "mb-1 font-bold transition-colors line-clamp-2 group-hover:text-ink-accent sm:line-clamp-1",
                 compact ? "text-[13px] leading-snug sm:text-lg" : "text-lg",
               )}
             >
@@ -96,7 +96,7 @@ export function ProductCard({ product, compact = false }) {
           </p>
           {product.rating && !compact && (
             <div className="mb-2 flex items-center gap-1">
-              <div className="flex text-[var(--c-peach)]">
+              <div className="flex text-ink-accent">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
                     key={i}
@@ -127,7 +127,7 @@ export function ProductCard({ product, compact = false }) {
           <div className={cn("flex items-baseline gap-1 mb-3 sm:mb-4", compact && "gap-1")}>
             <span
               className={cn(
-                "font-black text-primary font-[family-name:var(--font-heading)]",
+                "font-black text-ink-accent font-[family-name:var(--font-heading)]",
                 compact ? "text-base sm:text-lg" : "text-lg",
               )}
             >

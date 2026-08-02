@@ -18,7 +18,7 @@ export function BlogsPanel({
       <Card className="overflow-hidden rounded-3xl border border-border/30 shadow-sm">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/20 p-5">
           <div className="flex items-center gap-2">
-            <Newspaper className="h-5 w-5 text-primary" />
+            <Newspaper className="h-5 w-5 text-ink-accent" />
             <div>
               <h3 className="text-sm font-bold uppercase tracking-wide">Blog posts</h3>
               <p className="text-xs text-muted-foreground">
@@ -160,7 +160,7 @@ export function BlogsPanel({
                   type="button"
                   size="sm"
                   variant="outline"
-                  className="text-[var(--c-peach)]"
+                  className="text-ink-accent"
                   onClick={() => handleDeleteBlog(blog)}
                 >
                   <Trash2 className="h-3.5 w-3.5" />

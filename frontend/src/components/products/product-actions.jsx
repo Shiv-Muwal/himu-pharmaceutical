@@ -40,7 +40,7 @@ export function ProductActions({ product }) {
     <div className="space-y-4">
       <div>
         <div className="flex items-baseline gap-2">
-          <span className="font-[family-name:var(--font-heading)] text-2xl font-black text-primary sm:text-3xl">
+          <span className="font-[family-name:var(--font-heading)] text-2xl font-black text-ink-accent sm:text-3xl">
             ₹{product.price}
           </span>
           {product.compareAtPrice && (
@@ -81,7 +81,7 @@ export function ProductActions({ product }) {
                     onClick={() => setSelectedVariant(v.name)}
                     className={`rounded-xl border px-3 py-2 text-xs font-semibold transition ${
                       selectedVariant === v.name
-                        ? "border-primary bg-primary/10 text-primary"
+                        ? "border-primary bg-primary/10 text-ink-accent"
                         : "border-border/40 text-muted-foreground"
                     }`}
                   >

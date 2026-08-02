@@ -98,7 +98,7 @@ export function ProductsPanel({
                           className={cn(
                             "rounded-full px-2 py-0.5 text-[10px] font-black",
                             Number(prod.stock) <= LOW_STOCK_THRESHOLD
-                              ? "bg-[var(--c-peach)]/25 text-[var(--c-peach)]"
+                              ? "bg-[var(--c-peach)]/25 text-ink-accent"
                               : "bg-emerald/10 text-emerald",
                           )}
                         >
@@ -106,7 +106,7 @@ export function ProductsPanel({
                         </span>
                       </td>
                       <td className="p-4">
-                        <div className="font-bold text-primary">₹{prod.price}</div>
+                        <div className="font-bold text-ink-accent">₹{prod.price}</div>
                         {prod.compareAtPrice && (
                           <div className="text-[10px] text-muted-foreground line-through">
                             ₹{prod.compareAtPrice}
@@ -118,14 +118,14 @@ export function ProductsPanel({
                           <button
                             type="button"
                             onClick={() => handleOpenEditModal(prod)}
-                            className="rounded-lg bg-primary/10 p-1.5 text-primary hover:bg-primary hover:text-[var(--c-lime)]"
+                            className="rounded-lg bg-primary/10 p-1.5 text-ink-accent hover:bg-primary hover:text-foreground"
                           >
                             <Edit className="h-3.5 w-3.5" />
                           </button>
                           <button
                             type="button"
                             onClick={() => handleDeleteProduct(prod.id)}
-                            className="rounded-lg bg-[var(--c-peach)]/25 p-1.5 text-[var(--c-peach)] hover:bg-[var(--c-peach)] hover:text-[var(--c-lime)]"
+                            className="rounded-lg bg-[var(--c-peach)]/25 p-1.5 text-ink-accent hover:bg-[var(--c-peach)] hover:text-foreground"
                           >
                             <Trash2 className="h-3.5 w-3.5" />
                           </button>
@@ -157,8 +157,8 @@ export function InventoryPanel({ lowStockProducts, products, handleUpdateStock, 
         </Card>
         <Card className="rounded-3xl border border-[var(--c-peach)]/30 bg-[var(--c-peach)]/15 shadow-sm">
           <CardContent className="p-5">
-            <p className="text-[10px] font-black uppercase text-[var(--c-peach)]">Low Stock</p>
-            <p className="mt-2 text-2xl font-black text-[var(--c-peach)]">{lowStockProducts.length}</p>
+            <p className="text-[10px] font-black uppercase text-ink-accent">Low Stock</p>
+            <p className="mt-2 text-2xl font-black text-ink-accent">{lowStockProducts.length}</p>
           </CardContent>
         </Card>
         <Card className="rounded-3xl border border-emerald/20 bg-emerald/5 shadow-sm">
@@ -193,7 +193,7 @@ export function InventoryPanel({ lowStockProducts, products, handleUpdateStock, 
                       className={cn(
                         "rounded-full px-2 py-0.5 text-[10px] font-black",
                         Number(prod.stock) <= LOW_STOCK_THRESHOLD
-                          ? "bg-[var(--c-peach)]/25 text-[var(--c-peach)]"
+                          ? "bg-[var(--c-peach)]/25 text-ink-accent"
                           : "bg-emerald/10 text-emerald",
                       )}
                     >
@@ -230,7 +230,7 @@ export function InventoryPanel({ lowStockProducts, products, handleUpdateStock, 
                     <button
                       type="button"
                       onClick={() => handleOpenEditModal(prod)}
-                      className="rounded-lg bg-primary/10 p-1.5 text-primary"
+                      className="rounded-lg bg-primary/10 p-1.5 text-ink-accent"
                     >
                       <Edit className="h-3.5 w-3.5" />
                     </button>

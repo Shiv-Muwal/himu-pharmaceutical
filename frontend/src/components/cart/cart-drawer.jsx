@@ -68,16 +68,16 @@ export function CartDrawer() {
             <div className="relative border-b border-[#bbf1d2] bg-primary-foreground/70 px-5 py-4 backdrop-blur-xl">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#bbf1d2] text-[#ffc5aa]">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#bbf1d2] text-ink-accent">
                     <ShoppingBag className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
                       HIMU Pharmacy
                     </p>
-                    <h2 className="font-[family-name:var(--font-heading)] text-lg font-black text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
+                    <h2 className="font-[family-name:var(--font-heading)] text-lg font-black text-foreground">
                       Your Cart
-                      <span className="ml-2 rounded-full bg-[#bbf1d2] px-2 py-0.5 text-xs font-bold text-[#ffc5aa]">
+                      <span className="ml-2 rounded-full bg-[#bbf1d2] px-2 py-0.5 text-xs font-bold text-ink-accent">
                         {cartItems.length}
                       </span>
                     </h2>
@@ -85,7 +85,7 @@ export function CartDrawer() {
                 </div>
                 <button
                   onClick={() => setCartOpen(false)}
-                  className="rounded-xl bg-[#bbf1d2] p-2 text-[#ffc5aa] transition hover:bg-[#bbf1d2] hover:text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]"
+                  className="rounded-xl bg-[#bbf1d2] p-2 text-ink-accent transition hover:bg-[#bbf1d2] hover:text-foreground"
                   aria-label="Close cart"
                 >
                   <X className="h-5 w-5" />
@@ -98,12 +98,12 @@ export function CartDrawer() {
               {cartItems.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center px-6 text-center">
                   <div className="mb-4 flex h-24 w-24 items-center justify-center rounded-[28px] bg-[var(--c-lime)] shadow-[0_10px_40px_rgba(187,241,210,0.35)]">
-                    <Leaf className="h-10 w-10 text-[#bbf1d2]" />
+                    <Leaf className="h-10 w-10 text-ink-mint" />
                   </div>
-                  <h3 className="font-[family-name:var(--font-heading)] text-lg font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
+                  <h3 className="font-[family-name:var(--font-heading)] text-lg font-bold text-foreground">
                     Your cart is empty
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]">
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                     Soft care starts here — explore formulations and add them to
                     your bag.
                   </p>
@@ -137,10 +137,10 @@ export function CartDrawer() {
                       <div className="min-w-0 flex-1">
                         <div className="flex items-start justify-between gap-2">
                           <div className="min-w-0">
-                            <h4 className="truncate text-sm font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
+                            <h4 className="truncate text-sm font-bold text-foreground">
                               {item.product.name}
                             </h4>
-                            <p className="mt-0.5 truncate text-[11px] text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
+                            <p className="mt-0.5 truncate text-[11px] text-muted-foreground">
                               {item.selectedVariant} · {item.product.strength}
                             </p>
                           </div>
@@ -148,7 +148,7 @@ export function CartDrawer() {
                             onClick={() =>
                               removeFromCart(item.product.id, item.selectedVariant)
                             }
-                            className="rounded-xl bg-[var(--c-peach)]/35 p-1.5 text-foreground transition hover:bg-[var(--c-peach)] hover:text-[var(--c-lime)]"
+                            className="rounded-xl bg-[var(--c-peach)]/35 p-1.5 text-foreground transition hover:bg-[var(--c-peach)] hover:text-foreground"
                             aria-label="Remove item"
                           >
                             <Trash2 className="h-3.5 w-3.5" />
@@ -165,11 +165,11 @@ export function CartDrawer() {
                                   item.selectedVariant,
                                 )
                               }
-                              className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--c-lime)] text-[#ffc5aa] shadow-sm transition hover:bg-[#bbf1d2]"
+                              className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--c-lime)] text-ink-accent shadow-sm transition hover:bg-[#bbf1d2]"
                             >
                               <Minus className="h-3 w-3" />
                             </button>
-                            <span className="w-7 text-center text-sm font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
+                            <span className="w-7 text-center text-sm font-bold text-foreground">
                               {item.quantity}
                             </span>
                             <button
@@ -180,18 +180,18 @@ export function CartDrawer() {
                                   item.selectedVariant,
                                 )
                               }
-                              className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--c-lime)] text-[#ffc5aa] shadow-sm transition hover:bg-[#bbf1d2]"
+                              className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--c-lime)] text-ink-accent shadow-sm transition hover:bg-[#bbf1d2]"
                             >
                               <Plus className="h-3 w-3" />
                             </button>
                           </div>
 
                           <div className="text-right">
-                            <p className="text-sm font-black text-[#ffc5aa]">
+                            <p className="text-sm font-black text-ink-accent">
                               ₹{item.product.price * item.quantity}
                             </p>
                             {item.product.compareAtPrice && (
-                              <p className="text-[10px] text-[#ffc5aa] line-through">
+                              <p className="text-[10px] text-ink-accent line-through">
                                 ₹{item.product.compareAtPrice * item.quantity}
                               </p>
                             )}
@@ -208,30 +208,30 @@ export function CartDrawer() {
             {cartItems.length > 0 && (
               <div className="relative border-t border-[#bbf1d2] bg-primary-foreground/80 px-5 py-5 backdrop-blur-xl">
                 <div className="mb-4 overflow-hidden rounded-3xl border border-[#bbf1d2] bg-gradient-to-br from-[#eef8cd] to-[#eef8cd] p-4">
-                  <div className="mb-3 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-[#ffc5aa]">
-                    <Sparkles className="h-3 w-3 text-[#ffc5aa]" />
+                  <div className="mb-3 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-ink-accent">
+                    <Sparkles className="h-3 w-3 text-ink-accent" />
                     Order summary
                   </div>
                   <div className="space-y-2 text-sm">
-                    <div className="flex justify-between text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]">
+                    <div className="flex justify-between text-muted-foreground">
                       <span>Original Price</span>
                       <span>₹{cartTotalOriginal}</span>
                     </div>
                     {cartSavings > 0 && (
-                      <div className="flex justify-between font-semibold text-[#bbf1d2]">
+                      <div className="flex justify-between font-semibold text-ink-mint">
                         <span>Total Savings</span>
                         <span>- ₹{cartSavings}</span>
                       </div>
                     )}
-                    <div className="flex justify-between text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]">
+                    <div className="flex justify-between text-muted-foreground">
                       <span>Shipping</span>
-                      <span className="font-semibold text-[#bbf1d2]">FREE</span>
+                      <span className="font-semibold text-ink-mint">FREE</span>
                     </div>
                     <div className="flex items-end justify-between border-t border-[#bbf1d2] pt-3">
-                      <span className="text-sm font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
+                      <span className="text-sm font-bold text-foreground">
                         Grand Total
                       </span>
-                      <span className="font-[family-name:var(--font-heading)] text-2xl font-black text-[#ffc5aa]">
+                      <span className="font-[family-name:var(--font-heading)] text-2xl font-black text-ink-accent">
                         ₹{cartTotal}
                       </span>
                     </div>
@@ -255,7 +255,7 @@ export function CartDrawer() {
                   <button
                     type="button"
                     onClick={() => setCartOpen(false)}
-                    className="h-11 w-full rounded-2xl border border-[#bbf1d2] bg-primary-foreground/70 text-xs font-bold text-[#ffc5aa] transition hover:bg-[#bbf1d2]"
+                    className="h-11 w-full rounded-2xl border border-[#bbf1d2] bg-primary-foreground/70 text-xs font-bold text-ink-accent transition hover:bg-[#bbf1d2]"
                   >
                     Continue Shopping
                   </button>

@@ -73,7 +73,7 @@ export function AdminTopBar({
         <button
           type="button"
           onClick={handleRefresh}
-          className="rounded-xl border border-border/40 bg-[var(--c-lime)] p-2.5 text-muted-foreground transition hover:text-primary"
+          className="rounded-xl border border-border/40 bg-[var(--c-lime)] p-2.5 text-muted-foreground transition hover:text-ink-accent"
           title="Refresh data"
         >
           <RefreshCw className={cn("h-4 w-4", refreshing && "animate-spin")} />
@@ -83,11 +83,11 @@ export function AdminTopBar({
           <button
             type="button"
             onClick={() => setNotificationsOpen(!notificationsOpen)}
-            className="relative rounded-xl border border-border/40 bg-[var(--c-lime)] p-2.5 text-muted-foreground transition hover:text-primary"
+            className="relative rounded-xl border border-border/40 bg-[var(--c-lime)] p-2.5 text-muted-foreground transition hover:text-ink-accent"
           >
             <Bell className="h-4 w-4" />
             {notifications.length > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--c-peach)] px-1 text-[9px] font-black text-[var(--c-lime)]">
+              <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--c-peach)] px-1 text-[9px] font-black text-foreground">
                 {notifications.length}
               </span>
             )}

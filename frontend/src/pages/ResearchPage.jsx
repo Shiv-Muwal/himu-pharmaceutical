@@ -124,7 +124,7 @@ export default function ResearchPage() {
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">
                     {i + 1}
                   </div>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary mx-auto mb-4 mt-2">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-ink-accent mx-auto mb-4 mt-2">
                     <step.icon className="h-6 w-6" />
                   </div>
                   <h3 className="font-bold mb-2">{step.title}</h3>

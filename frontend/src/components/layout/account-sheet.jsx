@@ -32,7 +32,7 @@ export function AccountSheet({ open, onClose }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-black/35 backdrop-blur-[2px]"
+            className="absolute inset-0 bg-ink/35 backdrop-blur-[2px]"
             onClick={onClose}
           />
           <motion.div
@@ -46,7 +46,7 @@ export function AccountSheet({ open, onClose }) {
             <div className="mx-auto mt-3 h-1.5 w-12 rounded-full bg-border" />
             <div className="flex items-center justify-between px-5 pb-2 pt-4">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-primary">
+                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-ink-accent">
                   Account
                 </p>
                 <p className="text-base font-bold text-foreground">
@@ -72,7 +72,7 @@ export function AccountSheet({ open, onClose }) {
                     onClick={() => go(opt.tab)}
                     className="flex w-full items-center gap-3 rounded-2xl border border-border/50 bg-[var(--c-lime)] px-4 py-3.5 text-left shadow-sm transition active:scale-[0.99]"
                   >
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-ink-accent">
                       <Icon className="h-5 w-5" />
                     </span>
                     <span className="text-sm font-bold text-foreground">{opt.label}</span>
@@ -90,7 +90,7 @@ export function AccountSheet({ open, onClose }) {
                   }}
                   className="flex w-full items-center gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3.5 text-left"
                 >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-100 text-[var(--c-peach)]">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-100 text-ink-accent">
                     <LogOut className="h-5 w-5" />
                   </span>
                   <span className="text-sm font-bold text-red-700">Logout</span>

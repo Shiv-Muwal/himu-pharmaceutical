@@ -44,7 +44,7 @@ export function CustomersPanel({
         <Card className="rounded-3xl border border-border/30 shadow-sm">
           <CardContent className="p-5">
             <p className="text-[10px] font-black uppercase text-muted-foreground">Lifetime Value</p>
-            <p className="mt-2 text-2xl font-black text-primary">
+            <p className="mt-2 text-2xl font-black text-ink-accent">
               ₹
               {filteredCustomers
                 .reduce((sum, c) => sum + (c.totalSpent || 0), 0)
@@ -83,7 +83,7 @@ export function CustomersPanel({
                     <td className="p-4">{c.phone}</td>
                     <td className="p-4">{c.city}</td>
                     <td className="p-4 font-bold">{c.ordersCount}</td>
-                    <td className="p-4 font-bold text-primary">
+                    <td className="p-4 font-bold text-ink-accent">
                       ₹{(c.totalSpent || 0).toLocaleString("en-IN")}
                     </td>
                     <td className="p-4 text-muted-foreground">{c.lastOrder}</td>

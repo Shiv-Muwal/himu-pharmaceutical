@@ -153,7 +153,7 @@ export function PageLoader() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="font-[family-name:var(--font-heading)] text-lg font-black tracking-tight text-primary sm:text-xl"
+          className="font-[family-name:var(--font-heading)] text-lg font-black tracking-tight text-ink-accent sm:text-xl"
         >
           HIMU Pharmacy
         </motion.p>

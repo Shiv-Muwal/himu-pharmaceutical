@@ -114,7 +114,7 @@ export function OrdersPanel({
                       <td className="p-4 text-center font-bold">
                         {order.items.reduce((sum, item) => sum + item.quantity, 0)}
                       </td>
-                      <td className="p-4 font-bold text-primary">₹{order.total}</td>
+                      <td className="p-4 font-bold text-ink-accent">₹{order.total}</td>
                       <td className="p-4 text-[10px] font-black uppercase text-muted-foreground">
                         {order.paymentMethod}
                       </td>
@@ -127,10 +127,10 @@ export function OrdersPanel({
                             order.status === "Delivered"
                               ? "border-emerald/45 bg-emerald/5 text-emerald"
                               : order.status === "Shipped"
-                                ? "border-primary/45 bg-primary/5 text-primary"
+                                ? "border-primary/45 bg-primary/5 text-ink-accent"
                                 : order.status === "Cancelled"
-                                  ? "border-[var(--c-peach)]/50 bg-[var(--c-peach)]/15 text-[var(--c-peach)]"
-                                  : "border-[var(--c-peach)]/40 bg-[var(--c-lime)]/40 text-[var(--c-peach)]",
+                                  ? "border-[var(--c-peach)]/50 bg-[var(--c-peach)]/15 text-ink-accent"
+                                  : "border-[var(--c-peach)]/40 bg-[var(--c-lime)]/40 text-ink-accent",
                           )}
                         >
                           {ORDER_STATUSES.map((s) => (
@@ -144,7 +144,7 @@ export function OrdersPanel({
                         <button
                           type="button"
                           onClick={() => setSelectedOrder(order)}
-                          className="rounded-lg bg-primary/10 p-1.5 text-primary hover:bg-primary hover:text-[var(--c-lime)]"
+                          className="rounded-lg bg-primary/10 p-1.5 text-ink-accent hover:bg-primary hover:text-foreground"
                         >
                           <Eye className="h-3.5 w-3.5" />
                         </button>

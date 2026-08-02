@@ -23,7 +23,7 @@ export default function CertificationsPage() {
           <div className="grid md:grid-cols-2 gap-6 mb-12">
             <FadeIn>
               <Card className="p-8 text-center">
-                <h3 className="font-bold text-lg text-primary mb-2">
+                <h3 className="font-bold text-lg text-ink-accent mb-2">
                   License Number
                 </h3>
                 <p className="text-2xl font-mono font-bold">
@@ -36,7 +36,7 @@ export default function CertificationsPage() {
             </FadeIn>
             <FadeIn delay={0.1}>
               <Card className="p-8 text-center">
-                <h3 className="font-bold text-lg text-primary mb-2">
+                <h3 className="font-bold text-lg text-ink-accent mb-2">
                   CIN Number
                 </h3>
                 <p className="text-2xl font-mono font-bold">
@@ -63,7 +63,7 @@ export default function CertificationsPage() {
                   </div>
                   <div className="p-6">
                     <h3 className="font-bold text-lg mb-1">{cert.name}</h3>
-                    <p className="text-sm text-primary font-medium mb-2">
+                    <p className="text-sm text-ink-accent font-medium mb-2">
                       {cert.issuer} · {cert.year}
                     </p>
                     <p className="text-sm text-muted-foreground mb-4">

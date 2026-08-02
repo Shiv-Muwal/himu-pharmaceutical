@@ -3,6 +3,9 @@
 /*
   Palette locked to 3 colors only:
   Mint #BBF1D2 · Lime #EEF8CD · Peach #FFC5AA
+
+  Text uses darkened mixes of these hues (never white)
+  so every page stays readable and consistent.
 */
 :root {
   --font-poppins: "Poppins", system-ui, sans-serif;
@@ -12,27 +15,32 @@
   --c-lime: #eef8cd;
   --c-peach: #ffc5aa;
 
+  --ink: color-mix(in srgb, var(--c-peach) 30%, #2a1810 70%);
+  --ink-soft: color-mix(in srgb, var(--c-peach) 38%, #4a3228 62%);
+  --ink-accent: color-mix(in srgb, var(--c-peach) 48%, #3a2418 52%);
+  --ink-mint: color-mix(in srgb, var(--c-mint) 36%, #1a3328 64%);
+
   --background: var(--c-lime);
-  --foreground: color-mix(in srgb, var(--c-peach) 42%, #3a2418 58%);
+  --foreground: var(--ink);
   --card: color-mix(in srgb, var(--c-lime) 78%, var(--c-mint) 22%);
-  --card-foreground: var(--foreground);
+  --card-foreground: var(--ink);
   --primary: var(--c-peach);
   --primary-hover: color-mix(in srgb, var(--c-peach) 72%, var(--c-mint) 28%);
-  --primary-foreground: var(--c-lime);
+  --primary-foreground: var(--ink);
   --secondary: var(--c-mint);
-  --secondary-foreground: color-mix(in srgb, var(--c-peach) 55%, #3a2418 45%);
+  --secondary-foreground: var(--ink);
   --muted: color-mix(in srgb, var(--c-lime) 55%, var(--c-mint) 45%);
-  --muted-foreground: color-mix(in srgb, var(--c-peach) 50%, #5a3d2e 50%);
+  --muted-foreground: var(--ink-soft);
   --accent: var(--c-mint);
-  --accent-foreground: color-mix(in srgb, var(--c-peach) 48%, #3a2418 52%);
+  --accent-foreground: var(--ink);
   --border: color-mix(in srgb, var(--c-mint) 55%, var(--c-peach) 45%);
   --ring: var(--c-peach);
   --gold: var(--c-peach);
   --emerald: var(--c-mint);
   --cream: var(--c-lime);
   --footer: var(--c-mint);
-  --footer-foreground: var(--c-lime);
-  --footer-muted: color-mix(in srgb, var(--c-lime) 70%, var(--c-peach) 30%);
+  --footer-foreground: var(--ink);
+  --footer-muted: var(--ink-soft);
   --olive: color-mix(in srgb, var(--c-mint) 60%, var(--c-peach) 40%);
   --glass: color-mix(in srgb, var(--c-lime) 88%, transparent);
   --glass-border: color-mix(in srgb, var(--c-mint) 50%, var(--c-peach) 50%);
@@ -45,13 +53,13 @@
   --card-foreground: var(--c-lime);
   --primary: var(--c-peach);
   --primary-hover: color-mix(in srgb, var(--c-peach) 80%, var(--c-mint) 20%);
-  --primary-foreground: var(--c-lime);
+  --primary-foreground: var(--ink);
   --secondary: var(--c-mint);
-  --secondary-foreground: var(--c-lime);
+  --secondary-foreground: var(--ink);
   --muted: color-mix(in srgb, var(--c-mint) 20%, #2a1c14 80%);
-  --muted-foreground: color-mix(in srgb, var(--c-lime) 65%, var(--c-peach) 35%);
+  --muted-foreground: color-mix(in srgb, var(--c-lime) 55%, var(--c-peach) 45%);
   --accent: var(--c-mint);
-  --accent-foreground: var(--c-lime);
+  --accent-foreground: var(--ink);
   --border: color-mix(in srgb, var(--c-mint) 40%, var(--c-peach) 30%);
   --ring: var(--c-peach);
   --glass: color-mix(in srgb, var(--c-mint) 18%, transparent);
@@ -83,6 +91,10 @@
   --color-olive: var(--olive);
   --color-glass: var(--glass);
   --color-glass-border: var(--glass-border);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-accent: var(--ink-accent);
+  --color-ink-mint: var(--ink-mint);
   --font-sans: var(--font-poppins);
   --font-heading: var(--font-plus-jakarta);
 }
@@ -99,7 +111,14 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
-  min-height: 100dvh;
+}
+
+.text-brand {
+  color: var(--ink-accent);
+}
+
+.text-brand-mint {
+  color: var(--ink-mint);
 }
 
 .glass {
@@ -109,6 +128,7 @@ body {
   border: 1px solid var(--glass-border);
 }
 
-.gradient-primary {
-  background: linear-gradient(135deg, var(--c-mint) 0%, var(--c-lime) 48%, var(--c-peach) 100%);
+::selection {
+  background: color-mix(in srgb, var(--c-peach) 35%, transparent);
+  color: var(--foreground);
 }

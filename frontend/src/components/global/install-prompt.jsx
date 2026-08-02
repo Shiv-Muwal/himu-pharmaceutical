@@ -76,7 +76,7 @@ export function InstallPrompt() {
           <BrandLogo className="h-8 w-10" priority />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-bold text-primary">Install HIMU App</p>
+          <p className="text-sm font-bold text-ink-accent">Install HIMU App</p>
           <p className="text-[11px] text-muted-foreground">
             {iosHint
               ? "Tap Share, then Add to Home Screen"
