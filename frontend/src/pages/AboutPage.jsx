@@ -83,7 +83,7 @@ export default function AboutPage() {
           ].map((item, i) => (
             <FadeIn key={item.title} delay={i * 0.1}>
               <Card className="h-full p-8 text-center">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-ink-accent">
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                   <item.icon className="h-7 w-7" />
                 </div>
                 <h3 className="mb-3 text-xl font-bold">{item.title}</h3>
@@ -103,7 +103,7 @@ export default function AboutPage() {
             {coreValues.map((v, i) => (
               <FadeIn key={v.title} delay={i * 0.08}>
                 <Card className="p-6 transition-shadow hover:shadow-lg">
-                  <h3 className="mb-2 text-lg font-bold text-ink-accent">
+                  <h3 className="mb-2 text-lg font-bold text-primary">
                     {v.title}
                   </h3>
                   <p className="text-sm text-muted-foreground">
@@ -133,7 +133,7 @@ export default function AboutPage() {
                   </div>
                   <div className="p-5">
                     <h3 className="text-lg font-bold">{member.name}</h3>
-                    <p className="mb-2 text-sm font-medium text-ink-accent">
+                    <p className="mb-2 text-sm font-medium text-primary">
                       {member.role}
                     </p>
                     <p className="text-sm text-muted-foreground">{member.bio}</p>
@@ -178,8 +178,8 @@ export default function AboutPage() {
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 flex items-end bg-linear-to-t from-[var(--c-peach)]/60 to-transparent p-5">
-                    <h3 className="font-bold text-primary-foreground">{img.title}</h3>
+                  <div className="absolute inset-0 flex items-end bg-linear-to-t from-black/60 to-transparent p-5">
+                    <h3 className="font-bold text-white">{img.title}</h3>
                   </div>
                 </div>
               </FadeIn>

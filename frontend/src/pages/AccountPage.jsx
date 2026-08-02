@@ -47,7 +47,7 @@ export default function AccountPage() {
     <div className="section-padding">
       <div className="container-custom max-w-3xl">
         <div className="mb-6">
-          <p className="text-[10px] font-black uppercase tracking-[0.18em] text-ink-accent">
+          <p className="text-[10px] font-black uppercase tracking-[0.18em] text-primary">
             My Account
           </p>
           <h1 className="font-[family-name:var(--font-heading)] text-2xl font-bold md:text-3xl">
@@ -55,7 +55,7 @@ export default function AccountPage() {
           </h1>
         </div>
 
-        <div className="mb-6 grid grid-cols-3 gap-2 rounded-2xl border border-border/50 bg-[var(--c-lime)] p-1.5 dark:bg-card">
+        <div className="mb-6 grid grid-cols-3 gap-2 rounded-2xl border border-border/50 bg-white p-1.5 dark:bg-card">
           {TABS.map((item) => {
             const Icon = item.icon;
             const active = tab === item.id;
@@ -66,7 +66,7 @@ export default function AccountPage() {
                 onClick={() => setParams({ tab: item.id })}
                 className={cn(
                   "flex flex-col items-center gap-1 rounded-xl px-2 py-2.5 text-[11px] font-bold transition sm:flex-row sm:justify-center sm:text-sm",
-                  active ? "bg-primary text-primary-foreground shadow-md" : "text-muted-foreground",
+                  active ? "bg-primary text-white shadow-md" : "text-muted-foreground",
                 )}
               >
                 <Icon className="h-4 w-4" />
@@ -77,7 +77,7 @@ export default function AccountPage() {
         </div>
 
         {tab === "profile" && (
-          <div className="space-y-4 rounded-3xl border border-border/50 bg-[var(--c-lime)] p-5 shadow-sm dark:bg-card">
+          <div className="space-y-4 rounded-3xl border border-border/50 bg-white p-5 shadow-sm dark:bg-card">
             {!isAuthenticated ? (
               <div className="py-8 text-center">
                 <p className="text-sm text-muted-foreground">
@@ -90,7 +90,7 @@ export default function AccountPage() {
             ) : (
               <>
                 <div className="flex items-center gap-3">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-lg font-black text-ink-accent">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-lg font-black text-primary">
                     {(user.name || "H").slice(0, 1).toUpperCase()}
                   </div>
                   <div>
@@ -99,14 +99,14 @@ export default function AccountPage() {
                   </div>
                 </div>
                 <div className="grid gap-3 text-sm sm:grid-cols-2">
-                  <div className="rounded-2xl bg-[#eef8cd] p-3">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-ink-accent">
+                  <div className="rounded-2xl bg-[#f8f3e6] p-3">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-primary">
                       Phone
                     </p>
                     <p className="mt-1 font-semibold">{user.phone || "Not added"}</p>
                   </div>
-                  <div className="rounded-2xl bg-[#eef8cd] p-3">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-ink-accent">
+                  <div className="rounded-2xl bg-[#f8f3e6] p-3">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-primary">
                       Orders
                     </p>
                     <p className="mt-1 font-semibold">{orders.length} placed</p>
@@ -131,7 +131,7 @@ export default function AccountPage() {
         {(tab === "orders" || tab === "history") && (
           <div className="space-y-3">
             {!list.length ? (
-              <div className="rounded-3xl border border-dashed border-border/60 bg-[var(--c-lime)] py-14 text-center dark:bg-card">
+              <div className="rounded-3xl border border-dashed border-border/60 bg-white py-14 text-center dark:bg-card">
                 <Package className="mx-auto mb-3 h-10 w-10 text-muted-foreground/50" />
                 <p className="font-semibold text-foreground">
                   {tab === "orders" ? "No active orders" : "No order history yet"}
@@ -147,14 +147,14 @@ export default function AccountPage() {
               list.map((order) => (
                 <div
                   key={order.id}
-                  className="rounded-3xl border border-border/50 bg-[var(--c-lime)] p-4 shadow-sm dark:bg-card"
+                  className="rounded-3xl border border-border/50 bg-white p-4 shadow-sm dark:bg-card"
                 >
                   <div className="mb-3 flex items-start justify-between gap-3">
                     <div>
                       <p className="text-sm font-bold text-foreground">Order {order.id}</p>
                       <p className="text-xs text-muted-foreground">{order.date}</p>
                     </div>
-                    <span className="rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase text-ink-accent">
+                    <span className="rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase text-primary">
                       {order.status || "Pending"}
                     </span>
                   </div>
@@ -168,19 +168,19 @@ export default function AccountPage() {
                   </div>
 
                   <div className="grid gap-2 sm:grid-cols-2">
-                    <div className="flex items-center gap-2 rounded-xl bg-[#eef8cd] px-3 py-2 text-xs">
-                      <Truck className="h-4 w-4 text-ink-accent" />
+                    <div className="flex items-center gap-2 rounded-xl bg-[#f3f7f0] px-3 py-2 text-xs">
+                      <Truck className="h-4 w-4 text-primary" />
                       <div>
-                        <p className="font-bold text-ink-accent">Expected</p>
+                        <p className="font-bold text-primary">Expected</p>
                         <p className="text-foreground">
                           {order.expectedDelivery || "5–7 days"}
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 rounded-xl bg-[#ffc5aa] px-3 py-2 text-xs">
-                      <TicketPercent className="h-4 w-4 text-ink-accent" />
+                    <div className="flex items-center gap-2 rounded-xl bg-[#fff8e8] px-3 py-2 text-xs">
+                      <TicketPercent className="h-4 w-4 text-[#8a7020]" />
                       <div>
-                        <p className="font-bold text-ink-accent">Coupon</p>
+                        <p className="font-bold text-[#8a7020]">Coupon</p>
                         <p className="font-black tracking-wide text-foreground">
                           {order.couponCode || "—"}
                         </p>
@@ -188,7 +188,7 @@ export default function AccountPage() {
                     </div>
                   </div>
 
-                  <p className="mt-3 text-right text-sm font-black text-ink-accent">
+                  <p className="mt-3 text-right text-sm font-black text-primary">
                     ₹{order.total}
                   </p>
                 </div>

@@ -139,14 +139,14 @@ export function ProductCatalog({
   const filterPanel = (
     <div className="space-y-1">
       <div className="mb-3 flex items-center justify-between">
-        <p className="text-xs font-black uppercase tracking-[0.16em] text-ink-accent">
+        <p className="text-xs font-black uppercase tracking-[0.16em] text-primary">
           Filters
         </p>
         {activeCount > 0 && (
           <button
             type="button"
             onClick={clearFilters}
-            className="text-xs font-semibold text-ink-accent hover:underline"
+            className="text-xs font-semibold text-primary hover:underline"
           >
             Clear all
           </button>
@@ -227,7 +227,7 @@ export function ProductCatalog({
   return (
     <div>
       <div className="grid gap-8 lg:grid-cols-[260px_1fr]">
-        <aside className="sticky top-24 hidden h-fit rounded-2xl border border-border/40 bg-[var(--c-lime)] p-4 shadow-sm lg:block dark:bg-card">
+        <aside className="sticky top-24 hidden h-fit rounded-2xl border border-border/40 bg-white p-4 shadow-sm lg:block dark:bg-card">
           {filterPanel}
         </aside>
 

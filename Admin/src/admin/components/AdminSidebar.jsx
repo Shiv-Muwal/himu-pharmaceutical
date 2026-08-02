@@ -64,25 +64,25 @@ export function AdminSidebar({
         <button
           type="button"
           aria-label="Close sidebar"
-          className="fixed inset-0 z-30 bg-[var(--c-peach)]/50 lg:hidden"
+          className="fixed inset-0 z-30 bg-black/50 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex w-72 flex-col justify-between border-r border-[var(--c-lime)]/10 bg-gradient-to-b from-[#ffc5aa] via-[#ffc5aa] to-[#bbf1d2] text-foreground transition-transform duration-300 lg:static lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 flex w-72 flex-col justify-between border-r border-white/10 bg-gradient-to-b from-[#1e2422] via-[#0b6a46] to-[#064d32] text-white transition-transform duration-300 lg:static lg:translate-x-0",
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
         )}
       >
-        <div className="border-b border-[var(--c-lime)]/10 p-5">
+        <div className="border-b border-white/10 p-5">
           <div className="mb-4 flex items-center justify-center">
             <AdminLogo
               size="md"
               className="mx-auto drop-shadow-[0_2px_12px_rgba(255,255,255,0.3)]"
             />
           </div>
-          <div className="text-center text-[10px] font-black tracking-[0.25em] text-ink-accent">
+          <div className="text-center text-[10px] font-black tracking-[0.25em] text-[#d6b04d]">
             ADMIN CONTROL
           </div>
         </div>
@@ -106,8 +106,8 @@ export function AdminSidebar({
                 className={cn(
                   "group flex w-full items-center gap-3 rounded-2xl border px-3.5 py-2.5 text-left transition-all",
                   active
-                    ? "border-[#ffc5aa]/40 bg-[#eef8cd] text-ink-accent shadow-lg shadow-[var(--c-peach)]/20"
-                    : "border-transparent text-foreground/70 hover:bg-[var(--c-lime)]/5 hover:text-foreground",
+                    ? "border-[#d6b04d]/40 bg-[#f8f3e6] text-[#0b6a46] shadow-lg shadow-black/20"
+                    : "border-transparent text-white/70 hover:bg-white/5 hover:text-white",
                 )}
               >
                 <Icon className="h-4 w-4 shrink-0" />
@@ -116,7 +116,7 @@ export function AdminSidebar({
                   <span
                     className={cn(
                       "block text-[10px]",
-                      active ? "text-ink-accent/70" : "text-foreground/40",
+                      active ? "text-[#0b6a46]/70" : "text-white/40",
                     )}
                   >
                     {tab.hint}
@@ -126,7 +126,7 @@ export function AdminSidebar({
                   <span
                     className={cn(
                       "rounded-full px-1.5 py-0.5 text-[9px] font-black",
-                      active ? "bg-primary text-foreground" : "bg-[var(--c-peach)] text-foreground",
+                      active ? "bg-primary text-white" : "bg-[#d6b04d] text-[#1e2422]",
                     )}
                   >
                     {badge}
@@ -137,10 +137,10 @@ export function AdminSidebar({
           })}
         </nav>
 
-        <div className="space-y-2 border-t border-[var(--c-lime)]/10 p-4">
+        <div className="space-y-2 border-t border-white/10 p-4">
           <a
             href={getStorefrontUrl()}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--c-lime)]/15 px-3 py-2.5 text-xs font-bold text-foreground/80 hover:bg-[var(--c-lime)]/10"
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 px-3 py-2.5 text-xs font-bold text-white/80 hover:bg-white/10"
           >
             <ExternalLink className="h-3.5 w-3.5" />
             View Storefront
@@ -148,7 +148,7 @@ export function AdminSidebar({
           <Button
             variant="outline"
             onClick={handleLogout}
-            className="h-11 w-full gap-2 border-[var(--c-lime)]/15 bg-transparent text-xs text-foreground hover:border-[var(--c-lime)]/30 hover:bg-[var(--c-lime)]/10 hover:text-foreground"
+            className="h-11 w-full gap-2 border-white/15 bg-transparent text-xs text-white hover:border-white/30 hover:bg-white/10 hover:text-white"
           >
             <LogOut className="h-4 w-4" />
             Sign Out
@@ -161,11 +161,11 @@ export function AdminSidebar({
 
 export function AdminMobileHeader({ sidebarOpen, setSidebarOpen }) {
   return (
-    <header className="flex h-16 shrink-0 items-center justify-between border-b border-[var(--c-lime)]/10 bg-[#ffc5aa] px-4 text-foreground lg:hidden">
+    <header className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-[#1e2422] px-4 text-white lg:hidden">
       <button
         type="button"
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="rounded-lg p-1.5 hover:bg-[var(--c-lime)]/10"
+        className="rounded-lg p-1.5 hover:bg-white/10"
       >
         <Grid className="h-6 w-6" />
       </button>

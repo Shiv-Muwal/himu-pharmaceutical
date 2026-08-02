@@ -84,7 +84,7 @@ export function LoginModal() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-[#bbf1d2]/60 backdrop-blur-md"
+            className="absolute inset-0 bg-[#1e2422]/60 backdrop-blur-md"
             onClick={handleClose}
           />
 
@@ -96,15 +96,15 @@ export function LoginModal() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 24 }}
             transition={{ type: "spring", damping: 26, stiffness: 280 }}
-            className="relative z-10 flex max-h-[92dvh] w-full max-w-md flex-col overflow-hidden rounded-t-[28px] border border-[#ffc5aa]/15 bg-[#eef8cd] shadow-[0_30px_80px_rgba(255, 197, 170,0.35)] sm:rounded-[28px]"
+            className="relative z-10 flex max-h-[92dvh] w-full max-w-md flex-col overflow-hidden rounded-t-[28px] border border-[#0b6a46]/15 bg-[#f8f3e6] shadow-[0_30px_80px_rgba(6,21,15,0.35)] sm:rounded-[28px]"
             style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative shrink-0 overflow-hidden bg-gradient-to-br from-[#ffc5aa] via-[#bbf1d2] to-[#bbf1d2] px-6 pb-6 pt-5 text-primary-foreground sm:px-7 sm:pb-8 sm:pt-7">
+            <div className="relative shrink-0 overflow-hidden bg-gradient-to-br from-[#0b6a46] via-[#0f8157] to-[#1a4d35] px-6 pb-6 pt-5 text-white sm:px-7 sm:pb-8 sm:pt-7">
               <button
                 type="button"
                 onClick={handleClose}
-                className="absolute right-3 top-3 z-20 rounded-xl bg-primary-foreground/10 p-2.5 text-primary-foreground/80 transition hover:bg-primary-foreground/20 hover:text-primary-foreground"
+                className="absolute right-3 top-3 z-20 rounded-xl bg-white/10 p-2.5 text-white/80 transition hover:bg-white/20 hover:text-white"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -113,7 +113,7 @@ export function LoginModal() {
                   <BrandLogo className="h-full w-full" priority />
                 </div>
                 <div className="min-w-0 pt-0.5">
-                  <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-primary-foreground/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-ink-accent">
+                  <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#f5e6b8]">
                     <Sparkles className="h-3 w-3" />
                     Welcome back
                   </div>
@@ -123,7 +123,7 @@ export function LoginModal() {
                   >
                     Sign in to HIMU
                   </h2>
-                  <p className="mt-1 text-xs text-primary-foreground/70 sm:text-sm">
+                  <p className="mt-1 text-xs text-white/70 sm:text-sm">
                     Orders, wishlist & faster checkout
                   </p>
                 </div>
@@ -138,7 +138,7 @@ export function LoginModal() {
                 <motion.div
                   initial={{ opacity: 0, y: -6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-xs text-ink-accent"
+                  className="flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-xs text-red-600"
                 >
                   <AlertCircle className="h-4 w-4 shrink-0" />
                   {error}
@@ -198,14 +198,14 @@ export function LoginModal() {
                 variant="outline"
                 disabled={loading}
                 onClick={handleDemoLogin}
-                className="h-11 w-full touch-manipulation gap-2 border-primary/25 bg-primary/5 text-ink-accent hover:bg-primary/10"
+                className="h-11 w-full touch-manipulation gap-2 border-primary/25 bg-primary/5 text-primary hover:bg-primary/10"
               >
                 <UserRound className="h-4 w-4" />
                 {loading ? "Signing in..." : "Demo customer login"}
               </Button>
 
               <div className="rounded-2xl border border-border/50 bg-muted/40 px-3 py-2.5 text-[11px] text-muted-foreground">
-                <p className="mb-1 font-bold uppercase tracking-wide text-ink-accent/80">
+                <p className="mb-1 font-bold uppercase tracking-wide text-primary/80">
                   Dummy customer ID
                 </p>
                 <p>
@@ -223,7 +223,7 @@ export function LoginModal() {
                 <Link
                   to="/signup"
                   onClick={handleClose}
-                  className="inline-flex items-center gap-1 font-bold text-ink-accent hover:underline"
+                  className="inline-flex items-center gap-1 font-bold text-primary hover:underline"
                 >
                   Create account <ArrowRight className="h-3 w-3" />
                 </Link>

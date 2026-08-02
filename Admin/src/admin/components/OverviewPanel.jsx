@@ -17,10 +17,10 @@ const statusTone = (status) =>
   status === "Delivered"
     ? "bg-emerald/10 text-emerald"
     : status === "Shipped"
-      ? "bg-primary/10 text-ink-accent"
+      ? "bg-primary/10 text-primary"
       : status === "Cancelled"
-        ? "bg-[var(--c-peach)]/25 text-ink-accent"
-        : "bg-[var(--c-peach)]/20 text-ink-accent";
+        ? "bg-red-500/10 text-red-500"
+        : "bg-amber-500/10 text-amber-500";
 
 export function OverviewPanel({
   stats,
@@ -38,7 +38,7 @@ export function OverviewPanel({
       value: stats.totalOrders,
       desc: `${stats.pendingOrders} pending`,
       icon: ShoppingBag,
-      accent: "from-primary/20 to-primary/5 text-ink-accent",
+      accent: "from-primary/20 to-primary/5 text-primary",
     },
     {
       label: "Customers",
@@ -51,7 +51,7 @@ export function OverviewPanel({
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col justify-between gap-4 rounded-3xl border border-border/30 bg-[var(--c-lime)]/80 p-4 shadow-sm backdrop-blur md:flex-row md:items-center md:justify-end">
+      <div className="flex flex-col justify-between gap-4 rounded-3xl border border-border/30 bg-white/80 p-4 shadow-sm backdrop-blur md:flex-row md:items-center md:justify-end">
         <div className="flex flex-wrap gap-2">
           <Button size="sm" variant="outline" onClick={() => setActiveTab("orders")}>
             <Truck className="h-3.5 w-3.5" /> Dispatch
@@ -88,7 +88,7 @@ export function OverviewPanel({
                     </h3>
                     <p className="mt-1 text-[10px] opacity-70">{stat.desc}</p>
                   </div>
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--c-lime)]/70">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/70">
                     <Icon className="h-5 w-5" />
                   </div>
                 </CardContent>
@@ -105,7 +105,7 @@ export function OverviewPanel({
             <button
               type="button"
               onClick={() => setActiveTab("orders")}
-              className="flex items-center gap-0.5 text-xs font-bold text-ink-accent hover:underline"
+              className="flex items-center gap-0.5 text-xs font-bold text-primary hover:underline"
             >
               All <ChevronRight className="h-3.5 w-3.5" />
             </button>
@@ -132,7 +132,7 @@ export function OverviewPanel({
                       <tr key={order.id} className="hover:bg-muted/10">
                         <td className="p-4 font-bold">{order.id}</td>
                         <td className="p-4 font-semibold">{order.customer.name}</td>
-                        <td className="p-4 font-bold text-ink-accent">₹{order.total}</td>
+                        <td className="p-4 font-bold text-primary">₹{order.total}</td>
                         <td className="p-4">
                           <span
                             className={cn(
@@ -147,7 +147,7 @@ export function OverviewPanel({
                           <button
                             type="button"
                             onClick={() => setSelectedOrder(order)}
-                            className="rounded-lg bg-primary/10 p-1.5 text-ink-accent hover:bg-primary hover:text-foreground"
+                            className="rounded-lg bg-primary/10 p-1.5 text-primary hover:bg-primary hover:text-white"
                           >
                             <Eye className="h-3.5 w-3.5" />
                           </button>
@@ -165,7 +165,7 @@ export function OverviewPanel({
           <Card className="overflow-hidden rounded-3xl border border-border/30 shadow-sm">
             <div className="border-b border-border/20 p-4">
               <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide">
-                <AlertTriangle className="h-3.5 w-3.5 text-ink-accent" />
+                <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />
                 Low Stock
               </h3>
             </div>
@@ -178,7 +178,7 @@ export function OverviewPanel({
                   className="flex w-full items-center justify-between rounded-xl px-2 py-2 text-left hover:bg-muted/40"
                 >
                   <span className="truncate text-xs font-semibold">{p.name}</span>
-                  <span className="rounded-full bg-[var(--c-peach)]/25 px-2 py-0.5 text-[10px] font-black text-ink-accent">
+                  <span className="rounded-full bg-red-500/10 px-2 py-0.5 text-[10px] font-black text-red-500">
                     {p.stock}
                   </span>
                 </button>
@@ -196,7 +196,7 @@ export function OverviewPanel({
             <CardContent className="space-y-2 p-3">
               {topProducts.slice(0, 4).map((p, i) => (
                 <div key={p.name} className="flex items-center gap-2 rounded-xl px-2 py-1.5">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10 text-[10px] font-black text-ink-accent">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10 text-[10px] font-black text-primary">
                     {i + 1}
                   </span>
                   <div className="min-w-0 flex-1">
@@ -218,7 +218,7 @@ export function OverviewPanel({
       <Card className="overflow-hidden rounded-3xl border border-border/30 shadow-sm">
         <div className="flex items-center justify-between border-b border-border/20 p-5">
           <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide">
-            <RefreshCw className="h-4 w-4 text-ink-accent" />
+            <RefreshCw className="h-4 w-4 text-primary" />
             Activity Feed
           </h3>
         </div>

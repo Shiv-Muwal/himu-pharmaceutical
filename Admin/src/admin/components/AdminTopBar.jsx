@@ -22,7 +22,7 @@ export function AdminTopBar({
   refreshing,
 }) {
   return (
-    <div className="sticky top-0 z-20 border-b border-border/30 bg-[#eef8cd]/90 px-4 py-3 backdrop-blur-xl md:px-8">
+    <div className="sticky top-0 z-20 border-b border-border/30 bg-[#f8f3e6]/90 px-4 py-3 backdrop-blur-xl md:px-8">
       <div className="flex items-center gap-3">
         <div className="hidden xl:block">
           <AdminLogo size="md" />
@@ -34,7 +34,7 @@ export function AdminTopBar({
             value={globalQuery}
             onChange={(e) => setGlobalQuery(e.target.value)}
             placeholder="Search products, orders, customers..."
-            className="h-11 rounded-2xl border-border/40 bg-[var(--c-lime)]/80 pl-10"
+            className="h-11 rounded-2xl border-border/40 bg-white/80 pl-10"
           />
           <AnimatePresence>
             {globalQuery.trim() && (
@@ -42,7 +42,7 @@ export function AdminTopBar({
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 8 }}
-                className="absolute left-0 right-0 top-12 z-30 overflow-hidden rounded-2xl border border-border/40 bg-[var(--c-lime)] shadow-2xl"
+                className="absolute left-0 right-0 top-12 z-30 overflow-hidden rounded-2xl border border-border/40 bg-white shadow-2xl"
               >
                 {globalResults.length === 0 ? (
                   <p className="p-4 text-xs text-muted-foreground">No matches found</p>
@@ -73,7 +73,7 @@ export function AdminTopBar({
         <button
           type="button"
           onClick={handleRefresh}
-          className="rounded-xl border border-border/40 bg-[var(--c-lime)] p-2.5 text-muted-foreground transition hover:text-ink-accent"
+          className="rounded-xl border border-border/40 bg-white p-2.5 text-muted-foreground transition hover:text-primary"
           title="Refresh data"
         >
           <RefreshCw className={cn("h-4 w-4", refreshing && "animate-spin")} />
@@ -83,11 +83,11 @@ export function AdminTopBar({
           <button
             type="button"
             onClick={() => setNotificationsOpen(!notificationsOpen)}
-            className="relative rounded-xl border border-border/40 bg-[var(--c-lime)] p-2.5 text-muted-foreground transition hover:text-ink-accent"
+            className="relative rounded-xl border border-border/40 bg-white p-2.5 text-muted-foreground transition hover:text-primary"
           >
             <Bell className="h-4 w-4" />
             {notifications.length > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--c-peach)] px-1 text-[9px] font-black text-foreground">
+              <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[9px] font-black text-white">
                 {notifications.length}
               </span>
             )}
@@ -98,7 +98,7 @@ export function AdminTopBar({
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 8 }}
-                className="absolute right-0 top-12 z-30 w-80 overflow-hidden rounded-2xl border border-border/40 bg-[var(--c-lime)] shadow-2xl"
+                className="absolute right-0 top-12 z-30 w-80 overflow-hidden rounded-2xl border border-border/40 bg-white shadow-2xl"
               >
                 <div className="flex items-center justify-between border-b border-border/30 px-4 py-3">
                   <p className="text-xs font-bold uppercase tracking-wide">Notifications</p>

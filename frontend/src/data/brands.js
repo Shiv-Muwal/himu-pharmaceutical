@@ -1,15 +1,15 @@
 /** Trusted institutional partners shown on the homepage. */
 export const trustedBrands = [
-  { id: "tb-apollo", name: "Apollo Hospitals", mark: "AH", accent: "#ffc5aa" },
-  { id: "tb-fortis", name: "Fortis Healthcare", mark: "FH", accent: "#bbf1d2" },
-  { id: "tb-max", name: "Max Healthcare", mark: "MH", accent: "#bbf1d2" },
-  { id: "tb-aiims", name: "AIIMS", mark: "AI", accent: "#ffc5aa" },
-  { id: "tb-medsupply", name: "MedSupply Global", mark: "MG", accent: "#ffc5aa" },
-  { id: "tb-pharmacorp", name: "PharmaCorp", mark: "PC", accent: "#bbf1d2" },
-  { id: "tb-healthfirst", name: "HealthFirst", mark: "HF", accent: "#bbf1d2" },
-  { id: "tb-biomed", name: "BioMed International", mark: "BI", accent: "#ffc5aa" },
-  { id: "tb-carewell", name: "CareWell Network", mark: "CW", accent: "#ffc5aa" },
-  { id: "tb-lifeline", name: "LifeLine Pharma", mark: "LP", accent: "#bbf1d2" },
+  { id: "tb-apollo", name: "Apollo Hospitals", mark: "AH", accent: "#0b6a46" },
+  { id: "tb-fortis", name: "Fortis Healthcare", mark: "FH", accent: "#0f8157" },
+  { id: "tb-max", name: "Max Healthcare", mark: "MH", accent: "#1a4d35" },
+  { id: "tb-aiims", name: "AIIMS", mark: "AI", accent: "#d6b04d" },
+  { id: "tb-medsupply", name: "MedSupply Global", mark: "MG", accent: "#0b6a46" },
+  { id: "tb-pharmacorp", name: "PharmaCorp", mark: "PC", accent: "#0f8157" },
+  { id: "tb-healthfirst", name: "HealthFirst", mark: "HF", accent: "#1e2422" },
+  { id: "tb-biomed", name: "BioMed International", mark: "BI", accent: "#d6b04d" },
+  { id: "tb-carewell", name: "CareWell Network", mark: "CW", accent: "#0b6a46" },
+  { id: "tb-lifeline", name: "LifeLine Pharma", mark: "LP", accent: "#0f8157" },
 ];
 
 /** Shop-by-brand tiles linking into catalog facets. */
@@ -20,7 +20,7 @@ export const shopBrands = [
     tagline: "Clinical skin therapeutics",
     href: "/products?category=dermatology",
     mark: "HD",
-    accent: "#ffc5aa",
+    accent: "#0b6a46",
     productsLabel: "Creams · Gels · Shields",
   },
   {
@@ -29,7 +29,7 @@ export const shopBrands = [
     tagline: "Daily skin essentials",
     href: "/products?category=skin-care",
     mark: "HC",
-    accent: "#bbf1d2",
+    accent: "#0f8157",
     productsLabel: "Wash · Serum · Lotion",
   },
   {
@@ -38,7 +38,7 @@ export const shopBrands = [
     tagline: "Pharma-grade beauty",
     href: "/products?category=cosmetics",
     mark: "CO",
-    accent: "#ffc5aa",
+    accent: "#d6b04d",
     productsLabel: "Glow · Tone · Finish",
   },
   {
@@ -47,7 +47,7 @@ export const shopBrands = [
     tagline: "Scalp & hair science",
     href: "/products?category=hair-care",
     mark: "HF",
-    accent: "#bbf1d2",
+    accent: "#1a4d35",
     productsLabel: "Serum · Oil · Repair",
   },
   {
@@ -56,7 +56,7 @@ export const shopBrands = [
     tagline: "Hospital-ready formulations",
     href: "/products?category=antibiotics",
     mark: "RX",
-    accent: "#ffc5aa",
+    accent: "#0b6a46",
     productsLabel: "Antibiotics · Capsules",
   },
   {
@@ -65,7 +65,7 @@ export const shopBrands = [
     tagline: "Aseptic injectables",
     href: "/products?category=injectables",
     mark: "ST",
-    accent: "#bbf1d2",
+    accent: "#1e2422",
     productsLabel: "Vials · Ampoules",
   },
 ];

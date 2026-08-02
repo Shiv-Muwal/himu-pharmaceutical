@@ -107,14 +107,14 @@ export function BrandStoryHero() {
       />
       <div className="absolute inset-0 gradient-hero-mobile md:hidden" />
       <div className="absolute inset-0 hidden gradient-hero md:block" />
-      <div className="absolute inset-y-0 left-0 hidden w-1/2 bg-gradient-to-r from-[#ffc5aa]/45 to-transparent md:block" />
+      <div className="absolute inset-y-0 left-0 hidden w-1/2 bg-gradient-to-r from-[#061610]/45 to-transparent md:block" />
 
       <div className="container-custom relative z-10 flex min-h-[88svh] items-start md:min-h-[92svh] md:items-center">
         <div className="w-full max-w-xl pt-28 pb-16 sm:pt-32 sm:pb-20 lg:max-w-3xl lg:pt-36">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-primary-foreground/5 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-gold backdrop-blur-sm"
+            className="mb-4 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-white/5 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-gold backdrop-blur-sm"
           >
             About HIMU Pharmacy
           </motion.p>
@@ -122,7 +122,7 @@ export function BrandStoryHero() {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, ease: "easeOut" }}
-            className="mb-6 font-[family-name:var(--font-heading)] text-[2.1rem] font-bold leading-[1.1] tracking-tight text-primary-foreground sm:text-5xl md:text-6xl lg:text-7xl"
+            className="mb-6 font-[family-name:var(--font-heading)] text-[2.1rem] font-bold leading-[1.1] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
           >
             <span className="block">
               <span className="text-gold">H</span>ealthcare{" "}
@@ -147,7 +147,7 @@ export function BrandStoryHero() {
                 <p className="mb-1.5 font-[family-name:var(--font-heading)] text-sm font-bold text-gold sm:text-base">
                   {BRAND_SUBLINES[sublineIndex].title}
                 </p>
-                <p className="text-sm leading-relaxed text-primary-foreground/80 sm:text-base lg:text-lg">
+                <p className="text-sm leading-relaxed text-white/80 sm:text-base lg:text-lg">
                   {BRAND_SUBLINES[sublineIndex].body}
                 </p>
               </motion.div>
@@ -170,7 +170,7 @@ export function BrandStoryHero() {
               <Button
                 size="lg"
                 variant="ghost"
-                className="w-full border-2 border-gold/80 bg-primary-foreground/5 text-gold backdrop-blur-sm hover:border-gold hover:bg-gold hover:text-ink-accent hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(255, 197, 170,0.35)] sm:w-auto"
+                className="w-full border-2 border-gold/80 bg-white/5 text-gold backdrop-blur-sm hover:border-gold hover:bg-gold hover:text-[#1a2e1f] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(214, 176, 77,0.35)] sm:w-auto"
               >
                 <MessageCircle className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
                 Contact Us
@@ -193,10 +193,10 @@ export function StatsSection() {
           {STATS.map((stat, i) => (
             <FadeIn key={stat.label} delay={i * 0.1}>
               <div className="text-center">
-                <p className="text-4xl md:text-5xl font-bold text-primary-foreground mb-2 font-[family-name:var(--font-heading)]">
+                <p className="text-4xl md:text-5xl font-bold text-white mb-2 font-[family-name:var(--font-heading)]">
                   <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                 </p>
-                <p className="text-primary-foreground/70 text-sm md:text-base">
+                <p className="text-white/70 text-sm md:text-base">
                   {stat.label}
                 </p>
               </div>
@@ -229,7 +229,7 @@ const OVERVIEW_PILLARS = [
 export function OverviewSection() {
   return (
     <section className="relative overflow-hidden section-padding">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_20%,rgba(255, 197, 170,0.08),transparent_45%),radial-gradient(ellipse_at_90%_80%,rgba(255, 197, 170,0.1),transparent_40%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_20%,rgba(11, 106, 70,0.08),transparent_45%),radial-gradient(ellipse_at_90%_80%,rgba(214, 176, 77,0.1),transparent_40%)]" />
       <div className="container-custom relative">
         <div className="grid items-stretch gap-10 lg:grid-cols-12 lg:gap-14">
           <FadeIn direction="left" className="lg:col-span-5">
@@ -240,15 +240,15 @@ export function OverviewSection() {
                 fill
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#ffc5aa]/85 via-[#ffc5aa]/25 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#061610]/85 via-[#061610]/25 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
                 <p className="font-[family-name:var(--font-heading)] text-3xl font-black tracking-tight text-gold sm:text-4xl">
                   20+
                 </p>
-                <p className="mt-1 text-sm font-semibold text-primary-foreground">
+                <p className="mt-1 text-sm font-semibold text-white">
                   years elevating accessible, trusted care
                 </p>
-                <p className="mt-3 max-w-xs text-xs leading-relaxed text-primary-foreground/75">
+                <p className="mt-3 max-w-xs text-xs leading-relaxed text-white/75">
                   From discovery-inspired formulation to last-mile pharmacy
                   shelves—quality you can prescribe and recommend.
                 </p>
@@ -259,7 +259,7 @@ export function OverviewSection() {
           <FadeIn direction="right" className="lg:col-span-7">
             <h2 className="mb-5 max-w-xl font-[family-name:var(--font-heading)] text-3xl font-bold leading-[1.15] text-foreground md:text-4xl lg:text-[2.75rem]">
               Medicines engineered for trust.
-              <span className="mt-2 block text-ink-accent">
+              <span className="mt-2 block text-primary">
                 Care designed for everyday excellence.
               </span>
             </h2>
@@ -291,7 +291,7 @@ export function OverviewSection() {
                     transition={{ duration: 0.45, delay: 0.08 * i }}
                     className="flex gap-3"
                   >
-                    <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center bg-primary/10 text-ink-accent">
+                    <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center bg-primary/10 text-primary">
                       <Icon className="h-4 w-4" />
                     </div>
                     <div>
@@ -354,7 +354,7 @@ export function CategoriesSection() {
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" />
-                    <h3 className="absolute bottom-4 left-4 text-xl font-bold text-primary-foreground">
+                    <h3 className="absolute bottom-4 left-4 text-xl font-bold text-white">
                       {cat.name}
                     </h3>
                   </div>
@@ -362,7 +362,7 @@ export function CategoriesSection() {
                     <p className="text-sm text-muted-foreground line-clamp-2">
                       {cat.description}
                     </p>
-                    <span className="inline-flex items-center gap-1 text-ink-accent text-sm font-semibold mt-3 group-hover:gap-2 transition-all">
+                    <span className="inline-flex items-center gap-1 text-primary text-sm font-semibold mt-3 group-hover:gap-2 transition-all">
                       Explore <ArrowRight className="h-4 w-4" />
                     </span>
                   </CardContent>
@@ -378,16 +378,16 @@ export function CategoriesSection() {
 
 export function WhyChooseSection() {
   return (
-    <section className="relative overflow-hidden section-padding bg-[#ffc5aa]">
+    <section className="relative overflow-hidden section-padding bg-[#0b6a46]">
       <div className="pointer-events-none absolute inset-0 opacity-30 molecular-bg" />
       <div className="pointer-events-none absolute -right-20 top-10 h-64 w-64 rounded-full bg-gold/15 blur-3xl" />
       <div className="container-custom relative">
         <div className="mb-10 max-w-2xl">
-          <h2 className="font-[family-name:var(--font-heading)] text-3xl font-bold leading-tight text-primary-foreground md:text-4xl">
+          <h2 className="font-[family-name:var(--font-heading)] text-3xl font-bold leading-tight text-white md:text-4xl">
             Why healthcare partners
             <span className="mt-2 block text-gold">choose HIMU Pharmacy</span>
           </h2>
-          <p className="mt-4 text-sm leading-relaxed text-primary-foreground/75 md:text-base">
+          <p className="mt-4 text-sm leading-relaxed text-white/75 md:text-base">
             From research labs to pharmacy counters, teams trust HIMU for
             dependable quality, progressive science, and patient-first delivery
             across every therapeutic line we manufacture.
@@ -396,14 +396,14 @@ export function WhyChooseSection() {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {whyChoose.map((item, i) => (
             <FadeIn key={item.title} delay={i * 0.08}>
-              <div className="group h-full border border-primary-foreground/10 bg-primary-foreground/[0.06] p-6 backdrop-blur-sm transition hover:border-gold/40 hover:bg-primary-foreground/[0.1]">
-                <div className="mb-4 flex h-11 w-11 items-center justify-center bg-gold/15 text-gold transition group-hover:bg-gold group-hover:text-ink-accent">
+              <div className="group h-full border border-white/10 bg-white/[0.06] p-6 backdrop-blur-sm transition hover:border-gold/40 hover:bg-white/[0.1]">
+                <div className="mb-4 flex h-11 w-11 items-center justify-center bg-gold/15 text-gold transition group-hover:bg-gold group-hover:text-[#1a2e1f]">
                   <item.icon className="h-5 w-5" />
                 </div>
-                <h3 className="mb-2 font-[family-name:var(--font-heading)] text-lg font-bold text-primary-foreground">
+                <h3 className="mb-2 font-[family-name:var(--font-heading)] text-lg font-bold text-white">
                   {item.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-primary-foreground/70">
+                <p className="text-sm leading-relaxed text-white/70">
                   {item.description}
                 </p>
               </div>
@@ -462,11 +462,11 @@ export function FeaturedProductsSection() {
   };
 
   return (
-    <section className="relative overflow-hidden section-padding bg-gradient-to-b from-[#eef8cd] via-[#eef8cd] to-[#eef8cd]">
+    <section className="relative overflow-hidden section-padding bg-gradient-to-b from-[#f8f3e6] via-[#f3f7f0] to-[#f8f3e6]">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
       <div className="container-custom mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <div className="max-w-xl">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-ink-accent">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
             <ShoppingBag className="h-3.5 w-3.5" />
             Best sellers
           </div>
@@ -482,7 +482,7 @@ export function FeaturedProductsSection() {
               <Tag className="h-3 w-3" />
               Deal prices live
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-[11px] font-bold text-ink-accent">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-[11px] font-bold text-primary">
               Add to cart · Buy now
             </span>
           </div>
@@ -491,7 +491,7 @@ export function FeaturedProductsSection() {
           <button
             type="button"
             onClick={() => scrollByCard(-1)}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-[var(--c-lime)] text-ink-accent shadow-sm transition hover:bg-primary hover:text-primary-foreground"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-white text-primary shadow-sm transition hover:bg-primary hover:text-white"
             aria-label="Previous products"
           >
             <ChevronLeft className="h-5 w-5" />
@@ -499,7 +499,7 @@ export function FeaturedProductsSection() {
           <button
             type="button"
             onClick={() => scrollByCard(1)}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-[var(--c-lime)] text-ink-accent shadow-sm transition hover:bg-primary hover:text-primary-foreground"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-white text-primary shadow-sm transition hover:bg-primary hover:text-white"
             aria-label="Next products"
           >
             <ChevronRight className="h-5 w-5" />
@@ -520,8 +520,8 @@ export function FeaturedProductsSection() {
         onTouchStart={() => setPaused(true)}
         onTouchEnd={() => setPaused(false)}
       >
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[#eef8cd] to-transparent sm:w-16" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#eef8cd] to-transparent sm:w-16" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[#f8f3e6] to-transparent sm:w-16" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#f8f3e6] to-transparent sm:w-16" />
         <div
           ref={scrollerRef}
           className="flex gap-4 overflow-x-auto px-4 pb-2 scrollbar-none sm:px-8"
@@ -538,7 +538,7 @@ export function FeaturedProductsSection() {
         </div>
       </div>
 
-      <div className="container-custom mt-8 flex flex-col items-center justify-between gap-3 rounded-2xl border border-primary/15 bg-primary-foreground/70 px-5 py-4 text-center backdrop-blur sm:flex-row sm:text-left">
+      <div className="container-custom mt-8 flex flex-col items-center justify-between gap-3 rounded-2xl border border-primary/15 bg-white/70 px-5 py-4 text-center backdrop-blur sm:flex-row sm:text-left">
         <p className="text-sm font-semibold text-foreground">
           Need bulk or pharmacy supply? Browse the full catalog and checkout in
           minutes.
@@ -659,7 +659,7 @@ export function NewsSection() {
                     <Badge variant="outline" className="mb-2">
                       {post.category}
                     </Badge>
-                    <h3 className="font-bold mb-2 group-hover:text-ink-accent transition-colors line-clamp-2">
+                    <h3 className="font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
                       {post.title}
                     </h3>
                     <p className="text-sm text-muted-foreground line-clamp-2">
@@ -714,10 +714,10 @@ export function PartnersSection() {
                 key={`${name}-${i}`}
                 className="px-6 py-4 rounded-2xl bg-card border border-primary/10 shadow-md shadow-primary/5 flex items-center gap-3 whitespace-nowrap hover:border-primary hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5 transition-all duration-300 group cursor-pointer"
               >
-                <div className="h-9 w-9 rounded-xl bg-primary/10 text-ink-accent flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                <div className="h-9 w-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
                   <Icon className="h-5 w-5" />
                 </div>
-                <span className="text-sm font-semibold text-foreground group-hover:text-ink-accent transition-colors">
+                <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
                   {name}
                 </span>
               </div>
@@ -742,10 +742,10 @@ export function CTASection() {
           />
           <div className="absolute inset-0 gradient-hero" />
           <div className="relative z-10 p-10 md:p-16 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4 font-[family-name:var(--font-heading)]">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 font-[family-name:var(--font-heading)]">
               Partner With HIMU Pharmacy
             </h2>
-            <p className="text-primary-foreground/80 max-w-xl mx-auto mb-8">
+            <p className="text-white/80 max-w-xl mx-auto mb-8">
               Join our global network of healthcare partners and distributors.
               Together, we can advance healthcare innovation worldwide.
             </p>
@@ -756,7 +756,7 @@ export function CTASection() {
                 </Button>
               </Link>
               <Link href="/about">
-                <Button size="lg" variant="glass" className="text-primary-foreground">
+                <Button size="lg" variant="glass" className="text-white">
                   Learn About Us
                 </Button>
               </Link>

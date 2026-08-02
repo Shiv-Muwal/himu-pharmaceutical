@@ -121,7 +121,7 @@ export function ProductReviews({ product, variant = "detail" }) {
   };
 
   return (
-    <div className="rounded-2xl border border-border/40 bg-[var(--c-lime)] p-4 shadow-sm md:rounded-3xl md:p-6">
+    <div className="rounded-2xl border border-border/40 bg-white p-4 shadow-sm md:rounded-3xl md:p-6">
       <div className="mb-4 flex flex-col gap-3 sm:mb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="font-[family-name:var(--font-heading)] text-lg font-bold md:text-2xl">
