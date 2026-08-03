@@ -1,4 +1,21 @@
 import { cn } from "@/lib/utils";
+import { getApiOrigin } from "@/lib/api-base";
+
+function resolveSrc(src) {
+  if (!src) return "";
+  if (
+    src.startsWith("http://") ||
+    src.startsWith("https://") ||
+    src.startsWith("data:") ||
+    src.startsWith("blob:")
+  ) {
+    return src;
+  }
+  if (src.startsWith("/uploads/")) {
+    return `${getApiOrigin()}${src}`;
+  }
+  return src;
+}
 
 export function Image({
   src,
@@ -11,10 +28,12 @@ export function Image({
   style,
   ...props
 }) {
+  const resolved = resolveSrc(src);
+
   if (fill) {
     return (
       <img
-        src={src}
+        src={resolved}
         alt={alt}
         loading={priority ? "eager" : "lazy"}
         className={cn("absolute inset-0 h-full w-full", className)}
@@ -26,7 +45,7 @@ export function Image({
 
   return (
     <img
-      src={src}
+      src={resolved}
       alt={alt}
       width={width}
       height={height}

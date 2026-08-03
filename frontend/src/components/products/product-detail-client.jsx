@@ -1,7 +1,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Image } from "@/components/ui/image";
 import { Link } from "@/components/ui/link";
-import { ArrowLeft, Star, X } from "lucide-react";
+import {
+  ArrowLeft,
+  Check,
+  Droplets,
+  ShieldCheck,
+  Sparkles,
+  Star,
+  Sun,
+  X,
+} from "lucide-react";
 import { ProductCard } from "@/components/products/product-card";
 import { Button } from "@/components/ui/button";
 import { AccordionItem } from "@/components/ui/accordion";
@@ -9,6 +18,8 @@ import { ProductActions } from "@/components/products/product-actions";
 import { ProductReviews } from "@/components/products/product-reviews";
 import { getMockProducts } from "@/lib/mock-backend";
 import { cn } from "@/lib/utils";
+
+const HIGHLIGHT_ICONS = [Sun, Droplets, ShieldCheck, Sparkles];
 
 export function ProductDetailClient({
   initialProduct,
@@ -22,6 +33,14 @@ export function ProductDetailClient({
   const scrollerRef = useRef(null);
 
   useEffect(() => {
+    if (initialProduct) {
+      setProduct(initialProduct);
+      setRelated(initialRelatedProducts || []);
+      setActiveIndex(0);
+      setNotFound(false);
+      return;
+    }
+
     const allProducts = getMockProducts();
     const foundProduct = allProducts.find((p) => p.slug === slug);
     if (foundProduct) {
@@ -38,17 +57,41 @@ export function ProductDetailClient({
           p.categorySlug === foundProduct.categorySlug &&
           !fromRelated.some((r) => r.id === p.id),
       );
-      const merged = [...fromRelated, ...similar].slice(0, 8);
-      setRelated(merged);
+      setRelated([...fromRelated, ...similar].slice(0, 8));
     } else {
       setNotFound(true);
     }
-  }, [slug]);
+  }, [slug, initialProduct, initialRelatedProducts]);
 
   const gallery = useMemo(() => {
     if (!product) return [];
     const list = [product.image, ...(product.images || [])].filter(Boolean);
     return [...new Set(list)];
+  }, [product]);
+
+  const highlights = useMemo(() => {
+    if (!product?.highlights?.length) return [];
+    return product.highlights.map((h) =>
+      typeof h === "string" ? { label: h } : { label: h.label },
+    );
+  }, [product]);
+
+  const ingredients = useMemo(
+    () => (product?.ingredients || []).filter((item) => item?.name),
+    [product],
+  );
+
+  const lovePoints = useMemo(
+    () => (product?.benefits || []).filter(Boolean),
+    [product],
+  );
+
+  const trustTags = useMemo(() => {
+    const tags = (product?.tags || []).filter(Boolean);
+    if (product?.strength && !tags.includes(product.strength)) {
+      return [product.strength, ...tags];
+    }
+    return tags;
   }, [product]);
 
   const goToImage = useCallback(
@@ -73,12 +116,10 @@ export function ProductDetailClient({
     }
   };
 
-  // Reset carousel when product changes
   useEffect(() => {
     goToImage(0, { smooth: false });
   }, [slug, goToImage]);
 
-  // Keep active slide aligned after rotate / resize
   useEffect(() => {
     const onResize = () => goToImage(activeIndex, { smooth: false });
     window.addEventListener("resize", onResize);
@@ -135,11 +176,10 @@ export function ProductDetailClient({
 
   return (
     <div className="bg-[#f8f3e6] pb-4 md:bg-transparent md:pb-10">
-      {/* Gallery — edge-to-edge on mobile */}
       <section className="bg-white md:bg-transparent">
         <div className="md:container-custom md:pt-4">
-          <div className="grid gap-0 lg:grid-cols-2 lg:gap-10 lg:pt-2">
-            <div className="bg-white">
+          <div className="grid items-start gap-0 lg:grid-cols-2 lg:gap-10 lg:pt-2">
+            <div className="bg-white lg:sticky lg:top-[calc(var(--site-header-height,4.5rem)+0.75rem)]">
               <div className="relative aspect-square w-full overflow-hidden bg-[#f3f1ea] md:rounded-2xl md:shadow-lg">
                 <div
                   ref={scrollerRef}
@@ -193,10 +233,10 @@ export function ProductDetailClient({
                         type="button"
                         onClick={() => goToImage(i)}
                         className={cn(
-                          "relative h-[58px] w-[58px] shrink-0 overflow-hidden rounded-lg border-2 transition",
+                          "relative h-[64px] w-[64px] shrink-0 overflow-hidden rounded-xl border-2 transition",
                           selected
                             ? "border-primary ring-2 ring-primary/20"
-                            : "border-border/50 opacity-80",
+                            : "border-border/50 opacity-80 hover:opacity-100",
                         )}
                         aria-label={`View image ${i + 1}`}
                       >
@@ -208,58 +248,112 @@ export function ProductDetailClient({
               )}
             </div>
 
-            {/* Buy box */}
-            <div className="space-y-3 px-4 pb-4 pt-3 md:px-0 md:pt-0">
-              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-emerald">
-                {product.brand || "HIMU"} · {product.category}
-              </p>
-              <h1 className="font-[family-name:var(--font-heading)] text-[1.35rem] font-bold leading-snug text-foreground sm:text-2xl md:text-3xl">
-                {product.name}
-              </h1>
+            <div className="space-y-4 px-4 pb-5 pt-3 md:px-0 md:pt-0">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-emerald">
+                  {product.category}
+                  {product.productType ? ` · ${product.productType}` : ""}
+                </p>
+                <h1 className="mt-1 font-[family-name:var(--font-heading)] text-[1.45rem] font-bold leading-snug text-foreground sm:text-2xl md:text-3xl">
+                  {product.name}
+                </h1>
 
-              {product.rating && (
-                <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1 rounded-md bg-[#BBF7D0] px-2 py-0.5 text-xs font-bold text-primary-foreground">
-                    {product.rating}
-                    <Star className="h-3 w-3 fill-current" />
-                  </span>
-                  <span className="text-xs font-semibold text-emerald">
-                    {product.reviewCount || 0} ratings
-                  </span>
+                {product.rating && (
+                  <div className="mt-2 flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1 rounded-md bg-[#BBF7D0] px-2 py-0.5 text-xs font-bold text-primary-foreground">
+                      {product.rating}
+                      <Star className="h-3 w-3 fill-current" />
+                    </span>
+                    <span className="text-xs font-semibold text-emerald">
+                      {product.reviewCount || 0} ratings
+                    </span>
+                  </div>
+                )}
+
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {product.shortDescription}
+                </p>
+              </div>
+
+              {highlights.length > 0 && (
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  {highlights.map((item, index) => {
+                    const Icon = HIGHLIGHT_ICONS[index % HIGHLIGHT_ICONS.length];
+                    return (
+                      <div
+                        key={`${item.label}-${index}`}
+                        className="rounded-2xl border border-primary/10 bg-primary/[0.06] px-3 py-2.5 text-center"
+                      >
+                        <Icon className="mx-auto h-4 w-4 text-emerald" />
+                        <p className="mt-1 text-[10px] font-bold leading-tight text-foreground">
+                          {item.label}
+                        </p>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
-
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {product.shortDescription}
-              </p>
-
-              <div className="flex flex-wrap gap-2 text-[11px] font-semibold text-foreground/80">
-                {product.strength && (
-                  <span className="rounded-full bg-primary/8 px-2.5 py-1">
-                    {product.strength}
-                  </span>
-                )}
-                {product.productType && (
-                  <span className="rounded-full bg-primary/8 px-2.5 py-1">
-                    {product.productType}
-                  </span>
-                )}
-                {product.composition && (
-                  <span className="rounded-full bg-primary/8 px-2.5 py-1">
-                    {product.composition}
-                  </span>
-                )}
-              </div>
 
               <div className="rounded-2xl border border-border/40 bg-white p-3 shadow-sm md:p-4">
                 <ProductActions product={product} />
               </div>
+
+              {ingredients.length > 0 && (
+                <div className="rounded-2xl border border-border/40 bg-white p-4 shadow-sm">
+                  <p className="text-[10px] font-black uppercase tracking-[0.16em] text-emerald">
+                    Key ingredients
+                  </p>
+                  <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
+                    {ingredients.map((item) => (
+                      <div
+                        key={item.name}
+                        className="flex items-start gap-2 rounded-xl bg-[#f7faf8] px-3 py-2.5"
+                      >
+                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/15 text-emerald">
+                          <Check className="h-3 w-3" />
+                        </span>
+                        <div className="min-w-0">
+                          <p className="text-xs font-bold text-foreground">{item.name}</p>
+                          {item.blurb ? (
+                            <p className="text-[11px] text-muted-foreground">{item.blurb}</p>
+                          ) : null}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {lovePoints.length > 0 && (
+                <div className="rounded-2xl border border-border/40 bg-gradient-to-br from-[#f3f7f0] to-white p-4 shadow-sm">
+                  <p className="text-[10px] font-black uppercase tracking-[0.16em] text-emerald">
+                    Why you&apos;ll love it
+                  </p>
+                  <ul className="mt-3 space-y-2">
+                    {lovePoints.map((benefit) => (
+                      <li key={benefit} className="flex gap-2 text-sm text-foreground">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald" />
+                        <span>{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {trustTags.length > 0 && (
+                <div className="flex flex-wrap gap-2 text-[11px] font-semibold text-foreground/80">
+                  {trustTags.map((tag) => (
+                    <span key={tag} className="rounded-full bg-primary/8 px-2.5 py-1">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Essential info — accordion only */}
       <section className="mt-2 bg-white px-4 py-4 md:mt-8 md:bg-transparent md:px-0">
         <div className="container-custom max-w-3xl px-0 md:px-4">
           <h2 className="mb-3 font-[family-name:var(--font-heading)] text-lg font-bold md:text-xl">

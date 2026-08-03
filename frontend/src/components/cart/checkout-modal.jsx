@@ -32,7 +32,7 @@ export function CheckoutModal() {
     checkoutSavings,
     clearCart,
   } = useCart();
-  const { user } = useAuth();
+  const { user, isAuthenticated, openLogin } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -130,6 +130,13 @@ export function CheckoutModal() {
     e.preventDefault();
     if (!checkoutItems.length) {
       setErrors({ submit: "No items to checkout." });
+      return;
+    }
+    if (!isAuthenticated) {
+      setErrors({
+        submit: "Please login or signup to place your order.",
+      });
+      openLogin();
       return;
     }
     if (!validateForm()) return;

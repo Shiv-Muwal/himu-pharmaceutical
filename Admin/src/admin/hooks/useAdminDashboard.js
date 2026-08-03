@@ -4,9 +4,10 @@ import {
   EMPTY_PRODUCT_FORM,
   EMPTY_BANNER_FORM,
   EMPTY_BLOG_FORM,
-  IMAGE_PRESETS,
   LOW_STOCK_THRESHOLD,
   downloadCsv,
+  linesToList,
+  listToLines,
 } from "@/admin/constants";
 
 export function useAdminDashboard() {
@@ -380,31 +381,53 @@ export function useAdminDashboard() {
     if (productForm.price <= 0) newErrors.price = "Enter a valid price";
     if (!productForm.shortDescription.trim())
       newErrors.shortDescription = "Short description is required";
+    const images = (productForm.images || []).filter(Boolean);
+    if (!images.length && !productForm.image) {
+      newErrors.images = "Upload at least one product image";
+    }
     if (Object.keys(newErrors).length > 0) {
       setFormErrors(newErrors);
       return;
     }
     const categorySlug = productForm.category.toLowerCase().replace(/\s+/g, "-");
-    const imageUrl = IMAGE_PRESETS[productForm.imageKey] || IMAGE_PRESETS.cream;
+    const gallery = images.length ? images : [productForm.image].filter(Boolean);
+    const ingredients = (productForm.ingredients || [])
+      .map((item) => ({
+        name: String(item.name || "").trim(),
+        blurb: String(item.blurb || "").trim(),
+      }))
+      .filter((item) => item.name);
+    const benefits = linesToList(productForm.benefitsText);
+    const tags = linesToList(productForm.tagsText);
+    const highlights = linesToList(productForm.highlightsText).map((label) => ({ label }));
+    const uses = linesToList(productForm.usesText);
+    const variantName = productForm.variantName?.trim() || productForm.name;
+
     const dataToSave = {
-      name: productForm.name,
+      name: productForm.name.trim(),
       category: productForm.category,
       categorySlug,
-      composition: productForm.composition,
-      strength: productForm.strength,
+      composition: productForm.composition.trim(),
+      strength: productForm.strength.trim(),
       price: Number(productForm.price),
-      compareAtPrice: Number(productForm.compareAtPrice),
+      compareAtPrice: Number(productForm.compareAtPrice) || undefined,
       stock: Number(productForm.stock ?? 0),
-      image: imageUrl,
-      images: [imageUrl, IMAGE_PRESETS.capsule, IMAGE_PRESETS.tablet].filter(Boolean),
-      shortDescription: productForm.shortDescription,
+      image: gallery[0],
+      images: gallery,
+      shortDescription: productForm.shortDescription.trim(),
       description:
-        productForm.description ||
-        `${productForm.name} is a premium formulation developed by HIMU Pharmacy.`,
+        productForm.description?.trim() ||
+        `${productForm.name} is a premium formulation for daily care.`,
       storage: productForm.storage,
       packaging: productForm.packaging,
       shelfLife: productForm.shelfLife,
-      variants: [{ name: productForm.name, strength: productForm.strength }],
+      dosage: productForm.dosage || undefined,
+      uses,
+      benefits,
+      ingredients,
+      highlights,
+      tags,
+      variants: [{ name: variantName, strength: productForm.strength.trim() }],
       active: true,
     };
     try {
@@ -441,28 +464,42 @@ export function useAdminDashboard() {
 
   const handleOpenEditModal = (product) => {
     setEditingProduct(product);
-    let imageKey = "cream";
-    for (const [key, val] of Object.entries(IMAGE_PRESETS)) {
-      if (val === product.image) {
-        imageKey = key;
-        break;
-      }
-    }
+    const gallery = [
+      ...(product.images?.length ? product.images : []),
+      product.image,
+    ].filter(Boolean);
+    const uniqueGallery = [...new Set(gallery)];
     setProductForm({
-      name: product.name,
-      category: product.category,
-      composition: product.composition,
-      strength: product.strength,
-      price: product.price,
+      name: product.name || "",
+      category: product.category || "Skin Care",
+      composition: product.composition || "",
+      strength: product.strength || "",
+      price: product.price ?? 0,
       compareAtPrice:
         product.compareAtPrice || Math.round((product.price * 1.35) / 10) * 10 - 1,
       stock: product.stock ?? 0,
-      imageKey,
-      shortDescription: product.shortDescription,
-      description: product.description,
-      storage: product.storage,
-      packaging: product.packaging,
-      shelfLife: product.shelfLife,
+      image: uniqueGallery[0] || "",
+      images: uniqueGallery,
+      shortDescription: product.shortDescription || "",
+      description: product.description || "",
+      storage: product.storage || "",
+      packaging: product.packaging || "",
+      shelfLife: product.shelfLife || "",
+      dosage: product.dosage || "",
+      usesText: listToLines(product.uses),
+      benefitsText: listToLines(product.benefits),
+      tagsText: listToLines(product.tags),
+      highlightsText: listToLines(
+        (product.highlights || []).map((h) => (typeof h === "string" ? h : h.label)),
+      ),
+      ingredients:
+        product.ingredients?.length > 0
+          ? product.ingredients.map((item) => ({
+              name: item.name || "",
+              blurb: item.blurb || "",
+            }))
+          : [{ name: "", blurb: "" }],
+      variantName: product.variants?.[0]?.name || product.name || "",
     });
     setFormErrors({});
     setIsProductModalOpen(true);

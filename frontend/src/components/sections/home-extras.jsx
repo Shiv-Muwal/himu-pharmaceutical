@@ -1,122 +1,105 @@
 import { useEffect, useState } from "react";
-import { ArrowRight, BookOpen, Quote, Sparkles } from "lucide-react";
+import { ArrowRight, BookOpen, Quote, Sparkles, Sun, Moon, Droplets } from "lucide-react";
 import { Link } from "@/components/ui/link";
 import { Image } from "@/components/ui/image";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/animations/motion-components";
-import { trustedBrands, shopBrands } from "@/data/brands";
+import { products } from "@/data/products";
 import { blogPosts as fallbackBlogs } from "@/data/blogs";
 import { api } from "@/lib/api";
 
+const PRODUCT_TRUST = [
+  {
+    slug: "milky-sunscreen-spf-50",
+    icon: Sun,
+    accent: "#d6b04d",
+    tint: "from-[#fff8e8] to-[#f3f7f0]",
+    promise: "Day defense",
+    detail: "SPF 50 · no white cast",
+  },
+  {
+    slug: "porcelyn-night-cream",
+    icon: Moon,
+    accent: "#6b5b95",
+    tint: "from-[#f5f0fa] to-[#f3f7f0]",
+    promise: "Night renewal",
+    detail: "Soft, restored morning skin",
+  },
+  {
+    slug: "lumeva-melasma-cream",
+    icon: Droplets,
+    accent: "#7c6ba8",
+    tint: "from-[#f3eef8] to-[#f8f3e6]",
+    promise: "Tone care",
+    detail: "Melasma & pigmentation control",
+  },
+];
+
 export function TrustedBrandsSection() {
-  const loop = [...trustedBrands, ...trustedBrands];
+  const lineup = PRODUCT_TRUST.map((item) => {
+    const product = products.find((p) => p.slug === item.slug);
+    return product ? { ...item, product } : null;
+  }).filter(Boolean);
 
   return (
-    <section className="relative overflow-hidden border-y border-primary/10 bg-[#BBF7D0] py-10 text-primary-foreground">
-      <div className="pointer-events-none absolute inset-0 opacity-30 [background-image:repeating-linear-gradient(135deg,rgba(20,83,45,0.06)_0_2px,transparent_2px_18px)]" />
-      <div className="pointer-events-none absolute -left-16 top-0 h-40 w-40 rounded-full bg-gold/30 blur-3xl" />
-      <div className="pointer-events-none absolute -right-10 bottom-0 h-48 w-48 rounded-full bg-white/40 blur-3xl" />
+    <section className="relative overflow-hidden border-y border-primary/10 bg-gradient-to-b from-[#f8f3e6] via-[#f3f7f0] to-[#e8f5ec] py-12 text-primary-foreground sm:py-14">
+      <div className="pointer-events-none absolute -left-20 top-8 h-48 w-48 rounded-full bg-gold/20 blur-3xl" />
+      <div className="pointer-events-none absolute -right-16 bottom-0 h-56 w-56 rounded-full bg-[#c4b5e0]/35 blur-3xl" />
 
-      <div className="container-custom relative mb-7 text-center">
-        <p className="mb-2 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.22em] text-emerald">
-          <Sparkles className="h-3.5 w-3.5" /> Trusted Brands
-        </p>
-        <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold md:text-3xl">
-          Chosen by hospitals & care networks
-        </h2>
-        <p className="mx-auto mt-2 max-w-xl text-sm text-emerald/75">
-          HIMU formulations move through leading clinical partners across India.
-        </p>
-      </div>
-
-      <div className="relative">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#BBF7D0] to-transparent sm:w-24" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#BBF7D0] to-transparent sm:w-24" />
-        <div className="animate-marquee-slow flex w-max gap-4 px-4">
-          {loop.map((brand, index) => (
-            <div
-              key={`${brand.id}-${index}`}
-              className="group flex min-w-[180px] items-center gap-3 rounded-2xl border border-emerald/15 bg-white/60 px-4 py-3 backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-emerald/40 hover:bg-white/80 sm:min-w-[210px]"
-            >
-              <div
-                className="flex h-11 w-11 items-center justify-center rounded-xl text-xs font-black tracking-wide text-white shadow-inner"
-                style={{ background: brand.accent }}
-              >
-                {brand.mark}
-              </div>
-              <div>
-                <p className="text-sm font-bold text-primary-foreground">{brand.name}</p>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-emerald/80">
-                  Partner network
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function ShopWithBrandsSection() {
-  return (
-    <section className="section-padding">
-      <div className="container-custom">
-        <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="mb-1 text-[10px] font-black uppercase tracking-[0.18em] text-emerald">
-              Shop with brands
-            </p>
-            <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold md:text-3xl">
-              Explore HIMU houses
-            </h2>
-            <p className="mt-2 max-w-lg text-sm text-muted-foreground">
-              Jump into curated brand shelves — derma, care, cosmo, and clinical lines.
-            </p>
-          </div>
-          <Link
-            href="/products"
-            className="inline-flex items-center gap-1 text-sm font-semibold text-emerald hover:underline"
-          >
-            Browse catalog <ArrowRight className="h-4 w-4" />
-          </Link>
+      <div className="container-custom relative">
+        <div className="mx-auto mb-8 max-w-2xl text-center">
+          <p className="mb-2 inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.22em] text-emerald">
+            <Sparkles className="h-3.5 w-3.5" /> Dermatologist recommended
+          </p>
+          <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold text-foreground md:text-3xl">
+            Built for real skin routines
+          </h2>
+          <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
+            Day SPF, overnight renewal, and pigmentation care — three focused formulas for clearer, calmer skin.
+          </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-3">
-          {shopBrands.map((brand, i) => (
-            <FadeIn key={brand.id} delay={i * 0.05}>
+        <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
+          {lineup.map(({ product, icon: Icon, accent, tint, promise, detail }, i) => (
+            <FadeIn key={product.slug} delay={i * 0.06}>
               <Link
-                href={brand.href}
-                className="group relative block h-full overflow-hidden rounded-2xl border border-border/50 bg-white p-3 shadow-[0_10px_30px_rgba(187, 247, 208,0.06)] transition active:scale-[0.98] hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_18px_40px_rgba(187, 247, 208,0.12)] sm:rounded-[1.5rem] sm:p-5 dark:bg-card"
+                href={`/products/${product.slug}`}
+                className={`group relative flex h-full flex-col overflow-hidden rounded-[1.35rem] bg-gradient-to-br ${tint} p-4 transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(20,83,45,0.1)] sm:p-5`}
               >
-                <div
-                  className="absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-20 blur-2xl transition group-hover:opacity-40 sm:h-28 sm:w-28"
-                  style={{ background: brand.accent }}
-                />
-                <div className="relative flex items-start justify-between gap-2">
-                  <div
-                    className="flex h-11 w-11 items-center justify-center rounded-xl text-[11px] font-black text-white shadow-lg sm:h-14 sm:w-14 sm:rounded-2xl sm:text-sm"
-                    style={{ background: brand.accent }}
+                <div className="flex items-center justify-between gap-2">
+                  <span
+                    className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white"
+                    style={{ background: accent }}
                   >
-                    {brand.mark}
-                  </div>
-                  <span className="rounded-full bg-[#f8f3e6] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-emerald sm:px-2.5 sm:py-1 sm:text-[10px]">
-                    Shop
+                    <Icon className="h-3 w-3" />
+                    {promise}
                   </span>
+                  <ArrowRight className="h-4 w-4 text-emerald opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100" />
                 </div>
-                <h3 className="relative mt-3 font-[family-name:var(--font-heading)] text-[15px] font-bold leading-snug text-foreground sm:mt-4 sm:text-xl">
-                  {brand.name}
-                </h3>
-                <p className="relative mt-1 line-clamp-2 text-[11px] text-muted-foreground sm:text-sm">
-                  {brand.tagline}
-                </p>
-                <p className="relative mt-2.5 text-[10px] font-semibold text-emerald/80 sm:mt-4 sm:text-xs">
-                  {brand.productsLabel}
-                </p>
-                <span className="relative mt-2 inline-flex items-center gap-1 text-xs font-bold text-emerald sm:mt-3 sm:text-sm">
-                  Open
-                  <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1 sm:h-4 sm:w-4" />
-                </span>
+
+                <div className="relative mx-auto mt-4 h-36 w-full max-w-[180px] sm:h-40">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-contain drop-shadow-md transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+
+                <div className="mt-3 text-left">
+                  <h3 className="font-[family-name:var(--font-heading)] text-base font-bold text-foreground sm:text-lg">
+                    {product.name}
+                  </h3>
+                  <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{detail}</p>
+                  <p className="mt-2 text-sm font-bold text-emerald">
+                    ₹{product.price}
+                    {product.compareAtPrice ? (
+                      <span className="ml-2 text-xs font-medium text-muted-foreground line-through">
+                        ₹{product.compareAtPrice}
+                      </span>
+                    ) : null}
+                  </p>
+                </div>
               </Link>
             </FadeIn>
           ))}

@@ -1,11 +1,25 @@
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { PageHero } from "@/components/sections/page-hero";
 import { ProductCatalog } from "@/components/products/product-catalog";
-import { products } from "@/data/products";
+import { products as fallbackProducts } from "@/data/products";
+import { fetchStoreProducts } from "@/lib/products-api";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 
 export default function ProductsPage() {
   const [searchParams] = useSearchParams();
+  const [catalog, setCatalog] = useState(fallbackProducts);
+
+  useEffect(() => {
+    let active = true;
+    fetchStoreProducts().then((items) => {
+      if (active && items?.length) setCatalog(items);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <>
       <PageHero
@@ -24,7 +38,7 @@ export default function ProductsPage() {
             ]}
           />
           <ProductCatalog
-            products={products}
+            products={catalog}
             initialSearch={searchParams.get("q") || ""}
             initialCategory={searchParams.get("category") || ""}
           />

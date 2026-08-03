@@ -5,24 +5,25 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/providers/CartProvider";
-import { useAuth } from "@/providers/AuthProvider";
 import { cn } from "@/lib/utils";
 
 export function ProductCard({ product, compact = false }) {
   const { addToCart, buyNow } = useCart();
-  const { isAuthenticated, openLogin } = useAuth();
   const isAvailable =
     product.categorySlug === "dermatology" ||
     product.categorySlug === "skin-care";
+
+  const discount =
+    product.compareAtPrice && product.compareAtPrice > product.price
+      ? Math.round(
+          ((product.compareAtPrice - product.price) / product.compareAtPrice) * 100,
+        )
+      : 0;
 
   const handleBuyNow = (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (!isAvailable) return;
-    if (!isAuthenticated) {
-      openLogin();
-      return;
-    }
     buyNow(product, 1);
   };
 
@@ -36,73 +37,100 @@ export function ProductCard({ product, compact = false }) {
   return (
     <Card
       className={cn(
-        "group relative flex h-full flex-col justify-between overflow-hidden bg-card hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1",
-        compact && "shadow-sm",
+        "group relative flex h-full min-w-0 flex-col overflow-hidden border-border/50 bg-card shadow-md shadow-primary/5 transition duration-300 hover:-translate-y-1 hover:border-primary/25 hover:shadow-xl hover:shadow-primary/10",
+        compact && "rounded-2xl",
       )}
     >
-      <Link href={`/products/${product.slug}`} className="block">
-        <div className="relative aspect-square overflow-hidden bg-muted">
+      <Link href={`/products/${product.slug}`} className="block min-w-0">
+        <div
+          className={cn(
+            "relative overflow-hidden bg-gradient-to-br from-[#f3f7f0] to-[#efe8d8]",
+            compact ? "aspect-[4/5]" : "aspect-square",
+          )}
+        >
           <Image
             src={product.image}
             alt={product.name}
             fill
             className={cn(
-              "object-cover transition-transform duration-500 group-hover:scale-110",
+              "object-contain p-2 transition-transform duration-500 group-hover:scale-105",
               !isAvailable && "opacity-80 blur-[1px]",
             )}
-            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 280px"
           />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card/90 to-transparent" />
+
           <div className={cn("absolute z-10", compact ? "left-2 top-2" : "left-3 top-3")}>
-            <Badge variant="gold" className={compact ? "px-1.5 py-0 text-[8px]" : undefined}>
+            <Badge
+              variant="gold"
+              className={cn(
+                "max-w-[7.5rem] truncate shadow-sm",
+                compact ? "px-1.5 py-0 text-[8px]" : "text-[10px]",
+              )}
+            >
               {product.category}
             </Badge>
           </div>
+
+          {discount > 0 && (
+            <div className={cn("absolute z-10", compact ? "right-2 top-2" : "right-3 top-3")}>
+              <span className="rounded-full bg-emerald px-2 py-0.5 text-[9px] font-black text-white shadow-sm">
+                {discount}% OFF
+              </span>
+            </div>
+          )}
+
           {!isAvailable && (
             <div className={cn("absolute z-10", compact ? "right-2 top-2" : "right-3 top-3")}>
-              <Badge className="rounded-full border-0 bg-gradient-to-r from-secondary to-amber-600 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-[#1a2e1f] animate-pulse shadow-sm hover:from-secondary hover:to-amber-600">
+              <Badge className="rounded-full border-0 bg-gradient-to-r from-secondary to-amber-600 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-[#1a2e1f] shadow-sm">
                 Soon
               </Badge>
             </div>
           )}
         </div>
       </Link>
+
       <CardContent
         className={cn(
-          "flex flex-1 flex-col justify-between",
-          compact ? "p-2.5 sm:p-5" : "p-5",
+          "flex min-w-0 flex-1 flex-col overflow-hidden",
+          compact ? "gap-2 p-3" : "gap-3 p-5",
         )}
       >
-        <div>
-          <Link href={`/products/${product.slug}`} className="block">
-            <p
-              className={cn(
-                "mb-0.5 font-bold uppercase tracking-wider text-emerald/80",
-                compact ? "text-[8px] sm:text-[10px]" : "text-[10px]",
-              )}
-            >
-              {product.brand || "HIMU"}
-              {product.productType ? ` · ${product.productType}` : ""}
-            </p>
+        <div className="min-w-0 space-y-1">
+          <p
+            className={cn(
+              "truncate font-bold uppercase tracking-[0.14em] text-emerald/80",
+              compact ? "text-[8px]" : "text-[10px]",
+            )}
+          >
+            {product.category}
+          </p>
+
+          <Link href={`/products/${product.slug}`} className="block min-w-0">
             <h3
               className={cn(
-                "mb-1 font-bold transition-colors line-clamp-2 group-hover:text-emerald sm:line-clamp-1",
-                compact ? "text-[13px] leading-snug sm:text-lg" : "text-lg",
+                "font-bold leading-snug text-foreground transition-colors group-hover:text-emerald",
+                compact
+                  ? "line-clamp-2 text-[12px] sm:text-sm"
+                  : "line-clamp-2 text-base sm:text-lg",
               )}
             >
               {product.name}
             </h3>
           </Link>
+
           <p
             className={cn(
-              "mb-2 text-muted-foreground",
-              compact ? "hidden text-xs sm:block" : "text-xs",
+              "truncate text-muted-foreground",
+              compact ? "text-[10px]" : "text-xs",
             )}
           >
-            {product.composition} · {product.strength}
+            {product.strength}
           </p>
+
           {product.rating && !compact && (
-            <div className="mb-2 flex items-center gap-1">
-              <div className="flex text-amber-400">
+            <div className="flex min-w-0 items-center gap-1 pt-0.5">
+              <div className="flex shrink-0 text-amber-400">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
                     key={i}
@@ -115,71 +143,61 @@ export function ProductCard({ product, compact = false }) {
                   />
                 ))}
               </div>
-              <span className="text-[10px] font-bold text-muted-foreground">
-                {product.rating} ({product.reviewCount} reviews)
+              <span className="truncate text-[10px] font-bold text-muted-foreground">
+                {product.rating} ({product.reviewCount})
               </span>
             </div>
           )}
-          <p
-            className={cn(
-              "mb-3 line-clamp-2 text-muted-foreground",
-              compact ? "hidden text-sm sm:block" : "text-sm",
-            )}
-          >
-            {product.shortDescription}
-          </p>
+
+          {!compact && (
+            <p className="line-clamp-2 text-sm text-muted-foreground">
+              {product.shortDescription}
+            </p>
+          )}
         </div>
-        <div>
-          <div className={cn("flex items-baseline gap-1 mb-3 sm:mb-4", compact && "gap-1")}>
+
+        <div className="mt-auto min-w-0 space-y-2.5">
+          <div className="flex min-w-0 flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
             <span
               className={cn(
-                "font-black text-emerald font-[family-name:var(--font-heading)]",
-                compact ? "text-base sm:text-lg" : "text-lg",
+                "font-[family-name:var(--font-heading)] font-black text-emerald",
+                compact ? "text-base" : "text-xl",
               )}
             >
               ₹{product.price}
             </span>
-            {product.compareAtPrice && (
-              <>
-                <span className="text-[10px] text-muted-foreground line-through sm:text-xs">
-                  ₹{product.compareAtPrice}
-                </span>
-                <span className="ml-0.5 shrink-0 rounded bg-emerald/10 px-1 py-0.5 text-[8px] font-black text-emerald dark:bg-emerald/20 sm:text-[9px] sm:px-1.5">
-                  {Math.round(
-                    ((product.compareAtPrice - product.price) /
-                      product.compareAtPrice) *
-                      100,
-                  )}
-                  %
-                </span>
-              </>
-            )}
+            {product.compareAtPrice ? (
+              <span className="text-[10px] text-muted-foreground line-through sm:text-xs">
+                ₹{product.compareAtPrice}
+              </span>
+            ) : null}
           </div>
+
           {isAvailable ? (
-            <div className={cn("mt-auto grid grid-cols-2", compact ? "gap-1.5" : "gap-2")}>
+            <div className={cn("grid grid-cols-2", compact ? "gap-1.5" : "gap-2")}>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handleAddToCart}
                 className={cn(
-                  "flex cursor-pointer items-center justify-center gap-1 rounded-lg hover:border-primary hover:bg-primary hover:text-primary-foreground",
-                  compact ? "h-8 px-1.5 text-[10px] sm:h-9 sm:px-3 sm:text-xs" : "h-9 px-3 text-xs",
+                  "min-w-0 cursor-pointer items-center justify-center gap-1 rounded-xl border-primary/20 hover:border-primary hover:bg-primary hover:text-primary-foreground",
+                  compact ? "h-8 px-1.5 text-[10px]" : "h-10 px-3 text-xs",
                 )}
               >
-                <ShoppingCart className="h-3.5 w-3.5" />
-                Add
+                <ShoppingCart className="h-3.5 w-3.5 shrink-0" />
+                <span className="truncate">Add</span>
               </Button>
               <Button
                 variant="default"
                 size="sm"
                 onClick={handleBuyNow}
                 className={cn(
-                  "flex cursor-pointer items-center justify-center gap-1 rounded-lg bg-primary text-primary-foreground hover:bg-primary/95",
-                  compact ? "h-8 px-1.5 text-[10px] sm:h-9 sm:px-3 sm:text-xs" : "h-9 px-3 text-xs",
+                  "min-w-0 cursor-pointer items-center justify-center gap-1 rounded-xl bg-primary text-primary-foreground shadow-sm shadow-primary/20 hover:bg-primary/95",
+                  compact ? "h-8 px-1.5 text-[10px]" : "h-10 px-3 text-xs",
                 )}
               >
-                <Zap className="h-3.5 w-3.5 fill-current" />
-                Buy
+                <Zap className="h-3.5 w-3.5 shrink-0 fill-current" />
+                <span className="truncate">Buy</span>
               </Button>
             </div>
           ) : (
@@ -193,7 +211,7 @@ export function ProductCard({ product, compact = false }) {
                   `Thank you for your interest! ${product.name} is launching soon. We'll notify you once it's available!`,
                 );
               }}
-              className="h-9 w-full cursor-pointer rounded-lg border-2 border-dashed border-secondary/60 text-xs font-bold text-secondary hover:bg-secondary/10"
+              className="h-9 w-full cursor-pointer rounded-xl border-2 border-dashed border-secondary/60 text-xs font-bold text-secondary hover:bg-secondary/10"
             >
               Notify Me
             </Button>

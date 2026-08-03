@@ -10,6 +10,16 @@ const faqItemSchema = new mongoose.Schema(
   { _id: false }
 );
 
+const ingredientSchema = new mongoose.Schema(
+  { name: String, blurb: String },
+  { _id: false }
+);
+
+const highlightSchema = new mongoose.Schema(
+  { label: String },
+  { _id: false }
+);
+
 const productSchema = new mongoose.Schema(
   {
     productId: { type: String, required: true, unique: true },
@@ -25,6 +35,9 @@ const productSchema = new mongoose.Schema(
     image: String,
     images: [String],
     benefits: [String],
+    ingredients: [ingredientSchema],
+    highlights: [highlightSchema],
+    tags: [String],
     uses: [String],
     indications: [String],
     dosage: String,

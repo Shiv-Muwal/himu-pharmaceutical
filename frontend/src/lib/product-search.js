@@ -19,7 +19,8 @@ const SYNONYM_GROUPS = [
   ["vitamin", "multivitamin", "supplement", "wellness"],
   ["derma", "dermatology", "skin", "skincare", "skin care", "cosmetic", "cosmetics"],
   ["pain", "analgesic", "relief"],
-  ["himu", "himu pharmacy", "brand himu"],
+  ["night cream", "overnight", "renewal", "porcelyn"],
+  ["melasma", "pigmentation", "dark spots", "lumeva", "tone"],
 ];
 
 const BUDGET_RANGES = [
@@ -281,7 +282,7 @@ export function collectFilterFacets(products) {
   const types = new Map();
 
   products.forEach((p) => {
-    const brand = p.brand || "HIMU";
+    const brand = p.brand || p.category || "Skin Care";
     brands.set(brand, (brands.get(brand) || 0) + 1);
     const type = p.productType || "General";
     types.set(type, (types.get(type) || 0) + 1);

@@ -12,6 +12,16 @@ export const CATEGORIES_LIST = [
 ];
 
 export const IMAGE_PRESETS = {
+  "milky-hero": "/products/milky-sunscreen/hero.png",
+  "milky-lifestyle": "/products/milky-sunscreen/lifestyle.png",
+  "milky-studio": "/products/milky-sunscreen/studio.png",
+  "milky-beach": "/products/milky-sunscreen/beach.png",
+  "milky-texture": "/products/milky-sunscreen/texture.png",
+  "lumeva-hero": "/products/lumeva-melasma-cream/hero.png",
+  "lumeva-box": "/products/lumeva-melasma-cream/box.png",
+  "lumeva-angle": "/products/lumeva-melasma-cream/angle.png",
+  "lumeva-texture": "/products/lumeva-melasma-cream/texture.png",
+  "lumeva-hand": "/products/lumeva-melasma-cream/hand.png",
   capsule:
     "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&h=800&fit=crop",
   tablet:
@@ -32,18 +42,26 @@ export const IMAGE_PRESETS = {
 
 export const EMPTY_PRODUCT_FORM = {
   name: "",
-  category: "Dermatology",
+  category: "Skin Care",
   composition: "",
   strength: "",
-  price: 150,
-  compareAtPrice: 199,
+  price: 499,
+  compareAtPrice: 699,
   stock: 100,
-  imageKey: "cream",
+  image: "",
+  images: [],
   shortDescription: "",
   description: "",
-  storage: "Store in a cool, dry place below 25°C.",
-  packaging: "30g Tube",
-  shelfLife: "36 Months",
+  storage: "Store in a cool, dry place away from direct sunlight.",
+  packaging: "50g pump bottle",
+  shelfLife: "24 Months",
+  dosage: "",
+  usesText: "",
+  benefitsText: "",
+  tagsText: "",
+  highlightsText: "",
+  ingredients: [{ name: "", blurb: "" }],
+  variantName: "",
 };
 
 export const SIDEBAR_TABS = [
@@ -80,6 +98,17 @@ export const EMPTY_BLOG_FORM = {
 export const ORDER_STATUSES = ["Pending", "Shipped", "Delivered", "Cancelled"];
 
 export const LOW_STOCK_THRESHOLD = 20;
+
+export function linesToList(text) {
+  return String(text || "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+export function listToLines(list) {
+  return Array.isArray(list) ? list.filter(Boolean).join("\n") : "";
+}
 
 export function downloadCsv(filename, rows) {
   if (!rows?.length) return;

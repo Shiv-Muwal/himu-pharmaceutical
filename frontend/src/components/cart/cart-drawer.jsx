@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Image } from "@/components/ui/image";
 import { useCart } from "@/providers/CartProvider";
+import { useAuth } from "@/providers/AuthProvider";
 import { Button } from "@/components/ui/button";
 
 export function CartDrawer() {
@@ -26,6 +27,15 @@ export function CartDrawer() {
     cartSavings,
     openCheckoutFromCart,
   } = useCart();
+  const { isAuthenticated, openLogin } = useAuth();
+
+  const handleProceedCheckout = () => {
+    if (!isAuthenticated) {
+      openLogin();
+      return;
+    }
+    openCheckoutFromCart();
+  };
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -241,9 +251,7 @@ export function CartDrawer() {
                 <div className="grid gap-2.5">
                   <button
                     type="button"
-                    onClick={() => {
-                      openCheckoutFromCart();
-                    }}
+                    onClick={handleProceedCheckout}
                     className="group flex h-12 w-full items-center justify-between rounded-2xl bg-gradient-to-r from-[#BBF7D0] to-[#BBF7D0] px-5 text-sm font-bold text-primary-foreground shadow-[0_10px_24px_rgba(255,197,170,0.35)] transition hover:brightness-105"
                   >
                     <span>Proceed to Checkout</span>

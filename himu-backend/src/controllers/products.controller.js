@@ -10,6 +10,7 @@ const editableFields = [
   "category",
   "composition",
   "strength",
+  "manufacturer",
   "price",
   "compareAtPrice",
   "stock",
@@ -24,6 +25,9 @@ const editableFields = [
   "shelfLife",
   "variants",
   "benefits",
+  "ingredients",
+  "highlights",
+  "tags",
   "uses",
   "indications",
   "dosage",
@@ -219,4 +223,23 @@ export const deleteProduct = asyncHandler(async (req, res) => {
     meta: { productId: product.productId },
   });
   success(res, null, "Product deleted");
+});
+
+export const uploadProductMedia = asyncHandler(async (req, res) => {
+  if (!req.file) {
+    throw new ApiError(400, "Please upload a JPG, PNG, or WebP image");
+  }
+
+  const url = `/uploads/products/${req.file.filename}`;
+  return success(
+    res,
+    {
+      url,
+      filename: req.file.filename,
+      size: req.file.size,
+      mimetype: req.file.mimetype,
+    },
+    "Product image uploaded",
+    201,
+  );
 });

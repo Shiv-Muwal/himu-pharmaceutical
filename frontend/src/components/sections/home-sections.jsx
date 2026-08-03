@@ -530,7 +530,7 @@ export function FeaturedProductsSection() {
           {loopItems.map((product, index) => (
             <div
               key={`${product.id}-${index}`}
-              className="w-[260px] shrink-0 sm:w-[280px]"
+              className="w-[240px] min-w-0 shrink-0 sm:w-[260px]"
             >
               <ProductCard product={product} />
             </div>

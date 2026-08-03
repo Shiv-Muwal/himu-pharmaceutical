@@ -11,9 +11,9 @@ export const categories = [
     slug: "skin-care",
     name: "Skin Care",
     description:
-      "Comprehensive skin care range addressing hydration, protection, and rejuvenation with clinically validated active ingredients.",
-    image: "/categories/skin-care.webp",
-    heroImage: "/categories/skin-care.webp",
+      "Sun protection, overnight renewal, and pigmentation care — Milky Sunscreen, Porcelyn Night Cream, and Lumeva Melasma Cream.",
+    image: "/products/milky-sunscreen/hero.png?v=2",
+    heroImage: "/products/lumeva-melasma-cream/hero.png?v=2",
   },
   {
     slug: "antibiotics",

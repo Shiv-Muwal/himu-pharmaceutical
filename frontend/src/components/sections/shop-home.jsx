@@ -13,6 +13,10 @@ import {
   Truck,
   BadgePercent,
   ShoppingBag,
+  Sun,
+  Moon,
+  Droplets,
+  Leaf,
 } from "lucide-react";
 import { Link } from "@/components/ui/link";
 import { Image } from "@/components/ui/image";
@@ -150,7 +154,7 @@ export function BannerCarousel() {
               src={resolveBannerSrc(active.image)}
               alt={active.title}
               fill
-              className="object-cover"
+              className="object-cover object-right"
               priority
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#1e2422]/88 via-[#1e2422]/45 to-transparent" />
@@ -158,13 +162,13 @@ export function BannerCarousel() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="container-custom relative z-10 flex h-full items-end pb-8 pt-8 sm:items-center sm:pb-10 sm:pt-6">
+        <div className="container-custom relative z-10 flex h-full items-end pb-8 pt-8 text-left sm:items-center sm:pb-10 sm:pt-6">
           <motion.div
             key={`copy-${active.id || index}`}
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35 }}
-            className="max-w-xl"
+            className="max-w-xl text-left"
           >
             <p className="mb-2 font-[family-name:var(--font-heading)] text-[10px] font-bold uppercase tracking-[0.2em] text-gold sm:text-sm">
               HIMU Pharmacy
@@ -415,171 +419,95 @@ export function ShopSearchBar() {
 }
 
 export function QuickCategoryRail() {
-  const scrollerRef = useRef(null);
-  const [paused, setPaused] = useState(false);
-
-  const ordered = useMemo(() => {
-    const priority = ["dermatology", "skin-care", "creams", "ointments", "cosmetics", "hair-care"];
-    const rest = categories.filter((c) => !priority.includes(c.slug));
-    const top = priority
-      .map((slug) => categories.find((c) => c.slug === slug))
-      .filter(Boolean);
-    return [...top, ...rest].slice(0, 10);
-  }, []);
-
-  const getCardStep = () => {
-    const el = scrollerRef.current;
-    if (!el) return 160;
-    const card = el.querySelector("[data-category-slide]");
-    if (!card) return Math.min(160, el.clientWidth * 0.4);
-    const styles = window.getComputedStyle(el);
-    const gap = Number.parseFloat(styles.columnGap || styles.gap || "12") || 12;
-    return card.getBoundingClientRect().width + gap;
-  };
-
-  const scrollByCard = (dir = 1) => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    if (max <= 0) return;
-    if (dir > 0 && el.scrollLeft >= max - 4) {
-      el.scrollTo({ left: 0, behavior: "smooth" });
-      return;
-    }
-    if (dir < 0 && el.scrollLeft <= 4) {
-      el.scrollTo({ left: max, behavior: "smooth" });
-      return;
-    }
-    el.scrollBy({ left: dir * getCardStep(), behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    if (paused || ordered.length < 3) return undefined;
-    const timer = setInterval(() => scrollByCard(1), 3200);
-    return () => clearInterval(timer);
-  }, [paused, ordered.length]);
+  const goals = useMemo(
+    () => [
+      {
+        id: "spf",
+        title: "Sun protection",
+        blurb: "Broad-spectrum SPF for face & body — light, no white cast.",
+        href: "/products?q=sunscreen",
+        icon: Sun,
+        tone: "bg-[#fff6df] text-[#9a7a1f]",
+        ring: "hover:border-gold/50",
+      },
+      {
+        id: "night",
+        title: "Overnight renewal",
+        blurb: "Night care that softens and restores while you sleep.",
+        href: "/products?q=night%20cream",
+        icon: Moon,
+        tone: "bg-[#efe8f8] text-[#5c4d86]",
+        ring: "hover:border-[#6b5b95]/40",
+      },
+      {
+        id: "tone",
+        title: "Even skin tone",
+        blurb: "Target melasma and visible pigmentation with focused care.",
+        href: "/products?q=melasma",
+        icon: Droplets,
+        tone: "bg-[#ebe4f5] text-[#6a5a9a]",
+        ring: "hover:border-[#7c6ba8]/40",
+      },
+      {
+        id: "gentle",
+        title: "Gentle formulas",
+        blurb: "Paraben-free, sulphate-free picks for everyday skin.",
+        href: "/products?q=paraben%20free",
+        icon: Leaf,
+        tone: "bg-[#e5f5ea] text-emerald",
+        ring: "hover:border-emerald/40",
+      },
+    ],
+    [],
+  );
 
   return (
     <section className="section-padding pb-4 pt-5 sm:pt-8">
       <div className="container-custom">
-        <div className="mb-4 flex items-end justify-between gap-3">
+        <div className="mb-5 flex items-end justify-between gap-3 sm:mb-6">
           <div>
             <p className="mb-1 text-[10px] font-black uppercase tracking-[0.18em] text-emerald">
-              Shop by category
+              Shop by concern
             </p>
             <h2 className="font-[family-name:var(--font-heading)] text-xl font-bold text-foreground sm:text-2xl md:text-3xl">
               Find care faster
             </h2>
+            <p className="mt-1.5 max-w-lg text-xs text-muted-foreground sm:text-sm">
+              Skip the scroll — pick a skin goal and jump straight to matching products.
+            </p>
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => scrollByCard(-1)}
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-white text-emerald shadow-sm transition hover:bg-primary hover:text-primary-foreground md:inline-flex"
-              aria-label="Previous categories"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollByCard(1)}
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-white text-emerald shadow-sm transition hover:bg-primary hover:text-primary-foreground md:inline-flex"
-              aria-label="Next categories"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
-            <Link
-              href="/products"
-              className="text-xs font-semibold text-emerald hover:underline sm:text-sm sm:inline-flex sm:items-center sm:gap-1"
-            >
-              All <ArrowRight className="ml-0.5 inline h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            </Link>
-          </div>
-        </div>
-
-        {/* Mobile: compact 2-column grid */}
-        <div className="grid grid-cols-2 gap-2.5 sm:hidden">
-          {ordered.map((cat) => {
-            const highlight = DERMA_SLUGS.has(cat.slug);
-            return (
-              <Link
-                key={cat.slug}
-                href={`/products?category=${cat.slug}`}
-                className={`group relative flex flex-col overflow-hidden rounded-2xl border transition active:scale-[0.98] ${
-                  highlight
-                    ? "border-gold/50 bg-gradient-to-b from-[#f8f3e6] to-white shadow-[0_8px_22px_rgba(214,176,77,0.16)]"
-                    : "border-border/50 bg-white shadow-sm dark:bg-card"
-                }`}
-              >
-                <div className="relative aspect-[5/3] overflow-hidden">
-                  <Image
-                    src={cat.image}
-                    alt={cat.name}
-                    fill
-                    className="object-cover transition duration-500 group-active:scale-105"
-                  />
-                  {highlight && (
-                    <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[8px] font-black uppercase tracking-wider text-primary-foreground">
-                      Focus
-                    </span>
-                  )}
-                </div>
-                <div className="px-2.5 py-2.5">
-                  <p className="truncate text-[13px] font-bold text-foreground">{cat.name}</p>
-                  <p className="mt-0.5 text-[10px] font-semibold text-emerald">Shop now →</p>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-
-        {/* Tablet/desktop: auto-scroll rail */}
-        <div
-          className="relative hidden sm:block"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-        >
-          <div
-            ref={scrollerRef}
-            className="flex snap-x snap-mandatory gap-3 overflow-x-auto overflow-y-hidden scroll-smooth pb-2 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          <Link
+            href="/products"
+            className="shrink-0 text-xs font-semibold text-emerald hover:underline sm:inline-flex sm:items-center sm:gap-1 sm:text-sm"
           >
-            {ordered.map((cat, i) => {
-              const highlight = DERMA_SLUGS.has(cat.slug);
-              return (
-                <FadeIn key={cat.slug} delay={i * 0.04}>
-                  <Link
-                    href={`/products?category=${cat.slug}`}
-                    data-category-slide
-                    className={`group relative flex w-[148px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border transition ${
-                      highlight
-                        ? "border-gold/50 bg-gradient-to-b from-[#f8f3e6] to-white shadow-[0_10px_30px_rgba(214,176,77,0.18)]"
-                        : "border-border/50 bg-white hover:border-primary/30 hover:shadow-lg dark:bg-card"
-                    }`}
-                  >
-                    <div className="relative h-28 overflow-hidden">
-                      <Image
-                        src={cat.image}
-                        alt={cat.name}
-                        fill
-                        className="object-cover transition duration-500 group-hover:scale-110"
-                      />
-                      {highlight && (
-                        <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-primary-foreground">
-                          Focus
-                        </span>
-                      )}
-                    </div>
-                    <div className="p-3">
-                      <p className="text-sm font-bold text-foreground">{cat.name}</p>
-                      <p className="mt-0.5 text-[10px] font-semibold text-emerald">Shop now →</p>
-                    </div>
-                  </Link>
-                </FadeIn>
-              );
-            })}
-          </div>
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#f8f3e6] to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#f8f3e6] to-transparent" />
+            Catalog <ArrowRight className="ml-0.5 inline h-3.5 w-3.5 sm:h-4 sm:w-4" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4 lg:gap-4">
+          {goals.map((goal, i) => (
+            <FadeIn key={goal.id} delay={i * 0.05}>
+              <Link
+                href={goal.href}
+                className={`group flex h-full flex-col rounded-[1.25rem] border border-border/45 bg-white p-3.5 shadow-[0_8px_24px_rgba(20,83,45,0.05)] transition hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(20,83,45,0.1)] active:scale-[0.98] sm:rounded-[1.4rem] sm:p-5 ${goal.ring}`}
+              >
+                <span
+                  className={`mb-3 inline-flex h-11 w-11 items-center justify-center rounded-2xl sm:mb-4 sm:h-12 sm:w-12 ${goal.tone}`}
+                >
+                  <goal.icon className="h-5 w-5" />                </span>
+                <h3 className="font-[family-name:var(--font-heading)] text-sm font-bold leading-snug text-foreground sm:text-base">
+                  {goal.title}
+                </h3>
+                <p className="mt-1.5 flex-1 text-[11px] leading-relaxed text-muted-foreground sm:mt-2 sm:text-xs">
+                  {goal.blurb}
+                </p>
+                <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-emerald sm:mt-4 sm:text-sm">
+                  Explore
+                  <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5 sm:h-4 sm:w-4" />
+                </span>
+              </Link>
+            </FadeIn>
+          ))}
         </div>
       </div>
     </section>
@@ -593,12 +521,8 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
   const getCardStep = () => {
     const el = scrollerRef.current;
     if (!el) return 280;
-    // Mobile shows 2 cards — page by full viewport; desktop by one card
-    if (window.matchMedia("(max-width: 639px)").matches) {
-      return Math.max(el.clientWidth * 0.92, 200);
-    }
     const card = el.querySelector("[data-product-slide]");
-    if (!card) return Math.min(280, el.clientWidth * 0.85);
+    if (!card) return 260;
     const styles = window.getComputedStyle(el);
     const gap = Number.parseFloat(styles.columnGap || styles.gap || "16") || 16;
     return card.getBoundingClientRect().width + gap;
@@ -609,6 +533,7 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
     if (!el) return;
     const max = el.scrollWidth - el.clientWidth;
     if (max <= 0) return;
+    const step = getCardStep();
 
     if (dir > 0 && el.scrollLeft >= max - 4) {
       el.scrollTo({ left: 0, behavior: "smooth" });
@@ -618,22 +543,23 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
       el.scrollTo({ left: max, behavior: "smooth" });
       return;
     }
-    el.scrollBy({ left: dir * getCardStep(), behavior: "smooth" });
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
   };
 
   useEffect(() => {
-    if (paused || items.length < 3) return undefined;
+    if (paused || items.length < 2) return undefined;
     const timer = setInterval(() => {
       const el = scrollerRef.current;
       if (!el) return;
       const max = el.scrollWidth - el.clientWidth;
       if (max <= 0) return;
+      const step = getCardStep();
       if (el.scrollLeft >= max - 4) {
         el.scrollTo({ left: 0, behavior: "smooth" });
         return;
       }
-      el.scrollBy({ left: getCardStep(), behavior: "smooth" });
-    }, 3000);
+      el.scrollBy({ left: step, behavior: "smooth" });
+    }, 3500);
     return () => clearInterval(timer);
   }, [paused, items.length]);
 
@@ -705,7 +631,7 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
             <div
               key={product.id}
               data-product-slide
-              className="w-[calc((100vw-2rem-0.625rem)/2)] shrink-0 snap-start sm:w-[260px] md:w-[280px]"
+              className="w-[calc((100vw-2rem-0.625rem)/2)] min-w-0 shrink-0 snap-start sm:w-[240px] md:w-[260px]"
             >
               <ProductCard product={product} compact />
             </div>
@@ -823,8 +749,8 @@ export function ShopCTASection() {
           </div>
           <div className="relative hidden h-56 overflow-hidden rounded-2xl lg:block">
             <Image
-              src="/banners/banner-skin-specialists.png"
-              alt="HIMU skin care products"
+              src="/banners/banner-lumeva-melasma.png"
+              alt="Lumeva Melasma Cream"
               fill
               className="object-cover"
             />

@@ -1,7 +1,7 @@
 import { products as seedProducts } from "@/data/products";
 import { slugify } from "@/lib/utils";
 
-const PRODUCTS_KEY = "himu-products-v2";
+const PRODUCTS_KEY = "himu-products-v7";
 const ORDERS_KEY = "himu-orders";
 const ACTIVITY_KEY = "himu-admin-activity";
 const isClient = typeof window !== "undefined";
@@ -21,17 +21,17 @@ const mockSeedOrders = [
     items: [
       {
         productId: "prod-001",
-        productName: "HIMU Amoxi 500",
-        price: 249,
+        productName: "HIMU Milky Sunscreen SPF 50",
+        price: 499,
         quantity: 2,
-        selectedVariant: "HIMU Amoxi 500",
+        selectedVariant: "HIMU Milky Sunscreen SPF 50",
       },
       {
-        productId: "prod-009",
-        productName: "HIMU SkinCare Cream",
-        price: 459,
+        productId: "prod-001",
+        productName: "HIMU Milky Sunscreen SPF 50",
+        price: 499,
         quantity: 1,
-        selectedVariant: "HIMU SkinCare Cream",
+        selectedVariant: "HIMU Milky Sunscreen SPF 50",
       },
     ],
     total: 957,
@@ -51,11 +51,11 @@ const mockSeedOrders = [
     },
     items: [
       {
-        productId: "prod-040",
-        productName: "HIMU Radiance Serum",
-        price: 779,
+        productId: "prod-001",
+        productName: "HIMU Milky Sunscreen SPF 50",
+        price: 499,
         quantity: 1,
-        selectedVariant: "HIMU Radiance Serum",
+        selectedVariant: "HIMU Milky Sunscreen SPF 50",
       },
     ],
     total: 779,
@@ -75,11 +75,11 @@ const mockSeedOrders = [
     },
     items: [
       {
-        productId: "prod-064",
-        productName: "HIMU Cough Syrup",
-        price: 159,
+        productId: "prod-001",
+        productName: "HIMU Milky Sunscreen SPF 50",
+        price: 499,
         quantity: 3,
-        selectedVariant: "HIMU Cough Syrup",
+        selectedVariant: "HIMU Milky Sunscreen SPF 50",
       },
     ],
     total: 477,
@@ -99,7 +99,7 @@ const mockSeedOrders = [
     },
     items: [
       {
-        productId: "prod-012",
+        productId: "prod-001",
         productName: "HIMU Hair Revive Oil",
         price: 549,
         quantity: 2,
@@ -156,7 +156,7 @@ const mockSeedOrders = [
       {
         productId: "prod-018",
         productName: "HIMU Face Wash",
-        price: 249,
+        price: 499,
         quantity: 4,
         selectedVariant: "HIMU Face Wash",
       },
@@ -293,7 +293,7 @@ export function saveMockProduct(productData) {
       id: nextId,
       slug,
       name: productData.name,
-      brand: productData.brand || "HIMU",
+      brand: productData.brand || "",
       productType: productData.productType || productData.category || "General",
       tags: productData.tags || [],
       keywords: productData.keywords || productData.tags || [],
@@ -301,7 +301,7 @@ export function saveMockProduct(productData) {
       categorySlug: slugify(productData.category || "general"),
       composition: productData.composition || "N/A",
       strength: productData.strength || "N/A",
-      manufacturer: productData.manufacturer || "HIMU Pharmacy Pvt. Ltd.",
+      manufacturer: productData.manufacturer || "",
       image:
         productData.image ||
         "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&h=800&fit=crop",
@@ -334,10 +334,10 @@ export function saveMockProduct(productData) {
         productData.compareAtPrice ||
         Math.round(((productData.price || 150) * 1.35) / 10) * 10 - 1,
       shortDescription:
-        productData.shortDescription || "HIMU high-quality pharmaceutical formulation.",
+        productData.shortDescription || "Premium care formulation.",
       description:
         productData.description ||
-        "HIMU high-quality pharmaceutical formulation developed under GMP guidelines.",
+        "Premium care formulation developed for everyday use.",
       stock: Number(productData.stock ?? 100),
       featured: Boolean(productData.featured),
       active: productData.active !== false,
