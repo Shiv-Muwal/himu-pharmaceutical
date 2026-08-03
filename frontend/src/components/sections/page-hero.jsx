@@ -27,20 +27,21 @@ export function PageHero({
             className={cn(
               "absolute inset-0",
               compact
-                ? "bg-gradient-to-r from-[#061610]/88 via-[#0b6a46]/55 to-[#0b6a46]/15"
+                ? "bg-gradient-to-r from-[#14532D]/88 via-[#14532D]/55 to-[#14532D]/25"
                 : "gradient-hero",
             )}
           />
           {compact && (
-            <div className="absolute inset-0 bg-gradient-to-t from-[#061610]/55 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#14532D]/55 via-transparent to-transparent" />
           )}
         </>
       ) : (
         <>
-          <div className="absolute inset-0 gradient-primary molecular-bg" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#14532D] via-[#166534] to-[#15803D]" />
+          <div className="absolute inset-0 molecular-bg opacity-40" />
           <div className="absolute inset-0">
             <div className="absolute top-20 right-20 h-72 w-72 rounded-full bg-gold/10 blur-3xl" />
-            <div className="absolute bottom-10 left-10 h-96 w-96 rounded-full bg-emerald/10 blur-3xl" />
+            <div className="absolute bottom-10 left-10 h-96 w-96 rounded-full bg-primary/20 blur-3xl" />
           </div>
         </>
       )}

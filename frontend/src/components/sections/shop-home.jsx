@@ -49,20 +49,20 @@ function rankForShop(list) {
 
 export function ShopPromoStrip() {
   return (
-    <div className="relative overflow-hidden bg-[#0b6a46] text-white">
+    <div className="relative overflow-hidden bg-[#BBF7D0] text-primary-foreground">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(214, 176, 77,0.18),transparent_40%,rgba(214, 176, 77,0.12))]" />
       <div className="container-custom relative flex flex-wrap items-center justify-center gap-x-6 gap-y-2 py-2.5 text-[11px] font-semibold tracking-wide sm:justify-between sm:text-xs">
         <span className="inline-flex items-center gap-1.5">
-          <Sparkles className="h-3.5 w-3.5 text-gold" />
+          <Sparkles className="h-3.5 w-3.5 text-emerald" />
           HIMU Dermatology week — priority shelf live
         </span>
         <span className="hidden items-center gap-1.5 sm:inline-flex">
-          <Truck className="h-3.5 w-3.5 text-gold" />
+          <Truck className="h-3.5 w-3.5 text-emerald" />
           Pan-India pharmacy supply ready
         </span>
         <Link
           href="/products?category=dermatology"
-          className="inline-flex items-center gap-1 text-gold transition hover:text-white"
+          className="inline-flex items-center gap-1 font-bold text-emerald transition hover:text-foreground"
         >
           Shop derma now <ArrowRight className="h-3.5 w-3.5" />
         </Link>
@@ -127,7 +127,7 @@ export function BannerCarousel() {
 
   return (
     <section
-      className="relative overflow-hidden bg-[#061610]"
+      className="relative overflow-hidden bg-[#14532D]"
       tabIndex={0}
       role="region"
       aria-roledescription="carousel"
@@ -188,7 +188,7 @@ export function BannerCarousel() {
                 <Button
                   size="lg"
                   variant="ghost"
-                  className="h-10 border border-white/30 bg-white/5 px-4 text-sm text-white hover:bg-white hover:text-[#0b6a46] sm:h-11"
+                  className="h-10 border border-white/30 bg-white/5 px-4 text-sm text-white hover:bg-white hover:text-emerald sm:h-11"
                 >
                   Dermatology picks
                 </Button>
@@ -350,7 +350,7 @@ export function ShopSearchBar() {
               onFocus={() => setShowSuggestions(true)}
               placeholder={placeholderText}
               className={`w-full border-0 bg-transparent px-2 py-2.5 text-sm font-medium outline-none placeholder:text-muted-foreground ${
-                isListening ? "animate-pulse text-primary" : ""
+                isListening ? "animate-pulse text-emerald" : ""
               }`}
               autoComplete="off"
             />
@@ -360,7 +360,7 @@ export function ShopSearchBar() {
               className={`mr-1 rounded-full p-2 transition ${
                 isListening
                   ? "bg-red-100 text-red-500"
-                  : "text-muted-foreground hover:bg-muted hover:text-primary"
+                  : "text-muted-foreground hover:bg-muted hover:text-emerald"
               }`}
               aria-label="Voice search"
             >
@@ -395,7 +395,7 @@ export function ShopSearchBar() {
                           {product.composition} · {product.strength}
                         </p>
                       </div>
-                      <span className="shrink-0 rounded-full bg-primary/10 px-2 py-1 text-[10px] font-bold text-primary">
+                      <span className="shrink-0 rounded-full bg-primary/10 px-2 py-1 text-[10px] font-bold text-emerald">
                         {product.category}
                       </span>
                     </button>
@@ -464,7 +464,7 @@ export function QuickCategoryRail() {
       <div className="container-custom">
         <div className="mb-4 flex items-end justify-between gap-3">
           <div>
-            <p className="mb-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
+            <p className="mb-1 text-[10px] font-black uppercase tracking-[0.18em] text-emerald">
               Shop by category
             </p>
             <h2 className="font-[family-name:var(--font-heading)] text-xl font-bold text-foreground sm:text-2xl md:text-3xl">
@@ -475,7 +475,7 @@ export function QuickCategoryRail() {
             <button
               type="button"
               onClick={() => scrollByCard(-1)}
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-white text-primary shadow-sm transition hover:bg-primary hover:text-white md:inline-flex"
+              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-white text-emerald shadow-sm transition hover:bg-primary hover:text-primary-foreground md:inline-flex"
               aria-label="Previous categories"
             >
               <ChevronLeft className="h-4 w-4" />
@@ -483,14 +483,14 @@ export function QuickCategoryRail() {
             <button
               type="button"
               onClick={() => scrollByCard(1)}
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-white text-primary shadow-sm transition hover:bg-primary hover:text-white md:inline-flex"
+              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/50 bg-white text-emerald shadow-sm transition hover:bg-primary hover:text-primary-foreground md:inline-flex"
               aria-label="Next categories"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
             <Link
               href="/products"
-              className="text-xs font-semibold text-primary hover:underline sm:text-sm sm:inline-flex sm:items-center sm:gap-1"
+              className="text-xs font-semibold text-emerald hover:underline sm:text-sm sm:inline-flex sm:items-center sm:gap-1"
             >
               All <ArrowRight className="ml-0.5 inline h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </Link>
@@ -519,14 +519,14 @@ export function QuickCategoryRail() {
                     className="object-cover transition duration-500 group-active:scale-105"
                   />
                   {highlight && (
-                    <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[8px] font-black uppercase tracking-wider text-white">
+                    <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[8px] font-black uppercase tracking-wider text-primary-foreground">
                       Focus
                     </span>
                   )}
                 </div>
                 <div className="px-2.5 py-2.5">
                   <p className="truncate text-[13px] font-bold text-foreground">{cat.name}</p>
-                  <p className="mt-0.5 text-[10px] font-semibold text-primary">Shop now →</p>
+                  <p className="mt-0.5 text-[10px] font-semibold text-emerald">Shop now →</p>
                 </div>
               </Link>
             );
@@ -564,14 +564,14 @@ export function QuickCategoryRail() {
                         className="object-cover transition duration-500 group-hover:scale-110"
                       />
                       {highlight && (
-                        <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">
+                        <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-primary-foreground">
                           Focus
                         </span>
                       )}
                     </div>
                     <div className="p-3">
                       <p className="text-sm font-bold text-foreground">{cat.name}</p>
-                      <p className="mt-0.5 text-[10px] font-semibold text-primary">Shop now →</p>
+                      <p className="mt-0.5 text-[10px] font-semibold text-emerald">Shop now →</p>
                     </div>
                   </Link>
                 </FadeIn>
@@ -653,7 +653,7 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
     <section className="relative overflow-x-clip py-5 sm:py-8">
       <div className="container-custom mb-3 flex flex-col gap-2.5 sm:mb-5 sm:gap-3 md:flex-row md:items-end md:justify-between">
         <div className="max-w-xl">
-          <div className="mb-1.5 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-primary">
+          <div className="mb-1.5 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-emerald">
             <ShoppingBag className="h-3.5 w-3.5" />
             {badge}
           </div>
@@ -679,7 +679,7 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
         <button
           type="button"
           onClick={() => scrollByCard(-1)}
-          className="absolute left-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-white/95 text-primary shadow-md backdrop-blur transition hover:bg-primary hover:text-white md:flex md:left-3"
+          className="absolute left-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-white/95 text-emerald shadow-md backdrop-blur transition hover:bg-primary hover:text-primary-foreground md:flex md:left-3"
           aria-label="Previous products"
         >
           <ChevronLeft className="h-5 w-5" />
@@ -687,7 +687,7 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
         <button
           type="button"
           onClick={() => scrollByCard(1)}
-          className="absolute right-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-white/95 text-primary shadow-md backdrop-blur transition hover:bg-primary hover:text-white md:flex md:right-3"
+          className="absolute right-2 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-white/95 text-emerald shadow-md backdrop-blur transition hover:bg-primary hover:text-primary-foreground md:flex md:right-3"
           aria-label="Next products"
         >
           <ChevronRight className="h-5 w-5" />
@@ -773,7 +773,7 @@ export function ShopTrustStrip() {
         {items.map((item, i) => (
           <FadeIn key={item.title} delay={i * 0.05}>
             <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-primary/10 text-primary">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-primary/10 text-emerald">
                 <item.icon className="h-5 w-5" />
               </div>
               <div>
@@ -791,16 +791,16 @@ export function ShopTrustStrip() {
 export function ShopCTASection() {
   return (
     <section className="section-padding pt-2">
-      <div className="container-custom overflow-hidden rounded-[1.75rem] bg-[#0b6a46] px-5 py-7 sm:px-8 sm:py-9">
+      <div className="container-custom overflow-hidden rounded-[1.75rem] bg-[#BBF7D0] px-5 py-7 sm:px-8 sm:py-9">
         <div className="relative grid items-center gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="relative z-10">
-            <p className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-gold">
+            <p className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-emerald">
               Keep shopping
             </p>
-            <h2 className="font-[family-name:var(--font-heading)] text-3xl font-bold text-white md:text-4xl">
+            <h2 className="font-[family-name:var(--font-heading)] text-3xl font-bold text-primary-foreground md:text-4xl">
               Your cart starts with better skin care
             </h2>
-            <p className="mt-3 max-w-lg text-sm leading-relaxed text-white/75 md:text-base">
+            <p className="mt-3 max-w-lg text-sm leading-relaxed text-emerald/80 md:text-base">
               Explore the full HIMU catalog — dermatology, wellness, and clinical
               essentials with smooth checkout.
             </p>
@@ -813,8 +813,8 @@ export function ShopCTASection() {
               <Link href="/products">
                 <Button
                   size="lg"
-                  variant="ghost"
-                  className="border border-white/25 text-white hover:bg-white hover:text-[#0b6a46]"
+                  variant="outline"
+                  className="border-emerald/30 bg-white/50 text-emerald hover:bg-white"
                 >
                   View all products
                 </Button>
@@ -828,7 +828,7 @@ export function ShopCTASection() {
               fill
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#0b6a46]/40" />
+            <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#BBF7D0]/40" />
           </div>
         </div>
       </div>

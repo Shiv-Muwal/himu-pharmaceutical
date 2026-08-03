@@ -64,7 +64,7 @@ const aboutChildren = [
 
 export function Navbar() {
   const { cartCount, setCartOpen } = useCart();
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout, openLogin } = useAuth();
   const { location, status } = useLocationInfo();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -162,8 +162,8 @@ export function Navbar() {
                         "flex items-center gap-0.5 px-1.5 xl:px-3.5 py-2 rounded-lg text-xs xl:text-sm font-medium transition-colors whitespace-nowrap",
                         pathname.startsWith("/products") ||
                           pathname.startsWith("/categories")
-                          ? "text-primary"
-                          : "text-foreground hover:text-primary",
+                          ? "text-emerald"
+                          : "text-foreground hover:text-emerald",
                       )}
                     >
                       {link.name}
@@ -208,7 +208,7 @@ export function Navbar() {
                           </div>
                           {/* Column 2: Clinical Categories */}
                           <div className="col-span-4 flex flex-col gap-3">
-                            <h5 className="font-bold text-[10px] text-primary uppercase tracking-wider pl-1.5">
+                            <h5 className="font-bold text-[10px] text-emerald uppercase tracking-wider pl-1.5">
                               Clinical Divisions
                             </h5>
                             <div className="grid gap-0.5">
@@ -221,11 +221,11 @@ export function Navbar() {
                                     onClick={() => setProductsOpen(false)}
                                     className="flex items-center gap-2.5 p-1.5 rounded-xl hover:bg-primary/5 hover:translate-x-1 transition-all duration-200 group text-left"
                                   >
-                                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
+                                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-emerald group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
                                       <Icon className="h-4 w-4" />
                                     </div>
                                     <div>
-                                      <p className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors">
+                                      <p className="text-xs font-semibold text-foreground group-hover:text-emerald transition-colors">
                                         {item.name}
                                       </p>
                                     </div>
@@ -236,7 +236,7 @@ export function Navbar() {
                           </div>
                           {/* Column 3: Wellness & Care Categories */}
                           <div className="col-span-4 flex flex-col gap-3">
-                            <h5 className="font-bold text-[10px] text-primary uppercase tracking-wider pl-1.5">
+                            <h5 className="font-bold text-[10px] text-emerald uppercase tracking-wider pl-1.5">
                               Wellness & Care
                             </h5>
                             <div className="grid gap-0.5">
@@ -249,11 +249,11 @@ export function Navbar() {
                                     onClick={() => setProductsOpen(false)}
                                     className="flex items-center gap-2.5 p-1.5 rounded-xl hover:bg-primary/5 hover:translate-x-1 transition-all duration-200 group text-left"
                                   >
-                                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
+                                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-emerald group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
                                       <Icon className="h-4 w-4" />
                                     </div>
                                     <div>
-                                      <p className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors">
+                                      <p className="text-xs font-semibold text-foreground group-hover:text-emerald transition-colors">
                                         {item.name}
                                       </p>
                                     </div>
@@ -281,8 +281,8 @@ export function Navbar() {
                           pathname.startsWith("/quality") ||
                           pathname.startsWith("/news") ||
                           pathname.startsWith("/careers")
-                          ? "text-primary"
-                          : "text-foreground hover:text-primary",
+                          ? "text-emerald"
+                          : "text-foreground hover:text-emerald",
                       )}
                     >
                       {link.name}
@@ -310,11 +310,11 @@ export function Navbar() {
                                 onClick={() => setAboutOpen(false)}
                                 className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-primary/10 transition-all duration-200 group text-left"
                               >
-                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
+                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-emerald group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
                                   <Icon className="h-4 w-4" />
                                 </div>
                                 <div>
-                                  <p className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
+                                  <p className="text-xs font-semibold text-foreground group-hover:text-emerald transition-colors whitespace-nowrap">
                                     {child.name}
                                   </p>
                                 </div>
@@ -333,8 +333,8 @@ export function Navbar() {
                   className={cn(
                     "px-1.5 xl:px-3 py-2 rounded-lg text-xs xl:text-sm font-medium transition-colors whitespace-nowrap",
                     pathname === link.href
-                      ? "text-primary"
-                      : "text-foreground hover:text-primary",
+                      ? "text-emerald"
+                      : "text-foreground hover:text-emerald",
                   )}
                 >
                   {link.name}
@@ -344,7 +344,7 @@ export function Navbar() {
           </div>
           <div className="flex items-center gap-2">
             <div
-              className="flex max-w-[110px] items-center gap-1 rounded-xl border border-primary/15 bg-primary/5 px-2 py-1.5 text-primary sm:max-w-[140px] sm:gap-1.5 sm:px-2.5 xl:max-w-[180px]"
+              className="flex max-w-[110px] items-center gap-1 rounded-xl border border-primary/15 bg-primary/5 px-2 py-1.5 text-emerald sm:max-w-[140px] sm:gap-1.5 sm:px-2.5 xl:max-w-[180px]"
               title={location?.label || "Detecting your location"}
             >
               <MapPin className="h-3.5 w-3.5 shrink-0" />
@@ -376,6 +376,26 @@ export function Navbar() {
               )}
             </button>
 
+            {/* Mobile: discreet top-right account/sign-in — not the first thing visitors see */}
+            {isAuthenticated ? (
+              <Link
+                href="/account"
+                className="rounded-lg p-2 text-foreground transition-colors hover:bg-muted md:hidden"
+                aria-label="My account"
+              >
+                <User className="h-5 w-5" />
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={() => openLogin()}
+                className="rounded-lg p-2 text-foreground transition-colors hover:bg-muted md:hidden"
+                aria-label="Sign in"
+              >
+                <User className="h-5 w-5" />
+              </button>
+            )}
+
             {isAuthenticated ? (
               <div
                 className="relative hidden md:block"
@@ -384,7 +404,7 @@ export function Navbar() {
               >
                 <button
                   type="button"
-                  className="flex items-center gap-2 rounded-xl border border-primary/15 bg-primary/5 px-3 py-1.5 text-xs font-bold text-primary transition hover:bg-primary/10"
+                  className="flex items-center gap-2 rounded-xl border border-primary/15 bg-primary/5 px-3 py-1.5 text-xs font-bold text-emerald transition hover:bg-primary/10"
                 >
                   <User className="h-4 w-4" />
                   <span className="max-w-[90px] truncate">{user?.name?.split(" ")[0]}</span>
@@ -474,14 +494,14 @@ export function Navbar() {
                             className="flex items-center justify-between p-3 rounded-xl hover:bg-primary/10 transition-colors group"
                           >
                             <div className="text-left">
-                              <p className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm">
+                              <p className="font-semibold text-foreground group-hover:text-emerald transition-colors text-sm">
                                 {product.name}
                               </p>
                               <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
                                 {product.composition} • {product.strength}
                               </p>
                             </div>
-                            <span className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full group-hover:bg-primary group-hover:text-white transition-colors">
+                            <span className="text-xs font-medium text-emerald bg-primary/10 px-2.5 py-1 rounded-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                               {product.category}
                             </span>
                           </Link>
@@ -525,11 +545,55 @@ export function Navbar() {
                   "calc(var(--mobile-nav-offset, 5.5rem) + 1.5rem)",
               }}
             >
-              <div className="mb-4 space-y-2 border-b border-border/40 pb-4">
+              <div className="space-y-1">
+                {NAV_LINKS.map((link) => (
+                  <div key={link.name}>
+                    <Link
+                      href={link.href}
+                      onClick={closeMobileMenu}
+                      className="block rounded-xl px-4 py-3 text-base font-medium transition-colors hover:bg-primary/10 hover:text-emerald"
+                    >
+                      {link.name}
+                    </Link>
+                    {link.children && (
+                      <div className="ml-4 space-y-1">
+                        {link.children.map((child) => (
+                          <Link
+                            key={child.name}
+                            href={child.href}
+                            onClick={closeMobileMenu}
+                            className="block rounded-lg px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-emerald"
+                          >
+                            {child.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+                <Link
+                  href="/faq"
+                  onClick={closeMobileMenu}
+                  className="block rounded-xl px-4 py-3 text-base font-medium transition-colors hover:bg-primary/10 hover:text-emerald"
+                >
+                  FAQ
+                </Link>
+              </div>
+
+              {/* Sign-in after browse links — less friction for first-time visitors */}
+              <div className="mt-6 space-y-2 border-t border-border/40 pt-4">
                 {isAuthenticated ? (
                   <>
                     <p className="px-2 text-sm font-bold text-foreground">{user?.name}</p>
                     <p className="px-2 text-xs text-muted-foreground">{user?.email}</p>
+                    <Link
+                      href="/account"
+                      onClick={closeMobileMenu}
+                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-emerald hover:bg-primary/10"
+                    >
+                      <User className="h-4 w-4" />
+                      My account
+                    </Link>
                     <button
                       type="button"
                       onClick={() => {
@@ -543,49 +607,31 @@ export function Navbar() {
                     </button>
                   </>
                 ) : (
-                  <Link
+                  <>
+                    <p className="px-2 text-xs leading-relaxed text-muted-foreground">
+                      Browse products first — sign in anytime to checkout faster.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        closeMobileMenu();
+                        openLogin();
+                      }}
+                      className="flex w-full items-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground"
+                    >
+                      <User className="h-4 w-4" />
+                      Sign in
+                    </button>
+                    <Link
                       href="/signup"
                       onClick={closeMobileMenu}
-                      className="flex w-full items-center gap-2 rounded-xl border border-primary/30 px-4 py-3 text-sm font-bold text-primary"
+                      className="flex w-full items-center gap-2 rounded-xl border border-primary/30 px-4 py-3 text-sm font-bold text-emerald"
                     >
                       <UserPlus className="h-4 w-4" />
-                      Signup
+                      Create account
                     </Link>
+                  </>
                 )}
-              </div>
-              <div className="space-y-1">
-                {NAV_LINKS.map((link) => (
-                  <div key={link.name}>
-                    <Link
-                      href={link.href}
-                      onClick={closeMobileMenu}
-                      className="block rounded-xl px-4 py-3 text-base font-medium transition-colors hover:bg-primary/10 hover:text-primary"
-                    >
-                      {link.name}
-                    </Link>
-                    {link.children && (
-                      <div className="ml-4 space-y-1">
-                        {link.children.map((child) => (
-                          <Link
-                            key={child.name}
-                            href={child.href}
-                            onClick={closeMobileMenu}
-                            className="block rounded-lg px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-primary"
-                          >
-                            {child.name}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-                <Link
-                  href="/faq"
-                  onClick={closeMobileMenu}
-                  className="block rounded-xl px-4 py-3 text-base font-medium transition-colors hover:bg-primary/10 hover:text-primary"
-                >
-                  FAQ
-                </Link>
               </div>
             </motion.div>
           </motion.div>

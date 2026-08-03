@@ -8,7 +8,7 @@ export function LoginScene3D() {
       aria-hidden
       style={{ perspective: "1200px" }}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgba(16,185,129,0.22),transparent_50%),radial-gradient(ellipse_at_80%_70%,rgba(214, 176, 77,0.18),transparent_45%),linear-gradient(160deg,#1e2422_0%,#0b6a46_45%,#062418_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgba(16,185,129,0.22),transparent_50%),radial-gradient(ellipse_at_80%_70%,rgba(214, 176, 77,0.18),transparent_45%),linear-gradient(160deg,#1e2422_0%,#BBF7D0_45%,#14532D_100%)]" />
 
       {/* Floating grid floor */}
       <div
@@ -52,7 +52,7 @@ export function LoginScene3D() {
           y: { duration: 4.5, repeat: Infinity, ease: "easeInOut" },
         }}
       >
-        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-emerald-300/70 via-[#0b6a46] to-[#1e2422] shadow-[0_0_80px_rgba(16,185,129,0.45)]" />
+        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-emerald-300/70 via-[#BBF7D0] to-[#1e2422] shadow-[0_0_80px_rgba(16,185,129,0.45)]" />
         <div className="absolute inset-3 rounded-full bg-gradient-to-tr from-gold/40 via-transparent to-white/10" />
         <div className="absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/80 blur-[1px] shadow-[0_0_30px_rgba(214, 176, 77,0.9)]" />
       </motion.div>
@@ -64,7 +64,7 @@ export function LoginScene3D() {
         { x: "18%", y: "68%", delay: 0.8, rot: 15, color: "from-teal-300 to-emerald-800" },
         { x: "82%", y: "62%", delay: 1.1, rot: -40, color: "from-[#d6b04d] to-emerald-700" },
         { x: "8%", y: "45%", delay: 0.2, rot: 55, color: "from-white/80 to-emerald-500" },
-        { x: "88%", y: "40%", delay: 0.6, rot: -10, color: "from-emerald-200 to-[#0b6a46]" },
+        { x: "88%", y: "40%", delay: 0.6, rot: -10, color: "from-emerald-200 to-[#BBF7D0]" },
       ].map((item, i) => (
         <motion.div
           key={i}

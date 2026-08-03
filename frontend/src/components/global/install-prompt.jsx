@@ -71,12 +71,12 @@ export function InstallPrompt() {
       className="fixed inset-x-0 z-[90] px-3 md:hidden"
       style={{ bottom: "max(4.75rem, calc(3.75rem + env(safe-area-inset-bottom)))" }}
     >
-      <div className="mx-auto flex max-w-md items-center gap-3 rounded-2xl border border-primary/15 bg-[#f8f3e6]/95 p-3 shadow-[0_16px_40px_rgba(11,106,70,0.2)] backdrop-blur-md">
+      <div className="mx-auto flex max-w-md items-center gap-3 rounded-2xl border border-primary/15 bg-[#f8f3e6]/95 p-3 shadow-[0_16px_40px_rgba(187, 247, 208,0.2)] backdrop-blur-md">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white shadow-sm">
           <BrandLogo className="h-8 w-10" priority />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-bold text-primary">Install HIMU App</p>
+          <p className="text-sm font-bold text-emerald">Install HIMU App</p>
           <p className="text-[11px] text-muted-foreground">
             {iosHint
               ? "Tap Share, then Add to Home Screen"
@@ -87,7 +87,7 @@ export function InstallPrompt() {
           <button
             type="button"
             onClick={dismiss}
-            className="inline-flex h-9 items-center gap-1 rounded-xl bg-primary px-3 text-xs font-bold text-white"
+            className="inline-flex h-9 items-center gap-1 rounded-xl bg-primary px-3 text-xs font-bold text-primary-foreground"
           >
             <Share className="h-3.5 w-3.5" />
             OK
@@ -96,7 +96,7 @@ export function InstallPrompt() {
           <button
             type="button"
             onClick={install}
-            className="inline-flex h-9 items-center gap-1 rounded-xl bg-primary px-3 text-xs font-bold text-white"
+            className="inline-flex h-9 items-center gap-1 rounded-xl bg-primary px-3 text-xs font-bold text-primary-foreground"
           >
             <Download className="h-3.5 w-3.5" />
             Install

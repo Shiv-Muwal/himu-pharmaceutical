@@ -122,7 +122,7 @@ export function OrderSuccessView({
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.8 }}
-            className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#e7f3ec] px-4 py-1.5 text-xs font-bold text-[#0b6a46]"
+            className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#e7f3ec] px-4 py-1.5 text-xs font-bold text-emerald"
           >
             Order ID · {orderId}
           </motion.p>
@@ -135,11 +135,11 @@ export function OrderSuccessView({
           className="mb-4 space-y-3"
         >
           <div className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-white p-4 shadow-sm">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-emerald">
               <Truck className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-[10px] font-black uppercase tracking-[0.16em] text-primary">
+              <p className="text-[10px] font-black uppercase tracking-[0.16em] text-emerald">
                 Expected delivery
               </p>
               <p className="mt-0.5 text-base font-bold text-[#1f3b2c]">
@@ -262,7 +262,7 @@ export function OrderSuccessView({
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
           <Button
             onClick={onContinue}
-            className="h-12 rounded-2xl bg-primary px-8 text-white hover:bg-primary/95"
+            className="h-12 rounded-2xl bg-primary px-8 text-primary-foreground hover:bg-primary/95"
           >
             Continue Shopping
           </Button>

@@ -71,7 +71,7 @@ export function AdminSidebar({
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex w-72 flex-col justify-between border-r border-white/10 bg-gradient-to-b from-[#1e2422] via-[#0b6a46] to-[#064d32] text-white transition-transform duration-300 lg:static lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 flex w-72 flex-col justify-between border-r border-white/10 bg-gradient-to-b from-[#1e2422] via-[#166534] to-[#14532D] text-white transition-transform duration-300 lg:static lg:translate-x-0",
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
         )}
       >
@@ -106,7 +106,7 @@ export function AdminSidebar({
                 className={cn(
                   "group flex w-full items-center gap-3 rounded-2xl border px-3.5 py-2.5 text-left transition-all",
                   active
-                    ? "border-[#d6b04d]/40 bg-[#f8f3e6] text-[#0b6a46] shadow-lg shadow-black/20"
+                    ? "border-[#d6b04d]/40 bg-[#f8f3e6] text-[#14532D] shadow-lg shadow-black/20"
                     : "border-transparent text-white/70 hover:bg-white/5 hover:text-white",
                 )}
               >
@@ -116,7 +116,7 @@ export function AdminSidebar({
                   <span
                     className={cn(
                       "block text-[10px]",
-                      active ? "text-[#0b6a46]/70" : "text-white/40",
+                      active ? "text-[#14532D]/70" : "text-white/40",
                     )}
                   >
                     {tab.hint}
@@ -126,7 +126,7 @@ export function AdminSidebar({
                   <span
                     className={cn(
                       "rounded-full px-1.5 py-0.5 text-[9px] font-black",
-                      active ? "bg-primary text-white" : "bg-[#d6b04d] text-[#1e2422]",
+                      active ? "bg-primary text-primary-foreground" : "bg-[#d6b04d] text-[#1e2422]",
                     )}
                   >
                     {badge}

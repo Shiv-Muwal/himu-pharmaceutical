@@ -16,7 +16,7 @@ export function AccordionItem({ title, children, defaultOpen = false }) {
         <span className="pr-3">{title}</span>
         <ChevronDown
           className={cn(
-            "h-5 w-5 shrink-0 text-primary transition-transform duration-200",
+            "h-5 w-5 shrink-0 text-emerald transition-transform duration-200",
             isOpen && "rotate-180",
           )}
         />

@@ -139,14 +139,14 @@ export function ProductCatalog({
   const filterPanel = (
     <div className="space-y-1">
       <div className="mb-3 flex items-center justify-between">
-        <p className="text-xs font-black uppercase tracking-[0.16em] text-primary">
+        <p className="text-xs font-black uppercase tracking-[0.16em] text-emerald">
           Filters
         </p>
         {activeCount > 0 && (
           <button
             type="button"
             onClick={clearFilters}
-            className="text-xs font-semibold text-primary hover:underline"
+            className="text-xs font-semibold text-emerald hover:underline"
           >
             Clear all
           </button>

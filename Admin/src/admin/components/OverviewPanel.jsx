@@ -17,7 +17,7 @@ const statusTone = (status) =>
   status === "Delivered"
     ? "bg-emerald/10 text-emerald"
     : status === "Shipped"
-      ? "bg-primary/10 text-primary"
+      ? "bg-primary/10 text-emerald"
       : status === "Cancelled"
         ? "bg-red-500/10 text-red-500"
         : "bg-amber-500/10 text-amber-500";
@@ -38,7 +38,7 @@ export function OverviewPanel({
       value: stats.totalOrders,
       desc: `${stats.pendingOrders} pending`,
       icon: ShoppingBag,
-      accent: "from-primary/20 to-primary/5 text-primary",
+      accent: "from-primary/20 to-primary/5 text-emerald",
     },
     {
       label: "Customers",
@@ -105,7 +105,7 @@ export function OverviewPanel({
             <button
               type="button"
               onClick={() => setActiveTab("orders")}
-              className="flex items-center gap-0.5 text-xs font-bold text-primary hover:underline"
+              className="flex items-center gap-0.5 text-xs font-bold text-emerald hover:underline"
             >
               All <ChevronRight className="h-3.5 w-3.5" />
             </button>
@@ -132,7 +132,7 @@ export function OverviewPanel({
                       <tr key={order.id} className="hover:bg-muted/10">
                         <td className="p-4 font-bold">{order.id}</td>
                         <td className="p-4 font-semibold">{order.customer.name}</td>
-                        <td className="p-4 font-bold text-primary">₹{order.total}</td>
+                        <td className="p-4 font-bold text-emerald">₹{order.total}</td>
                         <td className="p-4">
                           <span
                             className={cn(
@@ -147,7 +147,7 @@ export function OverviewPanel({
                           <button
                             type="button"
                             onClick={() => setSelectedOrder(order)}
-                            className="rounded-lg bg-primary/10 p-1.5 text-primary hover:bg-primary hover:text-white"
+                            className="rounded-lg bg-primary/10 p-1.5 text-emerald hover:bg-primary hover:text-primary-foreground"
                           >
                             <Eye className="h-3.5 w-3.5" />
                           </button>
@@ -196,7 +196,7 @@ export function OverviewPanel({
             <CardContent className="space-y-2 p-3">
               {topProducts.slice(0, 4).map((p, i) => (
                 <div key={p.name} className="flex items-center gap-2 rounded-xl px-2 py-1.5">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10 text-[10px] font-black text-primary">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/10 text-[10px] font-black text-emerald">
                     {i + 1}
                   </span>
                   <div className="min-w-0 flex-1">
@@ -218,7 +218,7 @@ export function OverviewPanel({
       <Card className="overflow-hidden rounded-3xl border border-border/30 shadow-sm">
         <div className="flex items-center justify-between border-b border-border/20 p-5">
           <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide">
-            <RefreshCw className="h-4 w-4 text-primary" />
+            <RefreshCw className="h-4 w-4 text-emerald" />
             Activity Feed
           </h3>
         </div>

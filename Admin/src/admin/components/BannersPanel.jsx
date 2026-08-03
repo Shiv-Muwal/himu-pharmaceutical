@@ -72,7 +72,7 @@ export function BannersPanel({
       <Card className="overflow-hidden rounded-3xl border border-border/30 shadow-sm">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/20 p-5">
           <div className="flex items-center gap-2">
-            <ImageIcon className="h-5 w-5 text-primary" />
+            <ImageIcon className="h-5 w-5 text-emerald" />
             <div>
               <h3 className="text-sm font-bold uppercase tracking-wide">
                 Homepage Banners
@@ -135,9 +135,9 @@ export function BannersPanel({
                   className="flex min-h-[140px] flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-primary/30 bg-primary/5 px-4 py-6 text-center transition hover:border-primary hover:bg-primary/10 disabled:opacity-60"
                 >
                   {uploading ? (
-                    <Loader2 className="h-7 w-7 animate-spin text-primary" />
+                    <Loader2 className="h-7 w-7 animate-spin text-emerald" />
                   ) : (
-                    <Upload className="h-7 w-7 text-primary" />
+                    <Upload className="h-7 w-7 text-emerald" />
                   )}
                   <span className="text-sm font-bold text-foreground">
                     {uploading ? "Uploading WebP..." : "Upload WebP image"}
@@ -146,7 +146,7 @@ export function BannersPanel({
                     Accepts .webp only · max 5MB
                   </span>
                   {bannerForm.image && (
-                    <span className="mt-1 max-w-full truncate rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-primary dark:bg-card">
+                    <span className="mt-1 max-w-full truncate rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-emerald dark:bg-card">
                       {bannerForm.image}
                     </span>
                   )}
@@ -263,7 +263,7 @@ export function BannersPanel({
                   {banner.subtitle || "—"}
                 </p>
               </div>
-              <p className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary">
+              <p className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald">
                 <Link2 className="h-3 w-3" />
                 {banner.link || "/products"}
               </p>

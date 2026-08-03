@@ -49,7 +49,7 @@ export function Footer() {
                     Healthcare Innovation
                   </p>
                 </div>
-                <p className="mb-5 max-w-md text-sm leading-relaxed text-white/75">
+                <p className="mb-5 max-w-md text-sm leading-relaxed text-white/95">
                   {COMPANY.fullForm}. Advancing global healthcare through innovation, quality, and
                   compassion since 2004.
                 </p>
@@ -58,7 +58,7 @@ export function Footer() {
                     <a
                       key={social.name}
                       href={social.href}
-                      className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 text-xs font-bold uppercase transition-all duration-300 hover:scale-110 hover:border-gold hover:text-gold"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white/10 text-xs font-bold uppercase text-white transition-all duration-300 hover:scale-110 hover:border-gold hover:text-gold"
                       aria-label={social.name}
                     >
                       {social.label}
@@ -77,7 +77,7 @@ export function Footer() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="inline-block text-xs text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
+                        className="inline-block text-xs font-medium text-white transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
                       >
                         {link.name}
                       </Link>
@@ -86,7 +86,7 @@ export function Footer() {
                   <li>
                     <Link
                       href="/faq"
-                      className="inline-block text-xs text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
+                      className="inline-block text-xs font-medium text-white transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
                     >
                       FAQ
                     </Link>
@@ -94,7 +94,7 @@ export function Footer() {
                   <li>
                     <Link
                       href="/certifications"
-                      className="inline-block text-xs text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
+                      className="inline-block text-xs font-medium text-white transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
                     >
                       Certifications
                     </Link>
@@ -112,7 +112,7 @@ export function Footer() {
                     <li key={cat.slug}>
                       <Link
                         href={`/categories/${cat.slug}`}
-                        className="inline-block text-xs text-white/75 transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
+                        className="inline-block text-xs font-medium text-white transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
                       >
                         {cat.name}
                       </Link>
@@ -126,7 +126,7 @@ export function Footer() {
                 <h4 className="mb-3 text-sm font-bold tracking-wide text-gold sm:text-base">
                   Contact Info
                 </h4>
-                <ul className="space-y-3 text-xs text-white/75 sm:text-sm">
+                <ul className="space-y-3 text-xs font-medium text-white sm:text-sm">
                   <li className="flex items-start gap-2.5">
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                     <span>{COMPANY.address}</span>
@@ -145,7 +145,7 @@ export function Footer() {
           </div>
 
           <div>
-            <div className="container-custom flex flex-col items-center justify-between gap-3 py-4 text-xs text-white/60 md:flex-row">
+            <div className="container-custom flex flex-col items-center justify-between gap-3 py-4 text-xs font-medium text-white/90 md:flex-row">
               <p>
                 © {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
               </p>
@@ -154,20 +154,20 @@ export function Footer() {
                 <span>CIN: {COMPANY.cinNumber}</span>
               </div>
               <div className="flex flex-wrap items-center gap-4">
-                <Link href="/privacy" className="transition-colors hover:text-gold">
+                <Link href="/privacy" className="text-white transition-colors hover:text-gold">
                   Privacy
                 </Link>
-                <Link href="/terms" className="transition-colors hover:text-gold">
+                <Link href="/terms" className="text-white transition-colors hover:text-gold">
                   Terms & Conditions
                 </Link>
-                <Link href="/disclaimer" className="transition-colors hover:text-gold">
+                <Link href="/disclaimer" className="text-white transition-colors hover:text-gold">
                   Disclaimer
                 </Link>
                 <a
                   href={import.meta.env.VITE_ADMIN_URL || "http://localhost:5174/admin/"}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-semibold text-gold transition hover:bg-gold hover:text-[#0b6a46]"
+                  className="rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-semibold text-gold transition hover:bg-gold hover:text-[#14532D]"
                 >
                   Open Admin Panel
                 </a>

@@ -210,7 +210,7 @@ export function ProductDetailClient({
 
             {/* Buy box */}
             <div className="space-y-3 px-4 pb-4 pt-3 md:px-0 md:pt-0">
-              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-primary">
+              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-emerald">
                 {product.brand || "HIMU"} · {product.category}
               </p>
               <h1 className="font-[family-name:var(--font-heading)] text-[1.35rem] font-bold leading-snug text-foreground sm:text-2xl md:text-3xl">
@@ -219,11 +219,11 @@ export function ProductDetailClient({
 
               {product.rating && (
                 <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1 rounded-md bg-[#0b6a46] px-2 py-0.5 text-xs font-bold text-white">
+                  <span className="inline-flex items-center gap-1 rounded-md bg-[#BBF7D0] px-2 py-0.5 text-xs font-bold text-primary-foreground">
                     {product.rating}
                     <Star className="h-3 w-3 fill-current" />
                   </span>
-                  <span className="text-xs font-semibold text-primary">
+                  <span className="text-xs font-semibold text-emerald">
                     {product.reviewCount || 0} ratings
                   </span>
                 </div>
@@ -275,7 +275,7 @@ export function ProductDetailClient({
                   <ul className="space-y-1.5">
                     {section.items.map((item, i) => (
                       <li key={i} className="flex gap-2">
-                        <span className="text-primary">•</span>
+                        <span className="text-emerald">•</span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -307,7 +307,7 @@ export function ProductDetailClient({
               </h2>
               <Link
                 href={`/products?category=${product.categorySlug}`}
-                className="text-xs font-bold text-primary"
+                className="text-xs font-bold text-emerald"
               >
                 See all
               </Link>

@@ -58,26 +58,26 @@ export function CartDrawer() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 28, stiffness: 220 }}
-            className="fixed right-0 top-0 bottom-0 z-50 flex w-full max-w-md flex-col overflow-hidden border-l border-[#bbf1d2] bg-gradient-to-b from-[#eef8cd] via-[#eef8cd] to-[#eef8cd] shadow-[ -20px_0_60px_rgba(255, 197, 170,0.12)]"
+            className="fixed right-0 top-0 bottom-0 z-50 flex w-full max-w-md flex-col overflow-hidden border-l border-[#BBF7D0] bg-gradient-to-b from-[#eef8cd] via-[#eef8cd] to-[#eef8cd] shadow-[ -20px_0_60px_rgba(255, 197, 170,0.12)]"
           >
             {/* Soft decorative glow */}
-            <div className="pointer-events-none absolute -right-16 top-10 h-40 w-40 rounded-full bg-[#bbf1d2]/50 blur-3xl" />
+            <div className="pointer-events-none absolute -right-16 top-10 h-40 w-40 rounded-full bg-[#BBF7D0]/50 blur-3xl" />
             <div className="pointer-events-none absolute -left-10 bottom-40 h-32 w-32 rounded-full bg-[#ffc5aa]/40 blur-3xl" />
 
             {/* Header */}
-            <div className="relative border-b border-[#bbf1d2] bg-primary-foreground/70 px-5 py-4 backdrop-blur-xl">
+            <div className="relative border-b border-[#BBF7D0] bg-primary-foreground/70 px-5 py-4 backdrop-blur-xl">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#bbf1d2] text-[#ffc5aa]">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#BBF7D0] text-[#ffc5aa]">
                     <ShoppingBag className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[color-mix(in srgb, #BBF7D0 40%, #5a3d2e 60%)]">
                       HIMU Pharmacy
                     </p>
                     <h2 className="font-[family-name:var(--font-heading)] text-lg font-black text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
                       Your Cart
-                      <span className="ml-2 rounded-full bg-[#bbf1d2] px-2 py-0.5 text-xs font-bold text-[#ffc5aa]">
+                      <span className="ml-2 rounded-full bg-[#BBF7D0] px-2 py-0.5 text-xs font-bold text-[#ffc5aa]">
                         {cartItems.length}
                       </span>
                     </h2>
@@ -85,7 +85,7 @@ export function CartDrawer() {
                 </div>
                 <button
                   onClick={() => setCartOpen(false)}
-                  className="rounded-xl bg-[#bbf1d2] p-2 text-[#ffc5aa] transition hover:bg-[#bbf1d2] hover:text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]"
+                  className="rounded-xl bg-[#BBF7D0] p-2 text-[#ffc5aa] transition hover:bg-[#BBF7D0] hover:text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]"
                   aria-label="Close cart"
                 >
                   <X className="h-5 w-5" />
@@ -98,7 +98,7 @@ export function CartDrawer() {
               {cartItems.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center px-6 text-center">
                   <div className="mb-4 flex h-24 w-24 items-center justify-center rounded-[28px] bg-[var(--c-lime)] shadow-[0_10px_40px_rgba(187,241,210,0.35)]">
-                    <Leaf className="h-10 w-10 text-[#bbf1d2]" />
+                    <Leaf className="h-10 w-10 text-emerald" />
                   </div>
                   <h3 className="font-[family-name:var(--font-heading)] text-lg font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
                     Your cart is empty
@@ -109,7 +109,7 @@ export function CartDrawer() {
                   </p>
                   <Button
                     onClick={() => setCartOpen(false)}
-                    className="mt-6 h-11 rounded-2xl bg-[#bbf1d2] px-6 text-primary-foreground shadow-none hover:bg-[#bbf1d2]"
+                    className="mt-6 h-11 rounded-2xl bg-[#BBF7D0] px-6 text-primary-foreground shadow-none hover:bg-[#BBF7D0]"
                   >
                     Continue Shopping
                   </Button>
@@ -124,7 +124,7 @@ export function CartDrawer() {
                     className="group relative overflow-hidden rounded-3xl border border-primary-foreground/80 bg-primary-foreground/90 p-3.5 shadow-[0_8px_30px_rgba(187,241,210,0.3)]"
                   >
                     <div className="flex gap-3.5">
-                      <div className="relative h-[88px] w-[88px] shrink-0 overflow-hidden rounded-2xl bg-[#bbf1d2]">
+                      <div className="relative h-[88px] w-[88px] shrink-0 overflow-hidden rounded-2xl bg-[#BBF7D0]">
                         <Image
                           src={item.product.image}
                           alt={item.product.name}
@@ -140,7 +140,7 @@ export function CartDrawer() {
                             <h4 className="truncate text-sm font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
                               {item.product.name}
                             </h4>
-                            <p className="mt-0.5 truncate text-[11px] text-[color-mix(in srgb, #bbf1d2 40%, #5a3d2e 60%)]">
+                            <p className="mt-0.5 truncate text-[11px] text-[color-mix(in srgb, #BBF7D0 40%, #5a3d2e 60%)]">
                               {item.selectedVariant} · {item.product.strength}
                             </p>
                           </div>
@@ -156,7 +156,7 @@ export function CartDrawer() {
                         </div>
 
                         <div className="mt-3 flex items-end justify-between">
-                          <div className="inline-flex items-center gap-1 rounded-full bg-[#bbf1d2] p-1">
+                          <div className="inline-flex items-center gap-1 rounded-full bg-[#BBF7D0] p-1">
                             <button
                               onClick={() =>
                                 updateQuantity(
@@ -165,7 +165,7 @@ export function CartDrawer() {
                                   item.selectedVariant,
                                 )
                               }
-                              className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--c-lime)] text-[#ffc5aa] shadow-sm transition hover:bg-[#bbf1d2]"
+                              className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--c-lime)] text-[#ffc5aa] shadow-sm transition hover:bg-[#BBF7D0]"
                             >
                               <Minus className="h-3 w-3" />
                             </button>
@@ -180,7 +180,7 @@ export function CartDrawer() {
                                   item.selectedVariant,
                                 )
                               }
-                              className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--c-lime)] text-[#ffc5aa] shadow-sm transition hover:bg-[#bbf1d2]"
+                              className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--c-lime)] text-[#ffc5aa] shadow-sm transition hover:bg-[#BBF7D0]"
                             >
                               <Plus className="h-3 w-3" />
                             </button>
@@ -206,8 +206,8 @@ export function CartDrawer() {
 
             {/* Footer */}
             {cartItems.length > 0 && (
-              <div className="relative border-t border-[#bbf1d2] bg-primary-foreground/80 px-5 py-5 backdrop-blur-xl">
-                <div className="mb-4 overflow-hidden rounded-3xl border border-[#bbf1d2] bg-gradient-to-br from-[#eef8cd] to-[#eef8cd] p-4">
+              <div className="relative border-t border-[#BBF7D0] bg-primary-foreground/80 px-5 py-5 backdrop-blur-xl">
+                <div className="mb-4 overflow-hidden rounded-3xl border border-[#BBF7D0] bg-gradient-to-br from-[#eef8cd] to-[#eef8cd] p-4">
                   <div className="mb-3 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-[#ffc5aa]">
                     <Sparkles className="h-3 w-3 text-[#ffc5aa]" />
                     Order summary
@@ -218,16 +218,16 @@ export function CartDrawer() {
                       <span>₹{cartTotalOriginal}</span>
                     </div>
                     {cartSavings > 0 && (
-                      <div className="flex justify-between font-semibold text-[#bbf1d2]">
+                      <div className="flex justify-between font-semibold text-emerald">
                         <span>Total Savings</span>
                         <span>- ₹{cartSavings}</span>
                       </div>
                     )}
                     <div className="flex justify-between text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]">
                       <span>Shipping</span>
-                      <span className="font-semibold text-[#bbf1d2]">FREE</span>
+                      <span className="font-semibold text-emerald">FREE</span>
                     </div>
-                    <div className="flex items-end justify-between border-t border-[#bbf1d2] pt-3">
+                    <div className="flex items-end justify-between border-t border-[#BBF7D0] pt-3">
                       <span className="text-sm font-bold text-[color-mix(in srgb, #ffc5aa 42%, #3a2418 58%)]">
                         Grand Total
                       </span>
@@ -244,7 +244,7 @@ export function CartDrawer() {
                     onClick={() => {
                       openCheckoutFromCart();
                     }}
-                    className="group flex h-12 w-full items-center justify-between rounded-2xl bg-gradient-to-r from-[#bbf1d2] to-[#bbf1d2] px-5 text-sm font-bold text-primary-foreground shadow-[0_10px_24px_rgba(255,197,170,0.35)] transition hover:brightness-105"
+                    className="group flex h-12 w-full items-center justify-between rounded-2xl bg-gradient-to-r from-[#BBF7D0] to-[#BBF7D0] px-5 text-sm font-bold text-primary-foreground shadow-[0_10px_24px_rgba(255,197,170,0.35)] transition hover:brightness-105"
                   >
                     <span>Proceed to Checkout</span>
                     <span className="flex items-center gap-1.5">
@@ -255,7 +255,7 @@ export function CartDrawer() {
                   <button
                     type="button"
                     onClick={() => setCartOpen(false)}
-                    className="h-11 w-full rounded-2xl border border-[#bbf1d2] bg-primary-foreground/70 text-xs font-bold text-[#ffc5aa] transition hover:bg-[#bbf1d2]"
+                    className="h-11 w-full rounded-2xl border border-[#BBF7D0] bg-primary-foreground/70 text-xs font-bold text-[#ffc5aa] transition hover:bg-[#BBF7D0]"
                   >
                     Continue Shopping
                   </button>

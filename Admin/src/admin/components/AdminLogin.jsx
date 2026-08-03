@@ -141,7 +141,7 @@ export function AdminLogin({
               <Button
                 type="submit"
                 disabled={loginLoading}
-                className="h-12 w-full touch-manipulation bg-primary text-base text-white shadow-none hover:bg-primary-hover sm:text-sm"
+                className="h-12 w-full touch-manipulation bg-primary text-base text-primary-foreground shadow-none hover:bg-primary-hover sm:text-sm"
               >
                 {loginLoading ? "Authenticating..." : "Enter Dashboard"}
               </Button>

@@ -24,8 +24,8 @@ export function AdminPreloader() {
       transition={{ duration: 0.4 }}
       className="fixed inset-0 z-[200] flex items-center justify-center overflow-hidden bg-[#f8f3e6]"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_40%_25%,rgba(11,106,70,0.12),transparent_45%),radial-gradient(ellipse_at_70%_75%,rgba(214,176,77,0.16),transparent_50%)]" />
-      <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(rgba(11,106,70,0.06)_1px,transparent_1px)] [background-size:22px_22px]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_40%_25%,rgba(187, 247, 208,0.12),transparent_45%),radial-gradient(ellipse_at_70%_75%,rgba(214,176,77,0.16),transparent_50%)]" />
+      <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(rgba(187, 247, 208,0.06)_1px,transparent_1px)] [background-size:22px_22px]" />
 
       <div className="relative z-10 flex flex-col items-center px-6 text-center">
         <motion.div
@@ -36,7 +36,7 @@ export function AdminPreloader() {
         >
           <BrandLogo className="h-full w-full" priority />
         </motion.div>
-        <p className="font-[family-name:var(--font-heading)] text-lg font-black text-primary">
+        <p className="font-[family-name:var(--font-heading)] text-lg font-black text-emerald">
           HIMU Control
         </p>
         <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.28em] text-gold">

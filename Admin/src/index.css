@@ -1,36 +1,36 @@
 @import "tailwindcss";
 
 /*
-  Brand palette (Aug 2026 trial) — say "revert" to restore previous.
-  Previous: bg #fff8e7 | primary #0b5d3b | gold #d4af37
+  Brand palette — primary mint #BBF7D0 with dark ink for readable text.
+  Previous: primary #0b6a46
 */
 :root {
   --font-poppins: "Poppins", system-ui, sans-serif;
   --font-plus-jakarta: "Plus Jakarta Sans", system-ui, sans-serif;
   --background: #f8f3e6;
-  --foreground: #1a2e1f;
+  --foreground: #14532d;
   --card: rgba(255, 252, 240, 0.92);
-  --card-foreground: #1a2e1f;
-  --primary: #0b6a46;
-  --primary-hover: #0f8157;
-  --primary-foreground: #ffffff;
+  --card-foreground: #14532d;
+  --primary: #bbf7d0;
+  --primary-hover: #86efac;
+  --primary-foreground: #14532d;
   --secondary: #d6b04d;
-  --secondary-foreground: #1a2e1f;
+  --secondary-foreground: #14532d;
   --muted: #efe8d8;
   --muted-foreground: #5a6b5e;
-  --accent: #e7f3ec;
-  --accent-foreground: #0b6a46;
-  --border: rgba(11, 106, 70, 0.15);
-  --ring: #0b6a46;
+  --accent: #ecfdf5;
+  --accent-foreground: #14532d;
+  --border: rgba(20, 83, 45, 0.14);
+  --ring: #4ade80;
   --gold: #d6b04d;
-  --emerald: #0f8157;
+  --emerald: #166534;
   --cream: #f8f3e6;
-  --footer: #1e2422;
+  --footer: #14532d;
   --footer-foreground: #f5f5f5;
   --footer-muted: #cfcfcf;
   --olive: #6b7c3a;
   --glass: rgba(248, 243, 230, 0.88);
-  --glass-border: rgba(11, 106, 70, 0.15);
+  --glass-border: rgba(20, 83, 45, 0.14);
 }
 
 .dark {
@@ -38,19 +38,19 @@
   --foreground: #e8f0ea;
   --card: rgba(20, 35, 28, 0.85);
   --card-foreground: #e8f0ea;
-  --primary: #0f8157;
-  --primary-hover: #129a68;
-  --primary-foreground: #0a1410;
+  --primary: #bbf7d0;
+  --primary-hover: #86efac;
+  --primary-foreground: #14532d;
   --secondary: #d6b04d;
   --secondary-foreground: #0a1410;
   --muted: #1a2e22;
   --muted-foreground: #94a89a;
   --accent: #1a3d2e;
-  --accent-foreground: #0f8157;
-  --border: rgba(15, 129, 87, 0.15);
-  --ring: #0f8157;
+  --accent-foreground: #bbf7d0;
+  --border: rgba(187, 247, 208, 0.18);
+  --ring: #4ade80;
   --glass: rgba(20, 35, 28, 0.7);
-  --glass-border: rgba(15, 129, 87, 0.2);
+  --glass-border: rgba(187, 247, 208, 0.2);
 }
 
 @theme inline {
@@ -104,19 +104,19 @@ body {
 }
 
 .gradient-primary {
-  background: linear-gradient(135deg, #0b6a46 0%, #0f8157 50%, #d6b04d 100%);
+  background: linear-gradient(135deg, #bbf7d0 0%, #86efac 50%, #d6b04d 100%);
 }
 
 .gradient-hero {
-  background: linear-gradient(135deg, rgba(11, 106, 70, 0.95) 0%, rgba(15, 129, 87, 0.85) 40%, rgba(214, 176, 77, 0.3) 100%);
+  background: linear-gradient(135deg, rgba(187, 247, 208, 0.95) 0%, rgba(134, 239, 172, 0.85) 40%, rgba(214, 176, 77, 0.3) 100%);
 }
 
 .gradient-cream {
-  background: linear-gradient(180deg, #f8f3e6 0%, #f3ecda 100%);
+  background: linear-gradient(180deg, #f8f3e6 0%, #f0fdf4 100%);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #0b6a46, #d6b04d);
+  background: linear-gradient(135deg, #166534, #d6b04d);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -124,9 +124,9 @@ body {
 
 .molecular-bg {
   background-image:
-    radial-gradient(circle at 20% 50%, rgba(11, 106, 70, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 20% 50%, rgba(187, 247, 208, 0.35) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(214, 176, 77, 0.06) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(15, 129, 87, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 40% 80%, rgba(134, 239, 172, 0.2) 0%, transparent 50%);
 }
 
 .section-padding {
@@ -138,7 +138,7 @@ body {
 }
 
 .prose-custom h2 {
-  @apply text-2xl md:text-3xl font-bold text-primary mb-4 mt-8;
+  @apply text-2xl md:text-3xl font-bold text-emerald mb-4 mt-8;
 }
 
 .prose-custom p {
@@ -158,12 +158,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary);
+  background: var(--emerald);
   border-radius: 4px;
 }
 
 ::selection {
-  background: rgba(11, 106, 70, 0.2);
+  background: rgba(187, 247, 208, 0.55);
   color: var(--foreground);
 }
 

@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { History, LogOut, Package, UserRound, X } from "lucide-react";
+import { History, LogOut, Package, ShoppingBag, UserRound, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/providers/AuthProvider";
 
@@ -11,12 +11,12 @@ const OPTIONS = [
 
 export function AccountSheet({ open, onClose }) {
   const navigate = useNavigate();
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout, openLogin } = useAuth();
 
   const go = (tab) => {
     onClose();
     if (!isAuthenticated) {
-      navigate("/products");
+      openLogin();
       return;
     }
     navigate(`/account?tab=${tab}`);
@@ -46,7 +46,7 @@ export function AccountSheet({ open, onClose }) {
             <div className="mx-auto mt-3 h-1.5 w-12 rounded-full bg-border" />
             <div className="flex items-center justify-between px-5 pb-2 pt-4">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-primary">
+                <p className="text-[10px] font-black uppercase tracking-[0.18em] text-emerald">
                   Account
                 </p>
                 <p className="text-base font-bold text-foreground">
@@ -72,7 +72,7 @@ export function AccountSheet({ open, onClose }) {
                     onClick={() => go(opt.tab)}
                     className="flex w-full items-center gap-3 rounded-2xl border border-border/50 bg-white px-4 py-3.5 text-left shadow-sm transition active:scale-[0.99]"
                   >
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-emerald">
                       <Icon className="h-5 w-5" />
                     </span>
                     <span className="text-sm font-bold text-foreground">{opt.label}</span>
@@ -95,7 +95,36 @@ export function AccountSheet({ open, onClose }) {
                   </span>
                   <span className="text-sm font-bold text-red-700">Logout</span>
                 </button>
-              ) : null}
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onClose();
+                      navigate("/products");
+                    }}
+                    className="flex w-full items-center gap-3 rounded-2xl border border-border/50 bg-white px-4 py-3.5 text-left shadow-sm transition active:scale-[0.99]"
+                  >
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-emerald">
+                      <ShoppingBag className="h-5 w-5" />
+                    </span>
+                    <span className="text-sm font-bold text-foreground">Browse products</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onClose();
+                      openLogin();
+                    }}
+                    className="flex w-full items-center gap-3 rounded-2xl border border-primary/25 bg-primary/10 px-4 py-3.5 text-left transition active:scale-[0.99]"
+                  >
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+                      <UserRound className="h-5 w-5" />
+                    </span>
+                    <span className="text-sm font-bold text-emerald">Sign in</span>
+                  </button>
+                </>
+              )}
             </div>
           </motion.div>
         </div>

@@ -1,15 +1,15 @@
 /** Trusted institutional partners shown on the homepage. */
 export const trustedBrands = [
-  { id: "tb-apollo", name: "Apollo Hospitals", mark: "AH", accent: "#0b6a46" },
-  { id: "tb-fortis", name: "Fortis Healthcare", mark: "FH", accent: "#0f8157" },
-  { id: "tb-max", name: "Max Healthcare", mark: "MH", accent: "#1a4d35" },
+  { id: "tb-apollo", name: "Apollo Hospitals", mark: "AH", accent: "#14532D" },
+  { id: "tb-fortis", name: "Fortis Healthcare", mark: "FH", accent: "#166534" },
+  { id: "tb-max", name: "Max Healthcare", mark: "MH", accent: "#15803D" },
   { id: "tb-aiims", name: "AIIMS", mark: "AI", accent: "#d6b04d" },
-  { id: "tb-medsupply", name: "MedSupply Global", mark: "MG", accent: "#0b6a46" },
-  { id: "tb-pharmacorp", name: "PharmaCorp", mark: "PC", accent: "#0f8157" },
+  { id: "tb-medsupply", name: "MedSupply Global", mark: "MG", accent: "#14532D" },
+  { id: "tb-pharmacorp", name: "PharmaCorp", mark: "PC", accent: "#166534" },
   { id: "tb-healthfirst", name: "HealthFirst", mark: "HF", accent: "#1e2422" },
   { id: "tb-biomed", name: "BioMed International", mark: "BI", accent: "#d6b04d" },
-  { id: "tb-carewell", name: "CareWell Network", mark: "CW", accent: "#0b6a46" },
-  { id: "tb-lifeline", name: "LifeLine Pharma", mark: "LP", accent: "#0f8157" },
+  { id: "tb-carewell", name: "CareWell Network", mark: "CW", accent: "#15803D" },
+  { id: "tb-lifeline", name: "LifeLine Pharma", mark: "LP", accent: "#166534" },
 ];
 
 /** Shop-by-brand tiles linking into catalog facets. */
@@ -20,7 +20,7 @@ export const shopBrands = [
     tagline: "Clinical skin therapeutics",
     href: "/products?category=dermatology",
     mark: "HD",
-    accent: "#0b6a46",
+    accent: "#14532D",
     productsLabel: "Creams · Gels · Shields",
   },
   {
@@ -29,7 +29,7 @@ export const shopBrands = [
     tagline: "Daily skin essentials",
     href: "/products?category=skin-care",
     mark: "HC",
-    accent: "#0f8157",
+    accent: "#166534",
     productsLabel: "Wash · Serum · Lotion",
   },
   {
@@ -47,7 +47,7 @@ export const shopBrands = [
     tagline: "Scalp & hair science",
     href: "/products?category=hair-care",
     mark: "HF",
-    accent: "#1a4d35",
+    accent: "#15803D",
     productsLabel: "Serum · Oil · Repair",
   },
   {
@@ -56,7 +56,7 @@ export const shopBrands = [
     tagline: "Hospital-ready formulations",
     href: "/products?category=antibiotics",
     mark: "RX",
-    accent: "#0b6a46",
+    accent: "#14532D",
     productsLabel: "Antibiotics · Capsules",
   },
   {
