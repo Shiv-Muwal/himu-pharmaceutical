@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Home, ShoppingBag, ShoppingCart, UserRound, Newspaper } from "lucide-react";
+import { Home, ShoppingBag, ShoppingCart, Search, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/providers/CartProvider";
-import { AccountSheet } from "@/components/layout/account-sheet";
+import { PagesDrawer } from "@/components/layout/pages-drawer";
 
 const TABS = [
   { to: "/", label: "Home", icon: Home, end: true },
   { to: "/products", label: "Shop", icon: ShoppingBag },
+  { id: "search", label: "Search", icon: Search, isSearch: true },
   { id: "cart", label: "Cart", icon: ShoppingCart, isCart: true },
-  { to: "/news", label: "Blogs", icon: Newspaper },
-  { id: "account", label: "Account", icon: UserRound, isAccount: true },
+  { id: "more", label: "More", icon: Menu, isMore: true },
 ];
 
 export function MobileAppNav() {
   const { cartCount, setCartOpen } = useCart();
-  const [accountOpen, setAccountOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
 
   return (
     <>
@@ -28,6 +28,39 @@ export function MobileAppNav() {
           {TABS.map((tab) => {
             const Icon = tab.icon;
 
+            if (tab.isSearch) {
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => window.dispatchEvent(new CustomEvent("open-search"))}
+                  className="relative flex flex-col items-center gap-0.5 rounded-xl px-1 py-2 text-[10px] font-semibold text-muted-foreground"
+                >
+                  <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/25">
+                    <Icon className="h-4 w-4" />
+                  </span>
+                  {tab.label}
+                </button>
+              );
+            }
+
+            if (tab.isMore) {
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setMoreOpen(true)}
+                  className={cn(
+                    "flex flex-col items-center gap-0.5 rounded-xl px-1 py-2 text-[10px] font-semibold",
+                    moreOpen ? "text-emerald" : "text-muted-foreground",
+                  )}
+                >
+                  <Icon className="h-5 w-5" />
+                  {tab.label}
+                </button>
+              );
+            }
+
             if (tab.isCart) {
               return (
                 <button
@@ -36,31 +69,14 @@ export function MobileAppNav() {
                   onClick={() => setCartOpen(true)}
                   className="relative flex flex-col items-center gap-0.5 rounded-xl px-1 py-2 text-[10px] font-semibold text-muted-foreground"
                 >
-                  <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/25">
-                    <Icon className="h-4 w-4" />
+                  <span className="relative">
+                    <Icon className="h-5 w-5" />
                     {cartCount > 0 && (
-                      <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold px-1 text-[9px] font-black text-[#1a2e1f]">
+                      <span className="absolute -right-2 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold px-1 text-[9px] font-black text-[#1a2e1f]">
                         {cartCount > 9 ? "9+" : cartCount}
                       </span>
                     )}
                   </span>
-                  {tab.label}
-                </button>
-              );
-            }
-
-            if (tab.isAccount) {
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setAccountOpen(true)}
-                  className={cn(
-                    "flex flex-col items-center gap-0.5 rounded-xl px-1 py-2 text-[10px] font-semibold",
-                    accountOpen ? "text-emerald" : "text-muted-foreground",
-                  )}
-                >
-                  <Icon className="h-5 w-5" />
                   {tab.label}
                 </button>
               );
@@ -86,7 +102,7 @@ export function MobileAppNav() {
         </div>
       </nav>
 
-      <AccountSheet open={accountOpen} onClose={() => setAccountOpen(false)} />
+      <PagesDrawer open={moreOpen} onClose={() => setMoreOpen(false)} />
     </>
   );
 }

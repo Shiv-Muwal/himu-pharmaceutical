@@ -95,6 +95,12 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
+    const openSearch = () => setSearchOpen(true);
+    window.addEventListener("open-search", openSearch);
+    return () => window.removeEventListener("open-search", openSearch);
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -358,14 +364,14 @@ export function Navbar() {
             </div>
             <button
               onClick={() => setSearchOpen(!searchOpen)}
-              className="p-2 rounded-lg transition-colors hover:bg-muted text-foreground cursor-pointer"
+              className="hidden p-2 rounded-lg transition-colors hover:bg-muted text-foreground cursor-pointer md:inline-flex"
               aria-label="Search"
             >
               <Search className="h-5 w-5" />
             </button>
             <button
               onClick={() => setCartOpen(true)}
-              className="p-2 rounded-lg transition-colors hover:bg-muted text-foreground relative cursor-pointer"
+              className="hidden p-2 rounded-lg transition-colors hover:bg-muted text-foreground relative cursor-pointer md:inline-flex"
               aria-label="Shopping Cart"
             >
               <ShoppingBag className="h-5 w-5" />
@@ -376,75 +382,74 @@ export function Navbar() {
               )}
             </button>
 
-            {/* Mobile: discreet top-right account/sign-in — not the first thing visitors see */}
             {isAuthenticated ? (
-              <Link
-                href="/account"
-                className="rounded-lg p-2 text-foreground transition-colors hover:bg-muted md:hidden"
-                aria-label="My account"
-              >
-                <User className="h-5 w-5" />
-              </Link>
+              <>
+                <Link
+                  href="/account"
+                  className="rounded-lg p-2 text-foreground transition-colors hover:bg-muted md:hidden"
+                  aria-label="My account"
+                >
+                  <User className="h-5 w-5" />
+                </Link>
+                <div
+                  className="relative hidden md:block"
+                  onMouseEnter={() => setAccountOpen(true)}
+                  onMouseLeave={() => setAccountOpen(false)}
+                >
+                  <button
+                    type="button"
+                    className="flex items-center gap-2 rounded-xl border border-primary/15 bg-primary/5 px-3 py-1.5 text-xs font-bold text-emerald transition hover:bg-primary/10"
+                  >
+                    <User className="h-4 w-4" />
+                    <span className="max-w-[90px] truncate">{user?.name?.split(" ")[0]}</span>
+                  </button>
+                  <AnimatePresence>
+                    {accountOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        className="absolute right-0 mt-2 w-48 overflow-hidden rounded-2xl border border-border/60 bg-[#f8f3e6] p-2 shadow-xl"
+                      >
+                        <p className="truncate px-3 py-2 text-[11px] text-muted-foreground">
+                          {user?.email}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={logout}
+                          className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-bold text-red-600 hover:bg-red-500/10"
+                        >
+                          <LogOut className="h-3.5 w-3.5" />
+                          Sign out
+                        </button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </>
             ) : (
-              <button
-                type="button"
-                onClick={() => openLogin()}
-                className="rounded-lg p-2 text-foreground transition-colors hover:bg-muted md:hidden"
-                aria-label="Sign in"
-              >
-                <User className="h-5 w-5" />
-              </button>
-            )}
-
-            {isAuthenticated ? (
-              <div
-                className="relative hidden md:block"
-                onMouseEnter={() => setAccountOpen(true)}
-                onMouseLeave={() => setAccountOpen(false)}
-              >
+              <>
                 <button
                   type="button"
-                  className="flex items-center gap-2 rounded-xl border border-primary/15 bg-primary/5 px-3 py-1.5 text-xs font-bold text-emerald transition hover:bg-primary/10"
+                  onClick={() => openLogin()}
+                  className="rounded-lg p-2 text-foreground transition-colors hover:bg-muted md:hidden"
+                  aria-label="Account"
                 >
-                  <User className="h-4 w-4" />
-                  <span className="max-w-[90px] truncate">{user?.name?.split(" ")[0]}</span>
+                  <User className="h-5 w-5" />
                 </button>
-                <AnimatePresence>
-                  {accountOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      className="absolute right-0 mt-2 w-48 overflow-hidden rounded-2xl border border-border/60 bg-[#f8f3e6] p-2 shadow-xl"
-                    >
-                      <p className="truncate px-3 py-2 text-[11px] text-muted-foreground">
-                        {user?.email}
-                      </p>
-                      <button
-                        type="button"
-                        onClick={logout}
-                        className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-bold text-red-600 hover:bg-red-500/10"
-                      >
-                        <LogOut className="h-3.5 w-3.5" />
-                        Sign out
-                      </button>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ) : (
-              <div className="hidden items-center md:flex">
-                <Link href="/signup">
-                  <Button size="sm" variant="outline" className="gap-1.5 px-3">
-                    <UserPlus className="h-3.5 w-3.5" />
-                    Signup
-                  </Button>
-                </Link>
-              </div>
+                <div className="hidden items-center md:flex">
+                  <Link href="/signup">
+                    <Button size="sm" variant="outline" className="gap-1.5 px-3">
+                      <UserPlus className="h-3.5 w-3.5" />
+                      Signup
+                    </Button>
+                  </Link>
+                </div>
+              </>
             )}
 
             <button
-              className="lg:hidden p-2 rounded-lg hover:bg-muted text-foreground"
+              className="hidden p-2 rounded-lg hover:bg-muted text-foreground md:inline-flex lg:hidden"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Menu"
             >
