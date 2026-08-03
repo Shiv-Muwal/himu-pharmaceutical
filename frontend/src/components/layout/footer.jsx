@@ -14,7 +14,7 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="relative mt-0 pb-[var(--mobile-nav-offset)] text-white md:mt-12 md:pb-0">
+    <footer className="relative mt-0 pb-[var(--mobile-nav-offset)] text-emerald md:mt-12 md:pb-0">
       {/* Desktop wave only — mobile merges cleanly without a hard line */}
       <div className="pointer-events-none absolute left-0 right-0 top-0 hidden w-full -translate-y-[98%] overflow-hidden leading-[0] md:block">
         <svg
@@ -29,7 +29,7 @@ export function Footer() {
 
       <div className="relative bg-primary pt-2 md:pt-0">
         <div className="pointer-events-none absolute top-10 left-10 h-56 w-56 rounded-full bg-gold/15 blur-3xl" />
-        <div className="pointer-events-none absolute right-10 bottom-10 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+        <div className="pointer-events-none absolute right-10 bottom-10 h-64 w-64 rounded-full bg-emerald/5 blur-3xl" />
         <div className="pointer-events-none absolute inset-0 opacity-10 molecular-bg" />
 
         <div className="relative z-10">
@@ -38,18 +38,17 @@ export function Footer() {
               {/* Brand — full width on mobile */}
               <div className="col-span-2 lg:col-span-1">
                 <div className="mb-4 inline-flex flex-col gap-2">
-                  <div className="rounded-2xl border border-white/15 bg-white/10 px-3 py-2 shadow-[0_10px_40px_rgba(0,0,0,0.18)] backdrop-blur-sm transition hover:bg-white/15">
+                  <div className="rounded-2xl border border-emerald/15 bg-white/40 px-3 py-2 shadow-[0_10px_40px_rgba(20,83,45,0.08)] backdrop-blur-sm transition hover:bg-white/55">
                     <BrandLogo
-                      variant="white"
                       className="h-12 w-44 sm:h-14 sm:w-52"
                       priority
                     />
                   </div>
-                  <p className="pl-1 text-[10px] font-bold uppercase tracking-[0.28em] text-gold">
+                  <p className="pl-1 text-[10px] font-bold uppercase tracking-[0.28em] text-emerald">
                     Healthcare Innovation
                   </p>
                 </div>
-                <p className="mb-5 max-w-md text-sm leading-relaxed text-white/95">
+                <p className="mb-5 max-w-md text-sm leading-relaxed text-emerald/90">
                   {COMPANY.fullForm}. Advancing global healthcare through innovation, quality, and
                   compassion since 2004.
                 </p>
@@ -58,7 +57,7 @@ export function Footer() {
                     <a
                       key={social.name}
                       href={social.href}
-                      className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white/10 text-xs font-bold uppercase text-white transition-all duration-300 hover:scale-110 hover:border-gold hover:text-gold"
+                      className="flex h-9 w-9 items-center justify-center rounded-full border border-emerald/25 bg-white/40 text-xs font-bold uppercase text-emerald transition-all duration-300 hover:scale-110 hover:border-emerald hover:bg-emerald hover:text-white"
                       aria-label={social.name}
                     >
                       {social.label}
@@ -69,7 +68,7 @@ export function Footer() {
 
               {/* Quick Links — left column beside categories on mobile */}
               <div>
-                <h4 className="mb-3 text-sm font-bold tracking-wide text-gold sm:text-base">
+                <h4 className="mb-3 text-sm font-bold tracking-wide text-emerald sm:text-base">
                   Quick Links
                 </h4>
                 <ul className="space-y-2">
@@ -77,7 +76,7 @@ export function Footer() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="inline-block text-xs font-medium text-white transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
+                        className="inline-block text-xs font-medium text-emerald/90 transition-all duration-300 hover:translate-x-1.5 hover:text-emerald sm:text-sm"
                       >
                         {link.name}
                       </Link>
@@ -86,7 +85,7 @@ export function Footer() {
                   <li>
                     <Link
                       href="/faq"
-                      className="inline-block text-xs font-medium text-white transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
+                      className="inline-block text-xs font-medium text-emerald/90 transition-all duration-300 hover:translate-x-1.5 hover:text-emerald sm:text-sm"
                     >
                       FAQ
                     </Link>
@@ -94,7 +93,7 @@ export function Footer() {
                   <li>
                     <Link
                       href="/certifications"
-                      className="inline-block text-xs font-medium text-white transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
+                      className="inline-block text-xs font-medium text-emerald/90 transition-all duration-300 hover:translate-x-1.5 hover:text-emerald sm:text-sm"
                     >
                       Certifications
                     </Link>
@@ -104,7 +103,7 @@ export function Footer() {
 
               {/* Product Categories — right of Quick Links on mobile */}
               <div>
-                <h4 className="mb-3 text-sm font-bold tracking-wide text-gold sm:text-base">
+                <h4 className="mb-3 text-sm font-bold tracking-wide text-emerald sm:text-base">
                   Product Categories
                 </h4>
                 <ul className="space-y-2">
@@ -112,7 +111,7 @@ export function Footer() {
                     <li key={cat.slug}>
                       <Link
                         href={`/categories/${cat.slug}`}
-                        className="inline-block text-xs font-medium text-white transition-all duration-300 hover:translate-x-1.5 hover:text-gold sm:text-sm"
+                        className="inline-block text-xs font-medium text-emerald/90 transition-all duration-300 hover:translate-x-1.5 hover:text-emerald sm:text-sm"
                       >
                         {cat.name}
                       </Link>
@@ -123,20 +122,20 @@ export function Footer() {
 
               {/* Contact — full width under the two columns on mobile */}
               <div className="col-span-2 lg:col-span-1">
-                <h4 className="mb-3 text-sm font-bold tracking-wide text-gold sm:text-base">
+                <h4 className="mb-3 text-sm font-bold tracking-wide text-emerald sm:text-base">
                   Contact Info
                 </h4>
-                <ul className="space-y-3 text-xs font-medium text-white sm:text-sm">
+                <ul className="space-y-3 text-xs font-medium text-emerald/90 sm:text-sm">
                   <li className="flex items-start gap-2.5">
-                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-emerald" />
                     <span>{COMPANY.address}</span>
                   </li>
                   <li className="flex items-center gap-2.5">
-                    <Phone className="h-4 w-4 shrink-0 text-gold" />
+                    <Phone className="h-4 w-4 shrink-0 text-emerald" />
                     <span>{COMPANY.phone}</span>
                   </li>
                   <li className="flex items-center gap-2.5">
-                    <Mail className="h-4 w-4 shrink-0 text-gold" />
+                    <Mail className="h-4 w-4 shrink-0 text-emerald" />
                     <span>{COMPANY.email}</span>
                   </li>
                 </ul>
@@ -145,7 +144,7 @@ export function Footer() {
           </div>
 
           <div>
-            <div className="container-custom flex flex-col items-center justify-between gap-3 py-4 text-xs font-medium text-white/90 md:flex-row">
+            <div className="container-custom flex flex-col items-center justify-between gap-3 border-t border-emerald/15 py-4 text-xs font-medium text-emerald/85 md:flex-row">
               <p>
                 © {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
               </p>
@@ -154,20 +153,20 @@ export function Footer() {
                 <span>CIN: {COMPANY.cinNumber}</span>
               </div>
               <div className="flex flex-wrap items-center gap-4">
-                <Link href="/privacy" className="text-white transition-colors hover:text-gold">
+                <Link href="/privacy" className="text-emerald transition-colors hover:text-emerald/70">
                   Privacy
                 </Link>
-                <Link href="/terms" className="text-white transition-colors hover:text-gold">
+                <Link href="/terms" className="text-emerald transition-colors hover:text-emerald/70">
                   Terms & Conditions
                 </Link>
-                <Link href="/disclaimer" className="text-white transition-colors hover:text-gold">
+                <Link href="/disclaimer" className="text-emerald transition-colors hover:text-emerald/70">
                   Disclaimer
                 </Link>
                 <a
                   href={import.meta.env.VITE_ADMIN_URL || "http://localhost:5174/admin/"}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-semibold text-gold transition hover:bg-gold hover:text-[#14532D]"
+                  className="rounded-full border border-emerald/30 bg-emerald/10 px-3 py-1 font-semibold text-emerald transition hover:bg-emerald hover:text-white"
                 >
                   Open Admin Panel
                 </a>
