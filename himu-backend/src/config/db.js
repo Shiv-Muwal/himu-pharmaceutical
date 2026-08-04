@@ -18,7 +18,7 @@ export async function connectDB() {
   try {
     await mongoose.connect(uri);
   } catch (error) {
-    if (env.nodeEnv === "production" || env.useMemoryDb) {
+    if (env.useMemoryDb) {
       throw error;
     }
 

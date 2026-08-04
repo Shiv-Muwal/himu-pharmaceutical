@@ -3,7 +3,7 @@ import cors from "cors";
 import helmet from 'helmet';
 import morgan from "morgan";
 import path from "node:path";
-import { env } from "./config/env.js";
+import { env, isAllowedOrigin } from "./config/env.js";
 import routes from "./routes/index.js";
 import { notFound, errorHandler } from "./middleware/error.middleware.js";
 import { apiRateLimit, authRateLimit } from "./middleware/rate-limit.middleware.js";
@@ -32,7 +32,7 @@ function isDevLanOrigin(origin) {
 
 app.use(cors({
   origin(origin, callback) {
-    if (!origin || env.clientUrls.includes(origin) || isDevLanOrigin(origin)) {
+    if (isAllowedOrigin(origin) || isDevLanOrigin(origin)) {
       return callback(null, true);
     }
     return callback(new Error("Origin not allowed by CORS"));

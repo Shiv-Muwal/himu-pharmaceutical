@@ -262,7 +262,15 @@ export async function api(path, { token, ...options } = {}) {
       },
     });
     const payload = await response.json().catch(() => ({}));
-    if (!response.ok) throw new ApiError(payload.message || "Request failed", response.status);
+    if (!response.ok) {
+      const fallback =
+        response.status === 502 || response.status === 503 || response.status === 504
+          ? "API server is down (502). Restart himu-backend with pm2 on the server."
+          : response.status === 0
+            ? "Network error — cannot reach API."
+            : "Request failed";
+      throw new ApiError(payload.message || fallback, response.status);
+    }
 
     const data = payload.data;
     if (Array.isArray(data)) {

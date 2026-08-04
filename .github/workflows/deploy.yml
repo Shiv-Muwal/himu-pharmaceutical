@@ -21,23 +21,59 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
 
           script: |
+            set -e
             cd /var/www/Himu/himu-pharmaceutical
 
             git pull origin master
 
-            # Backend
+            # Backend — always ensure process is running (restart alone fails if missing)
             cd himu-backend
-            npm install
-            pm2 restart himu-backend --update-env
+            npm install --omit=dev
+            if [ ! -f .env ]; then
+              cp .env.example .env
+              echo "Created himu-backend/.env from example — set JWT_SECRET / MONGODB_URI on server"
+            fi
+            # Ensure production CORS includes sitetest host
+            grep -q "sitetest.himupharmaceutical.com" .env || \
+              echo 'CLIENT_URL=http://localhost:5173,http://localhost:5174,https://sitetest.himupharmaceutical.com,https://himupharmaceutical.com,https://www.himupharmaceutical.com' >> .env
 
-            # Frontend
+            pm2 delete himu-backend >/dev/null 2>&1 || true
+            pm2 start ecosystem.config.cjs --update-env
+            pm2 save
+
+            # Wait until API answers (avoid nginx 502 after deploy)
+            for i in 1 2 3 4 5 6 7 8 9 10; do
+              if curl -sf "http://127.0.0.1:5001/api/health" >/dev/null; then
+                echo "Backend healthy"
+                break
+              fi
+              echo "Waiting for backend... ($i)"
+              sleep 2
+              if [ "$i" -eq 10 ]; then
+                echo "Backend failed to become healthy"
+                pm2 logs himu-backend --lines 40 --nostream || true
+                exit 1
+              fi
+            done
+
+            # Frontend storefront
             cd ../frontend
             npm install
             npm run build
 
-            # Admin
-            cd ../Admin
+            # Admin panel (folder is lowercase `admin`)
+            cd ../admin
             npm install
             npm run build
 
+            # Optional nginx template (skip if SSL/custom site already managed)
+            if [ "${APPLY_NGINX:-0}" = "1" ] && [ -f ../deploy/nginx-himu.conf ]; then
+              sudo cp ../deploy/nginx-himu.conf /etc/nginx/sites-available/himu.conf
+              sudo ln -sfn /etc/nginx/sites-available/himu.conf /etc/nginx/sites-enabled/himu.conf
+            fi
+
+            sudo nginx -t
             sudo systemctl reload nginx
+
+            echo "Deploy complete"
+            curl -sf "http://127.0.0.1:5001/api/health" || true
