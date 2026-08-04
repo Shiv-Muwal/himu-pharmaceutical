@@ -12,8 +12,8 @@ export const categories = [
     name: "Skin Care",
     description:
       "Sun protection, overnight renewal, and pigmentation care — Milky Sunscreen, Porcelyn Night Cream, and Lumeva Melasma Cream.",
-    image: "/products/milky-sunscreen/hero.png?v=2",
-    heroImage: "/products/lumeva-melasma-cream/hero.png?v=2",
+    image: "/product-media/milky-sunscreen/hero.png?v=2",
+    heroImage: "/product-media/lumeva-melasma-cream/hero.png?v=2",
   },
   {
     slug: "antibiotics",

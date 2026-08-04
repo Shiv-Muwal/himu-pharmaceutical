@@ -1,7 +1,7 @@
 import { products as seedProducts } from "@/data/products";
 import { slugify } from "@/lib/utils";
 
-const PRODUCTS_KEY = "himu-products-v7";
+const PRODUCTS_KEY = "himu-products-v8";
 const ORDERS_KEY = "himu-orders";
 const ACTIVITY_KEY = "himu-admin-activity";
 const isClient = typeof window !== "undefined";

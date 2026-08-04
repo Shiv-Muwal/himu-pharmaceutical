@@ -1,9 +1,9 @@
 const PORCELYN_IMAGES = [
-  "/products/porcelyn-night-cream/hero.png?v=2",
-  "/products/porcelyn-night-cream/box.png",
-  "/products/porcelyn-night-cream/angle.png",
-  "/products/porcelyn-night-cream/open.png",
-  "/products/porcelyn-night-cream/hand.png",
+  "/product-media/porcelyn-night-cream/hero.png?v=2",
+  "/product-media/porcelyn-night-cream/box.png",
+  "/product-media/porcelyn-night-cream/angle.png",
+  "/product-media/porcelyn-night-cream/open.png",
+  "/product-media/porcelyn-night-cream/hand.png",
 ];
 
 export const porcelynNightCreamProduct = {

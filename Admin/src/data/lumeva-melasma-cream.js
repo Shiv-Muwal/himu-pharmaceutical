@@ -1,9 +1,9 @@
 const LUMEVA_IMAGES = [
-  "/products/lumeva-melasma-cream/hero.png?v=2",
-  "/products/lumeva-melasma-cream/box.png",
-  "/products/lumeva-melasma-cream/angle.png",
-  "/products/lumeva-melasma-cream/texture.png",
-  "/products/lumeva-melasma-cream/hand.png",
+  "/product-media/lumeva-melasma-cream/hero.png?v=2",
+  "/product-media/lumeva-melasma-cream/box.png",
+  "/product-media/lumeva-melasma-cream/angle.png",
+  "/product-media/lumeva-melasma-cream/texture.png",
+  "/product-media/lumeva-melasma-cream/hand.png",
 ];
 
 export const lumevaMelasmaCreamProduct = {

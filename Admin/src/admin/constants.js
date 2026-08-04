@@ -12,16 +12,16 @@ export const CATEGORIES_LIST = [
 ];
 
 export const IMAGE_PRESETS = {
-  "milky-hero": "/products/milky-sunscreen/hero.png",
-  "milky-lifestyle": "/products/milky-sunscreen/lifestyle.png",
-  "milky-studio": "/products/milky-sunscreen/studio.png",
-  "milky-beach": "/products/milky-sunscreen/beach.png",
-  "milky-texture": "/products/milky-sunscreen/texture.png",
-  "lumeva-hero": "/products/lumeva-melasma-cream/hero.png",
-  "lumeva-box": "/products/lumeva-melasma-cream/box.png",
-  "lumeva-angle": "/products/lumeva-melasma-cream/angle.png",
-  "lumeva-texture": "/products/lumeva-melasma-cream/texture.png",
-  "lumeva-hand": "/products/lumeva-melasma-cream/hand.png",
+  "milky-hero": "/product-media/milky-sunscreen/hero.png",
+  "milky-lifestyle": "/product-media/milky-sunscreen/lifestyle.png",
+  "milky-studio": "/product-media/milky-sunscreen/studio.png",
+  "milky-beach": "/product-media/milky-sunscreen/beach.png",
+  "milky-texture": "/product-media/milky-sunscreen/texture.png",
+  "lumeva-hero": "/product-media/lumeva-melasma-cream/hero.png",
+  "lumeva-box": "/product-media/lumeva-melasma-cream/box.png",
+  "lumeva-angle": "/product-media/lumeva-melasma-cream/angle.png",
+  "lumeva-texture": "/product-media/lumeva-melasma-cream/texture.png",
+  "lumeva-hand": "/product-media/lumeva-melasma-cream/hand.png",
   capsule:
     "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&h=800&fit=crop",
   tablet:

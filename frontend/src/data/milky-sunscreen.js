@@ -1,9 +1,9 @@
 const MILKY_IMAGES = [
-  "/products/milky-sunscreen/hero.png?v=2",
-  "/products/milky-sunscreen/lifestyle.png",
-  "/products/milky-sunscreen/studio.png",
-  "/products/milky-sunscreen/beach.png",
-  "/products/milky-sunscreen/texture.png",
+  "/product-media/milky-sunscreen/hero.png?v=2",
+  "/product-media/milky-sunscreen/lifestyle.png",
+  "/product-media/milky-sunscreen/studio.png",
+  "/product-media/milky-sunscreen/beach.png",
+  "/product-media/milky-sunscreen/texture.png",
 ];
 
 export const milkySunscreenProduct = {
