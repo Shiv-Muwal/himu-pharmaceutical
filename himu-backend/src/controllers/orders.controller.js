@@ -41,7 +41,10 @@ function toClientOrder(doc) {
 export const createOrder = asyncHandler(async (req, res) => {
   const requestedItems = req.body.items;
   const productIds = [...new Set(requestedItems.map((item) => item.productId))];
-  const products = await Product.find({ productId: { $in: productIds } }).lean();
+  const products = await Product.find({
+    productId: { $in: productIds },
+    active: { $ne: false },
+  }).lean();
   const productsById = new Map(products.map((product) => [product.productId, product]));
 
   if (productsById.size !== productIds.length) {
@@ -61,16 +64,23 @@ export const createOrder = asyncHandler(async (req, res) => {
       selectedVariant,
     };
   });
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   for (const item of items) {
-    const product = await Product.findOne({ productId: item.productId });
-    if (!product) continue;
-    const nextStock = Math.max(0, Number(product.stock ?? 0) - item.quantity);
-    product.stock = nextStock;
-    await product.save();
+    const updated = await Product.findOneAndUpdate(
+      {
+        productId: item.productId,
+        active: { $ne: false },
+        stock: { $gte: item.quantity },
+      },
+      { $inc: { stock: -item.quantity } },
+      { new: true },
+    );
+    if (!updated) {
+      throw new ApiError(409, `Insufficient stock for “${item.productName}”`);
+    }
   }
 
+  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const orderId = generateOrderId();
   const order = await Order.create({
     orderId,

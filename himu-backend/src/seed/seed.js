@@ -97,8 +97,12 @@ export async function runSeed({ clear = true } = {}) {
   });
 
   console.log("Seed completed successfully!");
-  console.log(`Admin login: ${env.adminEmail} / ${env.adminPassword}`);
-  console.log(`Customer login: ${env.customerEmail} / ${env.customerPassword}`);
+  if (!env.isProd) {
+    console.log(`Admin login: ${env.adminEmail} / ${env.adminPassword}`);
+    console.log(`Customer login: ${env.customerEmail} / ${env.customerPassword}`);
+  } else {
+    console.log(`Admin email ready: ${env.adminEmail}`);
+  }
 }
 
 async function ensureDemoCustomer() {
@@ -150,7 +154,9 @@ async function ensureDemoAdmin() {
       password: env.adminPassword,
       role: "admin",
     });
-    console.log(`Admin login: ${env.adminEmail} / ${env.adminPassword}`);
+    if (!env.isProd) {
+      console.log(`Admin login: ${env.adminEmail} / ${env.adminPassword}`);
+    }
     return;
   }
 

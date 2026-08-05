@@ -4,6 +4,12 @@ import { success, paginated } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { slugify } from "../utils/helpers.js";
 import { logActivity } from "../utils/activity.js";
+import {
+  isCloudinaryConfigured,
+  uploadImageBuffer,
+} from "../config/cloudinary.js";
+import { env } from "../config/env.js";
+import { asString } from "../middleware/sanitize.middleware.js";
 
 const editableFields = [
   "name",
@@ -94,14 +100,18 @@ export const getProducts = asyncHandler(async (req, res) => {
   const skip = (page - 1) * limit;
 
   const filter = {};
-  if (req.query.category) filter.categorySlug = req.query.category;
-  if (req.query.search) {
-    filter.$text = { $search: req.query.search };
-  }
-  if (req.query.active === "true") filter.active = true;
-  if (req.query.active === "false") filter.active = false;
+  const category = asString(req.query.category, 100);
+  const search = asString(req.query.search, 120);
+  const active = asString(req.query.active, 10);
 
-  const sort = req.query.search
+  if (category) filter.categorySlug = category;
+  if (search) {
+    filter.$text = { $search: search };
+  }
+  if (active === "true") filter.active = true;
+  if (active === "false") filter.active = false;
+
+  const sort = search
     ? { score: { $meta: "textScore" } }
     : { createdAt: -1 };
 
@@ -226,18 +236,28 @@ export const deleteProduct = asyncHandler(async (req, res) => {
 });
 
 export const uploadProductMedia = asyncHandler(async (req, res) => {
-  if (!req.file) {
+  if (!req.file?.buffer) {
     throw new ApiError(400, "Please upload a JPG, PNG, or WebP image");
   }
+  if (!isCloudinaryConfigured()) {
+    throw new ApiError(
+      503,
+      "Cloudinary is not configured. Add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET to the backend .env",
+    );
+  }
 
-  const url = `/uploads/products/${req.file.filename}`;
+  const uploaded = await uploadImageBuffer(req.file.buffer, {
+    folder: `${env.cloudinaryFolder}/products`,
+  });
+
   return success(
     res,
     {
-      url,
-      filename: req.file.filename,
-      size: req.file.size,
+      url: uploaded.url,
+      publicId: uploaded.publicId,
+      size: uploaded.bytes,
       mimetype: req.file.mimetype,
+      format: uploaded.format,
     },
     "Product image uploaded",
     201,

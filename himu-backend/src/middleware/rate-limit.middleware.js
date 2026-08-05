@@ -1,11 +1,27 @@
 import { ApiError } from "../utils/apiResponse.js";
 
-function createRateLimit({ windowMs, max, keyPrefix }) {
+/**
+ * In-memory rate limiter (per-process).
+ * Good for single-instance deploys; for multi-instance use Redis later.
+ */
+function createRateLimit({ windowMs, max, keyPrefix, keyFn }) {
   const entries = new Map();
+  let lastCleanup = Date.now();
+
+  function cleanup(now) {
+    if (now - lastCleanup < windowMs) return;
+    lastCleanup = now;
+    for (const [key, entry] of entries) {
+      if (entry.resetAt <= now) entries.delete(key);
+    }
+  }
 
   return (req, res, next) => {
     const now = Date.now();
-    const key = `${keyPrefix}:${req.ip}`;
+    cleanup(now);
+
+    const identity = keyFn ? keyFn(req) : req.ip || "unknown";
+    const key = `${keyPrefix}:${identity}`;
     const entry = entries.get(key);
     const active = entry && entry.resetAt > now ? entry : { count: 0, resetAt: now + windowMs };
     active.count += 1;
@@ -22,5 +38,51 @@ function createRateLimit({ windowMs, max, keyPrefix }) {
   };
 }
 
-export const apiRateLimit = createRateLimit({ windowMs: 15 * 60 * 1000, max: 500, keyPrefix: "api" });
-export const authRateLimit = createRateLimit({ windowMs: 15 * 60 * 1000, max: 60, keyPrefix: "auth" });
+/** General API: 300 req / 15 min per IP */
+export const apiRateLimit = createRateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 300,
+  keyPrefix: "api",
+});
+
+/** Auth routes overall: 40 / 15 min per IP */
+export const authRateLimit = createRateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 40,
+  keyPrefix: "auth",
+});
+
+/** Login brute-force: 8 attempts / 15 min per IP+email */
+export const loginRateLimit = createRateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 8,
+  keyPrefix: "login",
+  keyFn: (req) => {
+    const email = String(req.body?.email || "")
+      .toLowerCase()
+      .trim()
+      .slice(0, 120);
+    return `${req.ip || "unknown"}:${email || "none"}`;
+  },
+});
+
+/** Register spam: 5 / hour per IP */
+export const registerRateLimit = createRateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 5,
+  keyPrefix: "register",
+});
+
+/** Public order placement: 20 / 15 min per IP */
+export const orderCreateRateLimit = createRateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  keyPrefix: "order",
+});
+
+/** Contact / careers forms: 8 / hour per IP */
+export const formRateLimit = createRateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 8,
+  keyPrefix: "form",
+});

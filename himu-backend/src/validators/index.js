@@ -1,9 +1,20 @@
 import { body } from "express-validator";
 
+const strongPassword = body("password")
+  .isString()
+  .isLength({ min: 10, max: 128 })
+  .withMessage("Password must be 10 to 128 characters")
+  .matches(/[A-Z]/)
+  .withMessage("Password must include an uppercase letter")
+  .matches(/[a-z]/)
+  .withMessage("Password must include a lowercase letter")
+  .matches(/[0-9]/)
+  .withMessage("Password must include a number");
+
 export const registerValidation = [
   body("name").trim().isLength({ min: 2, max: 100 }).withMessage("Name must be between 2 and 100 characters"),
   body("email").trim().isEmail().normalizeEmail().withMessage("Valid email is required"),
-  body("password").isString().isLength({ min: 8, max: 128 }).withMessage("Password must be at least 8 characters"),
+  strongPassword,
   body("phone").optional({ checkFalsy: true }).trim().matches(/^\+?[0-9\s-]{10,16}$/).withMessage("Valid phone is required"),
 ];
 
@@ -20,7 +31,16 @@ export const profileValidation = [
 
 export const passwordChangeValidation = [
   body("currentPassword").isString().notEmpty().withMessage("Current password is required"),
-  body("newPassword").isString().isLength({ min: 12, max: 128 }).withMessage("New password must be 12 to 128 characters"),
+  body("newPassword")
+    .isString()
+    .isLength({ min: 12, max: 128 })
+    .withMessage("New password must be 12 to 128 characters")
+    .matches(/[A-Z]/)
+    .withMessage("New password must include an uppercase letter")
+    .matches(/[a-z]/)
+    .withMessage("New password must include a lowercase letter")
+    .matches(/[0-9]/)
+    .withMessage("New password must include a number"),
 ];
 
 export const productValidation = [

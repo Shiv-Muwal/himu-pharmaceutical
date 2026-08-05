@@ -2,6 +2,11 @@ import { Banner } from "../models/Banner.js";
 import { ApiError, success } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { logActivity } from "../utils/activity.js";
+import {
+  isCloudinaryConfigured,
+  uploadImageBuffer,
+} from "../config/cloudinary.js";
+import { env } from "../config/env.js";
 
 function toClientBanner(doc) {
   const obj = doc.toObject ? doc.toObject() : doc;
@@ -79,18 +84,28 @@ export const updateBanner = asyncHandler(async (req, res) => {
 });
 
 export const uploadBannerImage = asyncHandler(async (req, res) => {
-  if (!req.file) {
+  if (!req.file?.buffer) {
     throw new ApiError(400, "Please upload a WebP image");
   }
+  if (!isCloudinaryConfigured()) {
+    throw new ApiError(
+      503,
+      "Cloudinary is not configured. Add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET to the backend .env",
+    );
+  }
 
-  const url = `/uploads/banners/${req.file.filename}`;
+  const uploaded = await uploadImageBuffer(req.file.buffer, {
+    folder: `${env.cloudinaryFolder}/banners`,
+  });
+
   return success(
     res,
     {
-      url,
-      filename: req.file.filename,
-      size: req.file.size,
+      url: uploaded.url,
+      publicId: uploaded.publicId,
+      size: uploaded.bytes,
       mimetype: req.file.mimetype,
+      format: uploaded.format,
     },
     "Banner image uploaded",
     201,
