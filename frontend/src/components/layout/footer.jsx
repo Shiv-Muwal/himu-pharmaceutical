@@ -14,8 +14,8 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="relative mt-0 pb-[var(--mobile-nav-offset)] text-emerald md:mt-12 md:pb-0">
-      {/* Desktop wave only — mobile merges cleanly without a hard line */}
+    <footer className="relative mt-0 pb-[var(--mobile-nav-offset)] text-emerald md:pb-0">
+      {/* Desktop wave sits flush on content — no extra cream gap above */}
       <div className="pointer-events-none absolute left-0 right-0 top-0 hidden w-full -translate-y-[98%] overflow-hidden leading-[0] md:block">
         <svg
           viewBox="0 0 1200 120"

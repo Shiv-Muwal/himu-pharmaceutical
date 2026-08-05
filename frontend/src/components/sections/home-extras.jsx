@@ -131,7 +131,7 @@ export function HomeBlogsSection() {
   if (!featured) return null;
 
   return (
-    <section className="section-padding bg-gradient-to-b from-[#f8f3e6] via-white to-[#f8f3e6] pb-4 md:pb-[var(--section-padding,3rem)]">
+    <section className="section-padding bg-gradient-to-b from-[#f8f3e6] via-white to-[#f8f3e6] pb-2 md:pb-3">
       <div className="container-custom">
         <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
