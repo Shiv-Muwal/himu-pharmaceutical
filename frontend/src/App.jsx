@@ -50,6 +50,9 @@ function ScrollToTop() {
 }
 
 function AppLayout() {
+  const { pathname } = useLocation();
+  const hideFooter = pathname === "/signup";
+
   return (
     <>
       <ScrollToTop />
@@ -83,8 +86,8 @@ function AppLayout() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
-      <Footer />
-      <MobileAppNav />
+      {!hideFooter && <Footer />}
+      {!hideFooter && <MobileAppNav />}
       <BackToTop />
       <CookieBanner />
       <FloatingButtons />

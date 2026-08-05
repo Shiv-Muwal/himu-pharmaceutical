@@ -73,6 +73,20 @@ export const registerRateLimit = createRateLimit({
   keyPrefix: "register",
 });
 
+/** OTP send/verify: 10 / 15 min per IP+email */
+export const otpRateLimit = createRateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  keyPrefix: "otp",
+  keyFn: (req) => {
+    const email = String(req.body?.email || "")
+      .toLowerCase()
+      .trim()
+      .slice(0, 120);
+    return `${req.ip || "unknown"}:${email || "none"}`;
+  },
+});
+
 /** Public order placement: 20 / 15 min per IP */
 export const orderCreateRateLimit = createRateLimit({
   windowMs: 15 * 60 * 1000,

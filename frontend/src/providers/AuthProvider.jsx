@@ -35,11 +35,7 @@ export function AuthProvider({ children }) {
       .finally(() => setLoading(false));
   }, []);
 
-  const login = async (email, password) => {
-    const result = await api("/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ email: email.trim(), password }),
-    });
+  const applyAuthResult = (result) => {
     if (result.user.role === "admin") {
       throw new Error("Please use the admin panel to sign in as administrator.");
     }
@@ -50,15 +46,45 @@ export function AuthProvider({ children }) {
     return result.user;
   };
 
-  const register = async ({ name, email, password, phone }) => {
+  const login = async (email, password) => {
+    const result = await api("/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ email: email.trim(), password }),
+    });
+    return applyAuthResult(result);
+  };
+
+  const register = async ({ name, email, password, phone, emailToken }) => {
     const result = await api("/auth/register", {
       method: "POST",
-      body: JSON.stringify({ name, email, password, phone }),
+      body: JSON.stringify({ name, email, password, phone, emailToken }),
     });
-    customerSession.set(result.token);
-    customerSession.setUser(result.user);
-    setUser(result.user);
-    return result.user;
+    return applyAuthResult(result);
+  };
+
+  const sendSignupOtp = async (email) => {
+    return api("/auth/send-otp", {
+      method: "POST",
+      body: JSON.stringify({ email: email.trim() }),
+    });
+  };
+
+  const verifySignupOtp = async (email, otp) => {
+    return api("/auth/verify-otp", {
+      method: "POST",
+      body: JSON.stringify({ email: email.trim(), otp: String(otp).trim() }),
+    });
+  };
+
+  const loginWithGoogle = async ({ idToken, accessToken }) => {
+    const result = await api("/auth/google", {
+      method: "POST",
+      body: JSON.stringify({
+        ...(idToken ? { idToken } : {}),
+        ...(accessToken ? { accessToken } : {}),
+      }),
+    });
+    return applyAuthResult(result);
   };
 
   const logout = () => {
@@ -79,6 +105,9 @@ export function AuthProvider({ children }) {
         closeLogin: () => setLoginOpen(false),
         login,
         register,
+        sendSignupOtp,
+        verifySignupOtp,
+        loginWithGoogle,
         logout,
       }}
     >

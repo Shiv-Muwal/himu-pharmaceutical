@@ -1,13 +1,16 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { useAuth } from "@/providers/AuthProvider";
 
 const CartContext = createContext(undefined);
 
 export function CartProvider({ children }) {
+  const { isAuthenticated, openLogin, loginOpen } = useAuth();
   const [cartItems, setCartItems] = useState([]);
   const [directCheckoutItems, setDirectCheckoutItems] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isCartOpen, setCartOpen] = useState(false);
   const [isCheckoutOpen, setCheckoutOpen] = useState(false);
+  const [checkoutPending, setCheckoutPending] = useState(false);
 
   useEffect(() => {
     try {
@@ -27,6 +30,21 @@ export function CartProvider({ children }) {
       console.error("Failed to save cart to localStorage", e);
     }
   }, [cartItems, isLoaded]);
+
+  useEffect(() => {
+    if (isAuthenticated && checkoutPending) {
+      setCheckoutPending(false);
+      setCartOpen(false);
+      setCheckoutOpen(true);
+    }
+  }, [isAuthenticated, checkoutPending]);
+
+  useEffect(() => {
+    if (!loginOpen && checkoutPending && !isAuthenticated) {
+      setCheckoutPending(false);
+      setDirectCheckoutItems(null);
+    }
+  }, [loginOpen, checkoutPending, isAuthenticated]);
 
   const addToCart = (product, quantity = 1, variant, options = {}) => {
     const { open = true } = options;
@@ -51,7 +69,7 @@ export function CartProvider({ children }) {
 
   /**
    * Buy Now rules:
-   * - Empty cart → skip cart, open order form directly with this product
+   * - Empty cart → require login/signup first, then open order form with this product
    * - Cart already has items → add product and open cart drawer
    */
   const buyNow = (product, quantity = 1, variant) => {
@@ -59,6 +77,11 @@ export function CartProvider({ children }) {
     if (cartItems.length === 0) {
       setDirectCheckoutItems([{ product, quantity, selectedVariant }]);
       setCartOpen(false);
+      if (!isAuthenticated) {
+        setCheckoutPending(true);
+        openLogin();
+        return;
+      }
       setCheckoutOpen(true);
       return;
     }
@@ -69,6 +92,11 @@ export function CartProvider({ children }) {
   const openCheckoutFromCart = () => {
     setDirectCheckoutItems(null);
     setCartOpen(false);
+    if (!isAuthenticated) {
+      setCheckoutPending(true);
+      openLogin();
+      return;
+    }
     setCheckoutOpen(true);
   };
 

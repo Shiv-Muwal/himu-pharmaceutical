@@ -78,12 +78,50 @@ function getJsonBody(options) {
 function localApi(path, { token, method = "GET", ...options } = {}) {
   const body = getJsonBody(options);
 
+  if (path === "/auth/send-otp" && method === "POST") {
+    const email = body.email?.toLowerCase()?.trim();
+    if (!/@(gmail\.com|googlemail\.com)$/i.test(email || "")) {
+      throw new ApiError("Only Gmail addresses (@gmail.com) are allowed", 400);
+    }
+    const customers = getLocalCustomers();
+    if (customers.some((c) => c.email === email)) {
+      throw new ApiError("An account with this email already exists", 409);
+    }
+    const otp = String(Math.floor(100000 + Math.random() * 900000));
+    localStorage.setItem(
+      `himu-local-otp:${email}`,
+      JSON.stringify({ otp, verified: false, exp: Date.now() + 10 * 60 * 1000 }),
+    );
+    return { email, expiresInSec: 600, delivered: false, devOtp: otp };
+  }
+
+  if (path === "/auth/verify-otp" && method === "POST") {
+    const email = body.email?.toLowerCase()?.trim();
+    const otp = String(body.otp || "").trim();
+    const raw = localStorage.getItem(`himu-local-otp:${email}`);
+    if (!raw) throw new ApiError("OTP expired. Please request a new one.", 400);
+    const record = JSON.parse(raw);
+    if (record.exp < Date.now()) throw new ApiError("OTP expired. Please request a new one.", 400);
+    if (record.otp !== otp) throw new ApiError("Invalid OTP. Please try again.", 400);
+    localStorage.setItem(
+      `himu-local-otp:${email}`,
+      JSON.stringify({ ...record, verified: true, exp: Date.now() + 30 * 60 * 1000 }),
+    );
+    return { email, emailToken: `local-verify:${email}`, verified: true };
+  }
+
   if (path === "/auth/register" && method === "POST") {
     const email = body.email?.toLowerCase()?.trim();
     const customers = getLocalCustomers();
     const admin = getLocalAdmin();
-    if (!email || !body.password || !body.name) {
-      throw new ApiError("Name, email and password are required", 400);
+    if (!email || !body.password || !body.name || !body.phone) {
+      throw new ApiError("Name, Gmail, mobile and password are required", 400);
+    }
+    if (!/@(gmail\.com|googlemail\.com)$/i.test(email)) {
+      throw new ApiError("Only Gmail addresses (@gmail.com) are allowed", 400);
+    }
+    if (!body.emailToken) {
+      throw new ApiError("Please verify your Gmail with OTP before creating an account.", 400);
     }
     if (body.password.length < 8) {
       throw new ApiError("Password must be at least 8 characters", 400);
@@ -96,10 +134,11 @@ function localApi(path, { token, method = "GET", ...options } = {}) {
       name: body.name.trim(),
       email,
       password: body.password,
-      phone: body.phone?.trim() || "",
+      phone: body.phone.trim(),
       role: "customer",
     };
     saveLocalCustomers([customer, ...customers]);
+    localStorage.removeItem(`himu-local-otp:${email}`);
     return {
       token: `${LOCAL_CUSTOMER_TOKEN_PREFIX}${email}`,
       user: publicUser(customer),
@@ -120,6 +159,27 @@ function localApi(path, { token, method = "GET", ...options } = {}) {
       };
     }
     throw new ApiError("Invalid email or password", 401);
+  }
+
+  if (path === "/auth/google" && method === "POST") {
+    if (!body.idToken && !body.accessToken) {
+      throw new ApiError("Google credential is required", 400);
+    }
+    const email = `google.user.${Date.now()}@himu.local`;
+    const customers = getLocalCustomers();
+    const customer = {
+      id: `cust_google_${Date.now()}`,
+      name: "Google Customer",
+      email,
+      phone: "",
+      role: "customer",
+      authProvider: "google",
+    };
+    saveLocalCustomers([customer, ...customers]);
+    return {
+      token: `${LOCAL_CUSTOMER_TOKEN_PREFIX}${email}`,
+      user: publicUser(customer),
+    };
   }
 
   // Public checkout — no auth required

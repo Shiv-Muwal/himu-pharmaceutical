@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 import { Image } from "@/components/ui/image";
 import { useCart } from "@/providers/CartProvider";
-import { useAuth } from "@/providers/AuthProvider";
 import { Button } from "@/components/ui/button";
 
 export function CartDrawer() {
@@ -27,13 +26,7 @@ export function CartDrawer() {
     cartSavings,
     openCheckoutFromCart,
   } = useCart();
-  const { isAuthenticated, openLogin } = useAuth();
-
   const handleProceedCheckout = () => {
-    if (!isAuthenticated) {
-      openLogin();
-      return;
-    }
     openCheckoutFromCart();
   };
 

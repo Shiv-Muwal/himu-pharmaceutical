@@ -100,6 +100,14 @@ export function BannerCarousel() {
     };
   }, []);
 
+  useEffect(() => {
+    if (banners.length < 2) return undefined;
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % banners.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [banners.length]);
+
   const active = banners[index] || banners[0];
   if (!active) return null;
 
@@ -141,26 +149,27 @@ export function BannerCarousel() {
       onTouchEnd={onTouchEnd}
     >
       <div className="relative aspect-[4/3] w-full min-h-[280px] sm:aspect-[21/9] sm:min-h-0 lg:aspect-[2.6/1]">
-        <AnimatePresence mode="wait">
+        {banners.map((banner, i) => (
           <motion.div
-            key={active.id || active.image}
-            initial={{ opacity: 0, x: 24 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -24 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
+            key={banner.id || banner.image}
+            initial={false}
+            animate={{ opacity: i === index ? 1 : 0 }}
+            transition={{ duration: 0.55, ease: "easeInOut" }}
             className="absolute inset-0"
+            style={{ zIndex: i === index ? 1 : 0 }}
+            aria-hidden={i !== index}
           >
             <Image
-              src={resolveBannerSrc(active.image)}
-              alt={active.title}
+              src={resolveBannerSrc(banner.image)}
+              alt={banner.title}
               fill
               className="object-cover object-right"
-              priority
+              priority={i === 0}
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#1e2422]/88 via-[#1e2422]/45 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#1e2422]/70 via-transparent to-[#1e2422]/25" />
           </motion.div>
-        </AnimatePresence>
+        ))}
 
         <div className="container-custom relative z-10 flex h-full items-end pb-8 pt-8 text-left sm:items-center sm:pb-10 sm:pt-6">
           <motion.div
@@ -518,14 +527,48 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
   const scrollerRef = useRef(null);
   const [paused, setPaused] = useState(false);
 
-  const getCardStep = () => {
+  const getCards = () => {
     const el = scrollerRef.current;
-    if (!el) return 280;
-    const card = el.querySelector("[data-product-slide]");
-    if (!card) return 260;
-    const styles = window.getComputedStyle(el);
-    const gap = Number.parseFloat(styles.columnGap || styles.gap || "16") || 16;
-    return card.getBoundingClientRect().width + gap;
+    if (!el) return [];
+    return Array.from(el.querySelectorAll("[data-product-slide]"));
+  };
+
+  const getNearestIndex = () => {
+    const el = scrollerRef.current;
+    const cards = getCards();
+    if (!el || !cards.length) return 0;
+    const left = el.scrollLeft;
+    let best = 0;
+    let bestDist = Infinity;
+    cards.forEach((card, i) => {
+      const dist = Math.abs(card.offsetLeft - left);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = i;
+      }
+    });
+    return best;
+  };
+
+  const scrollToCardIndex = (targetIndex) => {
+    const el = scrollerRef.current;
+    const cards = getCards();
+    if (!el || !cards.length) return;
+    const max = el.scrollWidth - el.clientWidth;
+    if (max <= 0) return;
+
+    if (targetIndex < 0) {
+      el.scrollTo({ left: max, behavior: "smooth" });
+      return;
+    }
+    if (targetIndex >= cards.length) {
+      el.scrollTo({ left: 0, behavior: "smooth" });
+      return;
+    }
+
+    const card = cards[targetIndex];
+    const left = Math.min(card.offsetLeft, max);
+    el.scrollTo({ left, behavior: "smooth" });
   };
 
   const scrollByCard = (dir) => {
@@ -533,7 +576,6 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
     if (!el) return;
     const max = el.scrollWidth - el.clientWidth;
     if (max <= 0) return;
-    const step = getCardStep();
 
     if (dir > 0 && el.scrollLeft >= max - 4) {
       el.scrollTo({ left: 0, behavior: "smooth" });
@@ -543,7 +585,8 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
       el.scrollTo({ left: max, behavior: "smooth" });
       return;
     }
-    el.scrollBy({ left: dir * step, behavior: "smooth" });
+
+    scrollToCardIndex(getNearestIndex() + dir);
   };
 
   useEffect(() => {
@@ -553,13 +596,12 @@ function ProductScroller({ title, subtitle, badge, items, href }) {
       if (!el) return;
       const max = el.scrollWidth - el.clientWidth;
       if (max <= 0) return;
-      const step = getCardStep();
       if (el.scrollLeft >= max - 4) {
         el.scrollTo({ left: 0, behavior: "smooth" });
         return;
       }
-      el.scrollBy({ left: step, behavior: "smooth" });
-    }, 3500);
+      scrollToCardIndex(getNearestIndex() + 1);
+    }, 5000);
     return () => clearInterval(timer);
   }, [paused, items.length]);
 

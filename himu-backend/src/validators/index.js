@@ -13,14 +13,71 @@ const strongPassword = body("password")
 
 export const registerValidation = [
   body("name").trim().isLength({ min: 2, max: 100 }).withMessage("Name must be between 2 and 100 characters"),
-  body("email").trim().isEmail().normalizeEmail().withMessage("Valid email is required"),
+  body("email")
+    .trim()
+    .isEmail()
+    .normalizeEmail()
+    .withMessage("Valid Gmail address is required")
+    .custom((value) => {
+      if (!/@(gmail\.com|googlemail\.com)$/i.test(String(value || ""))) {
+        throw new Error("Only Gmail addresses (@gmail.com) are allowed");
+      }
+      return true;
+    }),
   strongPassword,
-  body("phone").optional({ checkFalsy: true }).trim().matches(/^\+?[0-9\s-]{10,16}$/).withMessage("Valid phone is required"),
+  body("phone")
+    .trim()
+    .notEmpty()
+    .withMessage("Mobile number is required")
+    .matches(/^\+?[0-9\s-]{10,16}$/)
+    .withMessage("Enter a valid mobile number"),
+  body("emailToken").trim().notEmpty().withMessage("Please verify your email with OTP"),
+];
+
+export const sendOtpValidation = [
+  body("email")
+    .trim()
+    .isEmail()
+    .normalizeEmail()
+    .withMessage("Valid Gmail address is required")
+    .custom((value) => {
+      if (!/@(gmail\.com|googlemail\.com)$/i.test(String(value || ""))) {
+        throw new Error("Only Gmail addresses (@gmail.com) are allowed");
+      }
+      return true;
+    }),
+];
+
+export const verifyOtpValidation = [
+  ...sendOtpValidation,
+  body("otp")
+    .trim()
+    .matches(/^\d{6}$/)
+    .withMessage("Enter the 6-digit OTP"),
 ];
 
 export const loginValidation = [
   body("email").isEmail().withMessage("Valid email is required"),
   body("password").notEmpty().withMessage("Password is required"),
+];
+
+export const googleAuthValidation = [
+  body("idToken")
+    .optional({ checkFalsy: true })
+    .isString()
+    .isLength({ min: 20 })
+    .withMessage("Valid Google ID token is required"),
+  body("accessToken")
+    .optional({ checkFalsy: true })
+    .isString()
+    .isLength({ min: 20 })
+    .withMessage("Valid Google access token is required"),
+  body().custom((_, { req }) => {
+    if (!req.body?.idToken && !req.body?.accessToken) {
+      throw new Error("Google credential is required");
+    }
+    return true;
+  }),
 ];
 
 export const profileValidation = [
