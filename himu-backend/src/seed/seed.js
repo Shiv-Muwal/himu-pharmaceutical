@@ -97,75 +97,61 @@ export async function runSeed({ clear = true } = {}) {
   });
 
   console.log("Seed completed successfully!");
-  if (!env.isProd) {
-    console.log(`Admin login: ${env.adminEmail} / ${env.adminPassword}`);
-    console.log(`Customer login: ${env.customerEmail} / ${env.customerPassword}`);
-  } else {
-    console.log(`Admin email ready: ${env.adminEmail}`);
-  }
+  console.log(`Admin account ready: ${env.adminEmail} (password not logged — use Admin panel to change it)`);
+  console.log(`Demo customer ready: ${env.customerEmail}`);
 }
 
 async function ensureDemoCustomer() {
   const email = String(env.customerEmail || "").toLowerCase();
-  let customer = await User.findOne({ email }).select("+password");
-  if (!customer) {
-    console.log(`Demo customer missing — creating ${email}...`);
-    await User.create({
-      name: env.customerName,
-      email: env.customerEmail,
-      password: env.customerPassword,
-      phone: env.customerPhone,
-      role: "customer",
-    });
-    return;
-  }
+  const customer = await User.findOne({ email });
+  if (customer) return;
 
-  // Keep teammate laptops in sync with shared demo password (dev only)
-  if (env.nodeEnv !== "production") {
-    customer.password = env.customerPassword;
-    customer.role = "customer";
-    await customer.save();
-  }
+  console.log(`Demo customer missing — creating ${email}...`);
+  await User.create({
+    name: env.customerName,
+    email: env.customerEmail,
+    password: env.customerPassword,
+    phone: env.customerPhone,
+    role: "customer",
+  });
 }
 
 async function ensureDemoAdmin() {
   const email = String(env.adminEmail || "").toLowerCase();
   const legacyEmails = ["admin@himupharmacy.com", "admin@himu.com"];
 
-  let admin = await User.findOne({ email }).select("+password");
+  let admin = await User.findOne({ email });
 
   if (!admin) {
     for (const legacy of legacyEmails) {
-      const old = await User.findOne({ email: legacy }).select("+password");
+      const old = await User.findOne({ email: legacy });
       if (!old) continue;
       old.email = email;
       old.name = old.name || "HIMU Admin";
-      old.password = env.adminPassword;
       old.role = "admin";
       await old.save();
-      console.log(`Migrated admin ${legacy} → ${email}`);
+      console.log(`Migrated admin ${legacy} → ${email} (password unchanged)`);
       return;
     }
 
-    console.log(`Demo admin missing — creating ${email}...`);
+    if (!env.adminPassword) {
+      console.warn(
+        `[himu-backend] Admin user missing and ADMIN_PASSWORD not set — skipping auto-create.`,
+      );
+      return;
+    }
+
+    console.log(`Admin missing — creating ${email} (password taken from .env, not printed)...`);
     await User.create({
       name: "HIMU Admin",
       email: env.adminEmail,
       password: env.adminPassword,
       role: "admin",
     });
-    if (!env.isProd) {
-      console.log(`Admin login: ${env.adminEmail} / ${env.adminPassword}`);
-    }
     return;
   }
 
-  // Reset shared demo password so friends don't hit "Invalid email or password"
-  if (env.nodeEnv !== "production") {
-    admin.password = env.adminPassword;
-    admin.role = "admin";
-    await admin.save();
-  }
+  // Never reset admin password on restart — once in DB, admin changes it from panel.
 }
 
 export async function ensureSeeded() {

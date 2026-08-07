@@ -15,7 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/providers/AuthProvider";
-import { gmailErrorMessage, isGmailAddress } from "@/lib/email-rules";
+import { signupEmailErrorMessage, isSignupEmail, validateStrongPassword } from "@/lib/email-rules";
 
 export function LoginModal() {
   const {
@@ -87,22 +87,18 @@ export function LoginModal() {
 
   const handleSendOtp = async () => {
     setError("");
-    if (!isGmailAddress(email)) {
-      setError(gmailErrorMessage());
+    if (!isSignupEmail(email)) {
+      setError(signupEmailErrorMessage());
       return;
     }
     setOtpLoading(true);
     try {
-      const result = await sendSignupOtp(email);
+      await sendSignupOtp(email);
       setOtpSent(true);
       setEmailVerified(false);
       setEmailToken("");
       setCooldown(45);
-      setOtpHint(
-        result?.devOtp
-          ? `Dev OTP: ${result.devOtp}`
-          : "OTP sent to your Gmail. Check inbox / spam.",
-      );
+      setOtpHint("OTP sent from HIMU admin email. Check your inbox / spam.");
     } catch (err) {
       setError(err.message || "Unable to send OTP");
     } finally {
@@ -113,7 +109,7 @@ export function LoginModal() {
   const handleVerifyOtp = async () => {
     setError("");
     if (!/^\d{6}$/.test(otp.trim())) {
-      setError("Enter the 6-digit OTP from your Gmail.");
+      setError("Enter the 6-digit OTP from your email.");
       return;
     }
     setOtpLoading(true);
@@ -121,7 +117,7 @@ export function LoginModal() {
       const result = await verifySignupOtp(email, otp);
       setEmailToken(result.emailToken);
       setEmailVerified(true);
-      setOtpHint("Gmail verified successfully.");
+      setOtpHint("Email verified successfully. You can create your account now.");
     } catch (err) {
       setEmailVerified(false);
       setEmailToken("");
@@ -142,16 +138,12 @@ export function LoginModal() {
         if (!phone.trim() || phone.replace(/\D/g, "").length < 10) {
           throw new Error("Mobile number is required.");
         }
-        if (!isGmailAddress(email)) throw new Error(gmailErrorMessage());
+        if (!isSignupEmail(email)) throw new Error(signupEmailErrorMessage());
         if (!emailVerified || !emailToken) {
-          throw new Error("Please verify your Gmail with OTP first.");
+          throw new Error("Please verify your email with OTP first.");
         }
-        if (password.length < 10) {
-          throw new Error("Password must be at least 10 characters.");
-        }
-        if (!/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
-          throw new Error("Password needs uppercase, lowercase, and a number.");
-        }
+        const pwdError = validateStrongPassword(password);
+        if (pwdError) throw new Error(pwdError);
         await register({
           name: name.trim(),
           email: email.trim(),
@@ -215,7 +207,7 @@ export function LoginModal() {
                 Log in or sign up
               </h2>
               <p className="mt-1.5 max-w-sm text-sm text-muted-foreground">
-                Signup requires Gmail OTP. All fields are mandatory.
+                Signup requires email OTP. All fields are mandatory.
               </p>
             </div>
 
@@ -299,7 +291,7 @@ export function LoginModal() {
                       <Input
                         type="email"
                         inputMode="email"
-                        placeholder={mode === "signup" ? "Gmail address *" : "Email address *"}
+                        placeholder={mode === "signup" ? "Email address *" : "Email address *"}
                         value={email}
                         onChange={(e) => onEmailChange(e.target.value)}
                         className="h-12 pl-11 text-base sm:text-sm"
@@ -365,7 +357,9 @@ export function LoginModal() {
                   <Input
                     type={showPassword ? "text" : "password"}
                     enterKeyHint="go"
-                    placeholder={mode === "signup" ? "Password * (min 10)" : "Password *"}
+                    placeholder={
+                      mode === "signup" ? "Password * (min 8: A-Z, a-z, 0-9, special)" : "Password *"
+                    }
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="h-12 pl-11 pr-12 text-base sm:text-sm"

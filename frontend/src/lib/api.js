@@ -80,8 +80,8 @@ function localApi(path, { token, method = "GET", ...options } = {}) {
 
   if (path === "/auth/send-otp" && method === "POST") {
     const email = body.email?.toLowerCase()?.trim();
-    if (!/@(gmail\.com|googlemail\.com)$/i.test(email || "")) {
-      throw new ApiError("Only Gmail addresses (@gmail.com) are allowed", 400);
+    if (!email || !email.includes("@")) {
+      throw new ApiError("Valid email address is required", 400);
     }
     const customers = getLocalCustomers();
     if (customers.some((c) => c.email === email)) {
@@ -92,7 +92,8 @@ function localApi(path, { token, method = "GET", ...options } = {}) {
       `himu-local-otp:${email}`,
       JSON.stringify({ otp, verified: false, exp: Date.now() + 10 * 60 * 1000 }),
     );
-    return { email, expiresInSec: 600, delivered: false, devOtp: otp };
+    // Local mock only — live API never returns OTP in the response body
+    return { email, expiresInSec: 600, delivered: true };
   }
 
   if (path === "/auth/verify-otp" && method === "POST") {
@@ -115,16 +116,23 @@ function localApi(path, { token, method = "GET", ...options } = {}) {
     const customers = getLocalCustomers();
     const admin = getLocalAdmin();
     if (!email || !body.password || !body.name || !body.phone) {
-      throw new ApiError("Name, Gmail, mobile and password are required", 400);
-    }
-    if (!/@(gmail\.com|googlemail\.com)$/i.test(email)) {
-      throw new ApiError("Only Gmail addresses (@gmail.com) are allowed", 400);
+      throw new ApiError("Name, email, mobile and password are required", 400);
     }
     if (!body.emailToken) {
-      throw new ApiError("Please verify your Gmail with OTP before creating an account.", 400);
+      throw new ApiError("Please verify your email with OTP before creating an account.", 400);
     }
-    if (body.password.length < 8) {
-      throw new ApiError("Password must be at least 8 characters", 400);
+    const pwd = String(body.password);
+    if (
+      pwd.length < 8 ||
+      !/[A-Z]/.test(pwd) ||
+      !/[a-z]/.test(pwd) ||
+      !/[0-9]/.test(pwd) ||
+      !/[^A-Za-z0-9]/.test(pwd)
+    ) {
+      throw new ApiError(
+        "Password must be at least 8 characters with uppercase, lowercase, number, and special character",
+        400,
+      );
     }
     if (email === admin.email.toLowerCase() || customers.some((c) => c.email === email)) {
       throw new ApiError("An account with this email already exists", 409);

@@ -7,7 +7,7 @@ import { EmailOtp } from "../models/EmailOtp.js";
 import { ApiError } from "../utils/apiResponse.js";
 import { success } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { assertGmailAddress, normalizeEmail } from "../utils/email-rules.js";
+import { assertSignupEmail, normalizeEmail } from "../utils/email-rules.js";
 import { sendOtpEmail } from "../utils/mailer.js";
 
 /** Dummy hash so missing-user logins take similar time (harder email enumeration timing). */
@@ -56,7 +56,7 @@ function assertValidPhone(phone) {
 export const sendSignupOtp = asyncHandler(async (req, res) => {
   let email;
   try {
-    email = assertGmailAddress(req.body.email);
+    email = assertSignupEmail(req.body.email);
   } catch (err) {
     throw new ApiError(400, err.message);
   }
@@ -76,29 +76,31 @@ export const sendSignupOtp = asyncHandler(async (req, res) => {
     attempts: 0,
   });
 
-  const delivery = await sendOtpEmail(email, otp);
-  const payload = {
-    email,
-    expiresInSec: Math.floor(OTP_TTL_MS / 1000),
-    delivered: delivery.delivered,
-  };
-  if (!env.isProd && delivery.devMode) {
-    payload.devOtp = otp;
+  try {
+    await sendOtpEmail(email, otp);
+  } catch (err) {
+    await EmailOtp.deleteMany({ email });
+    throw new ApiError(
+      503,
+      err.message || "Unable to send verification email. Please try again later.",
+    );
   }
 
   success(
     res,
-    payload,
-    delivery.delivered
-      ? "OTP sent to your Gmail inbox"
-      : "OTP generated (dev mode — check server logs / response)",
+    {
+      email,
+      expiresInSec: Math.floor(OTP_TTL_MS / 1000),
+      delivered: true,
+    },
+    "OTP sent to your email. Check inbox / spam folder.",
   );
 });
 
 export const verifySignupOtp = asyncHandler(async (req, res) => {
   let email;
   try {
-    email = assertGmailAddress(req.body.email);
+    email = assertSignupEmail(req.body.email);
   } catch (err) {
     throw new ApiError(400, err.message);
   }
@@ -131,14 +133,14 @@ export const register = asyncHandler(async (req, res) => {
   const { name, email, password, phone, emailToken } = req.body;
   let normalizedEmail;
   try {
-    normalizedEmail = assertGmailAddress(email);
+    normalizedEmail = assertSignupEmail(email);
   } catch (err) {
     throw new ApiError(400, err.message);
   }
   const normalizedPhone = assertValidPhone(phone);
 
   if (!emailToken) {
-    throw new ApiError(400, "Please verify your Gmail with OTP before creating an account.");
+    throw new ApiError(400, "Please verify your email with OTP before creating an account.");
   }
 
   let tokenPayload;

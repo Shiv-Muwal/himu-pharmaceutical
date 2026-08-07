@@ -21,7 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/providers/AuthProvider";
-import { gmailErrorMessage, isGmailAddress } from "@/lib/email-rules";
+import { signupEmailErrorMessage, isSignupEmail, validateStrongPassword } from "@/lib/email-rules";
 
 const benefits = [
   { icon: ShieldCheck, text: "WHO-GMP trusted formulations" },
@@ -84,22 +84,18 @@ export default function SignupPage() {
 
   const handleSendOtp = async () => {
     setError("");
-    if (!isGmailAddress(form.email)) {
-      setError(gmailErrorMessage());
+    if (!isSignupEmail(form.email)) {
+      setError(signupEmailErrorMessage());
       return;
     }
     setOtpLoading(true);
     try {
-      const result = await sendSignupOtp(form.email);
+      await sendSignupOtp(form.email);
       setOtpSent(true);
       setEmailVerified(false);
       setEmailToken("");
       setCooldown(45);
-      setOtpHint(
-        result?.devOtp
-          ? `Dev OTP: ${result.devOtp}`
-          : "OTP sent to your Gmail. Check inbox / spam.",
-      );
+      setOtpHint("OTP sent from HIMU admin email. Check your inbox / spam.");
     } catch (err) {
       setError(err.message || "Unable to send OTP");
     } finally {
@@ -110,7 +106,7 @@ export default function SignupPage() {
   const handleVerifyOtp = async () => {
     setError("");
     if (!/^\d{6}$/.test(form.otp.trim())) {
-      setError("Enter the 6-digit OTP from your Gmail.");
+      setError("Enter the 6-digit OTP from your email.");
       return;
     }
     setOtpLoading(true);
@@ -118,7 +114,7 @@ export default function SignupPage() {
       const result = await verifySignupOtp(form.email, form.otp);
       setEmailToken(result.emailToken);
       setEmailVerified(true);
-      setOtpHint("Gmail verified successfully.");
+      setOtpHint("Email verified successfully. You can create your account now.");
     } catch (err) {
       setEmailVerified(false);
       setEmailToken("");
@@ -138,16 +134,12 @@ export default function SignupPage() {
         if (!form.phone.trim() || form.phone.replace(/\D/g, "").length < 10) {
           throw new Error("Mobile number is required.");
         }
-        if (!isGmailAddress(form.email)) throw new Error(gmailErrorMessage());
+        if (!isSignupEmail(form.email)) throw new Error(signupEmailErrorMessage());
         if (!emailVerified || !emailToken) {
-          throw new Error("Please verify your Gmail with OTP first.");
+          throw new Error("Please verify your email with OTP first.");
         }
-        if (form.password.length < 10) {
-          throw new Error("Password must be at least 10 characters.");
-        }
-        if (!/[A-Z]/.test(form.password) || !/[a-z]/.test(form.password) || !/[0-9]/.test(form.password)) {
-          throw new Error("Password needs uppercase, lowercase, and a number.");
-        }
+        const pwdError = validateStrongPassword(form.password);
+        if (pwdError) throw new Error(pwdError);
         if (form.password !== form.confirmPassword) {
           throw new Error("Passwords do not match.");
         }
@@ -193,8 +185,8 @@ export default function SignupPage() {
             <span className="mt-1 block text-emerald">wellness account</span>
           </h1>
           <p className="mt-4 max-w-md text-base leading-relaxed text-[#14532d]/75">
-            Sign up with your Gmail only. We verify your email with OTP — no temporary
-            mail IDs accepted.
+            Sign up with a valid email. We send an OTP from our admin email — verify it,
+            then create a strong password to finish your account.
           </p>
           <div className="mt-8 space-y-3">
             {benefits.map((item, i) => {
@@ -236,7 +228,7 @@ export default function SignupPage() {
               Log in or sign up
             </h2>
             <p className="mt-1.5 text-sm leading-relaxed text-[#14532d]/70">
-              All fields are mandatory. Gmail OTP verification is required for signup.
+              All fields are mandatory. Email OTP verification is required for signup.
             </p>
           </div>
 
@@ -314,7 +306,7 @@ export default function SignupPage() {
                   <Mail className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#14532d]/45" />
                   <Input
                     type="email"
-                    placeholder={mode === "signup" ? "Gmail address *" : "Email address *"}
+                    placeholder={mode === "signup" ? "Email address *" : "Email address *"}
                     value={form.email}
                     onChange={update("email")}
                     className={inputClass}
@@ -380,7 +372,9 @@ export default function SignupPage() {
               <Input
                 type={showPassword ? "text" : "password"}
                 placeholder={
-                  mode === "signup" ? "Password * (min 10, A-z + number)" : "Password *"
+                  mode === "signup"
+                    ? "Password * (min 8: A-Z, a-z, 0-9, special)"
+                    : "Password *"
                 }
                 value={form.password}
                 onChange={update("password")}

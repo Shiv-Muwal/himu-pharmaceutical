@@ -2,14 +2,16 @@ import { body } from "express-validator";
 
 const strongPassword = body("password")
   .isString()
-  .isLength({ min: 10, max: 128 })
-  .withMessage("Password must be 10 to 128 characters")
+  .isLength({ min: 8, max: 128 })
+  .withMessage("Password must be at least 8 characters")
   .matches(/[A-Z]/)
-  .withMessage("Password must include an uppercase letter")
+  .withMessage("Password must include an uppercase letter (A-Z)")
   .matches(/[a-z]/)
-  .withMessage("Password must include a lowercase letter")
+  .withMessage("Password must include a lowercase letter (a-z)")
   .matches(/[0-9]/)
-  .withMessage("Password must include a number");
+  .withMessage("Password must include a number (0-9)")
+  .matches(/[^A-Za-z0-9]/)
+  .withMessage("Password must include a special character (!@#$…)");
 
 export const registerValidation = [
   body("name").trim().isLength({ min: 2, max: 100 }).withMessage("Name must be between 2 and 100 characters"),
@@ -17,13 +19,7 @@ export const registerValidation = [
     .trim()
     .isEmail()
     .normalizeEmail()
-    .withMessage("Valid Gmail address is required")
-    .custom((value) => {
-      if (!/@(gmail\.com|googlemail\.com)$/i.test(String(value || ""))) {
-        throw new Error("Only Gmail addresses (@gmail.com) are allowed");
-      }
-      return true;
-    }),
+    .withMessage("Valid email address is required"),
   strongPassword,
   body("phone")
     .trim()
@@ -39,13 +35,7 @@ export const sendOtpValidation = [
     .trim()
     .isEmail()
     .normalizeEmail()
-    .withMessage("Valid Gmail address is required")
-    .custom((value) => {
-      if (!/@(gmail\.com|googlemail\.com)$/i.test(String(value || ""))) {
-        throw new Error("Only Gmail addresses (@gmail.com) are allowed");
-      }
-      return true;
-    }),
+    .withMessage("Valid email address is required"),
 ];
 
 export const verifyOtpValidation = [
@@ -71,14 +61,16 @@ export const passwordChangeValidation = [
   body("currentPassword").isString().notEmpty().withMessage("Current password is required"),
   body("newPassword")
     .isString()
-    .isLength({ min: 12, max: 128 })
-    .withMessage("New password must be 12 to 128 characters")
+    .isLength({ min: 8, max: 128 })
+    .withMessage("New password must be at least 8 characters")
     .matches(/[A-Z]/)
     .withMessage("New password must include an uppercase letter")
     .matches(/[a-z]/)
     .withMessage("New password must include a lowercase letter")
     .matches(/[0-9]/)
-    .withMessage("New password must include a number"),
+    .withMessage("New password must include a number")
+    .matches(/[^A-Za-z0-9]/)
+    .withMessage("New password must include a special character"),
 ];
 
 export const productValidation = [
