@@ -183,10 +183,6 @@ export const login = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email }).select("+password");
 
-  if (user && !user.password) {
-    throw new ApiError(401, "This account has no password. Please register with email and OTP.");
-  }
-
   const hash = user?.password || DUMMY_HASH;
   const passwordOk = await bcrypt.compare(password, hash);
 
