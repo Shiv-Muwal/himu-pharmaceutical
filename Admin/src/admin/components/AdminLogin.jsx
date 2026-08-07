@@ -1,13 +1,10 @@
 import { motion } from "framer-motion";
-import { Lock, Mail, AlertCircle, Sparkles, Eye, EyeOff, LayoutDashboard, Copy, Check } from "lucide-react";
+import { Lock, Mail, AlertCircle, Sparkles, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AdminLogo } from "@/admin/components/AdminLogo";
 import { LoginScene3D } from "@/admin/components/LoginScene3D";
-
-const HINT_EMAIL = import.meta.env.VITE_LOCAL_ADMIN_EMAIL || "admin@himu.local";
-const HINT_PASSWORD = import.meta.env.VITE_LOCAL_ADMIN_PASSWORD || "HimuAdmin@2026";
 
 function getStorefrontUrl() {
   if (import.meta.env.VITE_STOREFRONT_URL) {
@@ -34,26 +31,9 @@ export function AdminLogin({
   loginError,
   loginLoading,
   handleLogin,
-  handleDemoLogin,
 }) {
   const [showPassword, setShowPassword] = useState(false);
-  const [copied, setCopied] = useState("");
   const storefrontUrl = getStorefrontUrl();
-
-  const fillDemo = () => {
-    setEmailInput(HINT_EMAIL);
-    setPasswordInput(HINT_PASSWORD);
-  };
-
-  const copyText = async (label, value) => {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopied(label);
-      window.setTimeout(() => setCopied(""), 1600);
-    } catch {
-      // ignore
-    }
-  };
 
   return (
     <div className="relative min-h-[100dvh] overflow-x-hidden overflow-y-auto bg-[#1e2422] text-white">
@@ -146,63 +126,6 @@ export function AdminLogin({
                 {loginLoading ? "Authenticating..." : "Enter Dashboard"}
               </Button>
             </form>
-
-            <Button
-              type="button"
-              variant="outline"
-              disabled={loginLoading}
-              onClick={(e) => {
-                e.preventDefault();
-                handleDemoLogin();
-              }}
-              className="mt-3 h-11 w-full touch-manipulation gap-2 border-emerald-300/30 bg-emerald-500/10 text-emerald-100 hover:bg-emerald-500/20 hover:text-white"
-            >
-              <LayoutDashboard className="h-4 w-4" />
-              Open admin panel (demo login)
-            </Button>
-
-            <div className="mt-5 rounded-2xl border border-white/10 bg-black/25 p-4">
-              <p className="mb-3 text-[10px] font-black uppercase tracking-[0.18em] text-gold">
-                Dummy credentials
-              </p>
-              <div className="space-y-2 text-xs">
-                <div className="flex items-center justify-between gap-2 rounded-xl bg-white/5 px-3 py-2">
-                  <div>
-                    <p className="text-[10px] text-white/45">ID / Email</p>
-                    <p className="font-semibold text-white/90">{HINT_EMAIL}</p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => copyText("email", HINT_EMAIL)}
-                    className="rounded-lg p-2 text-white/50 hover:bg-white/10 hover:text-white"
-                    aria-label="Copy email"
-                  >
-                    {copied === "email" ? <Check className="h-3.5 w-3.5 text-emerald-300" /> : <Copy className="h-3.5 w-3.5" />}
-                  </button>
-                </div>
-                <div className="flex items-center justify-between gap-2 rounded-xl bg-white/5 px-3 py-2">
-                  <div>
-                    <p className="text-[10px] text-white/45">Password</p>
-                    <p className="font-semibold text-white/90">{HINT_PASSWORD}</p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => copyText("password", HINT_PASSWORD)}
-                    className="rounded-lg p-2 text-white/50 hover:bg-white/10 hover:text-white"
-                    aria-label="Copy password"
-                  >
-                    {copied === "password" ? <Check className="h-3.5 w-3.5 text-emerald-300" /> : <Copy className="h-3.5 w-3.5" />}
-                  </button>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={fillDemo}
-                className="mt-3 w-full text-center text-[11px] font-semibold text-gold hover:underline"
-              >
-                Autofill demo ID & password
-              </button>
-            </div>
 
             <div className="mt-5 flex items-center justify-center gap-2 text-[11px] text-white/40">
               <Sparkles className="h-3.5 w-3.5 text-[#d6b04d]" />

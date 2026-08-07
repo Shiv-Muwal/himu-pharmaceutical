@@ -138,14 +138,6 @@ export function useAdminDashboard() {
     await loginWithCredentials(emailInput, passwordInput);
   };
 
-  const handleDemoLogin = async () => {
-    const email = import.meta.env.VITE_LOCAL_ADMIN_EMAIL || "admin@himu.local";
-    const password = import.meta.env.VITE_LOCAL_ADMIN_PASSWORD || "HimuAdmin@2026";
-    setEmailInput(email);
-    setPasswordInput(password);
-    await loginWithCredentials(email, password);
-  };
-
   const handleLogout = () => {
     adminSession.clear();
     setIsLoggedIn(false);
@@ -792,7 +784,6 @@ export function useAdminDashboard() {
     loginError,
     loginLoading,
     handleLogin,
-    handleDemoLogin,
     handleLogout,
     handleRefresh,
     refreshing,

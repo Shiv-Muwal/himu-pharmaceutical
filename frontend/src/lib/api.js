@@ -161,27 +161,6 @@ function localApi(path, { token, method = "GET", ...options } = {}) {
     throw new ApiError("Invalid email or password", 401);
   }
 
-  if (path === "/auth/google" && method === "POST") {
-    if (!body.idToken && !body.accessToken) {
-      throw new ApiError("Google credential is required", 400);
-    }
-    const email = `google.user.${Date.now()}@himu.local`;
-    const customers = getLocalCustomers();
-    const customer = {
-      id: `cust_google_${Date.now()}`,
-      name: "Google Customer",
-      email,
-      phone: "",
-      role: "customer",
-      authProvider: "google",
-    };
-    saveLocalCustomers([customer, ...customers]);
-    return {
-      token: `${LOCAL_CUSTOMER_TOKEN_PREFIX}${email}`,
-      user: publicUser(customer),
-    };
-  }
-
   // Public checkout — no auth required
   if (path === "/orders" && method === "POST") {
     const products = getMockProducts();

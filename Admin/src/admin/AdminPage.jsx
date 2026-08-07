@@ -62,7 +62,6 @@ export default function AdminPage() {
         loginError={dash.loginError}
         loginLoading={dash.loginLoading}
         handleLogin={dash.handleLogin}
-        handleDemoLogin={dash.handleDemoLogin}
       />
     );
   }

@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
-import { OAuth2Client } from "google-auth-library";
 import { env } from "../config/env.js";
 import { User } from "../models/User.js";
 import { EmailOtp } from "../models/EmailOtp.js";
@@ -10,10 +9,6 @@ import { success } from "../utils/apiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { assertGmailAddress, normalizeEmail } from "../utils/email-rules.js";
 import { sendOtpEmail } from "../utils/mailer.js";
-
-const googleClient = env.googleClientId
-  ? new OAuth2Client(env.googleClientId)
-  : null;
 
 /** Dummy hash so missing-user logins take similar time (harder email enumeration timing). */
 const DUMMY_HASH =
@@ -189,7 +184,7 @@ export const login = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email }).select("+password");
 
   if (user && !user.password) {
-    throw new ApiError(401, "This account uses Google sign-in. Please continue with Google.");
+    throw new ApiError(401, "This account has no password. Please register with email and OTP.");
   }
 
   const hash = user?.password || DUMMY_HASH;
@@ -204,84 +199,6 @@ export const login = asyncHandler(async (req, res) => {
 
   const token = signToken(user);
   success(res, { token, user: publicUser(user) }, "Login successful");
-});
-
-export const googleAuth = asyncHandler(async (req, res) => {
-  if (!env.googleClientId || !googleClient) {
-    throw new ApiError(503, "Google sign-in is not configured on the server.");
-  }
-
-  const idToken = String(req.body.idToken || "").trim();
-  const accessToken = String(req.body.accessToken || "").trim();
-
-  let email = "";
-  let name = "";
-  let googleId = "";
-
-  if (idToken) {
-    const ticket = await googleClient.verifyIdToken({
-      idToken,
-      audience: env.googleClientId,
-    });
-    const payload = ticket.getPayload();
-    if (!payload?.email || !payload.email_verified) {
-      throw new ApiError(401, "Google account email is not verified.");
-    }
-    email = normalizeEmail(payload.email);
-    name = String(payload.name || payload.given_name || email.split("@")[0]).trim();
-    googleId = String(payload.sub || "");
-  } else if (accessToken) {
-    const response = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-    if (!response.ok) {
-      throw new ApiError(401, "Unable to verify Google access token.");
-    }
-    const profile = await response.json();
-    if (!profile?.email || profile.email_verified === false) {
-      throw new ApiError(401, "Google account email is not verified.");
-    }
-    email = normalizeEmail(profile.email);
-    name = String(profile.name || profile.given_name || email.split("@")[0]).trim();
-    googleId = String(profile.sub || "");
-  } else {
-    throw new ApiError(400, "Google credential is required.");
-  }
-
-  if (!email || !googleId) {
-    throw new ApiError(401, "Invalid Google account details.");
-  }
-
-  let user =
-    (await User.findOne({ googleId })) ||
-    (await User.findOne({ email }));
-
-  if (user) {
-    if (user.active === false) {
-      throw new ApiError(403, "This account has been disabled.");
-    }
-    if (user.role === "admin") {
-      throw new ApiError(403, "Please use the admin panel to sign in as administrator.");
-    }
-    if (!user.googleId) {
-      user.googleId = googleId;
-      user.authProvider = user.authProvider || "google";
-      if (!user.name) user.name = name;
-      await user.save();
-    }
-  } else {
-    user = await User.create({
-      name,
-      email,
-      googleId,
-      authProvider: "google",
-      role: "customer",
-      active: true,
-    });
-  }
-
-  const token = signToken(user);
-  success(res, { token, user: publicUser(user) }, "Google sign-in successful");
 });
 
 export const getMe = asyncHandler(async (req, res) => {

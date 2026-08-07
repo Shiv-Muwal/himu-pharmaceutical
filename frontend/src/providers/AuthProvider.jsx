@@ -76,17 +76,6 @@ export function AuthProvider({ children }) {
     });
   };
 
-  const loginWithGoogle = async ({ idToken, accessToken }) => {
-    const result = await api("/auth/google", {
-      method: "POST",
-      body: JSON.stringify({
-        ...(idToken ? { idToken } : {}),
-        ...(accessToken ? { accessToken } : {}),
-      }),
-    });
-    return applyAuthResult(result);
-  };
-
   const logout = () => {
     customerSession.clear();
     customerSession.clearUser();
@@ -107,7 +96,6 @@ export function AuthProvider({ children }) {
         register,
         sendSignupOtp,
         verifySignupOtp,
-        loginWithGoogle,
         logout,
       }}
     >

@@ -61,25 +61,6 @@ export const loginValidation = [
   body("password").notEmpty().withMessage("Password is required"),
 ];
 
-export const googleAuthValidation = [
-  body("idToken")
-    .optional({ checkFalsy: true })
-    .isString()
-    .isLength({ min: 20 })
-    .withMessage("Valid Google ID token is required"),
-  body("accessToken")
-    .optional({ checkFalsy: true })
-    .isString()
-    .isLength({ min: 20 })
-    .withMessage("Valid Google access token is required"),
-  body().custom((_, { req }) => {
-    if (!req.body?.idToken && !req.body?.accessToken) {
-      throw new Error("Google credential is required");
-    }
-    return true;
-  }),
-];
-
 export const profileValidation = [
   body("name").trim().isLength({ min: 2, max: 100 }).withMessage("Name must be between 2 and 100 characters"),
   body("email").trim().isEmail().normalizeEmail().withMessage("Valid email is required"),
