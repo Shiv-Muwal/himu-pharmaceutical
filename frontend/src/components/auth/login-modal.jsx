@@ -8,7 +8,6 @@ import {
   EyeOff,
   LogIn,
   AlertCircle,
-  UserRound,
   Phone,
   UserPlus,
   CheckCircle2,
@@ -16,14 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/providers/AuthProvider";
-import { requestGoogleAccessToken } from "@/lib/google-auth";
-import { GoogleMark } from "@/components/auth/google-mark";
 import { gmailErrorMessage, isGmailAddress } from "@/lib/email-rules";
-
-const DEMO_CUSTOMER_EMAIL =
-  import.meta.env.VITE_DEMO_CUSTOMER_EMAIL || "customer@himu.local";
-const DEMO_CUSTOMER_PASSWORD =
-  import.meta.env.VITE_DEMO_CUSTOMER_PASSWORD || "HimuCustomer@2026";
 
 export function LoginModal() {
   const {
@@ -31,7 +23,6 @@ export function LoginModal() {
     closeLogin,
     login,
     register,
-    loginWithGoogle,
     sendSignupOtp,
     verifySignupOtp,
   } = useAuth();
@@ -92,20 +83,6 @@ export function LoginModal() {
     setOtpSent(false);
     setOtp("");
     setOtpHint("");
-  };
-
-  const signInWith = async (loginEmail, loginPassword) => {
-    setError("");
-    setLoading(true);
-    try {
-      await login(loginEmail, loginPassword);
-      setEmail("");
-      resetFields();
-    } catch (err) {
-      setError(err.message || "Unable to sign in");
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleSendOtp = async () => {
@@ -197,28 +174,6 @@ export function LoginModal() {
     }
   };
 
-  const handleDemoLogin = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setEmail(DEMO_CUSTOMER_EMAIL);
-    setPassword(DEMO_CUSTOMER_PASSWORD);
-    await signInWith(DEMO_CUSTOMER_EMAIL, DEMO_CUSTOMER_PASSWORD);
-  };
-
-  const handleGoogleContinue = async () => {
-    setError("");
-    setLoading(true);
-    try {
-      const accessToken = await requestGoogleAccessToken();
-      await loginWithGoogle({ accessToken });
-      resetFields();
-    } catch (err) {
-      setError(err.message || "Unable to continue with Google");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <AnimatePresence>
       {loginOpen && (
@@ -275,25 +230,6 @@ export function LoginModal() {
                   {error}
                 </motion.div>
               )}
-
-              <button
-                type="button"
-                disabled={loading}
-                onClick={handleGoogleContinue}
-                className="flex h-12 w-full touch-manipulation items-center justify-center gap-3 rounded-full border border-border/70 bg-white px-4 text-sm font-semibold text-foreground transition hover:bg-muted/40 disabled:opacity-60"
-              >
-                <GoogleMark />
-                {loading ? "Connecting..." : "Continue with Google"}
-              </button>
-
-              <div className="relative py-1">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-border/60" />
-                </div>
-                <div className="relative flex justify-center text-[11px] font-bold uppercase tracking-[0.18em]">
-                  <span className="bg-[#f8f3e6] px-3 text-muted-foreground">OR</span>
-                </div>
-              </div>
 
               <div className="grid grid-cols-2 gap-2 rounded-full bg-muted/50 p-1">
                 <button
@@ -461,31 +397,6 @@ export function LoginModal() {
                       : "Continue"}
                 </Button>
               </form>
-
-              <Button
-                type="button"
-                variant="outline"
-                disabled={loading}
-                onClick={handleDemoLogin}
-                className="h-11 w-full touch-manipulation gap-2 border-primary/25 bg-primary/5 text-emerald hover:bg-primary/10"
-              >
-                <UserRound className="h-4 w-4" />
-                {loading ? "Signing in..." : "Demo customer login"}
-              </Button>
-
-              <div className="rounded-2xl border border-border/50 bg-muted/40 px-3 py-2.5 text-[11px] text-muted-foreground">
-                <p className="mb-1 font-bold uppercase tracking-wide text-emerald/80">
-                  Dummy customer ID
-                </p>
-                <p>
-                  <span className="font-semibold text-foreground">Email:</span>{" "}
-                  {DEMO_CUSTOMER_EMAIL}
-                </p>
-                <p>
-                  <span className="font-semibold text-foreground">Password:</span>{" "}
-                  {DEMO_CUSTOMER_PASSWORD}
-                </p>
-              </div>
             </div>
           </motion.div>
         </div>

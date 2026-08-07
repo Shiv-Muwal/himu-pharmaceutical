@@ -21,8 +21,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/providers/AuthProvider";
-import { requestGoogleAccessToken } from "@/lib/google-auth";
-import { GoogleMark } from "@/components/auth/google-mark";
 import { gmailErrorMessage, isGmailAddress } from "@/lib/email-rules";
 
 const benefits = [
@@ -38,7 +36,6 @@ export default function SignupPage() {
   const {
     register,
     login,
-    loginWithGoogle,
     sendSignupOtp,
     verifySignupOtp,
     isAuthenticated,
@@ -82,20 +79,6 @@ export default function SignupPage() {
       setOtpSent(false);
       setOtpHint("");
       setForm((f) => ({ ...f, otp: "" }));
-    }
-  };
-
-  const handleGoogleContinue = async () => {
-    setError("");
-    setLoading(true);
-    try {
-      const accessToken = await requestGoogleAccessToken();
-      await loginWithGoogle({ accessToken });
-      navigate("/");
-    } catch (err) {
-      setError(err.message || "Unable to continue with Google");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -263,25 +246,6 @@ export default function SignupPage() {
               {error}
             </div>
           )}
-
-          <button
-            type="button"
-            disabled={loading}
-            onClick={handleGoogleContinue}
-            className="flex h-12 w-full touch-manipulation items-center justify-center gap-3 rounded-full border border-[#14532d]/18 bg-white px-4 text-sm font-semibold text-[#14532d] transition hover:bg-[#f3f7f0] disabled:opacity-60"
-          >
-            <GoogleMark />
-            {loading ? "Connecting..." : "Continue with Google"}
-          </button>
-
-          <div className="relative my-5">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-[#14532d]/12" />
-            </div>
-            <div className="relative flex justify-center text-[11px] font-bold uppercase tracking-[0.16em]">
-              <span className="bg-white px-3 text-[#14532d]/55">OR</span>
-            </div>
-          </div>
 
           <div className="mb-4 grid grid-cols-2 gap-1 rounded-full bg-[#eef6ef] p-1">
             <button
