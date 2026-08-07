@@ -31,20 +31,22 @@ export function BannersPanel({
 
   const previewSrc = mediaUrl(bannerForm.image);
 
-  const handleWebpSelect = async (event) => {
+  const handleImageSelect = async (event) => {
     const file = event.target.files?.[0];
     event.target.value = "";
     setUploadError("");
     if (!file) return;
 
-    const isWebp =
-      file.type === "image/webp" || file.name.toLowerCase().endsWith(".webp");
-    if (!isWebp) {
-      setUploadError("Only WebP images are allowed (.webp)");
+    const okExt = /\.(jpe?g|png|webp)$/i.test(file.name);
+    const okType =
+      !file.type ||
+      ["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(file.type);
+    if (!okExt || !okType) {
+      setUploadError("Only JPG, PNG, or WebP images are allowed");
       return;
     }
-    if (file.size > 5 * 1024 * 1024) {
-      setUploadError("Image must be 5MB or smaller");
+    if (file.size > 8 * 1024 * 1024) {
+      setUploadError("Image must be 8MB or smaller");
       return;
     }
 
@@ -118,14 +120,14 @@ export function BannersPanel({
 
             <div className="md:col-span-2">
               <label className="mb-2 block text-xs font-semibold text-muted-foreground">
-                Banner image (WebP only)
+                Banner image (JPG / PNG / WebP)
               </label>
               <input
                 ref={fileRef}
                 type="file"
-                accept="image/webp,.webp"
+                accept="image/jpeg,image/jpg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
                 className="hidden"
-                onChange={handleWebpSelect}
+                onChange={handleImageSelect}
               />
               <div className="grid gap-3 sm:grid-cols-[1fr_180px]">
                 <button
@@ -140,10 +142,10 @@ export function BannersPanel({
                     <Upload className="h-7 w-7 text-emerald" />
                   )}
                   <span className="text-sm font-bold text-foreground">
-                    {uploading ? "Uploading WebP..." : "Upload WebP image"}
+                    {uploading ? "Uploading..." : "Upload image"}
                   </span>
                   <span className="text-[11px] text-muted-foreground">
-                    Accepts .webp only · max 5MB
+                    Accepts JPG, PNG, WebP · max 8MB
                   </span>
                   {bannerForm.image && (
                     <span className="mt-1 max-w-full truncate rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-emerald dark:bg-card">
@@ -170,7 +172,7 @@ export function BannersPanel({
               )}
               {!bannerForm.image && (
                 <p className="mt-2 text-[11px] text-muted-foreground">
-                  A WebP banner image is required before saving.
+                  A banner image is required before saving.
                 </p>
               )}
             </div>

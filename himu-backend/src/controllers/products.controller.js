@@ -242,24 +242,31 @@ export const uploadProductMedia = asyncHandler(async (req, res) => {
   if (!isCloudinaryConfigured()) {
     throw new ApiError(
       503,
-      "Cloudinary is not configured. Add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET to the backend .env",
+      "Cloudinary is not configured on the server. Set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in himu-backend/.env then restart PM2.",
     );
   }
 
-  const uploaded = await uploadImageBuffer(req.file.buffer, {
-    folder: `${env.cloudinaryFolder}/products`,
-  });
+  try {
+    const uploaded = await uploadImageBuffer(req.file.buffer, {
+      folder: `${env.cloudinaryFolder}/products`,
+    });
 
-  return success(
-    res,
-    {
-      url: uploaded.url,
-      publicId: uploaded.publicId,
-      size: uploaded.bytes,
-      mimetype: req.file.mimetype,
-      format: uploaded.format,
-    },
-    "Product image uploaded",
-    201,
-  );
+    return success(
+      res,
+      {
+        url: uploaded.url,
+        publicId: uploaded.publicId,
+        size: uploaded.bytes,
+        mimetype: req.file.mimetype,
+        format: uploaded.format,
+      },
+      "Product image uploaded",
+      201,
+    );
+  } catch (error) {
+    throw new ApiError(
+      error.statusCode || 502,
+      error.message || "Image upload to Cloudinary failed",
+    );
+  }
 });

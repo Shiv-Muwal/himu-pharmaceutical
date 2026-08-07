@@ -85,31 +85,38 @@ export const updateBanner = asyncHandler(async (req, res) => {
 
 export const uploadBannerImage = asyncHandler(async (req, res) => {
   if (!req.file?.buffer) {
-    throw new ApiError(400, "Please upload a WebP image");
+    throw new ApiError(400, "Please upload a JPG, PNG, or WebP image");
   }
   if (!isCloudinaryConfigured()) {
     throw new ApiError(
       503,
-      "Cloudinary is not configured. Add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET to the backend .env",
+      "Cloudinary is not configured on the server. Set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in himu-backend/.env then restart PM2.",
     );
   }
 
-  const uploaded = await uploadImageBuffer(req.file.buffer, {
-    folder: `${env.cloudinaryFolder}/banners`,
-  });
+  try {
+    const uploaded = await uploadImageBuffer(req.file.buffer, {
+      folder: `${env.cloudinaryFolder}/banners`,
+    });
 
-  return success(
-    res,
-    {
-      url: uploaded.url,
-      publicId: uploaded.publicId,
-      size: uploaded.bytes,
-      mimetype: req.file.mimetype,
-      format: uploaded.format,
-    },
-    "Banner image uploaded",
-    201,
-  );
+    return success(
+      res,
+      {
+        url: uploaded.url,
+        publicId: uploaded.publicId,
+        size: uploaded.bytes,
+        mimetype: req.file.mimetype,
+        format: uploaded.format,
+      },
+      "Banner image uploaded",
+      201,
+    );
+  } catch (error) {
+    throw new ApiError(
+      error.statusCode || 502,
+      error.message || "Image upload to Cloudinary failed",
+    );
+  }
 });
 
 export const deleteBanner = asyncHandler(async (req, res) => {

@@ -639,7 +639,7 @@ export function useAdminDashboard() {
     const token = adminSession.get();
     if (!token) return;
     if (!bannerForm.image?.trim()) {
-      alert("Please upload a WebP banner image first.");
+      alert("Please upload a banner image first.");
       return;
     }
     const payload = {

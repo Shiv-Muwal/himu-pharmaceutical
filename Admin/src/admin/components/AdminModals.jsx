@@ -82,9 +82,11 @@ export function ProductModal({
     try {
       const uploaded = [];
       for (const file of files) {
-        const okType = ["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(file.type);
         const okExt = /\.(jpe?g|png|webp)$/i.test(file.name);
-        if (!okType || !okExt) {
+        const okType =
+          !file.type ||
+          ["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(file.type);
+        if (!okExt || !okType) {
           throw new Error("Only JPG, PNG, or WebP images are allowed");
         }
         if (file.size > 8 * 1024 * 1024) {

@@ -15,6 +15,17 @@ fi
 grep -q "sitetest.himupharmaceutical.com" .env || \
   echo 'CLIENT_URL=http://localhost:5173,http://localhost:5174,https://sitetest.himupharmaceutical.com,https://himupharmaceutical.com,https://www.himupharmaceutical.com' >> .env
 
+echo "Checking Cloudinary env..."
+if ! grep -q '^CLOUDINARY_CLOUD_NAME=.\+' .env 2>/dev/null; then
+  echo "WARNING: CLOUDINARY_CLOUD_NAME missing in .env — image uploads will fail"
+fi
+if ! grep -q '^CLOUDINARY_API_KEY=.\+' .env 2>/dev/null; then
+  echo "WARNING: CLOUDINARY_API_KEY missing in .env — image uploads will fail"
+fi
+if ! grep -q '^CLOUDINARY_API_SECRET=.\+' .env 2>/dev/null; then
+  echo "WARNING: CLOUDINARY_API_SECRET missing in .env — image uploads will fail"
+fi
+
 npm install --omit=dev
 
 pm2 delete himu-backend >/dev/null 2>&1 || true

@@ -11,6 +11,8 @@ import companyRoutes from "./company.routes.js";
 import customersRoutes from "./customers.routes.js";
 import activityRoutes from "./activity.routes.js";
 import bannersRoutes from "./banners.routes.js";
+import { isCloudinaryConfigured } from "../config/cloudinary.js";
+import { isSmtpConfigured } from "../utils/mailer.js";
 
 const router = Router();
 
@@ -19,6 +21,10 @@ router.get("/health", (_req, res) => {
     success: true,
     message: "HIMU Pharmacy API is running",
     timestamp: new Date().toISOString(),
+    data: {
+      cloudinaryConfigured: isCloudinaryConfigured(),
+      smtpConfigured: isSmtpConfigured(),
+    },
   });
 });
 

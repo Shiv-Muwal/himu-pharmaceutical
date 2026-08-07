@@ -46,7 +46,20 @@ export function uploadImageBuffer(buffer, { folder, publicId } = {}) {
       },
       (error, result) => {
         if (error) {
-          reject(error);
+          const message =
+            error.message ||
+            error.error?.message ||
+            "Cloudinary upload failed";
+          const err = new Error(message);
+          err.statusCode = error.http_code && error.http_code < 500 ? 400 : 502;
+          err.cloudinary = true;
+          reject(err);
+          return;
+        }
+        if (!result?.secure_url) {
+          const err = new Error("Cloudinary did not return an image URL");
+          err.statusCode = 502;
+          reject(err);
           return;
         }
         resolve({
@@ -57,6 +70,11 @@ export function uploadImageBuffer(buffer, { folder, publicId } = {}) {
         });
       },
     );
+    stream.on("error", (error) => {
+      const err = new Error(error.message || "Upload stream failed");
+      err.statusCode = 502;
+      reject(err);
+    });
     stream.end(buffer);
   });
 }

@@ -16,7 +16,7 @@ function runBannerUpload(req, res, next) {
     if (!err) return next();
     if (err.code === "LIMIT_FILE_SIZE") {
       err.statusCode = 400;
-      err.message = "WebP image must be 5MB or smaller";
+      err.message = "Image must be 8MB or smaller";
     }
     next(err);
   });

@@ -13,38 +13,41 @@ export const productsUploadDir = path.join(uploadsRoot, "products");
 fs.mkdirSync(bannersUploadDir, { recursive: true });
 fs.mkdirSync(productsUploadDir, { recursive: true });
 
-/** Memory storage — files are streamed to Cloudinary (not written to disk). */
 const memoryStorage = multer.memoryStorage();
 
-function webpFileFilter(_req, file, cb) {
-  const isWebpMime = file.mimetype === "image/webp";
-  const isWebpExt = path.extname(file.originalname || "").toLowerCase() === ".webp";
-  if (isWebpMime && isWebpExt) {
-    cb(null, true);
-    return;
-  }
-  cb(new ApiError(400, "Only WebP images are allowed (.webp)"));
+const IMAGE_MIMES = new Set([
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+  "image/pjpeg",
+]);
+const IMAGE_EXTS = new Set([".jpg", ".jpeg", ".png", ".webp"]);
+
+function isAllowedImage(file) {
+  const ext = path.extname(file.originalname || "").toLowerCase();
+  const mime = String(file.mimetype || "").toLowerCase();
+  const extOk = IMAGE_EXTS.has(ext);
+  const mimeOk = !mime || mime === "application/octet-stream" || IMAGE_MIMES.has(mime);
+  return extOk && mimeOk;
 }
 
-export const uploadBannerWebp = multer({
-  storage: memoryStorage,
-  fileFilter: webpFileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 },
-}).single("image");
-
-function productImageFilter(_req, file, cb) {
-  const allowed = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
-  const ext = path.extname(file.originalname || "").toLowerCase();
-  const allowedExt = [".jpg", ".jpeg", ".png", ".webp"];
-  if (allowed.includes(file.mimetype) && allowedExt.includes(ext)) {
+function imageFileFilter(_req, file, cb) {
+  if (isAllowedImage(file)) {
     cb(null, true);
     return;
   }
   cb(new ApiError(400, "Only JPG, PNG, or WebP images are allowed"));
 }
 
+export const uploadBannerWebp = multer({
+  storage: memoryStorage,
+  fileFilter: imageFileFilter,
+  limits: { fileSize: 8 * 1024 * 1024 },
+}).single("image");
+
 export const uploadProductImage = multer({
   storage: memoryStorage,
-  fileFilter: productImageFilter,
+  fileFilter: imageFileFilter,
   limits: { fileSize: 8 * 1024 * 1024 },
 }).single("image");
