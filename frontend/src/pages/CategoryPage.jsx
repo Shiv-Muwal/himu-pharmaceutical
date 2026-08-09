@@ -29,12 +29,15 @@ export default function CategoryPage() {
 
   if (!category) return <Navigate to="/404" replace />;
 
+  // Skin Care uses brand green hero (no product photo behind title)
+  const heroImage = slug === "skin-care" ? undefined : category.heroImage;
+
   return (
     <>
       <PageHero
         title={category.name}
         description={category.description}
-        image={category.heroImage}
+        image={heroImage}
         badge="Product Category"
       />
       <section className="section-padding">
