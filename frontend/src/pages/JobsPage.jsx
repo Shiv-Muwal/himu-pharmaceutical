@@ -3,17 +3,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   MapPin,
   Briefcase,
-  Clock,
   X,
   ArrowRight,
-  Sparkles,
+  Building2,
 } from "lucide-react";
 import { PageHero } from "@/components/sections/page-hero";
-import {
-  FadeIn,
-  SectionHeading,
-} from "@/components/animations/motion-components";
-import { Image } from "@/components/ui/image";
+import { FadeIn } from "@/components/animations/motion-components";
 import { Button } from "@/components/ui/button";
 import { CareerApplicationForm } from "@/components/forms/contact-form";
 import { getJobs } from "@/lib/jobs";
@@ -29,6 +24,7 @@ export default function JobsPage() {
   const [jobs, setJobs] = useState(() => getJobs());
   const [selected, setSelected] = useState(null);
   const [showApply, setShowApply] = useState(false);
+  const [hoveredId, setHoveredId] = useState(null);
 
   useEffect(() => {
     const refresh = () => setJobs(getJobs());
@@ -64,107 +60,172 @@ export default function JobsPage() {
     <>
       <PageHero
         title="Jobs at HIMU"
-        description="Grow with a team building trusted skincare and pharmaceutical care from Chirawa, Rajasthan."
+        description="Build trusted care with a team rooted in Chirawa — open roles, clear JDs, direct apply."
         image="/jobs/jobs-hero.png"
         badge="Jobs"
       />
 
-      <section className="relative overflow-hidden section-padding">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_#eef7f1_0%,_transparent_55%),linear-gradient(180deg,#fbf9f3_0%,#f3f7f2_100%)]" />
+      <section className="relative overflow-hidden py-16 md:py-24">
+        {/* Atmospheric field — not a flat wash */}
+        <div className="pointer-events-none absolute inset-0 bg-[#f4f8f4]" />
+        <div className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-[#cfe8d6]/50 blur-3xl" />
+        <div className="pointer-events-none absolute -right-16 bottom-0 h-96 w-96 rounded-full bg-[#efe3b8]/40 blur-3xl" />
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.35]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(20,83,45,0.12) 1px, transparent 0)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+
         <div className="container-custom relative">
-          <SectionHeading
-            badge="Open roles"
-            title="Current vacancies"
-            description="Browse openings in serial — tap a card for the full JD, or Apply now."
-          />
-
-          <div className="mx-auto max-w-3xl space-y-4">
-            {jobs.length === 0 ? (
-              <div className="rounded-[1.75rem] border border-dashed border-[#cfe0d6] bg-white/70 px-6 py-16 text-center">
-                <Briefcase className="mx-auto mb-3 h-10 w-10 text-[#8aa394]" />
-                <p className="font-bold text-[#1f3b2c]">No open vacancies right now</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Check back soon — new roles are posted regularly.
+          <div className="mb-12 grid gap-8 lg:grid-cols-[1fr_1.15fr] lg:items-end">
+            <FadeIn>
+              <p className="mb-3 text-[11px] font-black uppercase tracking-[0.22em] text-[#3d7a5a]">
+                Open vacancies
+              </p>
+              <h2 className="max-w-md font-[family-name:var(--font-heading)] text-4xl font-black leading-[1.05] text-[#14532D] md:text-5xl">
+                Roles worth
+                <span className="mt-1 block text-[#6fa987]">showing up for.</span>
+              </h2>
+            </FadeIn>
+            <FadeIn delay={0.08}>
+              <div className="flex flex-col gap-4 border-l-2 border-[#6fa987]/40 pl-5 sm:flex-row sm:items-center sm:justify-between lg:pl-8">
+                <p className="max-w-sm text-sm leading-relaxed text-[#5f7468]">
+                  Tap any role for the full JD. Prefer speed? Hit Apply now and
+                  send your profile in one step.
                 </p>
+                <div className="inline-flex shrink-0 items-center gap-3 rounded-2xl bg-[#14532D] px-4 py-3 text-white shadow-[0_12px_30px_rgba(20,83,45,0.25)]">
+                  <Briefcase className="h-4 w-4 text-[#BBF7D0]" />
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-[#BBF7D0]/90">
+                      Live openings
+                    </p>
+                    <p className="font-[family-name:var(--font-heading)] text-xl font-black leading-none">
+                      {jobs.length}
+                    </p>
+                  </div>
+                </div>
               </div>
-            ) : (
-              jobs.map((job, i) => (
-                <FadeIn key={job.id} delay={i * 0.06}>
-                  <article
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => openJob(job, false)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        openJob(job, false);
-                      }
-                    }}
-                    className="group grid cursor-pointer overflow-hidden rounded-[1.75rem] border border-[#dce8e0] bg-white/90 shadow-[0_12px_40px_rgba(26,46,31,0.06)] transition hover:-translate-y-0.5 hover:border-[#6fa987]/50 hover:shadow-[0_18px_50px_rgba(61,122,90,0.12)] sm:grid-cols-[140px_1fr]"
-                  >
-                    <div className="relative min-h-[140px] overflow-hidden sm:min-h-full">
-                      <Image
-                        src={job.image}
-                        alt=""
-                        fill
-                        className="object-cover transition duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#14532D]/45 to-transparent sm:bg-gradient-to-r" />
-                      <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black text-[#14532D]">
-                        #{String(i + 1).padStart(2, "0")}
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col justify-between gap-4 p-5 sm:p-6">
-                      <div>
-                        <div className="mb-2 flex flex-wrap items-center gap-2">
-                          <span className="rounded-full bg-[#e7f3ec] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#3d7a5a]">
-                            {job.department}
-                          </span>
-                          <span className="rounded-full bg-[#f8f3e6] px-2.5 py-1 text-[10px] font-bold text-[#8a6a20]">
-                            {job.type}
-                          </span>
-                        </div>
-                        <h3 className="font-[family-name:var(--font-heading)] text-xl font-black text-[#1f3b2c] transition group-hover:text-[#14532D]">
-                          {job.title}
-                        </h3>
-                        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-[#6f8679]">
-                          {job.summary}
-                        </p>
-                        <div className="mt-3 flex flex-wrap gap-3 text-[11px] font-semibold text-[#7a9586]">
-                          <span className="inline-flex items-center gap-1">
-                            <MapPin className="h-3.5 w-3.5" />
-                            {job.location}
-                          </span>
-                          <span className="inline-flex items-center gap-1">
-                            <Clock className="h-3.5 w-3.5" />
-                            View full JD
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex flex-wrap items-center gap-2">
-                        <Button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openJob(job, true);
-                          }}
-                          className="h-10 rounded-2xl px-5 text-xs font-bold"
-                        >
-                          Apply now
-                          <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-                        </Button>
-                        <span className="text-[11px] font-medium text-[#8aa394]">
-                          or tap card for details
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </FadeIn>
-              ))
-            )}
+            </FadeIn>
           </div>
+
+          {jobs.length === 0 ? (
+            <div className="rounded-[2rem] border border-dashed border-[#b9d4c4] bg-white/60 px-6 py-20 text-center">
+              <Briefcase className="mx-auto mb-3 h-10 w-10 text-[#8aa394]" />
+              <p className="font-bold text-[#1f3b2c]">No open vacancies right now</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                New roles land here first — check back soon.
+              </p>
+            </div>
+          ) : (
+            <div className="relative mx-auto max-w-3xl">
+              {/* Spine */}
+              <div className="absolute bottom-6 left-[1.65rem] top-6 hidden w-px bg-gradient-to-b from-[#6fa987] via-[#cfe0d6] to-transparent sm:block" />
+
+              <ol className="space-y-5">
+                {jobs.map((job, i) => {
+                  const active = hoveredId === job.id || selected?.id === job.id;
+                  return (
+                    <FadeIn key={job.id} delay={i * 0.05}>
+                      <li>
+                        <motion.article
+                          role="button"
+                          tabIndex={0}
+                          onMouseEnter={() => setHoveredId(job.id)}
+                          onMouseLeave={() => setHoveredId(null)}
+                          onClick={() => openJob(job, false)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              openJob(job, false);
+                            }
+                          }}
+                          whileHover={{ x: 4 }}
+                          transition={{ type: "spring", stiffness: 380, damping: 28 }}
+                          className={`group relative cursor-pointer overflow-hidden rounded-[1.5rem] border bg-white/80 backdrop-blur-sm transition ${
+                            active
+                              ? "border-[#6fa987] shadow-[0_20px_50px_rgba(61,122,90,0.14)]"
+                              : "border-[#d8e6dd] shadow-[0_8px_28px_rgba(26,46,31,0.05)]"
+                          }`}
+                        >
+                          <div
+                            className={`absolute inset-y-0 left-0 w-1.5 transition ${
+                              active ? "bg-[#14532D]" : "bg-[#cfe8d6]"
+                            }`}
+                          />
+
+                          <div className="flex gap-4 p-5 pl-5 sm:gap-6 sm:p-6 sm:pl-6">
+                            <div className="relative z-10 hidden shrink-0 sm:block">
+                              <motion.div
+                                animate={{
+                                  scale: active ? 1.06 : 1,
+                                  backgroundColor: active ? "#14532D" : "#eef7f1",
+                                  color: active ? "#f8fbf8" : "#14532D",
+                                }}
+                                className="flex h-12 w-12 items-center justify-center rounded-2xl font-[family-name:var(--font-heading)] text-sm font-black shadow-sm"
+                              >
+                                {String(i + 1).padStart(2, "0")}
+                              </motion.div>
+                            </div>
+
+                            <div className="min-w-0 flex-1">
+                              <div className="mb-2 flex flex-wrap items-center gap-2">
+                                <span className="sm:hidden rounded-lg bg-[#eef7f1] px-2 py-0.5 text-[10px] font-black text-[#14532D]">
+                                  {String(i + 1).padStart(2, "0")}
+                                </span>
+                                <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-[0.14em] text-[#3d7a5a]">
+                                  <Building2 className="h-3 w-3" />
+                                  {job.department}
+                                </span>
+                                <span className="text-[#c5d5cb]">·</span>
+                                <span className="text-[10px] font-bold uppercase tracking-wide text-[#8a6a20]">
+                                  {job.type}
+                                </span>
+                              </div>
+
+                              <h3 className="font-[family-name:var(--font-heading)] text-xl font-black tracking-tight text-[#143528] transition group-hover:text-[#14532D] md:text-2xl">
+                                {job.title}
+                              </h3>
+
+                              <p className="mt-2 max-w-xl text-sm leading-relaxed text-[#61756a]">
+                                {job.summary}
+                              </p>
+
+                              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#e8f0eb] pt-4">
+                                <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#7a9586]">
+                                  <MapPin className="h-3.5 w-3.5 text-[#6fa987]" />
+                                  {job.location}
+                                </span>
+
+                                <div className="flex items-center gap-2">
+                                  <span className="hidden text-[11px] font-medium text-[#8aa394] sm:inline">
+                                    View JD
+                                  </span>
+                                  <Button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      openJob(job, true);
+                                    }}
+                                    className="h-10 rounded-xl bg-[#14532D] px-4 text-xs font-bold text-white hover:bg-[#0f3f22]"
+                                  >
+                                    Apply now
+                                    <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </motion.article>
+                      </li>
+                    </FadeIn>
+                  );
+                })}
+              </ol>
+            </div>
+          )}
         </div>
       </section>
 
@@ -177,44 +238,42 @@ export default function JobsPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-[#1a2e1f]/45 backdrop-blur-[6px]"
+              className="absolute inset-0 bg-[#0f2418]/50 backdrop-blur-[7px]"
               onClick={closeJob}
             />
             <motion.div
               role="dialog"
               aria-modal="true"
-              initial={{ opacity: 0, y: 40, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 24, scale: 0.98 }}
-              className="relative z-10 flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-t-[1.75rem] border border-[#dce8e0] bg-gradient-to-br from-[#f8fbf8] via-white to-[#fbf9f3] shadow-[0_30px_80px_rgba(26,46,31,0.22)] sm:rounded-[1.75rem]"
+              initial={{ opacity: 0, y: 48 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 28 }}
+              transition={{ type: "spring", stiffness: 320, damping: 30 }}
+              className="relative z-10 flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden rounded-t-[1.75rem] border border-[#dce8e0] bg-[#f8fbf8] shadow-[0_30px_80px_rgba(15,36,24,0.28)] sm:rounded-[1.75rem]"
             >
-              <div className="relative h-40 shrink-0 sm:h-48">
-                <Image
-                  src={selected.image}
-                  alt=""
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#14532D] via-[#14532D]/55 to-transparent" />
-                <button
-                  type="button"
-                  onClick={closeJob}
-                  className="absolute right-3 top-3 rounded-xl bg-white/90 p-2 text-[#1f3b2c] shadow-sm"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-                <div className="absolute bottom-4 left-5 right-5">
-                  <p className="mb-1 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#BBF7D0]">
-                    <Sparkles className="h-3.5 w-3.5" />
-                    {selected.department} · {selected.type}
-                  </p>
-                  <h2 className="font-[family-name:var(--font-heading)] text-2xl font-black text-white sm:text-3xl">
-                    {selected.title}
-                  </h2>
-                  <p className="mt-1 flex items-center gap-1 text-xs text-white/80">
-                    <MapPin className="h-3.5 w-3.5" />
-                    {selected.location}
-                  </p>
+              <div className="relative shrink-0 overflow-hidden bg-gradient-to-br from-[#14532D] via-[#166534] to-[#1a5c38] px-5 pb-6 pt-5 sm:px-7 sm:pt-6">
+                <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#BBF7D0]/15 blur-2xl" />
+                <div className="pointer-events-none absolute bottom-0 left-1/3 h-24 w-48 rounded-full bg-[#d6b04d]/15 blur-2xl" />
+
+                <div className="relative flex items-start justify-between gap-3">
+                  <div>
+                    <p className="mb-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#BBF7D0]">
+                      {selected.department} · {selected.type}
+                    </p>
+                    <h2 className="max-w-lg font-[family-name:var(--font-heading)] text-2xl font-black leading-tight text-white sm:text-3xl">
+                      {selected.title}
+                    </h2>
+                    <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-white/75">
+                      <MapPin className="h-3.5 w-3.5" />
+                      {selected.location}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={closeJob}
+                    className="rounded-xl bg-white/15 p-2 text-white backdrop-blur-sm transition hover:bg-white/25"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
                 </div>
               </div>
 
@@ -233,7 +292,7 @@ export default function JobsPage() {
                           return (
                             <h3
                               key={idx}
-                              className="pt-2 font-[family-name:var(--font-heading)] text-sm font-black uppercase tracking-wide text-[#14532D]"
+                              className="pt-2 font-[family-name:var(--font-heading)] text-xs font-black uppercase tracking-[0.14em] text-[#14532D]"
                             >
                               {line}
                             </h3>
@@ -252,7 +311,7 @@ export default function JobsPage() {
                     <Button
                       type="button"
                       onClick={() => setShowApply(true)}
-                      className="h-11 w-full rounded-2xl text-sm font-bold sm:w-auto sm:min-w-[200px]"
+                      className="h-11 w-full rounded-2xl bg-[#14532D] text-sm font-bold text-white hover:bg-[#0f3f22] sm:w-auto sm:min-w-[200px]"
                     >
                       Apply now
                       <ArrowRight className="ml-1.5 h-4 w-4" />

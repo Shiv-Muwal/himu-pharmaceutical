@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-import { JOB_IMAGE_PRESETS, adminJobImageSrc } from "@/admin/lib/jobs";
 
 const EMPTY = {
   title: "",
@@ -13,7 +12,6 @@ const EMPTY = {
   type: "Full-time",
   summary: "",
   jd: "",
-  image: JOB_IMAGE_PRESETS[0].src,
 };
 
 export function JobsPanel({ jobs, onAddJob, onUpdateJob, onRemoveJob }) {
@@ -54,7 +52,6 @@ export function JobsPanel({ jobs, onAddJob, onUpdateJob, onRemoveJob }) {
       type: job.type,
       summary: job.summary,
       jd: job.jd,
-      image: job.image,
     });
     setError("");
   };
@@ -70,7 +67,7 @@ export function JobsPanel({ jobs, onAddJob, onUpdateJob, onRemoveJob }) {
                 {editingId ? "Edit vacancy" : "Add vacancy"}
               </h3>
               <p className="text-[11px] text-muted-foreground">
-                Add vacancy name and full JD — it appears on the Jobs page.
+                Vacancy name + full JD — appears on the Jobs page.
               </p>
             </div>
           </div>
@@ -167,40 +164,6 @@ export function JobsPanel({ jobs, onAddJob, onUpdateJob, onRemoveJob }) {
               />
             </div>
 
-            <div>
-              <label className="mb-2 block text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
-                Card image
-              </label>
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                {JOB_IMAGE_PRESETS.map((preset) => {
-                  const active = form.image === preset.src;
-                  return (
-                    <button
-                      key={preset.id}
-                      type="button"
-                      onClick={() =>
-                        setForm((p) => ({ ...p, image: preset.src }))
-                      }
-                      className={`overflow-hidden rounded-2xl border-2 transition ${
-                        active
-                          ? "border-emerald shadow-md"
-                          : "border-border/40 opacity-80 hover:opacity-100"
-                      }`}
-                    >
-                      <img
-                        src={adminJobImageSrc(preset.src)}
-                        alt={preset.label}
-                        className="aspect-square w-full object-cover"
-                      />
-                      <span className="block bg-white/90 px-2 py-1 text-[10px] font-bold">
-                        {preset.label}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
             {error ? <p className="text-xs text-red-600">{error}</p> : null}
 
             <Button type="submit" className="gap-2">
@@ -221,16 +184,14 @@ export function JobsPanel({ jobs, onAddJob, onUpdateJob, onRemoveJob }) {
               No vacancies yet. Add the first one above.
             </p>
           ) : (
-            jobs.map((job) => (
+            jobs.map((job, i) => (
               <div
                 key={job.id}
                 className="flex gap-3 rounded-2xl border border-border/40 bg-white/70 p-3"
               >
-                <img
-                  src={adminJobImageSrc(job.image)}
-                  alt=""
-                  className="h-16 w-16 shrink-0 rounded-xl object-cover"
-                />
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald/10 font-[family-name:var(--font-heading)] text-xs font-black text-emerald">
+                  {String(i + 1).padStart(2, "0")}
+                </div>
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-bold text-foreground">{job.title}</p>
                   <p className="mt-0.5 text-[11px] text-muted-foreground">
