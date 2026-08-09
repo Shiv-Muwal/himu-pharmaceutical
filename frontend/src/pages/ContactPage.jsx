@@ -3,22 +3,21 @@ import { Link } from "@/components/ui/link";
 import { PageHero } from "@/components/sections/page-hero";
 import { FadeIn } from "@/components/animations/motion-components";
 import { ContactForm } from "@/components/forms/contact-form";
-import { COMPANY } from "@/lib/constants";
+import { COMPANY, COMPANY_OFFICES } from "@/lib/constants";
 
-const MAP_QUERY = encodeURIComponent(
-  "38 Ambikanagar, Mandrela Road, Chirawa, Dist. Jhunjhunu, Rajasthan 333026",
-);
+const HEAD_OFFICE = COMPANY_OFFICES[0];
+const MAP_QUERY = encodeURIComponent(HEAD_OFFICE.address);
 const MAP_EMBED = `https://maps.google.com/maps?q=${MAP_QUERY}&z=15&output=embed`;
 const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`;
 
 const contactCards = [
-  {
+  ...COMPANY_OFFICES.map((office) => ({
     icon: MapPin,
-    title: "Visit us",
-    value: COMPANY.address,
-    href: MAP_LINK,
+    title: office.label,
+    value: office.address,
+    href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.address)}`,
     external: true,
-  },
+  })),
   {
     icon: Phone,
     title: "Call us",
@@ -50,7 +49,7 @@ export default function ContactPage() {
 
       <section className="section-padding bg-gradient-to-b from-[#f8f3e6] via-white to-[#f3f7f0]">
         <div className="container-custom">
-          <div className="mb-10 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="mb-10 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {contactCards.map((item, i) => {
               const Icon = item.icon;
               const inner = (
@@ -98,13 +97,13 @@ export default function ContactPage() {
               <div className="overflow-hidden rounded-[1.75rem] border border-border/40 bg-white shadow-[0_20px_50px_rgba(20,83,45,0.08)]">
                 <div className="border-b border-border/30 bg-[#f3f7f0] px-6 py-5">
                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald">
-                    Location
+                    Head Office — Chirawa
                   </p>
                   <h2 className="mt-1 font-[family-name:var(--font-heading)] text-2xl font-bold text-foreground">
                     Find us on the map
                   </h2>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    {COMPANY.address}
+                    {HEAD_OFFICE.address}
                   </p>
                 </div>
                 <div className="relative h-[280px] bg-[#eef4f0] sm:h-[360px] lg:h-[420px]">

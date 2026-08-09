@@ -6,7 +6,6 @@ import { BrandLogo } from "@/components/ui/brand-logo";
 import {
   Menu,
   X,
-  Search,
   ChevronDown,
   Heart,
   ShieldCheck,
@@ -248,13 +247,6 @@ export function Navbar() {
                     ? "Set location"
                     : location?.city || location?.label || "Your area"}
               </span>
-            </button>
-            <button
-              onClick={() => setSearchOpen(!searchOpen)}
-              className="hidden p-2 rounded-lg transition-colors hover:bg-muted text-foreground cursor-pointer md:inline-flex"
-              aria-label="Search"
-            >
-              <Search className="h-5 w-5" />
             </button>
             <button
               onClick={() => setCartOpen(true)}

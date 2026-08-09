@@ -1,5 +1,6 @@
 export const COMPANY = {
   name: "HIMU Pharmacy",
+  shortName: "HIMU",
   fullForm: "Healthcare Innovation for Medical Upliftment",
   tagline: "Advancing Healthcare Through Innovation",
   type: "Pharmaceutical Manufacturing Company",
@@ -9,8 +10,28 @@ export const COMPANY = {
   phone: "+91 7419363737",
   address: "38 Ambikanagar, Mandrela Road, Chirawa, Dist. Jhunjhunu, Rajasthan - 333026",
   officeHours: "24/7 Customer Support",
-  url: "https://www.himupharmaceutical.com"
+  url: "https://www.himupharmaceutical.com",
 };
+
+/** City-wise offices shown in footer / contact */
+export const COMPANY_OFFICES = [
+  {
+    label: "Head Office — Chirawa",
+    city: "Chirawa",
+    address:
+      "38 Ambikanagar, Mandrela Road, Chirawa, Dist. Jhunjhunu, Rajasthan - 333026",
+  },
+  {
+    label: "Bhiwani Office",
+    city: "Bhiwani",
+    address: "21, Railway Road, Bhiwani, Haryana - 127021",
+  },
+  {
+    label: "Nalagarh Office",
+    city: "Nalagarh",
+    address: "Nikuwal Road, New Nalagarh, Himachal Pradesh - 174101",
+  },
+];
 export const SOCIAL_LINKS = [{
   name: "LinkedIn",
   href: "https://linkedin.com",

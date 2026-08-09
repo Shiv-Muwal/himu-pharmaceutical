@@ -1,0 +1,275 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+      xmlns:w="urn:schemas-microsoft-com:office:word"
+      xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="utf-8">
+<title>HIMU Pharmaceutical — Website Structure</title>
+<!--[if gte mso 9]>
+<xml>
+  <w:WordDocument>
+    <w:View>Print</w:View>
+  </w:WordDocument>
+</xml>
+<![endif]-->
+<style>
+  body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; color: #1a2e1f; line-height: 1.45; }
+  h1 { font-size: 22pt; color: #14532D; }
+  h2 { font-size: 16pt; color: #166534; border-bottom: 1px solid #BBF7D0; padding-bottom: 4px; margin-top: 28px; }
+  h3 { font-size: 13pt; color: #14532D; margin-top: 18px; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0 20px; }
+  th, td { border: 1px solid #c5d5cb; padding: 8px 10px; vertical-align: top; text-align: left; }
+  th { background: #eef7f1; color: #14532D; }
+  ul { margin: 6px 0 12px 18px; }
+  .meta { color: #5f7468; font-size: 10pt; }
+  .note { background: #f8f3e6; padding: 10px 12px; border-left: 3px solid #14532D; margin: 14px 0; }
+</style>
+</head>
+<body>
+
+<h1>HIMU Pharmaceutical — Website Structure Document</h1>
+<p class="meta">
+  Project: himu-pharmaceutical (Storefront Frontend)<br>
+  Generated: 9 August 2026<br>
+  Purpose: Full page map — routes, sections, and key features
+</p>
+
+<div class="note">
+  <strong>Summary:</strong> Storefront me <strong>17 live pages</strong> hain (plus redirects &amp; global overlays).
+  Admin panel alag app hai (<code>/admin/</code>). Yeh document mainly <strong>customer website (frontend)</strong> cover karta hai.
+</div>
+
+<h2>1. Navigation Overview (Main Menu)</h2>
+<table>
+  <tr><th>Menu</th><th>URL</th><th>Notes</th></tr>
+  <tr><td>Home</td><td>/</td><td>Main shopping home</td></tr>
+  <tr><td>About Us ▾</td><td>/about</td><td>Dropdown: About Us, Manufacturing, Quality Assurance</td></tr>
+  <tr><td>Products ▾</td><td>/products</td><td>Dropdown: Skin Care → /categories/skin-care</td></tr>
+  <tr><td>Jobs</td><td>/jobs</td><td>Vacancies + Apply</td></tr>
+  <tr><td>Contact</td><td>/contact</td><td>Contact form + map</td></tr>
+</table>
+
+<p><strong>Header extras:</strong> Location chip (current city), Search, Cart, Signup / Account menu</p>
+<p><strong>Footer links also include:</strong> FAQ, Certifications, Terms, Privacy, Disclaimer, Jobs, Contact</p>
+
+<h2>2. Complete Page List (Storefront)</h2>
+<table>
+  <tr><th>#</th><th>Page Name</th><th>URL</th><th>Type</th></tr>
+  <tr><td>1</td><td>Home</td><td>/</td><td>Public</td></tr>
+  <tr><td>2</td><td>About Us</td><td>/about</td><td>Public</td></tr>
+  <tr><td>3</td><td>Manufacturing</td><td>/manufacturing</td><td>Public</td></tr>
+  <tr><td>4</td><td>Quality Assurance</td><td>/quality</td><td>Public</td></tr>
+  <tr><td>5</td><td>Products (All)</td><td>/products</td><td>Public</td></tr>
+  <tr><td>6</td><td>Category — Skin Care</td><td>/categories/skin-care</td><td>Public (dynamic)</td></tr>
+  <tr><td>7</td><td>Product Detail</td><td>/products/:slug</td><td>Public (dynamic)</td></tr>
+  <tr><td>8</td><td>Jobs</td><td>/jobs</td><td>Public</td></tr>
+  <tr><td>9</td><td>Contact Us</td><td>/contact</td><td>Public</td></tr>
+  <tr><td>10</td><td>FAQ</td><td>/faq</td><td>Public</td></tr>
+  <tr><td>11</td><td>Certifications</td><td>/certifications</td><td>Public</td></tr>
+  <tr><td>12</td><td>Terms &amp; Conditions</td><td>/terms</td><td>Legal</td></tr>
+  <tr><td>13</td><td>Privacy Policy</td><td>/privacy</td><td>Legal</td></tr>
+  <tr><td>14</td><td>Disclaimer</td><td>/disclaimer</td><td>Legal</td></tr>
+  <tr><td>15</td><td>Log in / Sign up</td><td>/signup</td><td>Auth</td></tr>
+  <tr><td>16</td><td>Forgot Password</td><td>/forgot-password</td><td>Auth</td></tr>
+  <tr><td>17</td><td>My Account</td><td>/account</td><td>Auth (tabs)</td></tr>
+  <tr><td>—</td><td>404 Not Found</td><td>*</td><td>System</td></tr>
+</table>
+
+<h3>Redirects (old URLs → new)</h3>
+<ul>
+  <li><code>/careers</code> → <code>/jobs</code></li>
+  <li><code>/research</code> → <code>/jobs</code></li>
+  <li><code>/news</code> and <code>/news/:slug</code> → Home <code>/</code></li>
+</ul>
+
+<h2>3. Page-by-Page Contents</h2>
+
+<h3>3.1 Home — /</h3>
+<ul>
+  <li>Promo strip (offers / purchase CTAs)</li>
+  <li>Banner carousel (homepage slides)</li>
+  <li>Smart product search bar</li>
+  <li>Quick category rail</li>
+  <li>Dermatology / Skin Care spotlight products</li>
+  <li>Trust strip (quality / shipping cues)</li>
+  <li>Trusted brands section</li>
+  <li>Bottom CTA section</li>
+</ul>
+
+<h3>3.2 About Us — /about</h3>
+<ul>
+  <li>Brand story hero</li>
+  <li>Company stats</li>
+  <li>Why choose HIMU</li>
+  <li>Company Story / Our Journey</li>
+  <li>Mission / Vision / Values style blocks</li>
+  <li>Core Values grid</li>
+  <li><strong>Chairperson Message</strong> (Priyanka) — intro, 4 pillars, quote, closing</li>
+  <li>Leadership Team cards</li>
+  <li>CSR / Corporate Responsibility</li>
+</ul>
+
+<h3>3.3 Manufacturing — /manufacturing</h3>
+<ul>
+  <li>Green / image hero: Manufacturing Excellence</li>
+  <li>Process cards: Production Lines, Packaging, Warehouse, Export, Supply Chain</li>
+</ul>
+
+<h3>3.4 Quality Assurance — /quality</h3>
+<ul>
+  <li>Hero: Quality Assurance</li>
+  <li>Standards cards: WHO-GMP, ISO 9001, ISO 14001, FDA</li>
+  <li>Quality Control Process (6 steps): Raw Material → In-Process → Finished Testing → Batch Release → Stability → Pharmacovigilance</li>
+</ul>
+
+<h3>3.5 Products — /products</h3>
+<ul>
+  <li>Page hero</li>
+  <li>Product catalog (filters / listing of all store products)</li>
+</ul>
+
+<h3>3.6 Category — Skin Care — /categories/skin-care</h3>
+<ul>
+  <li>Hero with <strong>brand green background</strong> (no product photo behind title)</li>
+  <li>Breadcrumbs: Products → Skin Care</li>
+  <li>Filtered product catalog for Skin Care</li>
+  <li>Related research / category note section</li>
+</ul>
+
+<h3>3.7 Product Detail — /products/:slug</h3>
+<ul>
+  <li>Product gallery / media</li>
+  <li>Name, price, MRP, bulk discount badges</li>
+  <li>Add to cart / Buy now (checkout)</li>
+  <li>Description, composition, uses, benefits, storage, etc.</li>
+  <li>Related products</li>
+  <li>SEO product schema</li>
+</ul>
+<p class="meta">Examples: Milky Sunscreen, Porcelyn Night Cream, Lumeva Melasma Cream</p>
+
+<h3>3.8 Jobs — /jobs</h3>
+<ul>
+  <li>Hero banner (jobs image)</li>
+  <li>Open vacancies list (numbered serial cards, no card images)</li>
+  <li>Card click → popup with full JD</li>
+  <li>Apply now → application form inside popup</li>
+  <li>Vacancies managed from Admin → Jobs (local storage)</li>
+</ul>
+
+<h3>3.9 Contact Us — /contact</h3>
+<ul>
+  <li>Hero (contact banner)</li>
+  <li>Contact cards: Address, Phone, Email, Support hours (24/7)</li>
+  <li>Contact form: name, email, phone, inquiry type, <strong>Country / State / City dropdowns</strong>, subject, message</li>
+  <li>Google Maps embed (Chirawa, Rajasthan address)</li>
+</ul>
+
+<h3>3.10 FAQ — /faq</h3>
+<ul>
+  <li>Categorized FAQ accordion (General, Products, Quality, Research, Manufacturing, Jobs, Contact, etc.)</li>
+</ul>
+
+<h3>3.11 Certifications — /certifications</h3>
+<ul>
+  <li>Hero: Compliance</li>
+  <li>Certificate gallery / list of company certifications</li>
+</ul>
+
+<h3>3.12 Terms — /terms</h3>
+<ul>
+  <li>Legal hero</li>
+  <li>Website terms &amp; conditions content</li>
+</ul>
+
+<h3>3.13 Privacy — /privacy</h3>
+<ul>
+  <li>Legal hero</li>
+  <li>Privacy policy content</li>
+</ul>
+
+<h3>3.14 Disclaimer — /disclaimer</h3>
+<ul>
+  <li>Legal hero</li>
+  <li>Medical / website disclaimer content</li>
+</ul>
+
+<h3>3.15 Log in / Sign up — /signup</h3>
+<ul>
+  <li>Left: brand message + benefit cards</li>
+  <li>Right card: Log in | Sign up tabs</li>
+  <li>Login: email, password, <strong>Forgot password?</strong> link</li>
+  <li>Signup: name, mobile, email + OTP verify, strong password, confirm password</li>
+</ul>
+
+<h3>3.16 Forgot Password — /forgot-password</h3>
+<ul>
+  <li>Same visual style as signup</li>
+  <li>Email + new password + confirm</li>
+  <li>Frontend-only reset (backend not changed)</li>
+  <li>Link back to log in</li>
+</ul>
+
+<h3>3.17 My Account — /account</h3>
+<ul>
+  <li>Tab: Profile — user details</li>
+  <li>Tab: My Orders — active orders (address, coupon, delivery, items)</li>
+  <li>Tab: History — past orders</li>
+  <li>Sign out</li>
+</ul>
+
+<h3>3.18 404 — Not Found</h3>
+<ul>
+  <li>Page not found + link back home</li>
+</ul>
+
+<h2>4. Global Features (Har Page pe / Overlay)</h2>
+<table>
+  <tr><th>Feature</th><th>Description</th></tr>
+  <tr><td>Navbar</td><td>Logo, menus, location, search, cart, auth</td></tr>
+  <tr><td>Footer</td><td>Quick links, categories, other links, contact info, CIN</td></tr>
+  <tr><td>Mobile bottom nav</td><td>App-style navigation on mobile</td></tr>
+  <tr><td>Cart Drawer</td><td>Slide-over cart with qty &amp; checkout</td></tr>
+  <tr><td>Checkout Modal</td><td>Contact + address (country/state/city) + payment (COD/Card demo) + bulk offers</td></tr>
+  <tr><td>Login Modal</td><td>Popup login/signup (same as /signup flow) + Forgot password link</td></tr>
+  <tr><td>Location prompt</td><td>Asks for location; shows current city in header</td></tr>
+  <tr><td>Cookie banner / floating buttons / back-to-top</td><td>Site widgets</td></tr>
+</table>
+
+<h2>5. Admin Panel (Separate App)</h2>
+<p class="meta">Path on live site: <code>https://…/admin/</code> — not part of storefront page count above.</p>
+<ul>
+  <li>Overview (dashboard cards including Jobs)</li>
+  <li>Products</li>
+  <li>Categories</li>
+  <li>Inventory</li>
+  <li>Orders</li>
+  <li>Customers</li>
+  <li>Banners</li>
+  <li>Blogs</li>
+  <li><strong>Jobs</strong> — Add vacancy (name + JD)</li>
+  <li>Settings</li>
+</ul>
+
+<h2>6. Company Contact Constants (shown site-wide)</h2>
+<ul>
+  <li>Address: 38 Ambikanagar, Mandrela Road, Chirawa, Dist. Jhunjhunu, Rajasthan - 333026</li>
+  <li>Phone: +91 7419363737</li>
+  <li>Email: Customercare@himupharmaceutical.com</li>
+  <li>Hours: 24/7 Customer Support</li>
+  <li>CIN: U47721RJ2026PTC115427</li>
+</ul>
+
+<h2>7. Tech Folders (for reference)</h2>
+<ul>
+  <li><code>frontend/</code> — customer website (this structure)</li>
+  <li><code>admin/</code> — admin panel</li>
+  <li><code>himu-backend/</code> — API (Node) — not modified for several recent UI features</li>
+  <li><code>docs/</code> — this documentation file</li>
+</ul>
+
+<p class="meta" style="margin-top:32px;">
+  End of document — HIMU Pharmaceutical Website Structure<br>
+  File location: docs/HIMU-Website-Structure.doc
+</p>
+
+</body>
+</html>

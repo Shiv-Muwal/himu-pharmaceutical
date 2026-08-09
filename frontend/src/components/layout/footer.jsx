@@ -1,7 +1,7 @@
 import { Link } from "@/components/ui/link";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { Mail, Phone, MapPin } from "lucide-react";
-import { COMPANY, NAV_LINKS } from "@/lib/constants";
+import { COMPANY, COMPANY_OFFICES, NAV_LINKS } from "@/lib/constants";
 import { categories } from "@/data/categories";
 
 const socialLinks = [
@@ -143,24 +143,29 @@ export function Footer() {
                 </ul>
               </div>
 
-              {/* Contact — bound to company constants */}
+              {/* Contact — offices + phone/email */}
               <div className="col-span-2 lg:col-span-1">
                 <h4 className="mb-3 text-sm font-bold tracking-wide text-emerald sm:text-base">
-                  Contact Info
+                  Our Offices
                 </h4>
-                <ul className="space-y-3 text-xs font-medium text-emerald/90 sm:text-sm">
-                  <li className="flex items-start gap-2.5">
-                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-emerald" />
-                    <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(COMPANY.address)}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="transition hover:text-emerald"
-                    >
-                      {COMPANY.address}
-                    </a>
-                  </li>
-                  <li className="flex items-center gap-2.5">
+                <ul className="space-y-3.5 text-xs font-medium text-emerald/90 sm:text-sm">
+                  {COMPANY_OFFICES.map((office) => (
+                    <li key={office.city} className="flex items-start gap-2.5">
+                      <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-emerald" />
+                      <div>
+                        <p className="font-bold text-emerald">{office.label}</p>
+                        <a
+                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.address)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="mt-0.5 block leading-relaxed transition hover:text-emerald"
+                        >
+                          {office.address}
+                        </a>
+                      </div>
+                    </li>
+                  ))}
+                  <li className="flex items-center gap-2.5 pt-1">
                     <Phone className="h-4 w-4 shrink-0 text-emerald" />
                     <a
                       href={`tel:${COMPANY.phone.replace(/\s+/g, "")}`}
@@ -191,11 +196,8 @@ export function Footer() {
 
           <div>
             <div className="container-custom flex flex-col items-center justify-between gap-3 border-t border-emerald/15 py-4 text-xs font-medium text-emerald/85 md:flex-row">
-              <p>
-                © {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
-              </p>
+              <p>© {new Date().getFullYear()} HIMU. All rights reserved.</p>
               <div className="flex flex-wrap gap-4">
-                <span>License: {COMPANY.licenseNumber}</span>
                 <span>CIN: {COMPANY.cinNumber}</span>
               </div>
               <div className="flex flex-wrap items-center gap-4">
@@ -208,14 +210,6 @@ export function Footer() {
                 <Link href="/disclaimer" className="text-emerald transition-colors hover:text-emerald/70">
                   Disclaimer
                 </Link>
-                <a
-                  href={import.meta.env.VITE_ADMIN_URL || "http://localhost:5174/admin/"}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-full border border-emerald/30 bg-emerald/10 px-3 py-1 font-semibold text-emerald transition hover:bg-emerald hover:text-white"
-                >
-                  Open Admin Panel
-                </a>
               </div>
             </div>
           </div>
