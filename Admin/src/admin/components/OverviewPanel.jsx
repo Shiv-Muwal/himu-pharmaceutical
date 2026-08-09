@@ -8,6 +8,7 @@ import {
   Users,
   AlertTriangle,
   Truck,
+  Briefcase,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -31,6 +32,7 @@ export function OverviewPanel({
   setActiveTab,
   setSelectedOrder,
   handleOpenAddModal,
+  jobsCount = 0,
 }) {
   const cards = [
     {
@@ -39,6 +41,7 @@ export function OverviewPanel({
       desc: `${stats.pendingOrders} pending`,
       icon: ShoppingBag,
       accent: "from-primary/20 to-primary/5 text-emerald",
+      tab: "orders",
     },
     {
       label: "Customers",
@@ -46,6 +49,15 @@ export function OverviewPanel({
       desc: `${stats.totalProductsCount} products`,
       icon: Users,
       accent: "from-teal-500/20 to-teal-500/5 text-teal-700",
+      tab: "customers",
+    },
+    {
+      label: "Jobs",
+      value: jobsCount,
+      desc: "Open vacancies",
+      icon: Briefcase,
+      accent: "from-emerald/25 to-[#f8f3e6] text-[#14532D]",
+      tab: "jobs",
     },
   ];
 
@@ -56,13 +68,16 @@ export function OverviewPanel({
           <Button size="sm" variant="outline" onClick={() => setActiveTab("orders")}>
             <Truck className="h-3.5 w-3.5" /> Dispatch
           </Button>
+          <Button size="sm" variant="outline" onClick={() => setActiveTab("jobs")}>
+            <Briefcase className="h-3.5 w-3.5" /> Add vacancy
+          </Button>
           <Button size="sm" onClick={handleOpenAddModal}>
             <Package className="h-3.5 w-3.5" /> Add Product
           </Button>
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {cards.map((stat, i) => {
           const Icon = stat.icon;
           return (
@@ -72,27 +87,33 @@ export function OverviewPanel({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05 * i }}
             >
-              <Card
-                className={cn(
-                  "overflow-hidden rounded-3xl border-0 bg-gradient-to-br shadow-md",
-                  stat.accent,
-                )}
+              <button
+                type="button"
+                onClick={() => setActiveTab(stat.tab)}
+                className="w-full text-left"
               >
-                <CardContent className="flex items-center justify-between p-5">
-                  <div>
-                    <p className="text-[10px] font-black uppercase tracking-wider opacity-70">
-                      {stat.label}
-                    </p>
-                    <h3 className="mt-1.5 font-[family-name:var(--font-heading)] text-2xl font-black text-foreground">
-                      {stat.value}
-                    </h3>
-                    <p className="mt-1 text-[10px] opacity-70">{stat.desc}</p>
-                  </div>
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/70">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                </CardContent>
-              </Card>
+                <Card
+                  className={cn(
+                    "overflow-hidden rounded-3xl border-0 bg-gradient-to-br shadow-md transition hover:brightness-[1.02]",
+                    stat.accent,
+                  )}
+                >
+                  <CardContent className="flex items-center justify-between p-5">
+                    <div>
+                      <p className="text-[10px] font-black uppercase tracking-wider opacity-70">
+                        {stat.label}
+                      </p>
+                      <h3 className="mt-1.5 font-[family-name:var(--font-heading)] text-2xl font-black text-foreground">
+                        {stat.value}
+                      </h3>
+                      <p className="mt-1 text-[10px] opacity-70">{stat.desc}</p>
+                    </div>
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/70">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                  </CardContent>
+                </Card>
+              </button>
             </motion.div>
           );
         })}

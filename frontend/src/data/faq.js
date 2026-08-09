@@ -115,19 +115,19 @@ export const faqs = [{
   answer: "Our combined manufacturing capacity exceeds 2 billion units annually across all dosage forms, with ongoing expansion projects."
 }, {
   id: "faq-24",
-  category: "Careers",
+  category: "Jobs",
   question: "How can I apply for a job at HIMU?",
-  answer: "Visit our Careers page to view open positions and submit an application through our online form. You can also send your resume to careers@himupharmacy.com."
+  answer: "Visit our Jobs page to view open vacancies, open a role for the full JD, and submit an application with Apply now."
 }, {
   id: "faq-25",
-  category: "Careers",
+  category: "Jobs",
   question: "What benefits does HIMU offer employees?",
   answer: "HIMU offers competitive compensation, health insurance, professional development programs, research opportunities, and a collaborative work culture."
 }, {
   id: "faq-26",
-  category: "Careers",
+  category: "Jobs",
   question: "Does HIMU offer internships?",
-  answer: "Yes. We offer internships for pharmacy, chemistry, and biotechnology students. Applications are accepted through our Careers page during designated periods."
+  answer: "Yes. We offer internships for pharmacy, chemistry, and biotechnology students. Applications are accepted through our Jobs page during designated periods."
 }, {
   id: "faq-27",
   category: "Contact",
@@ -149,4 +149,4 @@ export const faqs = [{
   question: "Can I schedule a facility visit?",
   answer: "Facility visits for qualified business partners, regulators, and academic collaborators can be arranged through our corporate communications team."
 }];
-export const faqCategories = ["All", "General", "Products", "Quality", "Research", "Manufacturing", "Careers", "Contact"];
+export const faqCategories = ["All", "General", "Products", "Quality", "Research", "Manufacturing", "Jobs", "Contact"];

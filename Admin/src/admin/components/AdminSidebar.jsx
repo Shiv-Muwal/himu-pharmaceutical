@@ -12,6 +12,7 @@ import {
   ImageIcon,
   Newspaper,
   Tags,
+  Briefcase,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -44,6 +45,7 @@ const ICONS = {
   customers: Users,
   banners: ImageIcon,
   blogs: Newspaper,
+  jobs: Briefcase,
   settings: Settings,
 };
 

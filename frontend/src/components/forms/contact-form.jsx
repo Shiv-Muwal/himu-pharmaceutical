@@ -224,7 +224,7 @@ const careerSchema = z.object({
   message: z.string().optional(),
 });
 
-export function CareerApplicationForm({ positions }) {
+export function CareerApplicationForm({ positions, defaultPosition = "" }) {
   const [submitted, setSubmitted] = useState(false);
   const {
     register,
@@ -232,6 +232,9 @@ export function CareerApplicationForm({ positions }) {
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(careerSchema),
+    defaultValues: {
+      position: defaultPosition || "",
+    },
   });
 
   const onSubmit = async (values) => {

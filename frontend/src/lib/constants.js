@@ -74,8 +74,8 @@ export const NAV_LINKS = [{
     href: "/categories/skin-care"
   }]
 }, {
-  name: "Careers",
-  href: "/careers"
+  name: "Jobs",
+  href: "/jobs"
 }, {
   name: "Contact",
   href: "/contact"

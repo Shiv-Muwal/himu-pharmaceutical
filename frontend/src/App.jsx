@@ -20,7 +20,7 @@ import { LoginModal } from "@/components/auth/login-modal";
 import { generateOrganizationSchema } from "@/lib/seo";
 import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
-import CareersPage from "@/pages/CareersPage";
+import JobsPage from "@/pages/JobsPage";
 import CategoryPage from "@/pages/CategoryPage";
 import CertificationsPage from "@/pages/CertificationsPage";
 import ContactPage from "@/pages/ContactPage";
@@ -65,7 +65,8 @@ function AppLayout() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/account" element={<AccountPage />} />
-          <Route path="/careers" element={<CareersPage />} />
+          <Route path="/jobs" element={<JobsPage />} />
+          <Route path="/careers" element={<Navigate to="/jobs" replace />} />
           <Route path="/categories/:slug" element={<CategoryPage />} />
           <Route path="/certifications" element={<CertificationsPage />} />
           <Route path="/contact" element={<ContactPage />} />
@@ -78,7 +79,7 @@ function AppLayout() {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/quality" element={<QualityPage />} />
-          <Route path="/research" element={<Navigate to="/careers" replace />} />
+          <Route path="/research" element={<Navigate to="/jobs" replace />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

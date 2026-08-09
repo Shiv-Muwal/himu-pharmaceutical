@@ -11,6 +11,7 @@ import { SettingsPanel } from "@/admin/components/SettingsPanel";
 import { BannersPanel } from "@/admin/components/BannersPanel";
 import { BlogsPanel } from "@/admin/components/BlogsPanel";
 import { CategoriesPanel } from "@/admin/components/CategoriesPanel";
+import { JobsPanel } from "@/admin/components/JobsPanel";
 import { ProductModal, OrderDetailModal } from "@/admin/components/AdminModals";
 
 const TAB_META = {
@@ -45,6 +46,10 @@ const TAB_META = {
   blogs: {
     title: "Blog Management",
     subtitle: "Create and manage news & insights for the storefront",
+  },
+  jobs: {
+    title: "Jobs & Vacancies",
+    subtitle: "Add vacancy name and full JD for the Jobs page",
   },
   settings: {
     title: "Account Settings",
@@ -143,6 +148,7 @@ export default function AdminPage() {
                   setActiveTab={dash.setActiveTab}
                   setSelectedOrder={dash.setSelectedOrder}
                   handleOpenAddModal={dash.handleOpenAddModal}
+                  jobsCount={dash.jobs.length}
                 />
               )}
               {dash.activeTab === "products" && (
@@ -221,6 +227,14 @@ export default function AdminPage() {
                   handleEditBlog={dash.handleEditBlog}
                   handleDeleteBlog={dash.handleDeleteBlog}
                   resetBlogForm={dash.resetBlogForm}
+                />
+              )}
+              {dash.activeTab === "jobs" && (
+                <JobsPanel
+                  jobs={dash.jobs}
+                  onAddJob={dash.handleAddJob}
+                  onUpdateJob={dash.handleUpdateJob}
+                  onRemoveJob={dash.handleRemoveJob}
                 />
               )}
               {dash.activeTab === "settings" && (

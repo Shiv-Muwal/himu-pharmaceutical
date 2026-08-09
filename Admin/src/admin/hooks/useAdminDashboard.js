@@ -14,6 +14,12 @@ import {
   getAdminCategories,
   removeAdminCategory,
 } from "@/admin/lib/categories";
+import {
+  addJob,
+  getJobs,
+  removeJob,
+  updateJob,
+} from "@/admin/lib/jobs";
 
 export function useAdminDashboard() {
   const [mounted, setMounted] = useState(false);
@@ -34,6 +40,7 @@ export function useAdminDashboard() {
   const [blogForm, setBlogForm] = useState(EMPTY_BLOG_FORM);
   const [editingBlogId, setEditingBlogId] = useState(null);
   const [categories, setCategories] = useState(["Skin Care"]);
+  const [jobs, setJobs] = useState([]);
   const [adminProfile, setAdminProfile] = useState({
     name: "HIMU Administrator",
     email: "admin@himu.local",
@@ -99,6 +106,7 @@ export function useAdminDashboard() {
   useEffect(() => {
     setMounted(true);
     setCategories(getAdminCategories());
+    setJobs(getJobs());
     const token = adminSession.get();
     if (!token) return;
     loadDashboard(token)
@@ -112,6 +120,18 @@ export function useAdminDashboard() {
 
   const handleRemoveCategory = (name) => {
     setCategories(removeAdminCategory(name));
+  };
+
+  const handleAddJob = (payload) => {
+    setJobs(addJob(payload));
+  };
+
+  const handleUpdateJob = (id, payload) => {
+    setJobs(updateJob(id, payload));
+  };
+
+  const handleRemoveJob = (id) => {
+    setJobs(removeJob(id));
   };
 
   const loginWithCredentials = async (email, password) => {
@@ -876,6 +896,10 @@ export function useAdminDashboard() {
     categories,
     handleAddCategory,
     handleRemoveCategory,
+    jobs,
+    handleAddJob,
+    handleUpdateJob,
+    handleRemoveJob,
     selectedOrder,
     setSelectedOrder,
     handleUpdateStatus,

@@ -26,7 +26,7 @@ const PAGE_SECTIONS = [
       { name: "Manufacturing", href: "/manufacturing", icon: Factory },
       { name: "Quality Assurance", href: "/quality", icon: ShieldCheck },
       { name: "Certifications", href: "/certifications", icon: Award },
-      { name: "Careers", href: "/careers", icon: Briefcase },
+      { name: "Jobs", href: "/jobs", icon: Briefcase },
     ],
   },
   {

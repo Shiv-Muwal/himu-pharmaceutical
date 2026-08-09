@@ -129,7 +129,7 @@ export function Footer() {
                     { name: "Disclaimer", href: "/disclaimer" },
                     { name: "FAQ", href: "/faq" },
                     { name: "Contact Us", href: "/contact" },
-                    { name: "Careers", href: "/careers" },
+                    { name: "Jobs", href: "/jobs" },
                   ].map((item) => (
                     <li key={item.href}>
                       <Link

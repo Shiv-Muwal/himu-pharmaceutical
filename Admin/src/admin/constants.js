@@ -62,6 +62,7 @@ export const SIDEBAR_TABS = [
   { id: "customers", label: "Customers", hint: "Buyer directory" },
   { id: "banners", label: "Banners", hint: "Homepage slides" },
   { id: "blogs", label: "Blogs", hint: "News & insights" },
+  { id: "jobs", label: "Jobs", hint: "Vacancies & JD" },
   { id: "settings", label: "Settings", hint: "Account & security" },
 ];
 
