@@ -1,14 +1,40 @@
 export const chairman = {
   id: "tm-chairman",
-  name: "Mrs. Kavita Malhotra",
-  role: "Chairman",
+  name: "Priyanka",
+  role: "Chairperson",
   image: "/team/chairman-portrait.png",
-  bio: "Mrs. Kavita Malhotra brings more than two decades of strategic leadership in healthcare and pharmaceutical governance. As Chairman of HIMU Pharmacy, she guides the board’s vision for ethical manufacturing, patient-first innovation, and sustainable growth across India and international markets.",
-  highlights: [
-    "Steers board strategy for quality, compliance, and long-term growth",
-    "Champions accessible dermatology and essential medicines for every community",
-    "Builds partnerships that strengthen HIMU’s research and manufacturing excellence",
+  headline: "A Message from the Chairperson: Advancing Excellence in Healthcare",
+  intro:
+    "At Himu Pharmaceutical, our path is shaped by one steadfast purpose: to bring dependable, high-calibre healthcare within reach across the world. Every formulation we craft and every shipment we release carries the confidence of patients, caregivers, and medical professionals alike.",
+  pillarsIntro:
+    "To honour that confidence, our strategy rests on four enduring pillars:",
+  pillars: [
+    {
+      title: "Uncompromising Quality",
+      description:
+        "Rigorous alignment with international GMP standards safeguards safety, purity, and clinical performance in every product.",
+    },
+    {
+      title: "Purposeful R&D",
+      description:
+        "Sustained investment in scientific discovery expands our therapeutic portfolio across essential healthcare domains.",
+    },
+    {
+      title: "Global Accessibility",
+      description:
+        "Resilient supply networks help deliver affordable treatments to communities near and far.",
+    },
+    {
+      title: "Ethical Integrity",
+      description:
+        "Transparent partnerships and environmentally responsible manufacturing guide every stage of our work.",
+    },
   ],
+  quote:
+    "Our true measure of success is not market reach alone, but the meaningful difference we make in human lives each day.",
+  closing:
+    "As we look ahead, we remain deeply grateful to our scientists, healthcare partners, and devoted colleagues whose shared dedication fuels our progress. Together, we will keep advancing the frontiers of science to build a healthier tomorrow—one solution at a time. Thank you for placing your trust in our vision.",
+  signOff: "Warm regards,",
 };
 
 export const teamMembers = [{

@@ -33,6 +33,7 @@ import ProductDetailPage from "@/pages/ProductDetailPage";
 import QualityPage from "@/pages/QualityPage";
 import TermsPage from "@/pages/TermsPage";
 import SignupPage from "@/pages/SignupPage";
+import ForgotPasswordPage from "@/pages/ForgotPasswordPage";
 import AccountPage from "@/pages/AccountPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 
@@ -48,7 +49,7 @@ function ScrollToTop() {
 
 function AppLayout() {
   const { pathname } = useLocation();
-  const hideFooter = pathname === "/signup";
+  const hideFooter = pathname === "/signup" || pathname === "/forgot-password";
 
   return (
     <>
@@ -64,6 +65,7 @@ function AppLayout() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/jobs" element={<JobsPage />} />
           <Route path="/careers" element={<Navigate to="/jobs" replace />} />

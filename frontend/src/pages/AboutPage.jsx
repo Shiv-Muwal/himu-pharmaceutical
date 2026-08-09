@@ -115,10 +115,13 @@ export default function AboutPage() {
 
       <section className="section-padding">
         <div className="container-custom">
-          <SectionHeading badge="Chairman" title="Message from the Chairman" />
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          <SectionHeading
+            badge="Chairperson"
+            title="Message from the Chairperson"
+          />
+          <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
             <FadeIn direction="left">
-              <div className="relative mx-auto aspect-[3/4] w-full max-w-md overflow-hidden rounded-3xl shadow-xl">
+              <div className="relative mx-auto aspect-[3/4] w-full max-w-md overflow-hidden rounded-3xl shadow-xl lg:sticky lg:top-28">
                 <Image
                   src={chairman.image}
                   alt={chairman.name}
@@ -136,25 +139,52 @@ export default function AboutPage() {
                   <h3 className="font-[family-name:var(--font-heading)] text-3xl font-bold text-foreground md:text-4xl">
                     {chairman.name}
                   </h3>
+                  <p className="mt-3 text-base font-semibold leading-snug text-[#14532D] md:text-lg">
+                    {chairman.headline}
+                  </p>
                 </div>
+
                 <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
-                  {chairman.bio}
+                  {chairman.intro}
                 </p>
-                <ul className="space-y-3">
-                  {chairman.highlights.map((item) => (
-                    <li
-                      key={item}
-                      className="flex gap-3 text-sm leading-relaxed text-muted-foreground md:text-base"
-                    >
+
+                <p className="text-sm font-medium text-foreground md:text-base">
+                  {chairman.pillarsIntro}
+                </p>
+
+                <ul className="space-y-4">
+                  {chairman.pillars.map((pillar) => (
+                    <li key={pillar.title} className="flex gap-3">
                       <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald" />
-                      <span>{item}</span>
+                      <div>
+                        <p className="text-sm font-bold text-[#14532D] md:text-base">
+                          {pillar.title}
+                        </p>
+                        <p className="mt-1 text-sm leading-relaxed text-muted-foreground md:text-[15px]">
+                          {pillar.description}
+                        </p>
+                      </div>
                     </li>
                   ))}
                 </ul>
-                <p className="border-l-2 border-emerald/40 pl-4 text-sm italic text-muted-foreground">
-                  “At HIMU, every formulation begins with one promise — healthcare
-                  that uplifts lives with integrity, science, and care.”
+
+                <p className="border-l-2 border-emerald/40 pl-4 text-sm italic leading-relaxed text-muted-foreground md:text-base">
+                  “{chairman.quote}”
                 </p>
+
+                <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
+                  {chairman.closing}
+                </p>
+
+                <div className="pt-2">
+                  <p className="text-sm text-muted-foreground">{chairman.signOff}</p>
+                  <p className="mt-1 font-[family-name:var(--font-heading)] text-lg font-bold text-[#14532D]">
+                    {chairman.name}
+                  </p>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-emerald">
+                    {chairman.role}, Himu Pharmaceutical
+                  </p>
+                </div>
               </div>
             </FadeIn>
           </div>

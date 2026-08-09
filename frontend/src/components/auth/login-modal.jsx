@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   X,
@@ -375,6 +376,18 @@ export function LoginModal() {
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
+
+                {mode === "login" ? (
+                  <div className="flex justify-end">
+                    <Link
+                      to="/forgot-password"
+                      onClick={handleClose}
+                      className="text-xs font-bold text-emerald hover:underline"
+                    >
+                      Forgot password?
+                    </Link>
+                  </div>
+                ) : null}
 
                 <Button
                   type="submit"
