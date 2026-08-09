@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { CATEGORIES_LIST, LOW_STOCK_THRESHOLD } from "@/admin/constants";
+import { LOW_STOCK_THRESHOLD } from "@/admin/constants";
 import { cn } from "@/lib/utils";
 
 export function ProductsPanel({
@@ -17,6 +17,7 @@ export function ProductsPanel({
   handleOpenEditModal,
   handleDeleteProduct,
   exportProducts,
+  categoriesList = ["Skin Care"],
 }) {
   return (
     <div className="space-y-6">
@@ -37,7 +38,7 @@ export function ProductsPanel({
             className="h-11 rounded-xl border border-input bg-transparent px-3 text-sm"
           >
             <option value="all">All categories</option>
-            {CATEGORIES_LIST.map((c) => (
+            {categoriesList.map((c) => (
               <option key={c} value={c}>
                 {c}
               </option>

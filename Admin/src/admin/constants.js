@@ -1,15 +1,4 @@
-export const CATEGORIES_LIST = [
-  "Dermatology",
-  "Skin Care",
-  "Antibiotics",
-  "Cosmetics",
-  "Hair Care",
-  "Capsules",
-  "Tablets",
-  "Syrups",
-  "Injectables",
-  "Ointments",
-];
+export const CATEGORIES_LIST = ["Skin Care"];
 
 export const IMAGE_PRESETS = {
   "milky-hero": "/product-media/milky-sunscreen/hero.png",
@@ -67,6 +56,7 @@ export const EMPTY_PRODUCT_FORM = {
 export const SIDEBAR_TABS = [
   { id: "overview", label: "Overview", hint: "Live store pulse" },
   { id: "products", label: "Products", hint: "Catalog control" },
+  { id: "categories", label: "Categories", hint: "Skin Care & more" },
   { id: "inventory", label: "Inventory", hint: "Stock & alerts" },
   { id: "orders", label: "Orders", hint: "Fulfillment desk" },
   { id: "customers", label: "Customers", hint: "Buyer directory" },

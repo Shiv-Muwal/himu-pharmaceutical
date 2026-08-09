@@ -6,7 +6,6 @@ import {
   X,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { AdminLogo } from "@/admin/components/AdminLogo";
 import { cn } from "@/lib/utils";
 
 export function AdminTopBar({
@@ -24,10 +23,6 @@ export function AdminTopBar({
   return (
     <div className="sticky top-0 z-20 border-b border-border/30 bg-[#f8f3e6]/90 px-4 py-3 backdrop-blur-xl md:px-8">
       <div className="flex items-center gap-3">
-        <div className="hidden xl:block">
-          <AdminLogo size="md" />
-        </div>
-
         <div className="relative min-w-0 flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input

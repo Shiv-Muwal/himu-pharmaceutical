@@ -70,41 +70,8 @@ export const NAV_LINKS = [{
   name: "Products",
   href: "/products",
   children: [{
-    name: "All Products",
-    href: "/products"
-  }, {
-    name: "Antibiotics",
-    href: "/categories/antibiotics"
-  }, {
-    name: "Dermatology",
-    href: "/categories/dermatology"
-  }, {
-    name: "Cosmetics",
-    href: "/categories/cosmetics"
-  }, {
     name: "Skin Care",
     href: "/categories/skin-care"
-  }, {
-    name: "Hair Care",
-    href: "/categories/hair-care"
-  }, {
-    name: "Injectables",
-    href: "/categories/injectables"
-  }, {
-    name: "Capsules",
-    href: "/categories/capsules"
-  }, {
-    name: "Tablets",
-    href: "/categories/tablets"
-  }, {
-    name: "Syrups",
-    href: "/categories/syrups"
-  }, {
-    name: "Creams",
-    href: "/categories/creams"
-  }, {
-    name: "Ointments",
-    href: "/categories/ointments"
   }]
 }, {
   name: "Careers",

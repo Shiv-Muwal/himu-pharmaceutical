@@ -9,6 +9,11 @@ import {
   linesToList,
   listToLines,
 } from "@/admin/constants";
+import {
+  addAdminCategory,
+  getAdminCategories,
+  removeAdminCategory,
+} from "@/admin/lib/categories";
 
 export function useAdminDashboard() {
   const [mounted, setMounted] = useState(false);
@@ -28,6 +33,7 @@ export function useAdminDashboard() {
   const [blogs, setBlogs] = useState([]);
   const [blogForm, setBlogForm] = useState(EMPTY_BLOG_FORM);
   const [editingBlogId, setEditingBlogId] = useState(null);
+  const [categories, setCategories] = useState(["Skin Care"]);
   const [adminProfile, setAdminProfile] = useState({
     name: "HIMU Administrator",
     email: "admin@himu.local",
@@ -92,12 +98,21 @@ export function useAdminDashboard() {
 
   useEffect(() => {
     setMounted(true);
+    setCategories(getAdminCategories());
     const token = adminSession.get();
     if (!token) return;
     loadDashboard(token)
       .then(() => setIsLoggedIn(true))
       .catch(() => adminSession.clear());
   }, []);
+
+  const handleAddCategory = (name) => {
+    setCategories(addAdminCategory(name));
+  };
+
+  const handleRemoveCategory = (name) => {
+    setCategories(removeAdminCategory(name));
+  };
 
   const loginWithCredentials = async (email, password) => {
     setLoginError("");
@@ -454,7 +469,12 @@ export function useAdminDashboard() {
 
   const handleOpenAddModal = () => {
     setEditingProduct(null);
-    setProductForm(EMPTY_PRODUCT_FORM);
+    const cats = getAdminCategories();
+    setCategories(cats);
+    setProductForm({
+      ...EMPTY_PRODUCT_FORM,
+      category: cats[0] || "Skin Care",
+    });
     setFormErrors({});
     setIsProductModalOpen(true);
   };
@@ -853,6 +873,9 @@ export function useAdminDashboard() {
     handleOpenEditModal,
     handleDeleteProduct,
     handleUpdateStock,
+    categories,
+    handleAddCategory,
+    handleRemoveCategory,
     selectedOrder,
     setSelectedOrder,
     handleUpdateStatus,

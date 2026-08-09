@@ -10,6 +10,7 @@ import { CustomersPanel } from "@/admin/components/CustomersPanel";
 import { SettingsPanel } from "@/admin/components/SettingsPanel";
 import { BannersPanel } from "@/admin/components/BannersPanel";
 import { BlogsPanel } from "@/admin/components/BlogsPanel";
+import { CategoriesPanel } from "@/admin/components/CategoriesPanel";
 import { ProductModal, OrderDetailModal } from "@/admin/components/AdminModals";
 
 const TAB_META = {
@@ -20,6 +21,10 @@ const TAB_META = {
   products: {
     title: "Product Catalog",
     subtitle: "Create, refine, export and manage formulations",
+  },
+  categories: {
+    title: "Product Categories",
+    subtitle: "Add Skin Care and other categories for product assignment",
   },
   inventory: {
     title: "Inventory Control",
@@ -151,6 +156,14 @@ export default function AdminPage() {
                   handleOpenEditModal={dash.handleOpenEditModal}
                   handleDeleteProduct={dash.handleDeleteProduct}
                   exportProducts={dash.exportProducts}
+                  categoriesList={dash.categories}
+                />
+              )}
+              {dash.activeTab === "categories" && (
+                <CategoriesPanel
+                  categories={dash.categories}
+                  onAddCategory={dash.handleAddCategory}
+                  onRemoveCategory={dash.handleRemoveCategory}
                 />
               )}
               {dash.activeTab === "inventory" && (
@@ -242,6 +255,12 @@ export default function AdminPage() {
         setProductForm={dash.setProductForm}
         formErrors={dash.formErrors}
         onSubmit={dash.handleProductSubmit}
+        categoriesList={
+          dash.productForm?.category &&
+          !dash.categories.includes(dash.productForm.category)
+            ? [...dash.categories, dash.productForm.category]
+            : dash.categories
+        }
       />
 
       <OrderDetailModal

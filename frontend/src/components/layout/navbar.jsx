@@ -8,16 +8,8 @@ import {
   X,
   Search,
   ChevronDown,
-  Pill,
-  Sparkles,
-  Syringe,
-  Layers,
-  Activity,
-  Droplet,
-  ArrowRight,
-  ShieldCheck,
   Heart,
-  Sparkle,
+  ShieldCheck,
   Info,
   Factory,
   ShoppingBag,
@@ -41,26 +33,14 @@ import { useCart } from "@/providers/CartProvider";
 import { useAuth } from "@/providers/AuthProvider";
 import { useLocationInfo } from "@/providers/LocationProvider";
 
-const clinicalCategories = [
-  { name: "Antibiotics", href: "/categories/antibiotics", icon: Pill },
-  { name: "Dermatology", href: "/categories/dermatology", icon: Layers },
-  { name: "Injectables", href: "/categories/injectables", icon: Syringe },
-  { name: "Capsules", href: "/categories/capsules", icon: Pill },
-  { name: "Tablets", href: "/categories/tablets", icon: Activity },
-];
-
-const wellnessCategories = [
-  { name: "Skin Care", href: "/categories/skin-care", icon: Heart },
-  { name: "Hair Care", href: "/categories/hair-care", icon: Sparkles },
-  { name: "Cosmetics", href: "/categories/cosmetics", icon: Sparkle },
-  { name: "Syrups", href: "/categories/syrups", icon: Droplet },
-  { name: "Creams & Ointments", href: "/categories/creams", icon: ShieldCheck },
-];
-
 const aboutChildren = [
   { name: "About Us", href: "/about", icon: Info },
   { name: "Manufacturing", href: "/manufacturing", icon: Factory },
   { name: "Quality Assurance", href: "/quality", icon: ShieldCheck },
+];
+
+const productChildren = [
+  { name: "Skin Care", href: "/categories/skin-care", icon: Heart },
 ];
 
 export function Navbar() {
@@ -157,180 +137,82 @@ export function Navbar() {
           <div className="hidden lg:flex items-center gap-0 xl:gap-1">
             {NAV_LINKS.map((link) =>
               link.children ? (
-                link.name === "Products" ? (
-                  <div
-                    key={link.name}
-                    className="relative group/mega"
-                    onMouseEnter={() => setProductsOpen(true)}
-                    onMouseLeave={() => setProductsOpen(false)}
-                  >
-                    <button
-                      className={cn(
-                        "flex items-center gap-0.5 px-1.5 xl:px-3.5 py-2 rounded-lg text-xs xl:text-sm font-medium transition-colors whitespace-nowrap",
-                        pathname.startsWith("/products") ||
+                <div
+                  key={link.name}
+                  className="relative"
+                  onMouseEnter={() =>
+                    link.name === "Products"
+                      ? setProductsOpen(true)
+                      : setAboutOpen(true)
+                  }
+                  onMouseLeave={() =>
+                    link.name === "Products"
+                      ? setProductsOpen(false)
+                      : setAboutOpen(false)
+                  }
+                >
+                  <button
+                    className={cn(
+                      "flex items-center gap-0.5 px-2.5 xl:px-3.5 py-2 rounded-lg text-xs xl:text-sm font-medium transition-colors whitespace-nowrap",
+                      link.name === "Products"
+                        ? pathname.startsWith("/products") ||
                           pathname.startsWith("/categories")
                           ? "text-emerald"
-                          : "text-foreground hover:text-emerald",
-                      )}
-                    >
-                      {link.name}
-                      <ChevronDown
-                        className={cn(
-                          "h-4 w-4 transition-transform",
-                          productsOpen && "rotate-180",
-                        )}
-                      />
-                    </button>
-                    <AnimatePresence>
-                      {productsOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 15 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 15 }}
-                          className="absolute left-1/2 -translate-x-1/2 mt-3 w-[760px] max-w-[90vw] bg-[#d2f2d4] rounded-3xl shadow-2xl p-5 grid grid-cols-12 gap-5 z-50 border border-[#b8dfba]"
-                        >
-                          {/* Featured Column (Left) */}
-                          <div className="col-span-4 bg-primary text-primary-foreground p-5 rounded-2xl relative overflow-hidden flex flex-col justify-between shadow-lg shadow-primary/20">
-                            <div className="absolute inset-0 opacity-10 molecular-bg" />
-                            <div className="relative z-10">
-                              <span className="text-[9px] tracking-widest uppercase bg-white/20 text-white px-2.5 py-1 rounded-full font-bold">
-                                Featured Portfolio
-                              </span>
-                              <h4 className="text-lg font-bold mt-4 font-[family-name:var(--font-heading)] leading-snug">
-                                Quality Assured Medicines
-                              </h4>
-                              <p className="text-[11px] text-white/80 mt-2 leading-relaxed">
-                                Over 500 WHO-GMP and ISO certified formulations
-                                designed for global health.
-                              </p>
-                            </div>
-                            <Link
-                              href="/products"
-                              onClick={() => setProductsOpen(false)}
-                              className="relative z-10 mt-6 inline-flex items-center justify-between bg-secondary text-secondary-foreground px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-secondary/90 transition-all shadow-[0_3px_0_0_#9a7d1a] hover:shadow-[0_4px_0_0_#9a7d1a] hover:-translate-y-[0.5px] active:translate-y-[2px] active:shadow-[0_1px_0_0_#9a7d1a]"
-                            >
-                              Explore All Products
-                              <ArrowRight className="h-4 w-4" />
-                            </Link>
-                          </div>
-                          {/* Column 2: Clinical Categories */}
-                          <div className="col-span-4 flex flex-col gap-3">
-                            <h5 className="font-bold text-[10px] text-emerald uppercase tracking-wider pl-1.5">
-                              Clinical Divisions
-                            </h5>
-                            <div className="grid gap-0.5">
-                              {clinicalCategories.map((item) => {
-                                const Icon = item.icon;
-                                return (
-                                  <Link
-                                    key={item.name}
-                                    href={item.href}
-                                    onClick={() => setProductsOpen(false)}
-                                    className="flex items-center gap-2.5 p-1.5 rounded-xl hover:bg-primary/5 hover:translate-x-1 transition-all duration-200 group text-left"
-                                  >
-                                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-emerald group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
-                                      <Icon className="h-4 w-4" />
-                                    </div>
-                                    <div>
-                                      <p className="text-xs font-semibold text-foreground group-hover:text-emerald transition-colors">
-                                        {item.name}
-                                      </p>
-                                    </div>
-                                  </Link>
-                                );
-                              })}
-                            </div>
-                          </div>
-                          {/* Column 3: Wellness & Care Categories */}
-                          <div className="col-span-4 flex flex-col gap-3">
-                            <h5 className="font-bold text-[10px] text-emerald uppercase tracking-wider pl-1.5">
-                              Wellness & Care
-                            </h5>
-                            <div className="grid gap-0.5">
-                              {wellnessCategories.map((item) => {
-                                const Icon = item.icon;
-                                return (
-                                  <Link
-                                    key={item.name}
-                                    href={item.href}
-                                    onClick={() => setProductsOpen(false)}
-                                    className="flex items-center gap-2.5 p-1.5 rounded-xl hover:bg-primary/5 hover:translate-x-1 transition-all duration-200 group text-left"
-                                  >
-                                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-emerald group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
-                                      <Icon className="h-4 w-4" />
-                                    </div>
-                                    <div>
-                                      <p className="text-xs font-semibold text-foreground group-hover:text-emerald transition-colors">
-                                        {item.name}
-                                      </p>
-                                    </div>
-                                  </Link>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                ) : (
-                  <div
-                    key={link.name}
-                    className="relative"
-                    onMouseEnter={() => setAboutOpen(true)}
-                    onMouseLeave={() => setAboutOpen(false)}
-                  >
-                    <button
-                      className={cn(
-                        "flex items-center gap-0.5 px-2.5 xl:px-3.5 py-2 rounded-lg text-xs xl:text-sm font-medium transition-colors whitespace-nowrap",
-                        pathname.startsWith("/about") ||
-                          pathname.startsWith("/manufacturing") ||
-                          pathname.startsWith("/quality")
+                          : "text-foreground hover:text-emerald"
+                        : pathname.startsWith("/about") ||
+                            pathname.startsWith("/manufacturing") ||
+                            pathname.startsWith("/quality")
                           ? "text-emerald"
                           : "text-foreground hover:text-emerald",
+                    )}
+                  >
+                    {link.name}
+                    <ChevronDown
+                      className={cn(
+                        "h-4 w-4 transition-transform",
+                        (link.name === "Products" ? productsOpen : aboutOpen) &&
+                          "rotate-180",
                       )}
-                    >
-                      {link.name}
-                      <ChevronDown
-                        className={cn(
-                          "h-4 w-4 transition-transform",
-                          aboutOpen && "rotate-180",
-                        )}
-                      />
-                    </button>
-                    <AnimatePresence>
-                      {aboutOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 10 }}
-                          className="absolute left-0 mt-3 w-64 bg-[#f8f3e6] border border-border/60 rounded-2xl shadow-2xl p-2 grid gap-1 z-50"
-                        >
-                          {aboutChildren.map((child) => {
-                            const Icon = child.icon;
-                            return (
-                              <Link
-                                key={child.name}
-                                href={child.href}
-                                onClick={() => setAboutOpen(false)}
-                                className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-primary/10 transition-all duration-200 group text-left"
-                              >
-                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-emerald group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
-                                  <Icon className="h-4 w-4" />
-                                </div>
-                                <div>
-                                  <p className="text-xs font-semibold text-foreground group-hover:text-emerald transition-colors whitespace-nowrap">
-                                    {child.name}
-                                  </p>
-                                </div>
-                              </Link>
-                            );
-                          })}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                )
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {(link.name === "Products" ? productsOpen : aboutOpen) && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        className="absolute left-0 mt-3 w-64 bg-[#f8f3e6] border border-border/60 rounded-2xl shadow-2xl p-2 grid gap-1 z-50"
+                      >
+                        {(link.name === "Products"
+                          ? productChildren
+                          : aboutChildren
+                        ).map((child) => {
+                          const Icon = child.icon;
+                          return (
+                            <Link
+                              key={child.name}
+                              href={child.href}
+                              onClick={() => {
+                                setProductsOpen(false);
+                                setAboutOpen(false);
+                              }}
+                              className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-primary/10 transition-all duration-200 group text-left"
+                            >
+                              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-emerald group-hover:bg-primary group-hover:text-primary-foreground transition-colors shrink-0">
+                                <Icon className="h-4 w-4" />
+                              </div>
+                              <div>
+                                <p className="text-xs font-semibold text-foreground group-hover:text-emerald transition-colors whitespace-nowrap">
+                                  {child.name}
+                                </p>
+                              </div>
+                            </Link>
+                          );
+                        })}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               ) : (
                 <Link
                   key={link.name}

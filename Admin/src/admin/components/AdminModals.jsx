@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-import { CATEGORIES_LIST } from "@/admin/constants";
 import { adminSession, mediaUrl, uploadApi } from "@/lib/api";
 
 export function ProductModal({
@@ -15,6 +14,7 @@ export function ProductModal({
   setProductForm,
   formErrors,
   onSubmit,
+  categoriesList = ["Skin Care"],
 }) {
   const fileRef = useRef(null);
   const [uploading, setUploading] = useState(false);
@@ -142,7 +142,7 @@ export function ProductModal({
                 onChange={(e) => setProductForm((p) => ({ ...p, category: e.target.value }))}
                 className="flex h-11 w-full rounded-xl border border-input bg-transparent px-3 py-1 text-sm"
               >
-                {CATEGORIES_LIST.map((c) => (
+                {categoriesList.map((c) => (
                   <option key={c} value={c}>{c}</option>
                 ))}
               </select>
