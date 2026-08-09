@@ -32,6 +32,12 @@ import {
   getProductMrp,
   getSuggestedProducts,
 } from "@/lib/pricing";
+import { LocationFields } from "@/components/forms/location-fields";
+import { useLocationInfo } from "@/providers/LocationProvider";
+import {
+  matchCityFromLabel,
+  matchStateFromLabel,
+} from "@/data/india-locations";
 
 export function CheckoutModal() {
   const {
@@ -50,12 +56,15 @@ export function CheckoutModal() {
     clearCart,
   } = useCart();
   const { user, isAuthenticated, openLogin } = useAuth();
+  const { location } = useLocationInfo();
 
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     email: "",
     address: "",
+    country: "India",
+    state: "",
     city: "",
     pincode: "",
     paymentMethod: "cod",
@@ -99,6 +108,28 @@ export function CheckoutModal() {
     }));
   }, [isCheckoutOpen, user]);
 
+  useEffect(() => {
+    if (!isCheckoutOpen || !location) return;
+    setFormData((prev) => {
+      if (prev.city && prev.state) return prev;
+      const country =
+        prev.country ||
+        (location.country?.toLowerCase().includes("india") ? "India" : location.country) ||
+        "India";
+      const state =
+        prev.state ||
+        (country === "India" ? matchStateFromLabel(location.region) : location.region) ||
+        "";
+      const city =
+        prev.city ||
+        (country === "India"
+          ? matchCityFromLabel(location.city, state) || location.city
+          : location.city) ||
+        "";
+      return { ...prev, country, state, city };
+    });
+  }, [isCheckoutOpen, location]);
+
   if (!isCheckoutOpen) return null;
 
   const handleInputChange = (e) => {
@@ -121,6 +152,8 @@ export function CheckoutModal() {
       newErrors.email = "Enter a valid email address";
     }
     if (!formData.address.trim()) newErrors.address = "Shipping address is required";
+    if (!formData.country.trim()) newErrors.country = "Country is required";
+    if (!formData.state.trim()) newErrors.state = "State is required";
     if (!formData.city.trim()) newErrors.city = "City is required";
     if (!formData.pincode.trim()) {
       newErrors.pincode = "Pin code is required";
@@ -164,6 +197,15 @@ export function CheckoutModal() {
     if (!validateForm()) return;
     setIsSubmitting(true);
 
+    const fullAddress = [
+      formData.address.trim(),
+      formData.city,
+      formData.state,
+      formData.country,
+    ]
+      .filter(Boolean)
+      .join(", ");
+
     try {
       const order = await api("/orders", {
         method: "POST",
@@ -172,9 +214,11 @@ export function CheckoutModal() {
             name: formData.name,
             phone: formData.phone,
             email: formData.email,
-            address: formData.address,
+            address: fullAddress,
             city: formData.city,
             pincode: formData.pincode,
+            country: formData.country,
+            state: formData.state,
           },
           items: checkoutItems.map((item) => ({
             productId: item.product.id,
@@ -224,9 +268,11 @@ export function CheckoutModal() {
           name: formData.name,
           phone: formData.phone,
           email: formData.email,
-          address: formData.address,
+          address: fullAddress,
           city: formData.city,
           pincode: formData.pincode,
+          country: formData.country,
+          state: formData.state,
         },
         paymentMethod: formData.paymentMethod,
       });
@@ -389,31 +435,53 @@ export function CheckoutModal() {
                       {errors.address && (
                         <p className="text-[10px] text-red-500">{errors.address}</p>
                       )}
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <Input
-                            name="city"
-                            placeholder="City *"
-                            value={formData.city}
-                            onChange={handleInputChange}
-                            className={`h-11 rounded-xl border-[#dce8e0] bg-[#f8fbf8] ${errors.city ? "border-red-400" : ""}`}
-                          />
-                          {errors.city && (
-                            <p className="mt-1 text-[10px] text-red-500">{errors.city}</p>
-                          )}
-                        </div>
-                        <div>
-                          <Input
-                            name="pincode"
-                            placeholder="Pincode *"
-                            value={formData.pincode}
-                            onChange={handleInputChange}
-                            className={`h-11 rounded-xl border-[#dce8e0] bg-[#f8fbf8] ${errors.pincode ? "border-red-400" : ""}`}
-                          />
-                          {errors.pincode && (
-                            <p className="mt-1 text-[10px] text-red-500">{errors.pincode}</p>
-                          )}
-                        </div>
+                      <LocationFields
+                        country={formData.country}
+                        state={formData.state}
+                        city={formData.city}
+                        errors={errors}
+                        onCountryChange={(country) => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            country,
+                            state: "",
+                            city: "",
+                          }));
+                          setErrors((prev) => ({
+                            ...prev,
+                            country: "",
+                            state: "",
+                            city: "",
+                          }));
+                        }}
+                        onStateChange={(state) => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            state,
+                            city: "",
+                          }));
+                          setErrors((prev) => ({
+                            ...prev,
+                            state: "",
+                            city: "",
+                          }));
+                        }}
+                        onCityChange={(city) => {
+                          setFormData((prev) => ({ ...prev, city }));
+                          setErrors((prev) => ({ ...prev, city: "" }));
+                        }}
+                      />
+                      <div>
+                        <Input
+                          name="pincode"
+                          placeholder="Pincode *"
+                          value={formData.pincode}
+                          onChange={handleInputChange}
+                          className={`h-11 rounded-xl border-[#dce8e0] bg-[#f8fbf8] ${errors.pincode ? "border-red-400" : ""}`}
+                        />
+                        {errors.pincode && (
+                          <p className="mt-1 text-[10px] text-red-500">{errors.pincode}</p>
+                        )}
                       </div>
                     </div>
                   </div>

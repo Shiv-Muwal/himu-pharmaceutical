@@ -1,13 +1,10 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 const LocationContext = createContext(null);
 
 const STORAGE_KEY = "himu-user-location";
-const REQUESTED_KEY = "himu-location-requested";
 
-// React Strict Mode remounts components in development. Keep this outside the
-// component so it cannot open the browser permission prompt twice.
-let locationRequestStarted = false;
+let inFlight = false;
 
 function readCachedLocation() {
   try {
@@ -28,11 +25,12 @@ async function reverseGeocode(latitude, longitude) {
     data.principalSubdivision ||
     data.countryName ||
     "Nearby";
-  const region = data.principalSubdivisionCode || data.principalSubdivision || "";
+  const region = data.principalSubdivision || data.principalSubdivisionCode || "";
+  const country = data.countryName || "";
   return {
     city,
     region,
-    country: data.countryName || "",
+    country,
     label: region && region !== city ? `${city}, ${region}` : city,
     latitude,
     longitude,
@@ -46,31 +44,19 @@ export function LocationProvider({ children }) {
   );
   const [error, setError] = useState("");
 
-  useEffect(() => {
+  const requestLocation = useCallback((options = {}) => {
+    const { forcePrompt = true } = options;
+
     if (typeof window === "undefined" || !navigator.geolocation) {
       setStatus("unsupported");
       setError("Location is not supported on this device");
       return;
     }
 
-    const cached = readCachedLocation();
-    if (cached?.label) {
-      setLocation(cached);
-      setStatus("ready");
-      return;
-    }
-
-    // After a visitor dismisses the browser prompt, do not request it again in
-    // the same tab. Repeated requests trigger Chrome's geolocation warning.
-    if (locationRequestStarted || sessionStorage.getItem(REQUESTED_KEY)) {
-      setStatus("denied");
-      setError("Location permission was not granted");
-      return;
-    }
-
-    locationRequestStarted = true;
-    sessionStorage.setItem(REQUESTED_KEY, "true");
+    if (inFlight) return;
+    inFlight = true;
     setStatus("requesting");
+    setError("");
 
     navigator.geolocation.getCurrentPosition(
       async (position) => {
@@ -96,22 +82,39 @@ export function LocationProvider({ children }) {
           setLocation(fallback);
           setStatus("ready");
           setError(err.message || "Showing approximate location");
+        } finally {
+          inFlight = false;
         }
       },
       (geoError) => {
+        inFlight = false;
         setStatus("denied");
         setError(geoError.message || "Location permission denied");
+        if (forcePrompt) {
+          // Keep last known city if permission denied mid-session
+          const cached = readCachedLocation();
+          if (cached?.label) {
+            setLocation(cached);
+          }
+        }
       },
       {
-        enableHighAccuracy: false,
-        timeout: 12000,
-        maximumAge: 10 * 60 * 1000,
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 0,
       },
     );
   }, []);
 
+  // Ask for current city on every page load / visit
+  useEffect(() => {
+    requestLocation({ forcePrompt: true });
+  }, [requestLocation]);
+
   return (
-    <LocationContext.Provider value={{ location, status, error }}>
+    <LocationContext.Provider
+      value={{ location, status, error, requestLocation }}
+    >
       {children}
     </LocationContext.Provider>
   );

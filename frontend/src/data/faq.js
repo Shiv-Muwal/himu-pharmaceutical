@@ -132,7 +132,7 @@ export const faqs = [{
   id: "faq-27",
   category: "Contact",
   question: "How can I contact HIMU Pharmacy?",
-  answer: "Reach us at info@himupharmacy.com, call +91 7419363737, or visit our Contact page to submit an inquiry through our contact form."
+  answer: "Reach us at Customercare@himupharmaceutical.com, call +91 7419363737, or visit our Contact page to submit an inquiry through our contact form."
 }, {
   id: "faq-28",
   category: "Contact",

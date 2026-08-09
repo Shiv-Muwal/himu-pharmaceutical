@@ -5,11 +5,11 @@ export const COMPANY = {
   type: "Pharmaceutical Manufacturing Company",
   licenseNumber: "ABCDEFGHIJKLMN",
   cinNumber: "U47721RJ2026PTC115427",
-  email: "info@himupharmacy.com",
+  email: "Customercare@himupharmaceutical.com",
   phone: "+91 7419363737",
   address: "38 Ambikanagar, Mandrela Road, Chirawa, Dist. Jhunjhunu, Rajasthan - 333026",
   officeHours: "24/7 Customer Support",
-  url: "https://www.himupharmacy.com"
+  url: "https://www.himupharmaceutical.com"
 };
 export const SOCIAL_LINKS = [{
   name: "LinkedIn",

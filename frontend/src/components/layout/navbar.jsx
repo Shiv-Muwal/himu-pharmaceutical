@@ -46,7 +46,7 @@ const productChildren = [
 export function Navbar() {
   const { cartCount, setCartOpen } = useCart();
   const { user, isAuthenticated, logout, openLogin } = useAuth();
-  const { location, status } = useLocationInfo();
+  const { location, status, requestLocation } = useLocationInfo();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
@@ -230,19 +230,25 @@ export function Navbar() {
             )}
           </div>
           <div className="flex items-center gap-2">
-            <div
-              className="flex max-w-[110px] items-center gap-1 rounded-xl border border-primary/15 bg-primary/5 px-2 py-1.5 text-emerald sm:max-w-[140px] sm:gap-1.5 sm:px-2.5 xl:max-w-[180px]"
-              title={location?.label || "Detecting your location"}
+            <button
+              type="button"
+              onClick={() => requestLocation({ forcePrompt: true })}
+              className="flex max-w-[110px] items-center gap-1 rounded-xl border border-primary/15 bg-primary/5 px-2 py-1.5 text-emerald transition hover:bg-primary/10 sm:max-w-[140px] sm:gap-1.5 sm:px-2.5 xl:max-w-[180px]"
+              title={
+                location?.label
+                  ? `${location.label} — tap to refresh`
+                  : "Detect your current city"
+              }
             >
               <MapPin className="h-3.5 w-3.5 shrink-0" />
               <span className="truncate text-[10px] font-bold sm:text-[11px]">
                 {status === "requesting" || status === "idle"
                   ? "Locating..."
                   : status === "denied" || status === "unsupported"
-                    ? "Location"
+                    ? "Set location"
                     : location?.city || location?.label || "Your area"}
               </span>
-            </div>
+            </button>
             <button
               onClick={() => setSearchOpen(!searchOpen)}
               className="hidden p-2 rounded-lg transition-colors hover:bg-muted text-foreground cursor-pointer md:inline-flex"

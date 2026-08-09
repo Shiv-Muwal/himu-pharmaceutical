@@ -101,12 +101,12 @@ export function Footer() {
                 </ul>
               </div>
 
-              {/* Product Categories — right of Quick Links on mobile */}
+              {/* Product Categories + Other Links */}
               <div>
                 <h4 className="mb-3 text-sm font-bold tracking-wide text-emerald sm:text-base">
                   Product Categories
                 </h4>
-                <ul className="space-y-2">
+                <ul className="mb-6 space-y-2">
                   {categories.slice(0, 8).map((cat) => (
                     <li key={cat.slug}>
                       <Link
@@ -118,9 +118,32 @@ export function Footer() {
                     </li>
                   ))}
                 </ul>
+
+                <h4 className="mb-3 text-sm font-bold tracking-wide text-emerald sm:text-base">
+                  Other Links
+                </h4>
+                <ul className="space-y-2">
+                  {[
+                    { name: "Terms & Conditions", href: "/terms" },
+                    { name: "Privacy Policy", href: "/privacy" },
+                    { name: "Disclaimer", href: "/disclaimer" },
+                    { name: "FAQ", href: "/faq" },
+                    { name: "Contact Us", href: "/contact" },
+                    { name: "Careers", href: "/careers" },
+                  ].map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className="inline-block text-xs font-medium text-emerald/90 transition-all duration-300 hover:translate-x-1.5 hover:text-emerald sm:text-sm"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
-              {/* Contact — full width under the two columns on mobile */}
+              {/* Contact — bound to company constants */}
               <div className="col-span-2 lg:col-span-1">
                 <h4 className="mb-3 text-sm font-bold tracking-wide text-emerald sm:text-base">
                   Contact Info
@@ -128,17 +151,40 @@ export function Footer() {
                 <ul className="space-y-3 text-xs font-medium text-emerald/90 sm:text-sm">
                   <li className="flex items-start gap-2.5">
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-emerald" />
-                    <span>{COMPANY.address}</span>
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(COMPANY.address)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="transition hover:text-emerald"
+                    >
+                      {COMPANY.address}
+                    </a>
                   </li>
                   <li className="flex items-center gap-2.5">
                     <Phone className="h-4 w-4 shrink-0 text-emerald" />
-                    <span>{COMPANY.phone}</span>
+                    <a
+                      href={`tel:${COMPANY.phone.replace(/\s+/g, "")}`}
+                      className="transition hover:text-emerald"
+                    >
+                      {COMPANY.phone}
+                    </a>
                   </li>
                   <li className="flex items-center gap-2.5">
                     <Mail className="h-4 w-4 shrink-0 text-emerald" />
-                    <span>{COMPANY.email}</span>
+                    <a
+                      href={`mailto:${COMPANY.email}`}
+                      className="transition hover:text-emerald"
+                    >
+                      {COMPANY.email}
+                    </a>
                   </li>
                 </ul>
+                <Link
+                  href="/contact"
+                  className="mt-4 inline-flex rounded-full border border-emerald/30 bg-white/40 px-3.5 py-1.5 text-xs font-bold text-emerald transition hover:bg-emerald hover:text-white"
+                >
+                  Go to Contact page
+                </Link>
               </div>
             </div>
           </div>
