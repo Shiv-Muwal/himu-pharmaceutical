@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
@@ -10,6 +10,10 @@ import {
   ShieldCheck,
   Package,
   Leaf,
+  Plus,
+  Minus,
+  Sparkles,
+  Tag,
 } from "lucide-react";
 import { Image } from "@/components/ui/image";
 import { useCart } from "@/providers/CartProvider";
@@ -20,6 +24,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/lib/api";
 import { OrderSuccessView } from "@/components/cart/order-success";
 import { saveCustomerOrder } from "@/lib/customer-orders";
+import { getMockProducts } from "@/lib/mock-backend";
+import {
+  BULK_OFFERS,
+  getDiscountedUnitPrice,
+  getNextOfferHint,
+  getProductMrp,
+  getSuggestedProducts,
+} from "@/lib/pricing";
 
 export function CheckoutModal() {
   const {
@@ -30,6 +42,11 @@ export function CheckoutModal() {
     checkoutTotal,
     checkoutTotalOriginal,
     checkoutSavings,
+    checkoutDiscountPercent,
+    checkoutItemCount,
+    addToCheckout,
+    updateCheckoutQuantity,
+    removeFromCheckout,
     clearCart,
   } = useCart();
   const { user, isAuthenticated, openLogin } = useAuth();
@@ -59,6 +76,11 @@ export function CheckoutModal() {
   });
   const [couponCode, setCouponCode] = useState("");
   const [expectedDelivery, setExpectedDelivery] = useState("");
+
+  const suggestions = useMemo(() => {
+    if (!isCheckoutOpen) return [];
+    return getSuggestedProducts(checkoutItems, getMockProducts(), 4);
+  }, [isCheckoutOpen, checkoutItems]);
 
   useEffect(() => {
     if (isCheckoutOpen) document.body.style.overflow = "hidden";
@@ -188,6 +210,7 @@ export function CheckoutModal() {
       saveCustomerOrder({
         id: order.id,
         date: order.date,
+        createdAt: order.createdAt || new Date().toISOString(),
         total: checkoutTotal,
         status: order.status || "Pending",
         couponCode: coupon,
@@ -195,7 +218,7 @@ export function CheckoutModal() {
         items: checkoutItems.map((item) => ({
           name: item.product.name,
           quantity: item.quantity,
-          price: item.product.price,
+          price: getDiscountedUnitPrice(item.product, checkoutItemCount),
         })),
         customer: {
           name: formData.name,
@@ -507,43 +530,191 @@ export function CheckoutModal() {
                   </h3>
                 </div>
 
+                <div className="mb-3 rounded-2xl border border-[#dce8e0] bg-[#eef7f1] p-3">
+                  <p className="mb-2 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-[#5f9877]">
+                    <Tag className="h-3.5 w-3.5" /> Bulk offers on MRP
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {BULK_OFFERS.map((offer) => {
+                      const active =
+                        (offer.minQty === 1 && checkoutItemCount === 1) ||
+                        (offer.minQty === 2 && checkoutItemCount === 2) ||
+                        (offer.minQty === 3 && checkoutItemCount >= 3);
+                      return (
+                        <span
+                          key={offer.minQty}
+                          className={`rounded-full px-2 py-1 text-[10px] font-bold ${
+                            active
+                              ? "bg-[#3d7a5a] text-white"
+                              : "bg-white text-[#6f8679]"
+                          }`}
+                        >
+                          {offer.label}
+                        </span>
+                      );
+                    })}
+                  </div>
+                  <p className="mt-2 text-[11px] font-semibold text-[#3d7a5a]">
+                    {getNextOfferHint(checkoutItemCount)}
+                  </p>
+                </div>
+
                 <div className="flex-1 space-y-3 overflow-y-auto pr-1">
-                  {checkoutItems.map((item) => (
-                    <div
-                      key={`${item.product.id}-${item.selectedVariant}`}
-                      className="flex gap-3 rounded-2xl border border-[#e4eee7] bg-[#f8fbf8] p-3"
-                    >
-                      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-[#eef4f0]">
-                        <Image
-                          src={item.product.image}
-                          alt={item.product.name}
-                          fill
-                          className="object-cover"
-                        />
+                  {checkoutItems.map((item) => {
+                    const unitPrice = getDiscountedUnitPrice(
+                      item.product,
+                      checkoutItemCount,
+                    );
+                    const mrp = getProductMrp(item.product);
+                    return (
+                      <div
+                        key={`${item.product.id}-${item.selectedVariant}`}
+                        className="rounded-2xl border border-[#e4eee7] bg-[#f8fbf8] p-3"
+                      >
+                        <div className="flex gap-3">
+                          <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-[#eef4f0]">
+                            <Image
+                              src={item.product.image}
+                              alt={item.product.name}
+                              fill
+                              className="object-cover"
+                            />
+                            {checkoutDiscountPercent > 0 && (
+                              <span className="absolute left-1 top-1 rounded bg-[#3d7a5a] px-1 py-0.5 text-[8px] font-black text-white">
+                                {checkoutDiscountPercent}% OFF
+                              </span>
+                            )}
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="truncate text-xs font-bold text-[#1f3b2c]">
+                              {item.product.name}
+                            </p>
+                            <p className="mt-0.5 text-[10px] text-[#7a9586]">
+                              {item.selectedVariant}
+                            </p>
+                            <div className="mt-2 flex items-center justify-between gap-2">
+                              <div className="inline-flex items-center gap-1 rounded-full bg-white p-1">
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    updateCheckoutQuantity(
+                                      item.product.id,
+                                      item.quantity - 1,
+                                      item.selectedVariant,
+                                    )
+                                  }
+                                  className="flex h-6 w-6 items-center justify-center rounded-full bg-[#e7f3ec] text-[#3d7a5a]"
+                                >
+                                  <Minus className="h-3 w-3" />
+                                </button>
+                                <span className="w-5 text-center text-xs font-bold text-[#1f3b2c]">
+                                  {item.quantity}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    updateCheckoutQuantity(
+                                      item.product.id,
+                                      item.quantity + 1,
+                                      item.selectedVariant,
+                                    )
+                                  }
+                                  className="flex h-6 w-6 items-center justify-center rounded-full bg-[#e7f3ec] text-[#3d7a5a]"
+                                >
+                                  <Plus className="h-3 w-3" />
+                                </button>
+                              </div>
+                              <div className="text-right">
+                                <p className="text-xs font-black text-[#3d7a5a]">
+                                  ₹{unitPrice * item.quantity}
+                                </p>
+                                <p className="text-[10px] text-[#7a9586] line-through">
+                                  ₹{mrp * item.quantity}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              removeFromCheckout(
+                                item.product.id,
+                                item.selectedVariant,
+                              )
+                            }
+                            className="self-start rounded-lg p-1 text-[#8aa394] hover:bg-white hover:text-red-500"
+                            aria-label="Remove item"
+                          >
+                            <X className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
                       </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-xs font-bold text-[#1f3b2c]">
-                          {item.product.name}
-                        </p>
-                        <p className="mt-0.5 text-[10px] text-[#7a9586]">
-                          Qty {item.quantity} · {item.selectedVariant}
-                        </p>
+                    );
+                  })}
+
+                  {suggestions.length > 0 && (
+                    <div className="rounded-2xl border border-dashed border-[#cfe0d6] bg-white/80 p-3">
+                      <p className="mb-2 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-[#7a9586]">
+                        <Sparkles className="h-3.5 w-3.5 text-[#6fa987]" />
+                        Suggested products
+                      </p>
+                      <div className="space-y-2">
+                        {suggestions.map((product) => {
+                          const nextCount = checkoutItemCount + 1;
+                          const nextPrice = getDiscountedUnitPrice(
+                            product,
+                            nextCount,
+                          );
+                          const mrp = getProductMrp(product);
+                          return (
+                            <div
+                              key={product.id}
+                              className="flex items-center gap-2.5 rounded-xl border border-[#e4eee7] bg-[#f8fbf8] p-2"
+                            >
+                              <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg bg-[#eef4f0]">
+                                <Image
+                                  src={product.image}
+                                  alt={product.name}
+                                  fill
+                                  className="object-cover"
+                                />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <p className="truncate text-[11px] font-bold text-[#1f3b2c]">
+                                  {product.name}
+                                </p>
+                                <p className="text-[10px] text-[#5f9877]">
+                                  ₹{nextPrice}{" "}
+                                  <span className="text-[#7a9586] line-through">
+                                    ₹{mrp}
+                                  </span>
+                                </p>
+                              </div>
+                              <Button
+                                type="button"
+                                size="sm"
+                                onClick={() => addToCheckout(product, 1)}
+                                className="h-8 shrink-0 rounded-xl bg-[#3d7a5a] px-2.5 text-[10px] font-bold text-white hover:bg-[#34684c]"
+                              >
+                                <Plus className="mr-1 h-3 w-3" />
+                                Add
+                              </Button>
+                            </div>
+                          );
+                        })}
                       </div>
-                      <span className="shrink-0 text-xs font-black text-[#3d7a5a]">
-                        ₹{item.product.price * item.quantity}
-                      </span>
                     </div>
-                  ))}
+                  )}
                 </div>
 
                 <div className="mt-5 space-y-2 rounded-3xl border border-[#e4eee7] bg-gradient-to-br from-[#f4f9f5] to-[#faf7ee] p-4 text-sm">
                   <div className="flex justify-between text-[#6f8679]">
-                    <span>Items Total</span>
+                    <span>MRP Total</span>
                     <span>₹{checkoutTotalOriginal}</span>
                   </div>
                   {checkoutSavings > 0 && (
                     <div className="flex justify-between font-semibold text-[#5f9877]">
-                      <span>Savings</span>
+                      <span>Offer ({checkoutDiscountPercent}% OFF)</span>
                       <span>- ₹{checkoutSavings}</span>
                     </div>
                   )}

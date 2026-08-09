@@ -68,7 +68,7 @@ export function ShopPromoStrip() {
           href="/products?category=dermatology"
           className="inline-flex items-center gap-1 font-bold text-emerald transition hover:text-foreground"
         >
-          Shop derma now <ArrowRight className="h-3.5 w-3.5" />
+          Purchase now <ArrowRight className="h-3.5 w-3.5" />
         </Link>
       </div>
     </div>
@@ -193,7 +193,7 @@ export function BannerCarousel() {
             <div className="mt-4 flex flex-wrap gap-2.5 sm:mt-5 sm:gap-3">
               <Link href={active.link || "/products"}>
                 <Button size="lg" variant="secondary" className="h-10 gap-2 px-4 text-sm sm:h-11">
-                  {active.ctaLabel || "Shop now"}
+                  Purchase now
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
@@ -775,7 +775,7 @@ export function ShopCTASection() {
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/products?category=dermatology">
                 <Button size="lg" variant="secondary" className="gap-2">
-                  Shop dermatology <ArrowRight className="h-4 w-4" />
+                  Purchase now <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
               <Link href="/products">

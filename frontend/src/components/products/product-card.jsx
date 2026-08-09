@@ -6,6 +6,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/providers/CartProvider";
 import { cn } from "@/lib/utils";
+import {
+  BULK_OFFERS,
+  getDiscountedUnitPrice,
+  getProductMrp,
+} from "@/lib/pricing";
 
 export function ProductCard({ product, compact = false }) {
   const { addToCart, buyNow } = useCart();
@@ -13,12 +18,8 @@ export function ProductCard({ product, compact = false }) {
     product.categorySlug === "dermatology" ||
     product.categorySlug === "skin-care";
 
-  const discount =
-    product.compareAtPrice && product.compareAtPrice > product.price
-      ? Math.round(
-          ((product.compareAtPrice - product.price) / product.compareAtPrice) * 100,
-        )
-      : 0;
+  const mrp = getProductMrp(product);
+  const offerPrice = getDiscountedUnitPrice(product, 1);
 
   const handleBuyNow = (e) => {
     e.preventDefault();
@@ -72,10 +73,10 @@ export function ProductCard({ product, compact = false }) {
             </Badge>
           </div>
 
-          {discount > 0 && (
+          {isAvailable && (
             <div className={cn("absolute z-10", compact ? "right-2 top-2" : "right-3 top-3")}>
               <span className="rounded-full bg-emerald px-2 py-0.5 text-[9px] font-black text-white shadow-sm">
-                {discount}% OFF
+                Up to 40% OFF
               </span>
             </div>
           )}
@@ -164,14 +165,32 @@ export function ProductCard({ product, compact = false }) {
                 compact ? "text-base" : "text-xl",
               )}
             >
-              ₹{product.price}
+              ₹{offerPrice}
             </span>
-            {product.compareAtPrice ? (
+            {mrp > offerPrice ? (
               <span className="text-[10px] text-muted-foreground line-through sm:text-xs">
-                ₹{product.compareAtPrice}
+                ₹{mrp}
               </span>
             ) : null}
           </div>
+
+          {isAvailable && (
+            <div
+              className={cn(
+                "flex flex-wrap gap-1",
+                compact ? "text-[8px]" : "text-[9px]",
+              )}
+            >
+              {BULK_OFFERS.map((offer) => (
+                <span
+                  key={offer.minQty}
+                  className="rounded-full bg-emerald/10 px-1.5 py-0.5 font-bold text-emerald"
+                >
+                  {offer.minQty === 3 ? "3+" : offer.minQty}: {offer.percent}%
+                </span>
+              ))}
+            </div>
+          )}
 
           {isAvailable ? (
             <div className={cn("grid grid-cols-2", compact ? "gap-1.5" : "gap-2")}>

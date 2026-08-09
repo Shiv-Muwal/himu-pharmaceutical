@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { CartProvider } from "@/providers/CartProvider";
 import { AuthProvider } from "@/providers/AuthProvider";
@@ -27,13 +27,10 @@ import ContactPage from "@/pages/ContactPage";
 import DisclaimerPage from "@/pages/DisclaimerPage";
 import FAQPage from "@/pages/FAQPage";
 import ManufacturingPage from "@/pages/ManufacturingPage";
-import NewsPage from "@/pages/NewsPage";
-import NewsDetailPage from "@/pages/NewsDetailPage";
 import PrivacyPage from "@/pages/PrivacyPage";
 import ProductsPage from "@/pages/ProductsPage";
 import ProductDetailPage from "@/pages/ProductDetailPage";
 import QualityPage from "@/pages/QualityPage";
-import ResearchPage from "@/pages/ResearchPage";
 import TermsPage from "@/pages/TermsPage";
 import SignupPage from "@/pages/SignupPage";
 import AccountPage from "@/pages/AccountPage";
@@ -75,13 +72,13 @@ function AppLayout() {
           <Route path="/disclaimer" element={<DisclaimerPage />} />
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/manufacturing" element={<ManufacturingPage />} />
-          <Route path="/news" element={<NewsPage />} />
-          <Route path="/news/:slug" element={<NewsDetailPage />} />
+          <Route path="/news" element={<Navigate to="/" replace />} />
+          <Route path="/news/:slug" element={<Navigate to="/" replace />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:slug" element={<ProductDetailPage />} />
           <Route path="/quality" element={<QualityPage />} />
-          <Route path="/research" element={<ResearchPage />} />
+          <Route path="/research" element={<Navigate to="/careers" replace />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

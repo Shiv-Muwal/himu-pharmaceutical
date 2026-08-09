@@ -3,6 +3,11 @@ import { ShoppingCart, Zap, Plus, Minus, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/providers/CartProvider";
+import {
+  BULK_OFFERS,
+  getDiscountedUnitPrice,
+  getProductMrp,
+} from "@/lib/pricing";
 
 export function ProductActions({ product }) {
   const { addToCart, buyNow } = useCart();
@@ -15,6 +20,9 @@ export function ProductActions({ product }) {
   const isAvailable =
     product.categorySlug === "dermatology" ||
     product.categorySlug === "skin-care";
+
+  const mrp = getProductMrp(product);
+  const offerPrice = getDiscountedUnitPrice(product, quantity);
 
   const handleAddToCart = () => {
     if (!isAvailable) return;
@@ -41,28 +49,41 @@ export function ProductActions({ product }) {
       <div>
         <div className="flex items-baseline gap-2">
           <span className="font-[family-name:var(--font-heading)] text-2xl font-black text-emerald sm:text-3xl">
-            ₹{product.price}
+            ₹{offerPrice}
           </span>
-          {product.compareAtPrice && (
+          {mrp > offerPrice && (
             <>
               <span className="text-sm text-muted-foreground line-through">
-                ₹{product.compareAtPrice}
+                ₹{mrp}
               </span>
               <span className="rounded bg-emerald/10 px-1.5 py-0.5 text-[11px] font-bold text-emerald">
-                {Math.round(
-                  ((product.compareAtPrice - product.price) /
-                    product.compareAtPrice) *
-                    100,
-                )}
-                % OFF
+                {Math.round(((mrp - offerPrice) / mrp) * 100)}% OFF
               </span>
             </>
           )}
         </div>
-        {product.compareAtPrice && isAvailable && (
+        {isAvailable && (
           <p className="mt-1 text-[11px] font-semibold text-emerald">
-            You save ₹{product.compareAtPrice - product.price}
+            You save ₹{Math.max(0, mrp - offerPrice)} on this qty
           </p>
+        )}
+        {isAvailable && (
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {BULK_OFFERS.map((offer) => (
+              <span
+                key={offer.minQty}
+                className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                  (offer.minQty === 1 && quantity === 1) ||
+                  (offer.minQty === 2 && quantity === 2) ||
+                  (offer.minQty === 3 && quantity >= 3)
+                    ? "bg-emerald text-white"
+                    : "bg-emerald/10 text-emerald"
+                }`}
+              >
+                {offer.label}
+              </span>
+            ))}
+          </div>
         )}
       </div>
 

@@ -46,10 +46,10 @@ export function generateOrganizationSchema() {
     },
     address: {
       "@type": "PostalAddress",
-      streetAddress: "HIMU Pharma Tower, Sector 62",
-      addressLocality: "Noida",
-      addressRegion: "Uttar Pradesh",
-      postalCode: "201301",
+      streetAddress: "38 Ambikanagar, Mandrela Road",
+      addressLocality: "Chirawa",
+      addressRegion: "Rajasthan",
+      postalCode: "333026",
       addressCountry: "IN"
     }
   };

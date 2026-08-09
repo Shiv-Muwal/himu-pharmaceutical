@@ -1,3 +1,16 @@
+export const chairman = {
+  id: "tm-chairman",
+  name: "Mrs. Kavita Malhotra",
+  role: "Chairman",
+  image: "/team/chairman-portrait.png",
+  bio: "Mrs. Kavita Malhotra brings more than two decades of strategic leadership in healthcare and pharmaceutical governance. As Chairman of HIMU Pharmacy, she guides the board’s vision for ethical manufacturing, patient-first innovation, and sustainable growth across India and international markets.",
+  highlights: [
+    "Steers board strategy for quality, compliance, and long-term growth",
+    "Champions accessible dermatology and essential medicines for every community",
+    "Builds partnerships that strengthen HIMU’s research and manufacturing excellence",
+  ],
+};
+
 export const teamMembers = [{
   id: "tm-01",
   name: "Mr. Arjun Mehta",

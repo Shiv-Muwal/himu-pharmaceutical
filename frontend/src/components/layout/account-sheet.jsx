@@ -1,25 +1,31 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { History, LogOut, Package, ShoppingBag, UserRound, X } from "lucide-react";
+import { History, LogOut, Package, ShoppingBag, UserRound, X, Scale, FileText } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/providers/AuthProvider";
 
 const OPTIONS = [
-  { id: "profile", label: "My Account / Profile", icon: UserRound, tab: "profile" },
+  { id: "profile", label: "My Profile", icon: UserRound, tab: "profile" },
   { id: "orders", label: "My Orders", icon: Package, tab: "orders" },
   { id: "history", label: "Order History", icon: History, tab: "history" },
+  { id: "terms", label: "Terms & Conditions", icon: Scale, href: "/terms" },
+  { id: "privacy", label: "Privacy Policy", icon: FileText, href: "/privacy" },
 ];
 
 export function AccountSheet({ open, onClose }) {
   const navigate = useNavigate();
   const { user, isAuthenticated, logout, openLogin } = useAuth();
 
-  const go = (tab) => {
+  const go = (opt) => {
     onClose();
+    if (opt.href) {
+      navigate(opt.href);
+      return;
+    }
     if (!isAuthenticated) {
       openLogin();
       return;
     }
-    navigate(`/account?tab=${tab}`);
+    navigate(`/account?tab=${opt.tab}`);
   };
 
   return (
@@ -69,7 +75,7 @@ export function AccountSheet({ open, onClose }) {
                   <button
                     key={opt.id}
                     type="button"
-                    onClick={() => go(opt.tab)}
+                    onClick={() => go(opt)}
                     className="flex w-full items-center gap-3 rounded-2xl border border-border/50 bg-white px-4 py-3.5 text-left shadow-sm transition active:scale-[0.99]"
                   >
                     <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-emerald">

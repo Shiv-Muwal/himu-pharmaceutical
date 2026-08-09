@@ -416,6 +416,7 @@ export function saveMockOrder(orderData) {
     ...orderData,
     id: orderId,
     date: currentDate,
+    createdAt: new Date().toISOString(),
     status: "Pending",
   };
   currentOrders.unshift(newOrder);
@@ -451,6 +452,8 @@ export function getCustomersFromOrders(orders = getMockOrders()) {
       email: order.customer.email,
       phone: order.customer.phone,
       city: order.customer.city,
+      address: order.customer.address || "",
+      pincode: order.customer.pincode || "",
       ordersCount: 0,
       totalSpent: 0,
       lastOrder: order.date,
@@ -459,6 +462,9 @@ export function getCustomersFromOrders(orders = getMockOrders()) {
     existing.ordersCount += 1;
     if (order.status === "Delivered") existing.totalSpent += Number(order.total) || 0;
     existing.lastOrder = order.date;
+    existing.address = order.customer.address || existing.address;
+    existing.pincode = order.customer.pincode || existing.pincode;
+    existing.city = order.customer.city || existing.city;
     map.set(email, existing);
   });
 

@@ -420,6 +420,11 @@ export function ProductModal({
 export function OrderDetailModal({ order, onClose, handleUpdateStatus }) {
   if (!order) return null;
 
+  const customer = order.customer || {};
+  const fullAddress = [customer.address, customer.city, customer.pincode]
+    .filter(Boolean)
+    .join(", ");
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4">
       <button type="button" className="fixed inset-0 bg-[var(--c-peach)]/55 backdrop-blur-sm" onClick={onClose} />
@@ -433,18 +438,63 @@ export function OrderDetailModal({ order, onClose, handleUpdateStatus }) {
           </button>
         </div>
         <div className="space-y-3 overflow-y-auto p-5">
-          <p className="text-xs text-muted-foreground">{order.date}</p>
-          <p className="text-sm font-bold">{order.customer?.name}</p>
-          <p className="text-xs text-muted-foreground">{order.customer?.email}</p>
-          <p className="text-xs text-muted-foreground">{order.customer?.phone}</p>
+          <div className="rounded-xl border border-border/40 bg-white/70 p-3">
+            <p className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+              Order time
+            </p>
+            <p className="mt-1 text-sm font-semibold text-foreground">
+              {order.date || "—"}
+            </p>
+            {order.createdAt && (
+              <p className="mt-0.5 text-[10px] text-muted-foreground">
+                {new Date(order.createdAt).toLocaleString("en-IN", {
+                  timeZone: "Asia/Kolkata",
+                  dateStyle: "medium",
+                  timeStyle: "short",
+                })}
+              </p>
+            )}
+          </div>
+
+          <div className="rounded-xl border border-border/40 bg-white/70 p-3 space-y-2">
+            <p className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+              Customer details
+            </p>
+            <p className="text-sm font-bold">{customer.name || "—"}</p>
+            <p className="text-xs text-muted-foreground">{customer.email || "—"}</p>
+            <p className="text-xs text-muted-foreground">{customer.phone || "—"}</p>
+            <div className="mt-2 rounded-lg bg-[#f8f3e6] p-2.5">
+              <p className="text-[10px] font-bold uppercase tracking-wide text-emerald">
+                Delivery address
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-foreground">
+                {fullAddress || "Address not provided"}
+              </p>
+            </div>
+          </div>
+
           <div className="space-y-1 rounded-xl border border-border/40 bg-white/70 p-3">
+            <p className="mb-2 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+              Items
+            </p>
             {(order.items || []).map((item, i) => (
               <div key={i} className="flex justify-between gap-2 text-xs">
-                <span>{item.productName} × {item.quantity}</span>
-                <span>₹{item.price * item.quantity}</span>
+                <span>
+                  {item.productName} × {item.quantity}
+                  {item.selectedVariant ? (
+                    <span className="text-muted-foreground"> · {item.selectedVariant}</span>
+                  ) : null}
+                </span>
+                <span>₹{(item.price || 0) * (item.quantity || 0)}</span>
               </div>
             ))}
           </div>
+
+          <div className="flex items-center justify-between rounded-xl border border-border/40 bg-white/70 px-3 py-2.5">
+            <span className="text-xs text-muted-foreground">Payment</span>
+            <span className="text-xs font-black uppercase">{order.paymentMethod || "—"}</span>
+          </div>
+
           <div className="flex items-center justify-between">
             <span className="font-bold">Total</span>
             <span className="font-black text-emerald">₹{order.total}</span>

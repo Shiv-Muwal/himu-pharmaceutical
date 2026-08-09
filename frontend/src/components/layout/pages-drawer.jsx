@@ -1,9 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  BookOpen,
   Briefcase,
   Factory,
-  FlaskConical,
   HelpCircle,
   Info,
   LogOut,
@@ -28,14 +26,12 @@ const PAGE_SECTIONS = [
       { name: "Manufacturing", href: "/manufacturing", icon: Factory },
       { name: "Quality Assurance", href: "/quality", icon: ShieldCheck },
       { name: "Certifications", href: "/certifications", icon: Award },
-      { name: "Research", href: "/research", icon: FlaskConical },
       { name: "Careers", href: "/careers", icon: Briefcase },
     ],
   },
   {
     title: "More",
     links: [
-      { name: "News & Insights", href: "/news", icon: BookOpen },
       { name: "Contact", href: "/contact", icon: Mail },
       { name: "FAQ", href: "/faq", icon: HelpCircle },
       { name: "Privacy Policy", href: "/privacy", icon: FileText },

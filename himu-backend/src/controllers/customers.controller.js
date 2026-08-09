@@ -20,6 +20,8 @@ export const getCustomers = asyncHandler(async (_req, res) => {
       email: order.customer.email,
       phone: order.customer.phone || "",
       city: order.customer.city || "",
+      address: order.customer.address || "",
+      pincode: order.customer.pincode || "",
       ordersCount: 0,
       totalSpent: 0,
       lastOrder: order.date,
@@ -34,6 +36,8 @@ export const getCustomers = asyncHandler(async (_req, res) => {
     existing.name = order.customer.name || existing.name;
     existing.phone = order.customer.phone || existing.phone;
     existing.city = order.customer.city || existing.city;
+    existing.address = order.customer.address || existing.address;
+    existing.pincode = order.customer.pincode || existing.pincode;
     map.set(email, existing);
   });
 
@@ -47,6 +51,8 @@ export const getCustomers = asyncHandler(async (_req, res) => {
         email: user.email,
         phone: user.phone || "",
         city: "",
+        address: "",
+        pincode: "",
         ordersCount: 0,
         totalSpent: 0,
         lastOrder: null,

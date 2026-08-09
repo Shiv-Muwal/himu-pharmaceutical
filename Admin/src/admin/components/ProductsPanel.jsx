@@ -179,7 +179,7 @@ export function InventoryPanel({ lowStockProducts, products, handleUpdateStock, 
                 <th className="p-4">Product</th>
                 <th className="p-4">Category</th>
                 <th className="p-4">Stock Qty</th>
-                <th className="p-4">Quick Adjust</th>
+                <th className="p-4">Add Stock</th>
                 <th className="p-4">Edit</th>
               </tr>
             </thead>
@@ -201,30 +201,26 @@ export function InventoryPanel({ lowStockProducts, products, handleUpdateStock, 
                     </span>
                   </td>
                   <td className="p-4">
-                    <div className="flex items-center gap-1">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() =>
-                          handleUpdateStock(prod, Math.max(0, Number(prod.stock || 0) - 5))
+                    <Button
+                      size="sm"
+                      className="gap-1.5"
+                      onClick={() => {
+                        const raw = window.prompt(
+                          `Add stock for “${prod.name}”\nCurrent: ${prod.stock ?? 0} units\nEnter quantity to add:`,
+                          "50",
+                        );
+                        if (raw == null) return;
+                        const qty = Number.parseInt(String(raw).trim(), 10);
+                        if (!Number.isFinite(qty) || qty <= 0) {
+                          window.alert("Enter a valid positive number.");
+                          return;
                         }
-                      >
-                        -5
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleUpdateStock(prod, Number(prod.stock || 0) + 10)}
-                      >
-                        +10
-                      </Button>
-                      <Button
-                        size="sm"
-                        onClick={() => handleUpdateStock(prod, Number(prod.stock || 0) + 50)}
-                      >
-                        Restock +50
-                      </Button>
-                    </div>
+                        handleUpdateStock(prod, Number(prod.stock || 0) + qty);
+                      }}
+                    >
+                      <Plus className="h-3.5 w-3.5" />
+                      Add stock
+                    </Button>
                   </td>
                   <td className="p-4">
                     <button

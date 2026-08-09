@@ -12,7 +12,7 @@ export const faqs = [{
   id: "faq-03",
   category: "General",
   question: "Where is HIMU Pharmacy headquartered?",
-  answer: "HIMU Pharmacy is headquartered at HIMU Pharma Tower, Sector 62, Noida, Uttar Pradesh 201301, India. We have manufacturing facilities across multiple locations in India."
+  answer: "HIMU Pharmacy is headquartered at 38 Ambikanagar, Mandrela Road, Chirawa, Dist. Jhunjhunu, Rajasthan - 333026. We have manufacturing facilities across multiple locations in India."
 }, {
   id: "faq-04",
   category: "General",
@@ -72,7 +72,7 @@ export const faqs = [{
   id: "faq-15",
   category: "Quality",
   question: "What is HIMU's license number?",
-  answer: "Our pharmaceutical license number is ABCDEFGHIJKLMN (demo value). CIN: 7878787878 (demo value)."
+  answer: "Our pharmaceutical license number is ABCDEFGHIJKLMN (demo value). CIN: U47721RJ2026PTC115427."
 }, {
   id: "faq-16",
   category: "Research",
@@ -132,12 +132,12 @@ export const faqs = [{
   id: "faq-27",
   category: "Contact",
   question: "How can I contact HIMU Pharmacy?",
-  answer: "Reach us at info@himupharmacy.com, call +91 1800-123-4567, or visit our Contact page to submit an inquiry through our contact form."
+  answer: "Reach us at info@himupharmacy.com, call +91 7419363737, or visit our Contact page to submit an inquiry through our contact form."
 }, {
   id: "faq-28",
   category: "Contact",
   question: "What are HIMU's office hours?",
-  answer: "Our corporate office operates Monday through Friday, 9:00 AM to 6:00 PM IST. Emergency manufacturing inquiries are handled 24/7."
+  answer: "We provide 24/7 customer support."
 }, {
   id: "faq-29",
   category: "Contact",

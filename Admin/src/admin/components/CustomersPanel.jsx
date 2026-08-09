@@ -66,6 +66,7 @@ export function CustomersPanel({
                 <tr className="border-b border-border/20 bg-muted/30 text-muted-foreground">
                   <th className="p-4">Customer</th>
                   <th className="p-4">Phone</th>
+                  <th className="p-4">Address</th>
                   <th className="p-4">City</th>
                   <th className="p-4">Orders</th>
                   <th className="p-4">Spent</th>
@@ -81,7 +82,13 @@ export function CustomersPanel({
                       <p className="text-[10px] text-muted-foreground">{c.email}</p>
                     </td>
                     <td className="p-4">{c.phone}</td>
-                    <td className="p-4">{c.city}</td>
+                    <td className="max-w-[160px] p-4">
+                      <p className="line-clamp-2 text-[11px]">{c.address || "—"}</p>
+                      {c.pincode ? (
+                        <p className="text-[10px] text-muted-foreground">PIN {c.pincode}</p>
+                      ) : null}
+                    </td>
+                    <td className="p-4">{c.city || "—"}</td>
                     <td className="p-4 font-bold">{c.ordersCount}</td>
                     <td className="p-4 font-bold text-ink-accent">
                       ₹{(c.totalSpent || 0).toLocaleString("en-IN")}

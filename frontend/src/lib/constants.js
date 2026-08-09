@@ -4,11 +4,11 @@ export const COMPANY = {
   tagline: "Advancing Healthcare Through Innovation",
   type: "Pharmaceutical Manufacturing Company",
   licenseNumber: "ABCDEFGHIJKLMN",
-  cinNumber: "7878787878",
+  cinNumber: "U47721RJ2026PTC115427",
   email: "info@himupharmacy.com",
-  phone: "+91 1800-123-4567",
-  address: "HIMU Pharma Tower, Sector 62, Noida, Uttar Pradesh 201301, India",
-  officeHours: "Monday – Friday: 9:00 AM – 6:00 PM IST",
+  phone: "+91 7419363737",
+  address: "38 Ambikanagar, Mandrela Road, Chirawa, Dist. Jhunjhunu, Rajasthan - 333026",
+  officeHours: "24/7 Customer Support",
   url: "https://www.himupharmacy.com"
 };
 export const SOCIAL_LINKS = [{
@@ -65,12 +65,6 @@ export const NAV_LINKS = [{
   }, {
     name: "Quality",
     href: "/quality"
-  }, {
-    name: "News",
-    href: "/news"
-  }, {
-    name: "Careers",
-    href: "/careers"
   }]
 }, {
   name: "Products",
@@ -113,8 +107,8 @@ export const NAV_LINKS = [{
     href: "/categories/ointments"
   }]
 }, {
-  name: "Research",
-  href: "/research"
+  name: "Careers",
+  href: "/careers"
 }, {
   name: "Contact",
   href: "/contact"

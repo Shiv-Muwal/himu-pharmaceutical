@@ -26,7 +26,7 @@ export function OrdersPanel({
           <div className="relative max-w-md flex-1">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Search order ID, customer, phone..."
+              placeholder="Search order ID, customer, phone, address..."
               value={orderSearch}
               onChange={(e) => setOrderSearch(e.target.value)}
               className="pl-10"
@@ -85,6 +85,7 @@ export function OrdersPanel({
                     </th>
                     <th className="p-4">Order ID</th>
                     <th className="p-4">Customer</th>
+                    <th className="p-4">Address</th>
                     <th className="p-4">Date</th>
                     <th className="p-4 text-center">Qty</th>
                     <th className="p-4">Total</th>
@@ -105,12 +106,27 @@ export function OrdersPanel({
                       </td>
                       <td className="p-4 font-bold">{order.id}</td>
                       <td className="p-4">
-                        <div className="font-semibold">{order.customer.name}</div>
+                        <div className="font-semibold">{order.customer?.name}</div>
                         <div className="text-[10px] text-muted-foreground">
-                          {order.customer.phone}
+                          {order.customer?.phone}
+                        </div>
+                        <div className="text-[10px] text-muted-foreground">
+                          {order.customer?.email}
                         </div>
                       </td>
-                      <td className="p-4 text-muted-foreground">{order.date}</td>
+                      <td className="max-w-[180px] p-4">
+                        <p className="line-clamp-2 text-[11px] leading-snug text-foreground">
+                          {order.customer?.address || "—"}
+                        </p>
+                        <p className="mt-0.5 text-[10px] text-muted-foreground">
+                          {[order.customer?.city, order.customer?.pincode]
+                            .filter(Boolean)
+                            .join(" · ") || "—"}
+                        </p>
+                      </td>
+                      <td className="p-4 text-muted-foreground whitespace-nowrap">
+                        {order.date}
+                      </td>
                       <td className="p-4 text-center font-bold">
                         {order.items.reduce((sum, item) => sum + item.quantity, 0)}
                       </td>

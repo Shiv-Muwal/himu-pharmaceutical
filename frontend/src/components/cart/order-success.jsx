@@ -3,6 +3,7 @@ import { CalendarDays, Copy, Printer, TicketPercent, Truck } from "lucide-react"
 import { Button } from "@/components/ui/button";
 import { COMPANY } from "@/lib/constants";
 import { useState } from "react";
+import { getCartItemCount, getDiscountedUnitPrice } from "@/lib/pricing";
 
 export function OrderSuccessTick({ orderId }) {
   return (
@@ -223,7 +224,10 @@ export function OrderSuccessView({
           </div>
 
           <div className="divide-y divide-[#eef4f0] rounded-2xl border border-[#e4eee7] text-xs">
-            {summaryItems.map((item) => (
+            {summaryItems.map((item) => {
+              const count = getCartItemCount(summaryItems);
+              const unit = getDiscountedUnitPrice(item.product, count);
+              return (
               <div
                 key={`${item.product.id}-${item.selectedVariant}`}
                 className="flex items-center justify-between gap-3 p-3"
@@ -233,10 +237,11 @@ export function OrderSuccessView({
                   <p className="text-[10px] text-[#7a9586]">Qty {item.quantity}</p>
                 </div>
                 <span className="shrink-0 font-bold text-[#3d7a5a]">
-                  ₹{item.product.price * item.quantity}
+                  ₹{unit * item.quantity}
                 </span>
               </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="space-y-1.5 text-xs">

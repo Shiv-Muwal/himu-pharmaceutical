@@ -20,13 +20,16 @@ import {
   Sparkle,
   Info,
   Factory,
-  BookOpen,
-  Briefcase,
   ShoppingBag,
   UserPlus,
   LogOut,
   User,
   MapPin,
+  Package,
+  History,
+  Scale,
+  FileText,
+  HelpCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -58,8 +61,6 @@ const aboutChildren = [
   { name: "About Us", href: "/about", icon: Info },
   { name: "Manufacturing", href: "/manufacturing", icon: Factory },
   { name: "Quality Assurance", href: "/quality", icon: ShieldCheck },
-  { name: "News & Insights", href: "/news", icon: BookOpen },
-  { name: "Careers", href: "/careers", icon: Briefcase },
 ];
 
 export function Navbar() {
@@ -284,9 +285,7 @@ export function Navbar() {
                         "flex items-center gap-0.5 px-2.5 xl:px-3.5 py-2 rounded-lg text-xs xl:text-sm font-medium transition-colors whitespace-nowrap",
                         pathname.startsWith("/about") ||
                           pathname.startsWith("/manufacturing") ||
-                          pathname.startsWith("/quality") ||
-                          pathname.startsWith("/news") ||
-                          pathname.startsWith("/careers")
+                          pathname.startsWith("/quality")
                           ? "text-emerald"
                           : "text-foreground hover:text-emerald",
                       )}
@@ -409,19 +408,76 @@ export function Navbar() {
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 8 }}
-                        className="absolute right-0 mt-2 w-48 overflow-hidden rounded-2xl border border-border/60 bg-[#f8f3e6] p-2 shadow-xl"
+                        className="absolute right-0 mt-2 w-56 overflow-hidden rounded-2xl border border-border/60 bg-[#f8f3e6] p-2 shadow-xl"
                       >
-                        <p className="truncate px-3 py-2 text-[11px] text-muted-foreground">
-                          {user?.email}
-                        </p>
-                        <button
-                          type="button"
-                          onClick={logout}
-                          className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-bold text-red-600 hover:bg-red-500/10"
-                        >
-                          <LogOut className="h-3.5 w-3.5" />
-                          Sign out
-                        </button>
+                        <div className="border-b border-border/40 px-3 py-2.5">
+                          <p className="truncate text-xs font-bold text-foreground">
+                            {user?.name}
+                          </p>
+                          <p className="truncate text-[11px] text-muted-foreground">
+                            {user?.email}
+                          </p>
+                        </div>
+                        <div className="py-1">
+                          <Link
+                            href="/account?tab=profile"
+                            onClick={() => setAccountOpen(false)}
+                            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-semibold text-foreground hover:bg-primary/10 hover:text-emerald"
+                          >
+                            <User className="h-3.5 w-3.5 text-emerald" />
+                            My Profile
+                          </Link>
+                          <Link
+                            href="/account?tab=orders"
+                            onClick={() => setAccountOpen(false)}
+                            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-semibold text-foreground hover:bg-primary/10 hover:text-emerald"
+                          >
+                            <Package className="h-3.5 w-3.5 text-emerald" />
+                            My Orders
+                          </Link>
+                          <Link
+                            href="/account?tab=history"
+                            onClick={() => setAccountOpen(false)}
+                            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-semibold text-foreground hover:bg-primary/10 hover:text-emerald"
+                          >
+                            <History className="h-3.5 w-3.5 text-emerald" />
+                            Order History
+                          </Link>
+                          <Link
+                            href="/faq"
+                            onClick={() => setAccountOpen(false)}
+                            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-semibold text-foreground hover:bg-primary/10 hover:text-emerald"
+                          >
+                            <HelpCircle className="h-3.5 w-3.5 text-emerald" />
+                            Help & FAQ
+                          </Link>
+                          <Link
+                            href="/terms"
+                            onClick={() => setAccountOpen(false)}
+                            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-semibold text-foreground hover:bg-primary/10 hover:text-emerald"
+                          >
+                            <Scale className="h-3.5 w-3.5 text-emerald" />
+                            Terms & Conditions
+                          </Link>
+                          <Link
+                            href="/privacy"
+                            onClick={() => setAccountOpen(false)}
+                            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-semibold text-foreground hover:bg-primary/10 hover:text-emerald"
+                          >
+                            <FileText className="h-3.5 w-3.5 text-emerald" />
+                            Privacy Policy
+                          </Link>
+                        </div>
+                        <div className="border-t border-border/40 pt-1">
+                          <button
+                            type="button"
+                            onClick={logout}
+                            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-bold text-red-600 hover:bg-red-500/10"
+                          >
+                            <LogOut className="h-3.5 w-3.5" />
+                            Sign out
+                          </button>
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -592,12 +648,44 @@ export function Navbar() {
                     <p className="px-2 text-sm font-bold text-foreground">{user?.name}</p>
                     <p className="px-2 text-xs text-muted-foreground">{user?.email}</p>
                     <Link
-                      href="/account"
+                      href="/account?tab=profile"
                       onClick={closeMobileMenu}
-                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-emerald hover:bg-primary/10"
+                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-foreground hover:bg-primary/10 hover:text-emerald"
                     >
-                      <User className="h-4 w-4" />
-                      My account
+                      <User className="h-4 w-4 text-emerald" />
+                      My Profile
+                    </Link>
+                    <Link
+                      href="/account?tab=orders"
+                      onClick={closeMobileMenu}
+                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-foreground hover:bg-primary/10 hover:text-emerald"
+                    >
+                      <Package className="h-4 w-4 text-emerald" />
+                      My Orders
+                    </Link>
+                    <Link
+                      href="/account?tab=history"
+                      onClick={closeMobileMenu}
+                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-foreground hover:bg-primary/10 hover:text-emerald"
+                    >
+                      <History className="h-4 w-4 text-emerald" />
+                      Order History
+                    </Link>
+                    <Link
+                      href="/terms"
+                      onClick={closeMobileMenu}
+                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-foreground hover:bg-primary/10 hover:text-emerald"
+                    >
+                      <Scale className="h-4 w-4 text-emerald" />
+                      Terms & Conditions
+                    </Link>
+                    <Link
+                      href="/privacy"
+                      onClick={closeMobileMenu}
+                      className="flex w-full items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-foreground hover:bg-primary/10 hover:text-emerald"
+                    >
+                      <FileText className="h-4 w-4 text-emerald" />
+                      Privacy Policy
                     </Link>
                     <button
                       type="button"

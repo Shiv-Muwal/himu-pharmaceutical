@@ -13,6 +13,11 @@ import {
 import { Image } from "@/components/ui/image";
 import { useCart } from "@/providers/CartProvider";
 import { Button } from "@/components/ui/button";
+import {
+  getDiscountedUnitPrice,
+  getNextOfferHint,
+  getProductMrp,
+} from "@/lib/pricing";
 
 export function CartDrawer() {
   const {
@@ -24,6 +29,8 @@ export function CartDrawer() {
     cartTotal,
     cartTotalOriginal,
     cartSavings,
+    cartDiscountPercent,
+    cartCount,
     openCheckoutFromCart,
   } = useCart();
   const handleProceedCheckout = () => {
@@ -191,13 +198,13 @@ export function CartDrawer() {
 
                           <div className="text-right">
                             <p className="text-sm font-black text-[#ffc5aa]">
-                              ₹{item.product.price * item.quantity}
+                              ₹
+                              {getDiscountedUnitPrice(item.product, cartCount) *
+                                item.quantity}
                             </p>
-                            {item.product.compareAtPrice && (
-                              <p className="text-[10px] text-[#ffc5aa] line-through">
-                                ₹{item.product.compareAtPrice * item.quantity}
-                              </p>
-                            )}
+                            <p className="text-[10px] text-[#ffc5aa] line-through">
+                              ₹{getProductMrp(item.product) * item.quantity}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -215,14 +222,19 @@ export function CartDrawer() {
                     <Sparkles className="h-3 w-3 text-[#ffc5aa]" />
                     Order summary
                   </div>
+                  {cartDiscountPercent > 0 && (
+                    <div className="mb-3 rounded-2xl bg-[#BBF7D0]/70 px-3 py-2 text-[11px] font-semibold text-[#1f3b2c]">
+                      {cartDiscountPercent}% OFF applied · {getNextOfferHint(cartCount)}
+                    </div>
+                  )}
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between text-[color-mix(in srgb, #ffc5aa 50%, #5a3d2e 50%)]">
-                      <span>Original Price</span>
+                      <span>MRP Total</span>
                       <span>₹{cartTotalOriginal}</span>
                     </div>
                     {cartSavings > 0 && (
                       <div className="flex justify-between font-semibold text-emerald">
-                        <span>Total Savings</span>
+                        <span>Offer Savings ({cartDiscountPercent}%)</span>
                         <span>- ₹{cartSavings}</span>
                       </div>
                     )}

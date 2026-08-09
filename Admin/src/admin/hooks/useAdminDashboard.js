@@ -218,7 +218,10 @@ export function useAdminDashboard() {
         order.id.toLowerCase().includes(q) ||
         order.customer?.name?.toLowerCase().includes(q) ||
         order.customer?.email?.toLowerCase().includes(q) ||
-        order.customer?.phone?.includes(q)
+        order.customer?.phone?.includes(q) ||
+        order.customer?.address?.toLowerCase().includes(q) ||
+        order.customer?.city?.toLowerCase().includes(q) ||
+        order.customer?.pincode?.includes(q)
       );
     });
   }, [filteredOrdersByTime, orderSearch, orderStatusFilter]);
@@ -300,7 +303,9 @@ export function useAdminDashboard() {
         c.name?.toLowerCase().includes(q) ||
         c.email?.toLowerCase().includes(q) ||
         c.phone?.includes(q) ||
-        c.city?.toLowerCase().includes(q),
+        c.city?.toLowerCase().includes(q) ||
+        c.address?.toLowerCase().includes(q) ||
+        c.pincode?.includes(q),
     );
   }, [customers, customerSearch]);
 
@@ -577,7 +582,9 @@ export function useAdminDashboard() {
         customer: o.customer?.name,
         email: o.customer?.email,
         phone: o.customer?.phone,
+        address: o.customer?.address,
         city: o.customer?.city,
+        pincode: o.customer?.pincode,
         total: o.total,
         payment: o.paymentMethod,
         status: o.status,
@@ -608,7 +615,9 @@ export function useAdminDashboard() {
         name: c.name,
         email: c.email,
         phone: c.phone,
+        address: c.address,
         city: c.city,
+        pincode: c.pincode,
         orders: c.ordersCount,
         spent: c.totalSpent,
         status: c.status,

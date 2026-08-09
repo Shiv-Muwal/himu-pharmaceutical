@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   History,
   LogOut,
+  MapPin,
   Package,
   TicketPercent,
   Truck,
@@ -19,6 +20,27 @@ const TABS = [
   { id: "history", label: "History", icon: History },
 ];
 
+function formatOrderTime(order) {
+  if (order?.createdAt) {
+    try {
+      return new Date(order.createdAt).toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    } catch {
+      /* fall through */
+    }
+  }
+  return order?.date || "—";
+}
+
+function formatAddress(customer = {}) {
+  return [customer.address, customer.city, customer.pincode]
+    .filter(Boolean)
+    .join(", ");
+}
+
 export default function AccountPage() {
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
@@ -28,8 +50,16 @@ export default function AccountPage() {
   const tab = params.get("tab") || "profile";
 
   useEffect(() => {
-    setOrders(getStoredOrders());
-  }, [tab]);
+    const all = getStoredOrders();
+    const email = user?.email?.toLowerCase();
+    if (!email) {
+      setOrders(all);
+      return;
+    }
+    setOrders(
+      all.filter((o) => o.customer?.email?.toLowerCase() === email),
+    );
+  }, [tab, user?.email]);
 
   const list = useMemo(() => {
     if (tab === "orders") {
@@ -105,6 +135,16 @@ export default function AccountPage() {
                     <p className="mt-1 font-semibold">{orders.length} placed</p>
                   </div>
                 </div>
+                {orders[0]?.customer && formatAddress(orders[0].customer) && (
+                  <div className="rounded-2xl bg-[#f3f7f0] p-3 text-sm">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-emerald">
+                      Last delivery address
+                    </p>
+                    <p className="mt-1 font-semibold leading-relaxed">
+                      {formatAddress(orders[0].customer)}
+                    </p>
+                  </div>
+                )}
                 <Button
                   variant="outline"
                   className="gap-2"
@@ -133,7 +173,7 @@ export default function AccountPage() {
                   Shop HIMU products and your orders will show here.
                 </p>
                 <Button className="mt-4" onClick={() => navigate("/products")}>
-                  Shop now
+                  Purchase now
                 </Button>
               </div>
             ) : (
@@ -145,7 +185,9 @@ export default function AccountPage() {
                   <div className="mb-3 flex items-start justify-between gap-3">
                     <div>
                       <p className="text-sm font-bold text-foreground">Order {order.id}</p>
-                      <p className="text-xs text-muted-foreground">{order.date}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {formatOrderTime(order)}
+                      </p>
                     </div>
                     <span className="rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase text-emerald">
                       {order.status || "Pending"}
@@ -160,6 +202,23 @@ export default function AccountPage() {
                     ))}
                   </div>
 
+                  {formatAddress(order.customer) && (
+                    <div className="mb-3 flex gap-2 rounded-xl bg-[#f3f7f0] px-3 py-2.5 text-xs">
+                      <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-emerald" />
+                      <div>
+                        <p className="font-bold text-emerald">Delivery address</p>
+                        <p className="mt-0.5 leading-relaxed text-foreground">
+                          {formatAddress(order.customer)}
+                        </p>
+                        {order.customer?.phone && (
+                          <p className="mt-1 text-muted-foreground">
+                            Phone: {order.customer.phone}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
                   <div className="grid gap-2 sm:grid-cols-2">
                     <div className="flex items-center gap-2 rounded-xl bg-[#f3f7f0] px-3 py-2 text-xs">
                       <Truck className="h-4 w-4 text-emerald" />
@@ -173,7 +232,11 @@ export default function AccountPage() {
                     <div className="flex items-center gap-2 rounded-xl bg-[#fff8e8] px-3 py-2 text-xs">
                       <TicketPercent className="h-4 w-4 text-[#8a7020]" />
                       <div>
-                        <p className="font-bold text-[#8a7020]">Coupon</p>
+                        <p className="font-bold text-[#8a7020]">
+                          {order.paymentMethod
+                            ? `Pay · ${String(order.paymentMethod).toUpperCase()}`
+                            : "Coupon"}
+                        </p>
                         <p className="font-black tracking-wide text-foreground">
                           {order.couponCode || "—"}
                         </p>

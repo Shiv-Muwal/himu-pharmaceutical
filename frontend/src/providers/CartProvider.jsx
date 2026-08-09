@@ -1,7 +1,24 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useAuth } from "@/providers/AuthProvider";
+import { summarizeCartPricing } from "@/lib/pricing";
 
 const CartContext = createContext(undefined);
+
+function mergeCartItem(items, product, quantity, selectedVariant) {
+  const existingIndex = items.findIndex(
+    (item) =>
+      item.product.id === product.id && item.selectedVariant === selectedVariant,
+  );
+  if (existingIndex > -1) {
+    const next = [...items];
+    next[existingIndex] = {
+      ...next[existingIndex],
+      quantity: next[existingIndex].quantity + quantity,
+    };
+    return next;
+  }
+  return [...items, { product, quantity, selectedVariant }];
+}
 
 export function CartProvider({ children }) {
   const { isAuthenticated, openLogin, loginOpen } = useAuth();
@@ -49,21 +66,9 @@ export function CartProvider({ children }) {
   const addToCart = (product, quantity = 1, variant, options = {}) => {
     const { open = true } = options;
     const selectedVariant = variant || product.variants?.[0]?.name || "";
-    setCartItems((prevItems) => {
-      const existingIndex = prevItems.findIndex(
-        (item) =>
-          item.product.id === product.id && item.selectedVariant === selectedVariant,
-      );
-      if (existingIndex > -1) {
-        const newItems = [...prevItems];
-        newItems[existingIndex] = {
-          ...newItems[existingIndex],
-          quantity: newItems[existingIndex].quantity + quantity,
-        };
-        return newItems;
-      }
-      return [...prevItems, { product, quantity, selectedVariant }];
-    });
+    setCartItems((prevItems) =>
+      mergeCartItem(prevItems, product, quantity, selectedVariant),
+    );
     if (open) setCartOpen(true);
   };
 
@@ -127,6 +132,56 @@ export function CartProvider({ children }) {
     );
   };
 
+  /** Add a product while checkout is open (cart or express). */
+  const addToCheckout = (product, quantity = 1, variant) => {
+    const selectedVariant = variant || product.variants?.[0]?.name || "";
+    if (directCheckoutItems) {
+      setDirectCheckoutItems((prev) =>
+        mergeCartItem(prev || [], product, quantity, selectedVariant),
+      );
+      return;
+    }
+    addToCart(product, quantity, selectedVariant, { open: false });
+  };
+
+  const updateCheckoutQuantity = (productId, quantity, variant) => {
+    if (directCheckoutItems) {
+      if (quantity <= 0) {
+        setDirectCheckoutItems((prev) => {
+          const next = (prev || []).filter(
+            (item) =>
+              !(item.product.id === productId && item.selectedVariant === variant),
+          );
+          return next.length ? next : null;
+        });
+        return;
+      }
+      setDirectCheckoutItems((prev) =>
+        (prev || []).map((item) =>
+          item.product.id === productId && item.selectedVariant === variant
+            ? { ...item, quantity }
+            : item,
+        ),
+      );
+      return;
+    }
+    updateQuantity(productId, quantity, variant);
+  };
+
+  const removeFromCheckout = (productId, variant) => {
+    if (directCheckoutItems) {
+      setDirectCheckoutItems((prev) => {
+        const next = (prev || []).filter(
+          (item) =>
+            !(item.product.id === productId && item.selectedVariant === variant),
+        );
+        return next.length ? next : null;
+      });
+      return;
+    }
+    removeFromCart(productId, variant);
+  };
+
   const clearCart = () => {
     setCartItems([]);
     setDirectCheckoutItems(null);
@@ -135,28 +190,9 @@ export function CartProvider({ children }) {
   const checkoutItems = directCheckoutItems || cartItems;
   const isDirectCheckout = Boolean(directCheckoutItems?.length);
 
-  const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-  const cartTotal = cartItems.reduce(
-    (acc, item) => acc + item.product.price * item.quantity,
-    0,
-  );
-  const cartTotalOriginal = cartItems.reduce(
-    (acc, item) =>
-      acc + (item.product.compareAtPrice || item.product.price) * item.quantity,
-    0,
-  );
-  const cartSavings = cartTotalOriginal - cartTotal;
-
-  const checkoutTotal = checkoutItems.reduce(
-    (acc, item) => acc + item.product.price * item.quantity,
-    0,
-  );
-  const checkoutTotalOriginal = checkoutItems.reduce(
-    (acc, item) =>
-      acc + (item.product.compareAtPrice || item.product.price) * item.quantity,
-    0,
-  );
-  const checkoutSavings = checkoutTotalOriginal - checkoutTotal;
+  const cartCount = getCartItemCountSafe(cartItems);
+  const cartPricing = summarizeCartPricing(cartItems);
+  const checkoutPricing = summarizeCartPricing(checkoutItems);
 
   return (
     <CartContext.Provider
@@ -165,17 +201,23 @@ export function CartProvider({ children }) {
         checkoutItems,
         isDirectCheckout,
         addToCart,
+        addToCheckout,
         buyNow,
         removeFromCart,
+        removeFromCheckout,
         updateQuantity,
+        updateCheckoutQuantity,
         clearCart,
         cartCount,
-        cartTotal,
-        cartTotalOriginal,
-        cartSavings,
-        checkoutTotal,
-        checkoutTotalOriginal,
-        checkoutSavings,
+        cartTotal: cartPricing.total,
+        cartTotalOriginal: cartPricing.original,
+        cartSavings: cartPricing.savings,
+        cartDiscountPercent: cartPricing.discountPercent,
+        checkoutTotal: checkoutPricing.total,
+        checkoutTotalOriginal: checkoutPricing.original,
+        checkoutSavings: checkoutPricing.savings,
+        checkoutDiscountPercent: checkoutPricing.discountPercent,
+        checkoutItemCount: checkoutPricing.itemCount,
         isCartOpen,
         setCartOpen,
         isCheckoutOpen,
@@ -187,6 +229,10 @@ export function CartProvider({ children }) {
       {children}
     </CartContext.Provider>
   );
+}
+
+function getCartItemCountSafe(items) {
+  return items.reduce((acc, item) => acc + item.quantity, 0);
 }
 
 export function useCart() {

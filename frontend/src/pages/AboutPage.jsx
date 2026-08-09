@@ -3,13 +3,11 @@ import {
   FadeIn,
   SectionHeading,
 } from "@/components/animations/motion-components";
-import { InteractiveTimeline } from "@/components/sections/timeline";
 import { Card } from "@/components/ui/card";
-import { teamMembers, companyTimeline, coreValues } from "@/data/company";
+import { teamMembers, coreValues, chairman } from "@/data/company";
 import { Target, Eye, Heart } from "lucide-react";
 import {
   BrandStoryHero,
-  OverviewSection,
   StatsSection,
   WhyChooseSection,
 } from "@/components/sections/home-sections";
@@ -19,7 +17,6 @@ export default function AboutPage() {
     <>
       <BrandStoryHero />
       <StatsSection />
-      <OverviewSection />
       <WhyChooseSection />
 
       <section className="section-padding">
@@ -116,6 +113,54 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="section-padding">
+        <div className="container-custom">
+          <SectionHeading badge="Chairman" title="Message from the Chairman" />
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+            <FadeIn direction="left">
+              <div className="relative mx-auto aspect-[3/4] w-full max-w-md overflow-hidden rounded-3xl shadow-xl">
+                <Image
+                  src={chairman.image}
+                  alt={chairman.name}
+                  fill
+                  className="object-cover object-top"
+                />
+              </div>
+            </FadeIn>
+            <FadeIn direction="right">
+              <div className="space-y-5">
+                <div>
+                  <p className="mb-1 text-xs font-bold uppercase tracking-[0.2em] text-emerald">
+                    {chairman.role}
+                  </p>
+                  <h3 className="font-[family-name:var(--font-heading)] text-3xl font-bold text-foreground md:text-4xl">
+                    {chairman.name}
+                  </h3>
+                </div>
+                <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
+                  {chairman.bio}
+                </p>
+                <ul className="space-y-3">
+                  {chairman.highlights.map((item) => (
+                    <li
+                      key={item}
+                      className="flex gap-3 text-sm leading-relaxed text-muted-foreground md:text-base"
+                    >
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="border-l-2 border-emerald/40 pl-4 text-sm italic text-muted-foreground">
+                  “At HIMU, every formulation begins with one promise — healthcare
+                  that uplifts lives with integrity, science, and care.”
+                </p>
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
       <section className="section-padding bg-muted/30">
         <div className="container-custom">
           <SectionHeading badge="Leadership" title="Our Leadership Team" />
@@ -142,56 +187,6 @@ export default function AboutPage() {
               </FadeIn>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="section-padding">
-        <div className="container-custom">
-          <SectionHeading
-            badge="Infrastructure"
-            title="Manufacturing & Research Facilities"
-          />
-          <div className="mb-12 grid gap-6 md:grid-cols-2">
-            {[
-              {
-                src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop",
-                title: "Manufacturing Plant — Noida",
-              },
-              {
-                src: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=600&h=400&fit=crop",
-                title: "R&D Laboratory — Noida",
-              },
-              {
-                src: "https://images.unsplash.com/photo-1551244072-5d12893278ab?w=600&h=400&fit=crop",
-                title: "Production Line — Hyderabad",
-              },
-              {
-                src: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=400&fit=crop",
-                title: "Quality Control Lab — Ahmedabad",
-              },
-            ].map((img, i) => (
-              <FadeIn key={img.title} delay={i * 0.08}>
-                <div className="group relative h-56 overflow-hidden rounded-2xl shadow-lg">
-                  <Image
-                    src={img.src}
-                    alt={img.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 flex items-end bg-linear-to-t from-black/60 to-transparent p-5">
-                    <h3 className="font-bold text-white">{img.title}</h3>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding bg-muted/30">
-        <div className="container-custom">
-          <SectionHeading badge="Timeline" title="Company Milestones" />
-          <InteractiveTimeline events={companyTimeline} />
         </div>
       </section>
 
