@@ -4,11 +4,10 @@ import {
   SectionHeading,
 } from "@/components/animations/motion-components";
 import { Card } from "@/components/ui/card";
-import { teamMembers, coreValues, chairman } from "@/data/company";
+import { coreValues, chairman } from "@/data/company";
 import { Target, Eye, Heart } from "lucide-react";
 import {
   BrandStoryHero,
-  StatsSection,
   WhyChooseSection,
 } from "@/components/sections/home-sections";
 
@@ -16,7 +15,6 @@ export default function AboutPage() {
   return (
     <>
       <BrandStoryHero />
-      <StatsSection />
       <WhyChooseSection />
 
       <section className="section-padding">
@@ -119,65 +117,83 @@ export default function AboutPage() {
             badge="Chairperson"
             title="Message from the Chairperson"
           />
-          <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
-            <FadeIn direction="left">
-              <div className="relative mx-auto aspect-[3/4] w-full max-w-md overflow-hidden rounded-3xl shadow-xl lg:sticky lg:top-28">
+          <div className="grid items-start gap-8 md:gap-10 lg:grid-cols-12 lg:gap-12">
+            <FadeIn direction="left" className="lg:col-span-5">
+              <div className="relative mx-auto w-full max-w-md lg:max-w-none aspect-[4/5] sm:aspect-[3/4] lg:aspect-auto lg:h-[600px] xl:h-[640px] overflow-hidden rounded-3xl shadow-2xl border border-emerald/20 lg:sticky lg:top-28">
                 <Image
                   src={chairman.image}
                   alt={chairman.name}
                   fill
                   className="object-cover object-top"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
+                  priority
                 />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-5 text-white">
+                  <p className="font-[family-name:var(--font-heading)] text-xl font-bold">
+                    {chairman.name}
+                  </p>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-emerald-300">
+                    {chairman.role}, Himu Pharmaceutical
+                  </p>
+                </div>
               </div>
             </FadeIn>
-            <FadeIn direction="right">
-              <div className="space-y-5">
+
+            <FadeIn direction="right" className="lg:col-span-7">
+              <div className="space-y-6">
                 <div>
-                  <p className="mb-1 text-xs font-bold uppercase tracking-[0.2em] text-emerald">
+                  <span className="inline-block rounded-full bg-emerald/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-emerald">
                     {chairman.role}
-                  </p>
-                  <h3 className="font-[family-name:var(--font-heading)] text-3xl font-bold text-foreground md:text-4xl">
+                  </span>
+                  <h3 className="mt-2 font-[family-name:var(--font-heading)] text-2xl font-bold text-foreground sm:text-3xl lg:text-4xl">
                     {chairman.name}
                   </h3>
-                  <p className="mt-3 text-base font-semibold leading-snug text-[#14532D] md:text-lg">
+                  <p className="mt-2 text-base font-semibold leading-snug text-[#14532D] md:text-lg">
                     {chairman.headline}
                   </p>
                 </div>
 
-                <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
+                <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
                   {chairman.intro}
                 </p>
 
-                <p className="text-sm font-medium text-foreground md:text-base">
-                  {chairman.pillarsIntro}
-                </p>
+                <div className="space-y-3">
+                  <p className="text-sm font-semibold text-foreground md:text-base">
+                    {chairman.pillarsIntro}
+                  </p>
 
-                <ul className="space-y-4">
-                  {chairman.pillars.map((pillar) => (
-                    <li key={pillar.title} className="flex gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald" />
-                      <div>
-                        <p className="text-sm font-bold text-[#14532D] md:text-base">
-                          {pillar.title}
-                        </p>
-                        <p className="mt-1 text-sm leading-relaxed text-muted-foreground md:text-[15px]">
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3.5">
+                    {chairman.pillars.map((pillar) => (
+                      <div
+                        key={pillar.title}
+                        className="rounded-2xl border border-emerald/15 bg-emerald/[0.03] p-4 transition-colors hover:border-emerald/35 hover:bg-emerald/[0.06]"
+                      >
+                        <div className="mb-1.5 flex items-center gap-2">
+                          <span className="h-2 w-2 shrink-0 rounded-full bg-emerald" />
+                          <p className="text-sm font-bold text-[#14532D]">
+                            {pillar.title}
+                          </p>
+                        </div>
+                        <p className="text-xs leading-relaxed text-muted-foreground sm:text-[13px]">
                           {pillar.description}
                         </p>
                       </div>
-                    </li>
-                  ))}
-                </ul>
+                    ))}
+                  </div>
+                </div>
 
-                <p className="border-l-2 border-emerald/40 pl-4 text-sm italic leading-relaxed text-muted-foreground md:text-base">
-                  “{chairman.quote}”
-                </p>
+                <div className="rounded-2xl border-l-4 border-emerald bg-muted/40 p-4 sm:p-5">
+                  <p className="text-sm italic leading-relaxed text-foreground sm:text-base">
+                    “{chairman.quote}”
+                  </p>
+                </div>
 
-                <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
+                <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
                   {chairman.closing}
                 </p>
 
-                <div className="pt-2">
-                  <p className="text-sm text-muted-foreground">{chairman.signOff}</p>
+                <div className="border-t border-border/60 pt-4">
+                  <p className="text-xs text-muted-foreground">{chairman.signOff}</p>
                   <p className="mt-1 font-[family-name:var(--font-heading)] text-lg font-bold text-[#14532D]">
                     {chairman.name}
                   </p>
@@ -191,34 +207,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section-padding bg-muted/30">
-        <div className="container-custom">
-          <SectionHeading badge="Leadership" title="Our Leadership Team" />
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {teamMembers.map((member, i) => (
-              <FadeIn key={member.name} delay={i * 0.08}>
-                <Card className="group overflow-hidden transition-shadow hover:shadow-xl">
-                  <div className="relative h-64 overflow-hidden">
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      className="object-cover transition-transform group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <h3 className="text-lg font-bold">{member.name}</h3>
-                    <p className="mb-2 text-sm font-medium text-emerald">
-                      {member.role}
-                    </p>
-                    <p className="text-sm text-muted-foreground">{member.bio}</p>
-                  </div>
-                </Card>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       <section className="section-padding">
         <div className="container-custom">

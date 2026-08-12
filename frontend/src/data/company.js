@@ -33,7 +33,7 @@ export const chairman = {
   quote:
     "Our true measure of success is not market reach alone, but the meaningful difference we make in human lives each day.",
   closing:
-    "As we look ahead, we remain deeply grateful to our scientists, healthcare partners, and devoted colleagues whose shared dedication fuels our progress. Together, we will keep advancing the frontiers of science to build a healthier tomorrow—one solution at a time. Thank you for placing your trust in our vision.",
+    "",
   signOff: "Warm regards,",
 };
 
