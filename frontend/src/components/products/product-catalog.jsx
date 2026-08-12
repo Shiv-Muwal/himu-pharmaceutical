@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { ProductCard } from "./product-card";
 import { FadeIn } from "@/components/animations/motion-components";
 import { categories } from "@/data/categories";
-import { getMockProducts } from "@/lib/mock-backend";
 import {
   BUDGET_RANGES,
   collectFilterFacets,
@@ -81,8 +80,8 @@ export function ProductCatalog({
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    setLocalProducts(getMockProducts());
-  }, []);
+    setLocalProducts(Array.isArray(products) ? products : []);
+  }, [products]);
 
   useEffect(() => {
     setSearch(initialSearch);

@@ -14,13 +14,19 @@ async function fetchJson(path) {
   return payload.data;
 }
 
+function extractProductList(data) {
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data?.items)) return data.items;
+  return [];
+}
+
 export async function fetchStoreProducts({ category, search, limit = 200 } = {}) {
   try {
     const params = new URLSearchParams({ limit: String(limit), active: "true" });
     if (category) params.set("category", category);
     if (search) params.set("search", search);
     const data = await fetchJson(`/products?${params.toString()}`);
-    const items = Array.isArray(data) ? data : [];
+    const items = extractProductList(data);
     if (items.length) return items;
   } catch {
     // Fall back to local catalog when API is offline

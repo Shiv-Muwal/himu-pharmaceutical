@@ -31,7 +31,7 @@ import { testimonials, partnerLogos } from "@/data/company";
 import { blogPosts } from "@/data/blogs";
 import { ProductCard } from "@/components/products/product-card";
 import { products } from "@/data/products";
-import { getMockProducts } from "@/lib/mock-backend";
+import { fetchStoreProducts } from "@/lib/products-api";
 
 const whyChoose = [
   {
@@ -421,11 +421,17 @@ export function FeaturedProductsSection() {
   const [catalog, setCatalog] = useState(products);
 
   useEffect(() => {
-    const list = getMockProducts();
-    const ranked = [...list].sort(
-      (a, b) => (Number(b.rating) || 0) - (Number(a.rating) || 0),
-    );
-    setCatalog(ranked.slice(0, 14));
+    let alive = true;
+    fetchStoreProducts().then((list) => {
+      if (!alive) return;
+      const ranked = [...list].sort(
+        (a, b) => (Number(b.rating) || 0) - (Number(a.rating) || 0),
+      );
+      setCatalog(ranked.slice(0, 14));
+    });
+    return () => {
+      alive = false;
+    };
   }, []);
 
   const loopItems = useMemo(() => [...catalog, ...catalog], [catalog]);

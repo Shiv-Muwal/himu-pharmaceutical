@@ -7,6 +7,10 @@ import {
   uploadImageBuffer,
 } from "../config/cloudinary.js";
 import { env } from "../config/env.js";
+import { bannersUploadDir } from "../middleware/upload.middleware.js";
+import fs from "node:fs";
+import path from "node:path";
+import crypto from "node:crypto";
 
 function toClientBanner(doc) {
   const obj = doc.toObject ? doc.toObject() : doc;
@@ -87,36 +91,47 @@ export const uploadBannerImage = asyncHandler(async (req, res) => {
   if (!req.file?.buffer) {
     throw new ApiError(400, "Please upload a JPG, PNG, or WebP image");
   }
-  if (!isCloudinaryConfigured()) {
-    throw new ApiError(
-      503,
-      "Cloudinary is not configured on the server. Set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in himu-backend/.env then restart PM2.",
-    );
+
+  if (isCloudinaryConfigured()) {
+    try {
+      const uploaded = await uploadImageBuffer(req.file.buffer, {
+        folder: `${env.cloudinaryFolder}/banners`,
+      });
+      return success(
+        res,
+        {
+          url: uploaded.url,
+          publicId: uploaded.publicId,
+          size: uploaded.bytes,
+          mimetype: req.file.mimetype,
+          format: uploaded.format,
+          storage: "cloudinary",
+        },
+        "Banner image uploaded",
+        201,
+      );
+    } catch (error) {
+      console.error("[upload] Cloudinary banner upload failed:", error.message);
+    }
   }
 
-  try {
-    const uploaded = await uploadImageBuffer(req.file.buffer, {
-      folder: `${env.cloudinaryFolder}/banners`,
-    });
+  const ext = path.extname(req.file.originalname || "").toLowerCase() || ".png";
+  const filename = `banner-${Date.now()}-${crypto.randomBytes(4).toString("hex")}${ext}`;
+  fs.writeFileSync(path.join(bannersUploadDir, filename), req.file.buffer);
+  const url = `/uploads/banners/${filename}`;
 
-    return success(
-      res,
-      {
-        url: uploaded.url,
-        publicId: uploaded.publicId,
-        size: uploaded.bytes,
-        mimetype: req.file.mimetype,
-        format: uploaded.format,
-      },
-      "Banner image uploaded",
-      201,
-    );
-  } catch (error) {
-    throw new ApiError(
-      error.statusCode || 502,
-      error.message || "Image upload to Cloudinary failed",
-    );
-  }
+  return success(
+    res,
+    {
+      url,
+      filename,
+      size: req.file.size || req.file.buffer.length,
+      mimetype: req.file.mimetype,
+      storage: "local",
+    },
+    "Banner image uploaded",
+    201,
+  );
 });
 
 export const deleteBanner = asyncHandler(async (req, res) => {

@@ -50,8 +50,8 @@ app.use(
       return callback(new Error("Origin not allowed by CORS"));
     },
     credentials: false,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    allowedHeaders: ["Authorization", "Content-Type"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Authorization", "Content-Type", "Accept", "Origin"],
     maxAge: 600,
   }),
 );

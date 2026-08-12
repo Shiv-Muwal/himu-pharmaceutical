@@ -34,7 +34,7 @@ export function BackToTop() {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-[calc(var(--mobile-nav-offset)+1.25rem)] right-4 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:scale-110 transition-transform cursor-pointer md:bottom-24 md:right-6 md:h-12 md:w-12"
+      className="fixed bottom-[calc(var(--mobile-nav-offset)+5.5rem)] right-4 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:scale-110 transition-transform cursor-pointer md:bottom-24 md:right-24 md:h-12 md:w-12"
       aria-label="Back to top"
     >
       ↑

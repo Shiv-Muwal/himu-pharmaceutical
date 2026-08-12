@@ -14,6 +14,7 @@ import {
   FloatingButtons,
   PageLoader,
 } from "@/components/global/site-widgets";
+import { SiteChatbot } from "@/components/global/site-chatbot";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 import { CheckoutModal } from "@/components/cart/checkout-modal";
 import { LoginModal } from "@/components/auth/login-modal";
@@ -89,6 +90,7 @@ function AppLayout() {
       {!hideFooter && <Footer />}
       {!hideFooter && <MobileAppNav />}
       <BackToTop />
+      <SiteChatbot />
       <CookieBanner />
       <FloatingButtons />
       <CartDrawer />

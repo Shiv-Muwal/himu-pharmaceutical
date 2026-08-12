@@ -87,7 +87,9 @@ export function ProductModal({
           !file.type ||
           ["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(file.type);
         if (!okExt || !okType) {
-          throw new Error("Only JPG, PNG, or WebP images are allowed");
+          throw new Error(
+            "Only JPG, PNG, or WebP allowed. iPhone Live/HEIC photos: export as JPG first.",
+          );
         }
         if (file.size > 8 * 1024 * 1024) {
           throw new Error("Each image must be 8MB or smaller");

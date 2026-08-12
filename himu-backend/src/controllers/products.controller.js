@@ -10,6 +10,10 @@ import {
 } from "../config/cloudinary.js";
 import { env } from "../config/env.js";
 import { asString } from "../middleware/sanitize.middleware.js";
+import { productsUploadDir } from "../middleware/upload.middleware.js";
+import fs from "node:fs";
+import path from "node:path";
+import crypto from "node:crypto";
 
 const editableFields = [
   "name",
@@ -239,34 +243,46 @@ export const uploadProductMedia = asyncHandler(async (req, res) => {
   if (!req.file?.buffer) {
     throw new ApiError(400, "Please upload a JPG, PNG, or WebP image");
   }
-  if (!isCloudinaryConfigured()) {
-    throw new ApiError(
-      503,
-      "Cloudinary is not configured on the server. Set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in himu-backend/.env then restart PM2.",
-    );
+
+  if (isCloudinaryConfigured()) {
+    try {
+      const uploaded = await uploadImageBuffer(req.file.buffer, {
+        folder: `${env.cloudinaryFolder}/products`,
+      });
+      return success(
+        res,
+        {
+          url: uploaded.url,
+          publicId: uploaded.publicId,
+          size: uploaded.bytes,
+          mimetype: req.file.mimetype,
+          format: uploaded.format,
+          storage: "cloudinary",
+        },
+        "Product image uploaded",
+        201,
+      );
+    } catch (error) {
+      console.error("[upload] Cloudinary product upload failed:", error.message);
+      // fall through to local disk so admin panel keeps working
+    }
   }
 
-  try {
-    const uploaded = await uploadImageBuffer(req.file.buffer, {
-      folder: `${env.cloudinaryFolder}/products`,
-    });
+  const ext = path.extname(req.file.originalname || "").toLowerCase() || ".png";
+  const filename = `product-${Date.now()}-${crypto.randomBytes(4).toString("hex")}${ext}`;
+  fs.writeFileSync(path.join(productsUploadDir, filename), req.file.buffer);
+  const url = `/uploads/products/${filename}`;
 
-    return success(
-      res,
-      {
-        url: uploaded.url,
-        publicId: uploaded.publicId,
-        size: uploaded.bytes,
-        mimetype: req.file.mimetype,
-        format: uploaded.format,
-      },
-      "Product image uploaded",
-      201,
-    );
-  } catch (error) {
-    throw new ApiError(
-      error.statusCode || 502,
-      error.message || "Image upload to Cloudinary failed",
-    );
-  }
+  return success(
+    res,
+    {
+      url,
+      filename,
+      size: req.file.size || req.file.buffer.length,
+      mimetype: req.file.mimetype,
+      storage: "local",
+    },
+    "Product image uploaded",
+    201,
+  );
 });

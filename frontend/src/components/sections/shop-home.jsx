@@ -25,7 +25,7 @@ import { ProductCard } from "@/components/products/product-card";
 import { categories } from "@/data/categories";
 import { DEFAULT_BANNERS } from "@/data/banners";
 import { products } from "@/data/products";
-import { getMockProducts } from "@/lib/mock-backend";
+import { fetchStoreProducts } from "@/lib/products-api";
 import { api } from "@/lib/api";
 import { FadeIn } from "@/components/animations/motion-components";
 import { searchProductsSmart } from "@/lib/product-search";
@@ -261,7 +261,13 @@ export function ShopSearchBar() {
   );
 
   useEffect(() => {
-    setCatalog(getMockProducts());
+    let alive = true;
+    fetchStoreProducts().then((items) => {
+      if (alive && items?.length) setCatalog(items);
+    });
+    return () => {
+      alive = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -688,10 +694,15 @@ export function DermaSpotlightSection() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const list = rankForShop(getMockProducts()).filter((p) =>
-      DERMA_SLUGS.has(p.categorySlug),
-    );
-    setItems(list.slice(0, 12));
+    let alive = true;
+    fetchStoreProducts().then((list) => {
+      if (!alive) return;
+      const ranked = rankForShop(list).filter((p) => DERMA_SLUGS.has(p.categorySlug));
+      setItems(ranked.slice(0, 12));
+    });
+    return () => {
+      alive = false;
+    };
   }, []);
 
   return (
@@ -711,7 +722,14 @@ export function PopularShopSection() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    setItems(rankForShop(getMockProducts()).slice(0, 14));
+    let alive = true;
+    fetchStoreProducts().then((list) => {
+      if (!alive) return;
+      setItems(rankForShop(list).slice(0, 14));
+    });
+    return () => {
+      alive = false;
+    };
   }, []);
 
   return (

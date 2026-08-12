@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { AccordionItem } from "@/components/ui/accordion";
 import { ProductActions } from "@/components/products/product-actions";
 import { ProductReviews } from "@/components/products/product-reviews";
-import { getMockProducts } from "@/lib/mock-backend";
+import { fetchStoreProducts } from "@/lib/products-api";
 import { cn } from "@/lib/utils";
 
 const HIGHLIGHT_ICONS = [Sun, Droplets, ShieldCheck, Sparkles];
@@ -41,26 +41,34 @@ export function ProductDetailClient({
       return;
     }
 
-    const allProducts = getMockProducts();
-    const foundProduct = allProducts.find((p) => p.slug === slug);
-    if (foundProduct) {
-      setProduct(foundProduct);
-      setActiveIndex(0);
-      setNotFound(false);
+    let alive = true;
+    (async () => {
+      const allProducts = await fetchStoreProducts();
+      if (!alive) return;
+      const foundProduct = allProducts.find((p) => p.slug === slug);
+      if (foundProduct) {
+        setProduct(foundProduct);
+        setActiveIndex(0);
+        setNotFound(false);
 
-      const fromRelated = (foundProduct.relatedSlugs || [])
-        .map((s) => allProducts.find((p) => p.slug === s))
-        .filter(Boolean);
-      const similar = allProducts.filter(
-        (p) =>
-          p.id !== foundProduct.id &&
-          p.categorySlug === foundProduct.categorySlug &&
-          !fromRelated.some((r) => r.id === p.id),
-      );
-      setRelated([...fromRelated, ...similar].slice(0, 8));
-    } else {
-      setNotFound(true);
-    }
+        const fromRelated = (foundProduct.relatedSlugs || [])
+          .map((s) => allProducts.find((p) => p.slug === s))
+          .filter(Boolean);
+        const similar = allProducts.filter(
+          (p) =>
+            p.id !== foundProduct.id &&
+            p.categorySlug === foundProduct.categorySlug &&
+            !fromRelated.some((r) => r.id === p.id),
+        );
+        setRelated([...fromRelated, ...similar].slice(0, 8));
+      } else {
+        setNotFound(true);
+      }
+    })();
+
+    return () => {
+      alive = false;
+    };
   }, [slug, initialProduct, initialRelatedProducts]);
 
   const gallery = useMemo(() => {

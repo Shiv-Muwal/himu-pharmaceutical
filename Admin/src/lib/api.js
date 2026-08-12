@@ -297,16 +297,48 @@ export async function uploadApi(path, formData, { token } = {}) {
     throw new ApiError("File upload requires the live API (disable VITE_USE_LOCAL_ADMIN)", 501);
   }
 
-  const response = await fetch(`${getApiBaseUrl()}${path}`, {
-    method: "POST",
-    headers: {
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-    body: formData,
-  });
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) throw new ApiError(payload.message || "Upload failed", response.status);
-  return payload.data;
+  const url = `${getApiBaseUrl()}${path}`;
+  const controller = new AbortController();
+  const timeoutMs = Number(import.meta.env.VITE_UPLOAD_TIMEOUT_MS) || 90000;
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      signal: controller.signal,
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: formData,
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      const hint =
+        response.status === 401 || response.status === 403
+          ? "Please sign in again as admin."
+          : response.status === 503
+            ? "Cloudinary/API not configured on server."
+            : response.status === 502 || response.status === 504
+              ? "API/proxy error while uploading."
+              : "Upload failed";
+      throw new ApiError(payload.message || hint, response.status);
+    }
+    if (!payload?.data?.url) {
+      throw new ApiError("Upload succeeded but no image URL was returned", 502);
+    }
+    return payload.data;
+  } catch (error) {
+    if (error?.name === "AbortError") {
+      throw new ApiError("Upload timed out. Try a smaller image (under 2MB).", 408);
+    }
+    if (error instanceof ApiError) throw error;
+    throw new ApiError(
+      `Cannot reach API at ${url}. Check backend / nginx /api proxy.`,
+      0,
+    );
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 export function mediaUrl(src) {
