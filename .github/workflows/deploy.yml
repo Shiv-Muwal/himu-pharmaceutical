@@ -26,13 +26,22 @@ jobs:
             echo "Pulling latest code..."
             git pull origin master
 
+            # Drop baked staging API hosts from server env (breaks live login DNS)
+            for envfile in frontend/.env Admin/.env admin/.env; do
+              if [ -f "$envfile" ]; then
+                sed -i 's|^VITE_API_URL=https\?://sitetest\..*|VITE_API_URL=|' "$envfile" || true
+                sed -i 's|^VITE_STOREFRONT_URL=https\?://sitetest\..*|VITE_STOREFRONT_URL=|' "$envfile" || true
+              fi
+            done
+
             ########################
             # Frontend
             ########################
 
             cd frontend
             npm ci
-            npm run build
+            # Same-origin /api via nginx — never bake sitetest/localhost API hosts
+            VITE_API_URL= npm run build
 
             ########################
             # Admin
@@ -40,7 +49,7 @@ jobs:
 
             cd ../Admin
             npm ci
-            npm run build
+            VITE_API_URL= VITE_STOREFRONT_URL= npm run build
 
             ########################
             # Backend

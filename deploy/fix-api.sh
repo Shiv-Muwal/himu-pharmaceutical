@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Quick recovery when admin login shows 502 / Request failed.
 # Run on the EC2 box:
-#   bash /var/www/Himu/himu-pharmaceutical/deploy/fix-api.sh
+#   bash /var/www/himu-pharmaceutical/deploy/fix-api.sh
 
 set -euo pipefail
-ROOT="/var/www/Himu/himu-pharmaceutical"
+ROOT="/var/www/himu-pharmaceutical"
 cd "$ROOT/himu-backend"
 
 if [ ! -f .env ]; then
