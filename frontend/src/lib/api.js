@@ -174,7 +174,7 @@ function localApi(path, { token, method = "GET", ...options } = {}) {
     const products = getMockProducts();
     const items = (body.items || []).map((item) => {
       const product = products.find((p) => p.id === item.productId);
-      const price = product?.price || 0;
+      const price = product?.mrp ?? product?.compareAtPrice ?? product?.price ?? 0;
       return {
         productId: item.productId,
         productName: item.productName || product?.name || "Product",

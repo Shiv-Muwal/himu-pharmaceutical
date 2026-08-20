@@ -410,7 +410,7 @@ export function useAdminDashboard() {
     if (!productForm.name.trim()) newErrors.name = "Product name is required";
     if (!productForm.composition.trim()) newErrors.composition = "Composition is required";
     if (!productForm.strength.trim()) newErrors.strength = "Strength / Volume is required";
-    if (productForm.price <= 0) newErrors.price = "Enter a valid price";
+    if (productForm.compareAtPrice <= 0) newErrors.price = "Enter a valid MRP";
     if (!productForm.shortDescription.trim())
       newErrors.shortDescription = "Short description is required";
     const images = (productForm.images || []).filter(Boolean);
@@ -441,8 +441,9 @@ export function useAdminDashboard() {
       categorySlug,
       composition: productForm.composition.trim(),
       strength: productForm.strength.trim(),
-      price: Number(productForm.price),
-      mrp: Number(productForm.compareAtPrice) || undefined,
+      // Offers are temporarily disabled: the saved MRP is the selling price.
+      price: Number(productForm.compareAtPrice),
+      mrp: Number(productForm.compareAtPrice),
       stock: Number(productForm.stock ?? 0),
       image: gallery[0],
       images: gallery,

@@ -325,10 +325,9 @@ export function saveMockProduct(productData) {
         },
       ],
       relatedSlugs: [],
-      price: productData.price || 150,
-      compareAtPrice:
-        productData.compareAtPrice ||
-        Math.round(((productData.price || 150) * 1.35) / 10) * 10 - 1,
+      price: productData.mrp ?? productData.price ?? 150,
+      mrp: productData.mrp ?? productData.price ?? 150,
+      compareAtPrice: productData.mrp ?? productData.price ?? 150,
       shortDescription:
         productData.shortDescription || "Premium care formulation.",
       description:

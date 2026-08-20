@@ -13,7 +13,6 @@ import {
   Plus,
   Minus,
   Sparkles,
-  Tag,
 } from "lucide-react";
 import { Image } from "@/components/ui/image";
 import { useCart } from "@/providers/CartProvider";
@@ -26,10 +25,7 @@ import { OrderSuccessView } from "@/components/cart/order-success";
 import { saveCustomerOrder } from "@/lib/customer-orders";
 import { getMockProducts } from "@/lib/mock-backend";
 import {
-  BULK_OFFERS,
   getDiscountedUnitPrice,
-  getNextOfferHint,
-  getProductMrp,
   getSuggestedProducts,
 } from "@/lib/pricing";
 import { LocationFields } from "@/components/forms/location-fields";
@@ -598,42 +594,12 @@ export function CheckoutModal() {
                   </h3>
                 </div>
 
-                <div className="mb-3 rounded-2xl border border-[#dce8e0] bg-[#eef7f1] p-3">
-                  <p className="mb-2 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-[#5f9877]">
-                    <Tag className="h-3.5 w-3.5" /> Bulk offers on MRP
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {BULK_OFFERS.map((offer) => {
-                      const active =
-                        (offer.minQty === 1 && checkoutItemCount === 1) ||
-                        (offer.minQty === 2 && checkoutItemCount === 2) ||
-                        (offer.minQty === 3 && checkoutItemCount >= 3);
-                      return (
-                        <span
-                          key={offer.minQty}
-                          className={`rounded-full px-2 py-1 text-[10px] font-bold ${
-                            active
-                              ? "bg-[#3d7a5a] text-white"
-                              : "bg-white text-[#6f8679]"
-                          }`}
-                        >
-                          {offer.label}
-                        </span>
-                      );
-                    })}
-                  </div>
-                  <p className="mt-2 text-[11px] font-semibold text-[#3d7a5a]">
-                    {getNextOfferHint(checkoutItemCount)}
-                  </p>
-                </div>
-
                 <div className="flex-1 space-y-3 overflow-y-auto pr-1">
                   {checkoutItems.map((item) => {
                     const unitPrice = getDiscountedUnitPrice(
                       item.product,
                       checkoutItemCount,
                     );
-                    const mrp = getProductMrp(item.product);
                     return (
                       <div
                         key={`${item.product.id}-${item.selectedVariant}`}
@@ -647,11 +613,6 @@ export function CheckoutModal() {
                               fill
                               className="object-cover"
                             />
-                            {checkoutDiscountPercent > 0 && (
-                              <span className="absolute left-1 top-1 rounded bg-[#3d7a5a] px-1 py-0.5 text-[8px] font-black text-white">
-                                {checkoutDiscountPercent}% OFF
-                              </span>
-                            )}
                           </div>
                           <div className="min-w-0 flex-1">
                             <p className="truncate text-xs font-bold text-[#1f3b2c]">
@@ -696,9 +657,6 @@ export function CheckoutModal() {
                                 <p className="text-xs font-black text-[#3d7a5a]">
                                   ₹{unitPrice * item.quantity}
                                 </p>
-                                <p className="text-[10px] text-[#7a9586] line-through">
-                                  ₹{mrp * item.quantity}
-                                </p>
                               </div>
                             </div>
                           </div>
@@ -733,7 +691,6 @@ export function CheckoutModal() {
                             product,
                             nextCount,
                           );
-                          const mrp = getProductMrp(product);
                           return (
                             <div
                               key={product.id}
@@ -752,10 +709,7 @@ export function CheckoutModal() {
                                   {product.name}
                                 </p>
                                 <p className="text-[10px] text-[#5f9877]">
-                                  ₹{nextPrice}{" "}
-                                  <span className="text-[#7a9586] line-through">
-                                    ₹{mrp}
-                                  </span>
+                                  ₹{nextPrice}
                                 </p>
                               </div>
                               <Button
@@ -777,15 +731,9 @@ export function CheckoutModal() {
 
                 <div className="mt-5 space-y-2 rounded-3xl border border-[#e4eee7] bg-gradient-to-br from-[#f4f9f5] to-[#faf7ee] p-4 text-sm">
                   <div className="flex justify-between text-[#6f8679]">
-                    <span>MRP Total</span>
-                    <span>₹{checkoutTotalOriginal}</span>
+                    <span>Total</span>
+                    <span>₹{checkoutTotal}</span>
                   </div>
-                  {checkoutSavings > 0 && (
-                    <div className="flex justify-between font-semibold text-[#5f9877]">
-                      <span>Offer ({checkoutDiscountPercent}% OFF)</span>
-                      <span>- ₹{checkoutSavings}</span>
-                    </div>
-                  )}
                   <div className="flex justify-between text-[#6f8679]">
                     <span>Shipping</span>
                     <span className="font-semibold text-[#5f9877]">FREE</span>

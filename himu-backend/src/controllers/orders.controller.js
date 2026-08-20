@@ -59,7 +59,7 @@ export const createOrder = asyncHandler(async (req, res) => {
     return {
       productId: product.productId,
       productName: product.name,
-      price: product.price,
+      price: product.mrp ?? product.compareAtPrice ?? product.price,
       quantity: item.quantity,
       selectedVariant,
     };

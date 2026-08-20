@@ -1,19 +1,11 @@
-/** Bulk offer tiers on MRP (frontend-only). */
-export const BULK_OFFERS = [
-  { minQty: 1, percent: 20, label: "Buy 1 · 20% OFF" },
-  { minQty: 2, percent: 35, label: "Buy 2 · 35% OFF" },
-  { minQty: 3, percent: 40, label: "Buy 3+ · 40% OFF" },
-];
+// Offers are temporarily disabled. MRP is the final selling price everywhere.
+export const BULK_OFFERS = [];
 
 export function getCartItemCount(items = []) {
   return items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
 }
 
 export function getBulkDiscountPercent(itemCount) {
-  const count = Number(itemCount) || 0;
-  if (count >= 3) return 40;
-  if (count === 2) return 35;
-  if (count === 1) return 20;
   return 0;
 }
 
@@ -24,10 +16,7 @@ export function getProductMrp(product) {
 
 export function getDiscountedUnitPrice(product, itemCount) {
   const mrp = getProductMrp(product);
-  const percent = getBulkDiscountPercent(itemCount);
-  if (!mrp) return 0;
-  if (!percent) return Math.round(Number(product?.price) || mrp);
-  return Math.round(mrp * (1 - percent / 100));
+  return Math.round(mrp || 0);
 }
 
 export function getItemLineTotal(item, itemCount) {
@@ -51,17 +40,7 @@ export function summarizeCartPricing(items = []) {
 }
 
 export function getNextOfferHint(itemCount) {
-  const count = Number(itemCount) || 0;
-  if (count <= 0) {
-    return "Add 1 product for 20% OFF on MRP";
-  }
-  if (count === 1) {
-    return "Add 1 more for 35% OFF on every product";
-  }
-  if (count === 2) {
-    return "Add 1 more for 40% OFF on every product";
-  }
-  return "Max offer unlocked · 40% OFF on every product";
+  return "";
 }
 
 export function getSuggestedProducts(checkoutItems = [], catalog = [], limit = 4) {

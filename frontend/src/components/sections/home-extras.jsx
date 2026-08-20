@@ -93,12 +93,7 @@ export function TrustedBrandsSection() {
                   </h3>
                   <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{detail}</p>
                   <p className="mt-2 text-sm font-bold text-emerald">
-                    ₹{product.price}
-                    {getProductMrp(product) > product.price ? (
-                      <span className="ml-2 text-xs font-medium text-muted-foreground line-through">
-                        ₹{getProductMrp(product)}
-                      </span>
-                    ) : null}
+                    ₹{getProductMrp(product)}
                   </p>
                 </div>
               </Link>

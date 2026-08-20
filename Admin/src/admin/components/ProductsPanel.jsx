@@ -107,12 +107,7 @@ export function ProductsPanel({
                         </span>
                       </td>
                       <td className="p-4">
-                        <div className="font-bold text-ink-accent">₹{prod.price}</div>
-                        {prod.compareAtPrice && (
-                          <div className="text-[10px] text-muted-foreground line-through">
-                            ₹{prod.compareAtPrice}
-                          </div>
-                        )}
+                        <div className="font-bold text-ink-accent">₹{prod.mrp ?? prod.compareAtPrice ?? prod.price}</div>
                       </td>
                       <td className="p-4 text-center">
                         <div className="flex items-center justify-center gap-2">

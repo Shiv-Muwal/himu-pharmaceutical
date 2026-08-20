@@ -148,7 +148,10 @@ export const createProduct = asyncHandler(async (req, res) => {
   if (input.mrp === undefined && input.compareAtPrice !== undefined) {
     input.mrp = input.compareAtPrice;
   }
-  if (input.mrp !== undefined) input.compareAtPrice = input.mrp;
+  if (input.mrp !== undefined) {
+    input.price = input.mrp;
+    input.compareAtPrice = input.mrp;
+  }
   const count = await Product.countDocuments();
   const productId = `prod-${String(count + 1).padStart(3, "0")}`;
   const slug = slugify(input.name);
@@ -217,7 +220,10 @@ export const updateProduct = asyncHandler(async (req, res) => {
   if (input.mrp === undefined && input.compareAtPrice !== undefined) {
     input.mrp = input.compareAtPrice;
   }
-  if (input.mrp !== undefined) input.compareAtPrice = input.mrp;
+  if (input.mrp !== undefined) {
+    input.price = input.mrp;
+    input.compareAtPrice = input.mrp;
+  }
   if (input.name) {
     input.slug = slugify(input.name);
   }

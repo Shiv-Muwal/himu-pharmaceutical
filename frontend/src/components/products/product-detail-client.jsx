@@ -17,7 +17,6 @@ import { AccordionItem } from "@/components/ui/accordion";
 import { ProductActions } from "@/components/products/product-actions";
 import { ProductReviews } from "@/components/products/product-reviews";
 import { fetchStoreProducts } from "@/lib/products-api";
-import { getProductMrp } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
 
 const HIGHLIGHT_ICONS = [Sun, Droplets, ShieldCheck, Sparkles];
@@ -175,14 +174,6 @@ export function ProductDetailClient({
     );
   }
 
-  const mrp = getProductMrp(product);
-  const offPercent =
-    mrp > product.price
-      ? Math.round(
-          ((mrp - product.price) / mrp) *
-            100,
-        )
-      : 0;
 
   return (
     <div className="bg-[#f8f3e6] pb-4 md:bg-transparent md:pb-10">
@@ -212,11 +203,6 @@ export function ProductDetailClient({
                   ))}
                 </div>
 
-                {offPercent > 0 && (
-                  <span className="pointer-events-none absolute left-3 top-3 z-10 rounded-md bg-[#cc0c39] px-2 py-1 text-[11px] font-black text-white">
-                    -{offPercent}%
-                  </span>
-                )}
 
                 {gallery.length > 1 && (
                   <div className="pointer-events-none absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5 rounded-full bg-black/35 px-2 py-1 backdrop-blur-sm">

@@ -168,8 +168,8 @@ export function ProductModal({
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
-            <div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="hidden">
               <label className="mb-1 block text-xs font-semibold text-muted-foreground">Price (₹) *</label>
               <Input
                 type="number"
@@ -178,7 +178,7 @@ export function ProductModal({
               />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-semibold text-muted-foreground">MRP (₹)</label>
+              <label className="mb-1 block text-xs font-semibold text-muted-foreground">MRP / Selling Price (₹) *</label>
               <Input
                 type="number"
                 value={productForm.compareAtPrice}
