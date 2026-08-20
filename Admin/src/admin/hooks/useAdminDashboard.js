@@ -442,7 +442,7 @@ export function useAdminDashboard() {
       composition: productForm.composition.trim(),
       strength: productForm.strength.trim(),
       price: Number(productForm.price),
-      compareAtPrice: Number(productForm.compareAtPrice) || undefined,
+      mrp: Number(productForm.compareAtPrice) || undefined,
       stock: Number(productForm.stock ?? 0),
       image: gallery[0],
       images: gallery,
@@ -513,7 +513,7 @@ export function useAdminDashboard() {
       strength: product.strength || "",
       price: product.price ?? 0,
       compareAtPrice:
-        product.compareAtPrice || Math.round((product.price * 1.35) / 10) * 10 - 1,
+        product.mrp || product.compareAtPrice || Math.round((product.price * 1.35) / 10) * 10 - 1,
       stock: product.stock ?? 0,
       image: uniqueGallery[0] || "",
       images: uniqueGallery,

@@ -5,6 +5,7 @@ import { Image } from "@/components/ui/image";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/animations/motion-components";
 import { products } from "@/data/products";
+import { getProductMrp } from "@/lib/pricing";
 import { blogPosts as fallbackBlogs } from "@/data/blogs";
 import { api } from "@/lib/api";
 
@@ -93,9 +94,9 @@ export function TrustedBrandsSection() {
                   <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{detail}</p>
                   <p className="mt-2 text-sm font-bold text-emerald">
                     ₹{product.price}
-                    {product.compareAtPrice ? (
+                    {getProductMrp(product) > product.price ? (
                       <span className="ml-2 text-xs font-medium text-muted-foreground line-through">
-                        ₹{product.compareAtPrice}
+                        ₹{getProductMrp(product)}
                       </span>
                     ) : null}
                   </p>

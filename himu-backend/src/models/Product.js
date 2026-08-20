@@ -52,6 +52,9 @@ const productSchema = new mongoose.Schema(
     faq: [faqItemSchema],
     relatedSlugs: [String],
     price: { type: Number, required: true },
+    // MRP is kept separately from the selling price. compareAtPrice remains for
+    // older catalog entries and is mirrored by the controller for compatibility.
+    mrp: Number,
     compareAtPrice: Number,
     stock: { type: Number, default: 100, min: 0 },
     featured: { type: Boolean, default: false },

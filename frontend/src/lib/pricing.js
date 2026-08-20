@@ -18,7 +18,7 @@ export function getBulkDiscountPercent(itemCount) {
 }
 
 export function getProductMrp(product) {
-  const mrp = Number(product?.compareAtPrice || product?.price || 0);
+  const mrp = Number(product?.mrp ?? product?.compareAtPrice ?? product?.price ?? 0);
   return Number.isFinite(mrp) ? mrp : 0;
 }
 

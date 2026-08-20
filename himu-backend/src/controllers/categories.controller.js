@@ -14,7 +14,7 @@ export const getCategoryBySlug = asyncHandler(async (req, res) => {
   if (!category) throw new ApiError(404, "Category not found");
 
   const products = await Product.find({ categorySlug: req.params.slug })
-    .select("productId slug name shortDescription image price compareAtPrice rating reviewCount category categorySlug")
+    .select("productId slug name shortDescription image price mrp compareAtPrice rating reviewCount category categorySlug")
     .limit(50);
 
   success(res, {
@@ -26,6 +26,7 @@ export const getCategoryBySlug = asyncHandler(async (req, res) => {
       shortDescription: p.shortDescription,
       image: p.image,
       price: p.price,
+      mrp: p.mrp ?? p.compareAtPrice ?? p.price,
       compareAtPrice: p.compareAtPrice,
       rating: p.rating,
       reviewCount: p.reviewCount,

@@ -22,6 +22,7 @@ const editableFields = [
   "strength",
   "manufacturer",
   "price",
+  "mrp",
   "compareAtPrice",
   "stock",
   "featured",
@@ -58,8 +59,12 @@ function pickEditableProductFields(source) {
 
 function toClientProduct(doc) {
   const obj = doc.toObject ? doc.toObject() : doc;
+  const mrp = Number(obj.mrp ?? obj.compareAtPrice ?? obj.price ?? 0);
   return {
     ...obj,
+    mrp,
+    // Keep legacy frontend/admin clients working while they migrate to `mrp`.
+    compareAtPrice: mrp,
     id: obj.productId,
     stock: Number(obj.stock ?? 0),
     featured: Boolean(obj.featured),
@@ -140,6 +145,10 @@ export const getProductBySlug = asyncHandler(async (req, res) => {
 
 export const createProduct = asyncHandler(async (req, res) => {
   const input = pickEditableProductFields(req.body);
+  if (input.mrp === undefined && input.compareAtPrice !== undefined) {
+    input.mrp = input.compareAtPrice;
+  }
+  if (input.mrp !== undefined) input.compareAtPrice = input.mrp;
   const count = await Product.countDocuments();
   const productId = `prod-${String(count + 1).padStart(3, "0")}`;
   const slug = slugify(input.name);
@@ -176,6 +185,7 @@ export const createProduct = asyncHandler(async (req, res) => {
       },
     ],
     relatedSlugs: [],
+    mrp: Math.round(((input.price || 150) * 1.35) / 10) * 10 - 1,
     compareAtPrice: Math.round(((input.price || 150) * 1.35) / 10) * 10 - 1,
     shortDescription:
       input.shortDescription || "HIMU high-quality pharmaceutical formulation.",
@@ -204,6 +214,10 @@ export const updateProduct = asyncHandler(async (req, res) => {
   if (!product) throw new ApiError(404, "Product not found");
 
   const input = pickEditableProductFields(req.body);
+  if (input.mrp === undefined && input.compareAtPrice !== undefined) {
+    input.mrp = input.compareAtPrice;
+  }
+  if (input.mrp !== undefined) input.compareAtPrice = input.mrp;
   if (input.name) {
     input.slug = slugify(input.name);
   }

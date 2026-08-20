@@ -17,6 +17,7 @@ import { AccordionItem } from "@/components/ui/accordion";
 import { ProductActions } from "@/components/products/product-actions";
 import { ProductReviews } from "@/components/products/product-reviews";
 import { fetchStoreProducts } from "@/lib/products-api";
+import { getProductMrp } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
 
 const HIGHLIGHT_ICONS = [Sun, Droplets, ShieldCheck, Sparkles];
@@ -174,10 +175,11 @@ export function ProductDetailClient({
     );
   }
 
+  const mrp = getProductMrp(product);
   const offPercent =
-    product.compareAtPrice && product.compareAtPrice > product.price
+    mrp > product.price
       ? Math.round(
-          ((product.compareAtPrice - product.price) / product.compareAtPrice) *
+          ((mrp - product.price) / mrp) *
             100,
         )
       : 0;

@@ -178,7 +178,7 @@ export function ProductModal({
               />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-semibold text-muted-foreground">Compare-At Price</label>
+              <label className="mb-1 block text-xs font-semibold text-muted-foreground">MRP (₹)</label>
               <Input
                 type="number"
                 value={productForm.compareAtPrice}
