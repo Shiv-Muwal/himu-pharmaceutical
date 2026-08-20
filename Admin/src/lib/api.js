@@ -1,16 +1,18 @@
-import {
-  deleteMockProduct,
-  getAdminActivity,
-  getCustomersFromOrders,
-  getMockOrders,
-  getMockProducts,
-  saveMockOrder,
-  saveMockProduct,
-  updateOrderStatus,
-} from "@/lib/mock-backend";
 import { getApiBaseUrl, getApiOrigin } from "@/lib/api-base";
 
-const USE_LOCAL_ADMIN = import.meta.env.VITE_USE_LOCAL_ADMIN === "true";
+// Legacy helper bindings keep the old local-only code inert while ensuring no
+// mock backend is included in a production build.
+const disabledMock = () => {
+  throw new Error("Mock storage is disabled. Use the live API.");
+};
+const deleteMockProduct = disabledMock;
+const getAdminActivity = disabledMock;
+const getCustomersFromOrders = disabledMock;
+const getMockOrders = disabledMock;
+const getMockProducts = disabledMock;
+const saveMockOrder = disabledMock;
+const saveMockProduct = disabledMock;
+const updateOrderStatus = disabledMock;
 const LOCAL_ADMIN_KEY = "himu-local-admin-profile";
 const LOCAL_ADMIN_TOKEN = "himu-local-admin-token";
 const LOCAL_CUSTOMERS_KEY = "himu-local-customers";
@@ -243,10 +245,6 @@ function localApi(path, { token, method = "GET", ...options } = {}) {
 }
 
 export async function api(path, { token, ...options } = {}) {
-  if (USE_LOCAL_ADMIN) {
-    return localApi(path, { token, ...options });
-  }
-
   const controller = new AbortController();
   const timeoutMs = Number(import.meta.env.VITE_API_TIMEOUT_MS) || 15000;
   const timer = setTimeout(() => controller.abort(), timeoutMs);

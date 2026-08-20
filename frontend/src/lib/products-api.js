@@ -1,9 +1,4 @@
 import { getApiBaseUrl } from "@/lib/api-base";
-import {
-  products as fallbackProducts,
-  getProductBySlug as getFallbackBySlug,
-  getProductsByCategory as getFallbackByCategory,
-} from "@/data/products";
 
 async function fetchJson(path) {
   const response = await fetch(`${getApiBaseUrl()}${path}`);
@@ -27,30 +22,18 @@ export async function fetchStoreProducts({ category, search, limit = 200 } = {})
     if (search) params.set("search", search);
     const data = await fetchJson(`/products?${params.toString()}`);
     const items = extractProductList(data);
-    if (items.length) return items;
+    return items;
   } catch {
-    // Fall back to local catalog when API is offline
+    // A production storefront must not display stale, hard-coded prices.
+    return [];
   }
-
-  if (category) return getFallbackByCategory(category);
-  if (search) {
-    const q = search.toLowerCase();
-    return fallbackProducts.filter(
-      (p) =>
-        p.name.toLowerCase().includes(q) ||
-        p.composition?.toLowerCase().includes(q) ||
-        p.shortDescription?.toLowerCase().includes(q),
-    );
-  }
-  return fallbackProducts;
 }
 
 export async function fetchStoreProductBySlug(slug) {
   try {
     const product = await fetchJson(`/products/${encodeURIComponent(slug)}`);
-    if (product) return product;
+    return product || null;
   } catch {
-    // Fall back to local catalog when API is offline
+    return null;
   }
-  return getFallbackBySlug(slug) || null;
 }

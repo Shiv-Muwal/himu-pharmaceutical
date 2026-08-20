@@ -2,18 +2,17 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { PageHero } from "@/components/sections/page-hero";
 import { ProductCatalog } from "@/components/products/product-catalog";
-import { products as fallbackProducts } from "@/data/products";
 import { fetchStoreProducts } from "@/lib/products-api";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 
 export default function ProductsPage() {
   const [searchParams] = useSearchParams();
-  const [catalog, setCatalog] = useState(fallbackProducts);
+  const [catalog, setCatalog] = useState([]);
 
   useEffect(() => {
     let active = true;
     fetchStoreProducts().then((items) => {
-      if (active && items?.length) setCatalog(items);
+      if (active) setCatalog(items);
     });
     return () => {
       active = false;

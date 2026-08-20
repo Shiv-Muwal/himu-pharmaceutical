@@ -277,6 +277,10 @@ export function saveMockProduct(productData) {
     savedProduct = {
       ...currentProducts[index],
       ...productData,
+      // Keep all legacy price keys in sync when editing in local-admin mode.
+      price: productData.mrp ?? productData.price ?? currentProducts[index].price,
+      mrp: productData.mrp ?? productData.price ?? currentProducts[index].mrp ?? currentProducts[index].compareAtPrice,
+      compareAtPrice: productData.mrp ?? productData.price ?? currentProducts[index].mrp ?? currentProducts[index].compareAtPrice,
       slug: slugify(productData.name),
       stock: Number(productData.stock ?? currentProducts[index].stock ?? 0),
       active: productData.active !== false,

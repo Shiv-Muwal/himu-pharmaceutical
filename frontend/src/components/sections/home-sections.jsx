@@ -30,7 +30,6 @@ import { categories } from "@/data/categories";
 import { testimonials, partnerLogos } from "@/data/company";
 import { blogPosts } from "@/data/blogs";
 import { ProductCard } from "@/components/products/product-card";
-import { products } from "@/data/products";
 import { fetchStoreProducts } from "@/lib/products-api";
 
 const whyChoose = [
@@ -418,7 +417,7 @@ export function WhyChooseSection() {
 export function FeaturedProductsSection() {
   const scrollerRef = useRef(null);
   const [paused, setPaused] = useState(false);
-  const [catalog, setCatalog] = useState(products);
+  const [catalog, setCatalog] = useState([]);
 
   useEffect(() => {
     let alive = true;

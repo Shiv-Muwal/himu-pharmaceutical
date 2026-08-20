@@ -4,8 +4,8 @@ import { Link } from "@/components/ui/link";
 import { Image } from "@/components/ui/image";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/animations/motion-components";
-import { products } from "@/data/products";
 import { getProductMrp } from "@/lib/pricing";
+import { fetchStoreProducts } from "@/lib/products-api";
 import { blogPosts as fallbackBlogs } from "@/data/blogs";
 import { api } from "@/lib/api";
 
@@ -37,8 +37,20 @@ const PRODUCT_TRUST = [
 ];
 
 export function TrustedBrandsSection() {
+  const [catalog, setCatalog] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+    fetchStoreProducts().then((items) => {
+      if (active) setCatalog(items);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const lineup = PRODUCT_TRUST.map((item) => {
-    const product = products.find((p) => p.slug === item.slug);
+    const product = catalog.find((p) => p.slug === item.slug);
     return product ? { ...item, product } : null;
   }).filter(Boolean);
 

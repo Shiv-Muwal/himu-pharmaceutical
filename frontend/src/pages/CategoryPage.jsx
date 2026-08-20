@@ -6,15 +6,12 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { FadeIn } from "@/components/animations/motion-components";
 import { Card } from "@/components/ui/card";
 import { getCategoryBySlug } from "@/data/categories";
-import { getProductsByCategory } from "@/data/products";
 import { fetchStoreProducts } from "@/lib/products-api";
 
 export default function CategoryPage() {
   const { slug = "" } = useParams();
   const category = getCategoryBySlug(slug);
-  const [categoryProducts, setCategoryProducts] = useState(() =>
-    getProductsByCategory(slug),
-  );
+  const [categoryProducts, setCategoryProducts] = useState([]);
 
   useEffect(() => {
     if (!category) return undefined;

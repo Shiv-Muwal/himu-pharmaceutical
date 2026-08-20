@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import { getProductBySlug, products } from "@/data/products";
 import { generateProductSchema, generateBreadcrumbSchema } from "@/lib/seo";
 import { ProductDetailClient } from "@/components/products/product-detail-client";
 import { fetchStoreProductBySlug, fetchStoreProducts } from "@/lib/products-api";
 
 export default function ProductDetailPage() {
   const { slug = "" } = useParams();
-  const [product, setProduct] = useState(() => getProductBySlug(slug) || null);
+  const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
-  const [loading, setLoading] = useState(!getProductBySlug(slug));
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let active = true;
@@ -21,7 +20,7 @@ export default function ProductDetailPage() {
       if (apiProduct) {
         const all = await fetchStoreProducts();
         const relatedItems = (apiProduct.relatedSlugs || [])
-          .map((s) => all.find((p) => p.slug === s) || products.find((p) => p.slug === s))
+          .map((s) => all.find((p) => p.slug === s))
           .filter(Boolean)
           .slice(0, 4);
         setRelated(

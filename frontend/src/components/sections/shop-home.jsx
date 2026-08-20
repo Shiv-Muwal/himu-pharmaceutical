@@ -24,7 +24,6 @@ import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/products/product-card";
 import { categories } from "@/data/categories";
 import { DEFAULT_BANNERS } from "@/data/banners";
-import { products } from "@/data/products";
 import { fetchStoreProducts } from "@/lib/products-api";
 import { api } from "@/lib/api";
 import { FadeIn } from "@/components/animations/motion-components";
@@ -255,7 +254,7 @@ export function ShopSearchBar() {
   const [selectedCategory, setSelectedCategory] = useState("dermatology");
   const [isListening, setIsListening] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [catalog, setCatalog] = useState(products);
+  const [catalog, setCatalog] = useState([]);
   const [placeholderText, setPlaceholderText] = useState(
     "Search derma creams, serums, medicines...",
   );
