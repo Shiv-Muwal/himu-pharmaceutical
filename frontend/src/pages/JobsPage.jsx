@@ -12,6 +12,8 @@ import { FadeIn } from "@/components/animations/motion-components";
 import { Button } from "@/components/ui/button";
 import { CareerApplicationForm } from "@/components/forms/contact-form";
 import { getJobs } from "@/lib/jobs";
+import { generateJobPostingSchemas } from "@/lib/seo";
+import { SeoJsonLd } from "@/components/seo/seo-json-ld";
 
 function formatJd(jd = "") {
   return String(jd)
@@ -58,6 +60,7 @@ export default function JobsPage() {
 
   return (
     <>
+      <SeoJsonLd id="jobs" data={generateJobPostingSchemas(jobs)} />
       <PageHero
         title="Jobs at HIMU"
         description="Build trusted care with a team rooted in Chirawa — open roles, clear JDs, direct apply."

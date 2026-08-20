@@ -7,6 +7,8 @@ import { FadeIn } from "@/components/animations/motion-components";
 import { Card } from "@/components/ui/card";
 import { getCategoryBySlug } from "@/data/categories";
 import { fetchStoreProducts } from "@/lib/products-api";
+import { generateBreadcrumbSchema, generateCollectionSchema } from "@/lib/seo";
+import { SeoJsonLd } from "@/components/seo/seo-json-ld";
 
 export default function CategoryPage() {
   const { slug = "" } = useParams();
@@ -31,6 +33,16 @@ export default function CategoryPage() {
 
   return (
     <>
+      <SeoJsonLd
+        id="category"
+        data={[
+          generateCollectionSchema(category, categoryProducts),
+          generateBreadcrumbSchema([
+            { name: "Products", url: "/products" },
+            { name: category.name, url: `/categories/${slug}` },
+          ]),
+        ]}
+      />
       <PageHero
         title={category.name}
         description={category.description}

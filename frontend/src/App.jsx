@@ -18,7 +18,6 @@ import { SiteChatbot } from "@/components/global/site-chatbot";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 import { CheckoutModal } from "@/components/cart/checkout-modal";
 import { LoginModal } from "@/components/auth/login-modal";
-import { generateOrganizationSchema } from "@/lib/seo";
 import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
 import JobsPage from "@/pages/JobsPage";
@@ -101,16 +100,6 @@ function AppLayout() {
 }
 
 export default function App() {
-  useEffect(() => {
-    const orgSchema = generateOrganizationSchema();
-    const el = document.createElement("script");
-    el.type = "application/ld+json";
-    el.text = JSON.stringify(orgSchema);
-    el.dataset.seo = "organization";
-    document.head.appendChild(el);
-    return () => el.remove();
-  }, []);
-
   return (
     <BrowserRouter>
       <ThemeProvider>
